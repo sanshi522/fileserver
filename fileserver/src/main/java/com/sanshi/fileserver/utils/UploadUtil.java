@@ -19,7 +19,7 @@ public abstract class UploadUtil {
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         return SAVE_PATH + date + "/";
     }
-    //获取文件类型
+    //获取文件类型1
     public static String parseFileType(String fileName) {
         return !fileName.contains(".") ? "" : fileName.substring(fileName.lastIndexOf("."));
     }
