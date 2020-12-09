@@ -10,6 +10,7 @@
 <head>
     <title>文件共享</title>
     <link rel="stylesheet" type="text/css" href="/css/share/share.css" />
+    <link rel="stylesheet" type="text/css" href="/css/share/addshare.css" />
     <link rel="stylesheet" type="text/css" href="/fonts/iconfont1.css">
     <script src="/js/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="/js/frame/addshare.js"></script>
@@ -27,28 +28,24 @@
                         </div>
                         <div class="ui segment fullheight">
                             <div class="blue ui buttons">
-                                <button class="ui button" data-filter="all">所有文件</button>
-                                <button class="ui button" data-filter="1">班级共享</button>
-                                <button class="ui button" data-filter="2">小组共享</button>
-                                <button class="ui button" data-filter="3">个人共享</button>
-                            </div>
-
-                            <div class="blue ui buttons">
                                 <button class="ui button greenli" data-shuffle>共享中心</button>
-                                <button class="ui button redli" data-sortAsc>添加共享</button>
-<%--                                <button class="ui button yellowli" data-sortDesc>降序</button>--%>
-                            </div>
-
-                            <!-- To choose the value by which you want to sort add -->
-                            <div class="ui query">
-                                <input class="query"  type="text" name="gender">
-                                <i class="my-icon lsm-sidebar-icon icon-chazhao querybtn"></i>
+                                <button class="ui button redli" data-sortAsc>我的共享</button>
                             </div>
                             <div class="ui divider"></div>
                             <div class="filtr-container">
-                                萨顶顶
-                                <input id="button" type="button" value="调用parent.html中的say()函数" onclick="callParent()"/>
+                                <div class="ui filelist" style="">
+
+                                </div>
+                                <div class="ui filemesg" style="">
+
+                                </div>
                             </div>
+                        </div>
+                        <div class="blue ui buttons commit-1">
+                            <button class="ui button " data-shuffle>添加上传</button>
+                        </div>
+                        <div class="blue ui buttons rest-1">
+                                <button class="ui button red" data-filter="all">重置</button>
                         </div>
                     </div>
                 </div>
