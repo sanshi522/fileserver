@@ -1,0 +1,98 @@
+$(function(){
+    $.ajax({
+        url:"login/Islogin",
+        type:"post",
+        dataType:"json",
+        success:function(data){
+           if(data.resoult)
+               document.getElementById("frameId").src="/home";
+                //根据登陆账户的类型初始化导航栏
+                if (data.ident==0){//学生
+                    $(".lsm-sidebar-item").css("display","none");
+                    $(".stu-show").css("display","block");
+                }else if(data.ident==1){//老师
+                    $(".lsm-sidebar-item").css("display","none");
+                    $(".tea-show").css("display","block");
+                }else if(data.ident==2){//管理员老师
+                    $(".lsm-sidebar-item").css("display","none");
+                    $(".tea-show").css("display","block");
+                    $(".man-show").css("display","block");
+                }else if(data.ident==3){//管理员
+                    $(".lsm-sidebar-item").css("display","none");
+                    $(".man-show").css("display","block");
+                }
+           else{
+               location.href = "/";
+           }
+        },
+        error:function(jqXHR){
+            alert("发生错误："+ jqXHR.status);
+        }
+    })
+});
+function  openshare(){
+    $.ajax({
+        url:"login/Islogin",
+        type:"post",
+        dataType:"json",
+        success:function(data){
+            if(data.resoult)
+                document.getElementById("frameId").src="/share";
+            else{
+                location.href = "/";
+            }
+        },
+        error:function(jqXHR){
+            alert("发生错误："+ jqXHR.status);
+        }
+    })
+}
+function  openmyshare(){
+        $.ajax({
+            url:"login/Islogin",
+            type:"post",
+            dataType:"json",
+            success:function(data){
+                if(data.resoult)
+                    document.getElementById("frameId").src="/myshare";
+                else{
+                    location.href = "/";
+                }
+            },
+            error:function(jqXHR){
+                alert("发生错误："+ jqXHR.status);
+            }
+        })
+}
+function  openaddshare(){
+            $.ajax({
+                url:"login/Islogin",
+                type:"post",
+                dataType:"json",
+                success:function(data){
+                    if(data.resoult)
+                        document.getElementById("frameId").src="/addshare";
+                    else{
+                        location.href = "/";
+                    }
+                },
+                error:function(jqXHR){
+                    alert("发生错误："+ jqXHR.status);
+                }
+            })
+}
+//最小化上传窗口
+function upload_minview(){
+    $('.frame2').addClass("min-upload-frame");
+    $('.frame2').removeClass("max-upload-frame");
+}
+//展开上传窗口
+function upload_maxview() {
+    $('.frame2').addClass("max-upload-frame");
+    $('.frame2').removeClass("min-upload-frame");
+}
+//初始化导航栏
+
+function say(){
+    alert("parent.html");
+}

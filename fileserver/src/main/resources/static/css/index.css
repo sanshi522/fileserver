@@ -1,0 +1,76 @@
+@charset "utf-8";
+body{font:14px "微软雅黑","宋体","Arial Narrow",HELVETICA;-webkit-text-size-adjust:100%;overflow:hidden;}
+body,html{height: 100%;background: #E2E2E2}
+.max_frame{
+    width: calc(100% - 60px);
+    transition:width 0.3s;
+}
+.min_frame{
+    width: calc(100% - 220px);
+    transition:width 0.3s;
+}
+.home_logodiv{
+    background-color:#7F5455;
+    width: 220px;
+    height:100%;
+    float: left;
+}
+.close_div{
+    background-color:#EB1014;
+    width: 60px;
+    height:100%;
+    float:right;}
+.user_div {
+    background-color:#7F5455;
+    width: 220px;
+    height:100%;
+    float:right;
+}
+.msg_div{
+    background-color:#4D51E8;
+    width: 100px;
+    height:100%;
+    float:right;
+}
+#user_head{
+    float: left;
+    width: 60px;
+    height: 60px;
+}
+.user_name{
+    width: 140px;
+    height: 60px;
+    float: left;
+    font-size: 30px;
+    line-height: 60px;
+    color:#FFFFFF;
+    font-family:'楷体';
+    text-align: left;
+    margin-left: 20px;
+}
+.max-upload-frame{
+    transition: 0.6s;
+    overflow-y:hidden;
+    background: #A67172;
+    border: 2px red solid;
+    width: 400px;
+    height: 500px;
+    position: fixed;
+    z-index: 2;
+    right: 0px;
+    bottom: 0px;
+    display: block;
+}
+.min-upload-frame{
+    transition: 0.6s;
+    overflow-y:auto;
+    background: #A67172;
+    border: 2px red solid;
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    z-index: 2;
+    right: 20px;
+    bottom: 40px;
+    display: block;
+}
