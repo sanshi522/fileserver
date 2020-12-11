@@ -13,8 +13,8 @@
     <link rel="stylesheet" type="text/css" href="/css/index.css">
     <link rel="stylesheet" type="text/css" href="/fonts/iconfont.css">
     <link rel="stylesheet" type="text/css" href="/fonts/iconfont1.css">
-    <script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script>
-    <script type="text/javascript" src="/js/jquery.slimscroll.min.js"></script>
+    <script type="text/javascript" src="/js/jquery/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="/js/jquery/jquery.slimscroll.min.js"></script>
     <script type="text/javascript" src="/js/left-side-menu.js"></script>
     <script type="text/javascript" src="/js/index.js"></script>
 </head>

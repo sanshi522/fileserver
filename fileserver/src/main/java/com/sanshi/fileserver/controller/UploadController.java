@@ -11,6 +11,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +38,7 @@ public class UploadController {
     }
     @PostMapping("/patch/upload")
     @ResponseBody
-    public Result filePatchExists(String name, Integer index, Integer parent, String md5, Long size, MultipartFile patch) throws IOException {
+    public Result filePatchExists(String name, Integer index, Integer parent, String md5, Long size, MultipartFile patch, HttpServletRequest request) throws IOException {
         FileSample file = fileSampleService.findByParentAndMd5(parent, md5);
         if(file == null || !file.getSize().equals(size)) {
             Optional.ofNullable(file).ifPresent(e -> fileSampleService.deleteById(e.getId()));

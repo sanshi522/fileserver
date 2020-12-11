@@ -1,0 +1,101 @@
+/* CSS Document */
+.ui.segments {
+    margin: 1rem 2rem;
+}
+.ui.filelist{
+    overflow:auto;
+    margin-top: 5px;
+    border: 1px solid rgba(34, 36, 38, .15);
+    min-width: 200px;
+    width: 100%;
+    height: 150px;
+    float: left;
+    border-radius: 1rem;
+    margin-bottom:1em;
+}
+.ui.filemesg{
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(34, 36, 38, .15);
+    min-width: 200px;
+    width: 100%;
+    height: 400px;
+    border-radius: 1rem;
+    float: left;
+}
+.buttons.commit-1{
+    float:right;
+    margin-right:45%;
+    margin-bottom: 10px;
+}
+.buttons.reset-1{
+    float:right;
+    margin-right:1rem;
+}
+.smailtitel{
+    font-weight: 900;
+    font-size: 16px;
+    width: 500px;
+    margin-left: 10px;
+
+}
+.ui.blue.buttons .ui.button.red{
+    background-color: #DF4B4E;
+}
+.ui.blue.buttons .ui.button.red:hover{
+    background-color:#AC0F12;
+}
+
+/**======================*/
+.delfile{
+    display: none;
+}
+.file:hover .delfile{
+    display:block;
+}
+#addfilebtn{
+    font-size: 60px;
+    color:#57CCDF;
+}
+#addfilebtn:hover{
+    font-size: 60px;
+    color:#1F568A;
+}
+.addfile{
+    width: 80px;
+    height:80px;
+    float: left;
+    margin: 10px;
+    position:relative;
+    text-align:center;
+    line-height: 80px;
+}
+.file{
+    width: 80px;
+    height:80px;
+    border: #B4AFAF 1px dotted;
+    float: left;
+    margin: 10px;
+    position:relative;
+}
+.filetypeimg{
+    width: 50px;
+    height:50px;
+    margin: 10px 15px;
+}
+.sharefilename{
+    font-size:8px;
+    width:80px;
+    height: 20px;
+    overflow: hidden;
+}
+.delfile{
+    width:80px;
+    height: 30px;
+    position:absolute;
+    z-index: 10;
+    bottom: 0px;
+    background: rgba(150,28,32,0.60);
+    text-align: center;
+    color:#B4DD33
+}

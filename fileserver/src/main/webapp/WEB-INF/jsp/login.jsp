@@ -7,10 +7,10 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<link rel="stylesheet" href="/css/bootstrap.css">
+<link rel="stylesheet" href="/css/bootstrap/bootstrap.css">
 <link  rel="stylesheet" href="/css/login.css" type="text/css">
 
-<script src="/js/jquery-3.5.1.min.js"></script>
+<script src="/js/jquery/jquery-3.5.1.min.js"></script>
 <script src="/js/login/login.js"></script>
 <head>
     <title>WaiS文件管理</title>

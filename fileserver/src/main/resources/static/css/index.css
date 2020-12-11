@@ -50,22 +50,21 @@ body,html{height: 100%;background: #E2E2E2}
 }
 .max-upload-frame{
     transition: 0.6s;
-    overflow-y:hidden;
-    background: #A67172;
-    border: 2px red solid;
+    overflow:hidden;
+    /*border: 2px red solid;*/
     width: 400px;
-    height: 500px;
+    height: 540px;
     position: fixed;
     z-index: 2;
     right: 0px;
     bottom: 0px;
     display: block;
+    border-radius:20px;
 }
 .min-upload-frame{
+    border-radius:20px;
+    overflow:hidden;
     transition: 0.6s;
-    overflow-y:auto;
-    background: #A67172;
-    border: 2px red solid;
     width: 40px;
     height: 40px;
     position: fixed;
