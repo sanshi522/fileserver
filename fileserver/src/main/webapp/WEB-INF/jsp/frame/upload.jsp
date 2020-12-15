@@ -18,10 +18,12 @@
     <script src="/js/spark-md5.min.js"></script>
 
     <script type="text/javascript" src="/js/frame/upload.js"></script>
+<%--    <script type="text/javascript" src="/js/frame/uploadworker.js"></script>--%>
 </head>
 <body style="margin: 0;overflow:hidden">
-<div class="viewimg" style="width:40px;height:40px;border: 1px dashed red;position:relative;" onclick="maxview()">
-    <div style="width:40px;height:15px;border: 1px dashed red;position:absolute;bottom: 0px;z-index: 10;text-align: center;font-size: 8px;">
+<div class="viewimg" onclick="maxview()">
+    <img class="uploadimg" src="./images/upload/uploadnotalk.png" />
+    <div class="talknum" >
         12
     </div>
 </div>
@@ -32,27 +34,27 @@
 </div>
 
 <div class="talks" >
-    <div class="talk finishtalk">
-        <div class="filename">文件名字.png</div>
-        <div class="talkstate">已完成 - 361.60KB</div>
-        <div class="deltalkdiv">
-            <i class="my-icon lsm-sidebar-icon icon-shezhi deltalkbth"></i>
-        </div>
-    </div>
-    <div class="talk nowtalk">
-        <div class="filename">文件名字.png</div>
-        <div  class="progress progress-striped active" style="width:240px;float: left;">
-            <div  class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" >12%
-            </div>
-        </div>
-        <div class="talkstate"> - 560.10MB</div>
-        <div class="pausetalkdiv">
-            <i class="my-icon lsm-sidebar-icon icon-shezhi pausetalkbth"></i>
-        </div>
-    </div>
+<%--    <div class="talk finishtalk">--%>
+<%--        <div class="filename">文件名字.png</div>--%>
+<%--        <div class="talkstate">已完成 - 361.60KB</div>--%>
+<%--        <div class="deltalkdiv">--%>
+<%--            <i class="my-icon lsm-sidebar-icon icon-shezhi deltalkbth"></i>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--    <div class="talk nowtalk">--%>
+<%--        <div class="filename">文件名字.png</div>--%>
+<%--        <div  class="progress progress-striped active" style="width:240px;float: left;">--%>
+<%--            <div  class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" >12%--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div class="talkstate"> - 560.10MB</div>--%>
+<%--        <div class="pausetalkdiv">--%>
+<%--            <i class="my-icon lsm-sidebar-icon icon-shezhi pausetalkbth"></i>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 </div>
 <div class="talking">
-    当前任务：10
+    当前任务：0
 </div>
 </body>
 </html>

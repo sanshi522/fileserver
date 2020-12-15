@@ -19,10 +19,10 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/file")
-public class UploadController {
+public class FileSampleController {
     FileSampleService fileSampleService;
 
-    public UploadController(FileSampleService fileSampleService) {
+    public FileSampleController(FileSampleService fileSampleService) {
         this.fileSampleService = fileSampleService;
     }
 

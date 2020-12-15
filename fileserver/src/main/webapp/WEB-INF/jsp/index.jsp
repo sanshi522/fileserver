@@ -147,7 +147,7 @@
       </div>
   </div>
 <iframe name="viewiframe" class="frame1 min_frame" id="frameId" src="" frameborder="0" background="#fff" style="float:right;height:calc(100% - 60px);position:absolute;reght:0;"></iframe>
-<iframe name="uploadiframe" class="frame2 min-upload-frame"  src="/uploadview" frameborder="0" background="#fff" style="padding: 0px;"></iframe>
+<iframe name="uploadiframe" Transparency="true"; class="frame2 min-upload-frame"  src="/uploadview" frameborder="0" background="#fff" style="padding: 0px;"></iframe>
 <div style="background: #A67172; border: 2px #ff0000 solid; width: 400px;height: 500px;position: fixed;z-index: 10;right: 0px;bottom: 0px;display: none;"></div>
   <div class ="center"  style="background-color: #397bc5;width: 100%;"></div>
   </body>

@@ -1,20 +1,28 @@
-function minview(){
-    parent.upload_minview();
-    $(".uptitle").css("display","none");
-    $(".talks").css("display","none");
-    $(".viewimg").css("display","block");
-    $("body").css("overflow-y","hidden");
-    $("body").css("overflow-x","hidden");
-    $("body").css("background-color","transparent");
-}
-function maxview(){
-    parent.upload_maxview();
-    $(".uptitle").css("display","block");
-    $(".talks").css("display","block");
-    $(".viewimg").css("display","none");
-    $("body").css("overflow-y","auto");
-    $("body").css("-ms-overflow-style","none");
-    $("body").css("background-color","#FFF");
+// JavaScript Document
+//上传文件线程js
+importScripts('/js/jquery/jquery-nodom/jquery.nodom.js');
+//importScripts('/js/jquery/nodom.js');
+
+
+
+importScripts('/js/jquery/jquery-3.5.1.min.js');
+importScripts('/js/spark-md5.min.js');
+
+
+//import '/js/spark-md5.min.js';
+let threadid;
+let divid;
+let upfile;
+onmessage=function (event) {
+    let msg=event.data;
+    if(msg.msgid==0){
+        threadid=msg.threadid;
+    }else if(msg.msgid==1){
+        divid= msg.talk.divid;
+        upfile=msg.talk.upfile;
+        patchUpload.init(divid,upfile);
+        patchUpload.start();
+    }
 }
 function getKbMbGb(limit){
     var size = "";
@@ -36,105 +44,6 @@ function getKbMbGb(limit){
     }
     return size;
 }
-function addtalk(file,talk){
-    const timestamp = parseInt((new Date()).valueOf()); //唯一的标识
-    $(".talks").append('<div id='+timestamp+' class="talk nowtalk">\n' +
-        '        <div class="filename"></div>\n' +
-        '        <div  class="progress progress-striped active" style="width:240px;float: left;">\n' +
-        '            <div  class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">' +
-        '            </div>\n' +
-        '        </div>\n' +
-        '        <div class="talkstate"> - '+getKbMbGb(file.size)+'</div>\n' +
-        '        <div class="pausetalkdiv">\n' +
-        '            <i class="my-icon lsm-sidebar-icon icon-shezhi pausetalkbth"></i>\n' +
-        '        </div>\n' +
-        '    </div>');
-    $("#" + timestamp).children(".filename").html(file.name);
-    //let talk={};
-    talk['divid']=timestamp;
-    talk['upfile']=file;
-
-
-    //talk['state']=0;//等待
-    talks.push(talk);
-    startnewtalk();
-    // this.upload=patchUpload;
-    // this.upload.init(timestamp,file);
-    // this.upload.start();
-    //alert(file.name+"||"+file.size);
-}
-let talks=[];//任务集合
-let upstate=0;
-let nowtalk={};
-function startnewtalk() {
-    if(talks.length==0) {
-        $(".uploadimg").attr("src", "./images/upload/uploadnotalk.png")
-        $(".talknum").html("");
-    }else{
-        $(".uploadimg").attr("src", "./images/upload/upload.gif")
-        $(".talknum").html(talks.length);
-    }
-
-    for (let i=0;i<talks.length;i++){
-        //for (let j=0;j<workers.length;j++){
-            if (upstate==0){
-                // let msg={};
-                // msg["msgid"]=1;//设置id
-                // msg["talk"]=talks[i];
-                // workers[j].postMessage(msg)
-                nowtalk=talks[i];
-                patchUpload.init(talks[i].divid,talks[i].upfile);
-                talks.splice(i, 1); // 将使后面的元素依次前移，数组长度减1
-                i--;
-                upstate=1;
-                break;
-            }else{
-                break;
-            }
-        }
-    //}
-}
-function talkend(){
-    upstate=0;
-    startnewtalk();
-}
-//
-// let talks=[];//任务集合
-// let workers=[];//线程集合
-// let state=[];//线程状态
-// for(let i=0;i<3;i++){//初始化线程
-//     let worker=new Worker("/js/frame/uploadworker.js");
-//     workers.push(worker);
-//     state[i]=0;
-//     let msg={};
-//     msg["msgid"]=0;//设置id
-//     msg["threadid"]=i;
-//     workers[i].postMessage(msg);
-// }
-// onmessage=function (event) {
-//     if(event.data.mythread.threadstate==0){//任务执行完毕
-//         state[event.data.mythread.threadid]=0;//线程状态重置
-//         starttalk();
-//     }
-// }
-//
-// function starttalk() {
-//     for (let i=0;i<talks.length;i++){
-//         for (let j=0;j<workers.length;j++){
-//             if (state[j]==0){
-//                 let msg={};
-//                 msg["msgid"]=1;//设置id
-//                 msg["talk"]=talks[i];
-//                 workers[j].postMessage(msg)
-//                 talks.splice(i, 1); // 将使后面的元素依次前移，数组长度减1
-//                 i--;
-//                 //talks.remove(i);
-//                 break;
-//             }
-//         }
-//     }
-// }
-
 var patchUpload = {
     /**
      * 分片上传成功索引
@@ -159,7 +68,7 @@ var patchUpload = {
     /**
      * 显示dom
      */
-     div:null,
+    div:null,
     /**
      * 文件对象
      */
@@ -169,41 +78,44 @@ var patchUpload = {
      */
     init: function (di,fil) {
         //this.setEvent();
+        this.file = fil;
+        this.div =di;
+    },
+    start:function(){
         this.succeed = [];
         this.failed = [];
         this.try = 3;
-        this.file = fil;
-        this.div =di;
-        this.loadProcess(0);
-        this.start();
-    },
-    start:function(){
+        //this.loadProcess(0);
         this.md5checkUpload(this.file);
     },
     /**
      * 设置页面事件监听
      */
-    // setEvent: function () {
-    //     var me = this;
-    //     $("#upload").click(function (e) {
-    //         var files = $("#file")[0].files;
-    //         if(files.length < 1) {
-    //             alert("请选择文件！");
-    //             return;
-    //         }
-    //         me.succeed = [];
-    //         me.failed = [];
-    //         me.try = 3;
-    //         me.loadProcess(0);
-    //         me.md5checkUpload(files[0]);
-    //     });
-    //
-    //     $("#try").click(function (e) {
-    //         var files = $("#file")[0].files;
-    //         me.try = 3;
-    //         me.md5checkUpload(files[0]);
-    //     });
-    // },
+    setEvent: function () {
+        let me = this;
+        me.succeed = [];
+        me.failed = [];
+        me.try = 3;
+        //me.loadProcess(0);
+        // $("#upload").click(function (e) {
+        //     var files = $("#file")[0].files;
+        //     if(files.length < 1) {
+        //         alert("请选择文件！");
+        //         return;
+        //     }
+        //     me.succeed = [];
+        //     me.failed = [];
+        //     me.try = 3;
+        //     me.loadProcess(0);
+        //     me.md5checkUpload(files[0]);
+        // });
+        //
+        // $("#try").click(function (e) {
+        //     var files = $("#file")[0].files;
+        //     me.try = 3;
+        //     me.md5checkUpload(files[0]);
+        // });
+    },
 
     /**
      * 检查文件是否已存在
@@ -220,31 +132,24 @@ var patchUpload = {
             success: function(data) {
                 //文件已经完全存在
                 if (data.status === 1) {
-                   // me.loadProcess(100);
-                    $("#"+me.div).find(".talkstate").html("已完成 - "+getKbMbGb(file.size));
-                    $("#"+me.div).find(".progress").remove();
-                   // alert("急速秒传！");
-                    //添加共享文件数据（返回共享文件id）
-                    let shareid;
-                    if(nowtalk.type==0){
-
-                        //循环添加共享文件授权表
-                       // for()
-                    }
-                    talkend();
+                    // me.loadProcess(100);
+                    //$("#"+me.div).find(".talkstate").html("已完成 - "+getKbMbGb(file.size));
+                   // $("#"+me.div).find(".progress").remove();
+                    // alert("急速秒传！");
+                    me.end();
                     return ;
                 }
                 //文件传输了一部分
                 if(data.id && data.status === 0) {
                     me.succeed = data.patchIndex;
                     me.upload(data.id, file);
+                    me.end();
                     return ;
                 }
                 //上传文件
                 me.upload(me.prepareUpload(md5, file), file);
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                talkend();
                 alert("服务器错误！");
             }
         });
@@ -271,12 +176,12 @@ var patchUpload = {
                     id = data.id;
                     return;
                 }
-                $("#"+me.div).find(".talkstate").html("上传文件失败！ - "+getKbMbGb(file.size));
+               // $("#"+me.div).find(".talkstate").html("上传文件失败！ - "+getKbMbGb(file.size));
                 //this.div.children(".progress").remove();
-               // alert("上传文件失败！");
+                // alert("上传文件失败！");
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                $("#"+me.div).find(".talkstate").html("服务器错误！ - "+getKbMbGb(file.size));
+               // $("#"+me.div).find(".talkstate").html("服务器错误！ - "+getKbMbGb(file.size));
                 //alert("服务器错误！");
             }
         });
@@ -290,7 +195,10 @@ var patchUpload = {
      */
     upload: function (id, file) {
         var me = this;
-        if(!id) return;
+        if(!id) {
+            me.end();
+            return;
+        }
         var shardCount = Math.ceil(file.size / this.shardSize);//文件片数
         for (var i = 0; i < shardCount; i++) {
             if(me.succeed.length !== 0 && me.succeed.indexOf(i) > -1 && me.failed.indexOf(i) === -1) {
@@ -315,7 +223,10 @@ var patchUpload = {
         var spark = new SparkMD5();
         var reader = new FileReader();
         reader.readAsBinaryString(patch);
-        $(reader).on('load',function (e) {
+        reader.onload(function(e){
+
+        // })
+        // $(reader).on('load',function (e) {
             spark.appendBinary(e.target.result);
             var md5 = spark.end();
             var form = new FormData();
@@ -336,12 +247,11 @@ var patchUpload = {
                     if(!data || !data.ok) {
                         me.failed.push(index);
                         console.log("上传分片" + index + "失败！");
-                        talkend();
                         return ;
                     }
                     me.succeed.push(index);
                     console.log("上传分片" + index + "成功！");
-                    me.loadProcess(((me.succeed.length - 1) * me.shardSize + patch.size) / file.size * 100);
+                   // me.loadProcess(((me.succeed.length - 1) * me.shardSize + patch.size) / file.size * 100);
                     me.mergePatch(parent, file, shardCount);
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -374,23 +284,23 @@ var patchUpload = {
             success: function(data) {
                 if (data && data.ok) {
                     //me.loadProcess(100);
-                    $("#"+me.div).find(".talkstate").html("已完成 - "+getKbMbGb(file.size));
-                    $("#"+me.div).find(".progress").remove();
-                    $("#"+me.div).removeClass("nowtalk");
-                    $("#"+me.div).addClass("finishtalk")
-                    talkend();
-                   // alert("上传文件成功！");
+                   // $("#"+me.div).find(".talkstate").html("已完成 - "+getKbMbGb(file.size));
+                   // $("#"+me.div).find(".progress").remove();
+                   // $("#"+me.div).removeClass("nowtalk");
+                   // $("#"+me.div).addClass("finishtalk")
+                    // alert("上传文件成功！");
+                    me.end();
                     return ;
                 }
-                $("#"+me.div).find(".talkstate").html("上传文件失败！ - "+getKbMbGb(file.size));
-                $("#"+me.div).find(".progress").remove();
-                talkend();
+               // $("#"+me.div).find(".talkstate").html("上传文件失败！ - "+getKbMbGb(file.size));
+               // $("#"+me.div).find(".progress").remove();
                 //alert("上传文件失败！");
+                me.end();
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                $("#"+me.div).find(".talkstate").html("服务器错误！ - "+getKbMbGb(file.size));
-                $("#"+me.div).find(".progress").remove();
-                talkend();
+               // $("#"+me.div).find(".talkstate").html("服务器错误！ - "+getKbMbGb(file.size));
+              //  $("#"+me.div).find(".progress").remove();
+                me.end();
                 //alert("服务器错误！");
             }
         });
@@ -407,7 +317,7 @@ var patchUpload = {
             return ;
         }
         if(me.try === 0) {
-           // $("#try").css("display", "block");
+            $("#try").css("display", "block");
             return ;
         }
         me.try--;
@@ -461,10 +371,10 @@ var patchUpload = {
         }
 
         loadNext();
+    },
+    end:function(){
+        let mythread={};
+        mythread['threadstate']=0;
+        postMessage(mythread);
     }
 };
-
-// $(function () {
-//     patchUpload.init();
-// });
-

@@ -1,3 +1,6 @@
+body{
+    background-color:transparent;
+}
 .uptitle{
     width:100%;
     height:20px;
@@ -22,6 +25,26 @@
 .minbtn:hover{
     background-color: #72cfff;
 }
+.viewimg{
+    width:50px;
+    height:50px;
+    position:relative;
+}
+.uploadimg{
+    width:50px;
+    height:50px;
+}
+.talknum{
+    width:50px;
+    height:27px;
+    position:absolute;
+    bottom: 0px;
+    z-index: 10;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 900;
+    color: #faffff;
+}
 .talks{
     width:400px;
     height:500px;
@@ -33,10 +56,11 @@
 }
 .talk{
     width:400px;
-    height:60px;
+    height:auto;
     border-bottom: 1px solid rgba(34, 36, 38, .15);
     position: relative;
     padding-left: 10px;
+    float: left;
 }
 .talk:hover .deltalkdiv,.talk:hover .pausetalkdiv{
     display: block;
@@ -48,9 +72,11 @@
     color:black;
 }
 .filename{
+    float: left;
     width:400px;
-    height:30px;
-    padding-top: 6px;
+    height:auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 .talkstate{
     width:150px;

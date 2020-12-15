@@ -53,13 +53,13 @@ $(function(){
         }
         $(".file").each(function(){
             var file=$(this).children(".inp_file")[0].files[0];
-            alert($(this).html());
-            var id=parent.frames["uploadiframe"].addtalk(file);//返回文件id
+           // alert($(this).html());
+          parent.frames["uploadiframe"].addtalk(file);//返回文件id
+           // var id=parent.frames["uploadiframe"].addtalk(file);//返回文件id
            // $(".target").each(function(){
             //循环入库共享授权表（排除授权重复的id相同，授权人相同，目标相同，文件相同）
                // alert("文件名："+file.name+"大小："+file.size+"分享到:"+$("#channels1").val()+"的"+$(this).attr("data_id"));
            // });
-
             this.remove();
         });
     });
@@ -92,7 +92,7 @@ function initadd(){
             $(this).parent().children("i").remove();
             $(this).parent().removeClass("addfile");
             $(this).parent().addClass("file");
-            $(this).parent().append("<img class='filetypeimg' src='img/fileicon/png/1140192.png'/>"+
+            $(this).parent().append("<img class='filetypeimg' src='images/file_logo_png/1140192.png'/>"+
                 "<div class='sharefilename'>"+this.files[0].name+"</div>"+
                 "<div class='delfile' >"+
                 "<i class='my-icon lsm-sidebar-icon icon-shanchu' style='font-size: 20px;color:#B4DD33;''></i>"+
