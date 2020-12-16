@@ -1,7 +1,12 @@
 package com.sanshi.fileserver.repository;
 
 import com.sanshi.fileserver.bean.FileSample;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -10,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface FileSampleRepository extends JpaRepository<FileSample,Integer> {
+public interface FileSampleRepository extends JpaRepository<FileSample,Integer> , JpaSpecificationExecutor {
     //@Insert("insert into file_sample(patch_index,parent,name,path,md5,size) value(#{file.patchIndex},#{file.parent},#{file.name},#{file.path},#{file.md5},#{file.size})")
    // @SelectKey(statement = "select last_insert_id()",keyProperty="file.id",before = false,resultType = int.class )
 
@@ -56,5 +61,7 @@ public interface FileSampleRepository extends JpaRepository<FileSample,Integer> 
      * @param lsit
      * @return
      */
-    FileSample findByIdIn(List<Integer> lsit);
+    Page<FileSample> findALLByIdInAndNameLike(List<Integer> lsit,String name, Pageable pageable);
+    Page<FileSample> findALLByIdIn(List<Integer> lsit, Pageable pageable);
+    //Page<FileSample> findALLByIdInAndNameLike(List<Integer> lsit,String name, Pageable pageable, Example<FileSample> example);
 }

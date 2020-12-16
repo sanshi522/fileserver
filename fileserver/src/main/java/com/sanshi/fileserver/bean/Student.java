@@ -13,25 +13,23 @@ public class Student {
     private String stuGender;
     private String stuPass;
     private String stuHead;
-    private Integer stuClass;
     private Integer stuGroup;
     private Integer stuState;
     private String stuRemake;
 
-    @Override
-    public String toString() {
-        return "Student{" +
-                "stuId=" + stuId +
-                ", stuNumber='" + stuNumber + '\'' +
-                ", stuName='" + stuName + '\'' +
-                ", stuGender='" + stuGender + '\'' +
-                ", stuPass='" + stuPass + '\'' +
-                ", stuHead='" + stuHead + '\'' +
-                ", stuClass=" + stuClass +
-                ", stuGroup=" + stuGroup +
-                ", stuState=" + stuState +
-                ", stuRemake='" + stuRemake + '\'' +
-                '}';
+    public Student() {
+    }
+
+    public Student(Integer stuId, String stuNumber, String stuName, String stuGender, String stuPass, String stuHead, Integer stuGroup, Integer stuState, String stuRemake) {
+        this.stuId = stuId;
+        this.stuNumber = stuNumber;
+        this.stuName = stuName;
+        this.stuGender = stuGender;
+        this.stuPass = stuPass;
+        this.stuHead = stuHead;
+        this.stuGroup = stuGroup;
+        this.stuState = stuState;
+        this.stuRemake = stuRemake;
     }
 
     public Integer getStuId() {
@@ -82,14 +80,6 @@ public class Student {
         this.stuHead = stuHead;
     }
 
-    public Integer getStuClass() {
-        return stuClass;
-    }
-
-    public void setStuClass(Integer stuClass) {
-        this.stuClass = stuClass;
-    }
-
     public Integer getStuGroup() {
         return stuGroup;
     }
@@ -112,5 +102,20 @@ public class Student {
 
     public void setStuRemake(String stuRemake) {
         this.stuRemake = stuRemake;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "stuId=" + stuId +
+                ", stuNumber='" + stuNumber + '\'' +
+                ", stuName='" + stuName + '\'' +
+                ", stuGender='" + stuGender + '\'' +
+                ", stuPass='" + stuPass + '\'' +
+                ", stuHead='" + stuHead + '\'' +
+                ", stuGroup=" + stuGroup +
+                ", stuState=" + stuState +
+                ", stuRemake='" + stuRemake + '\'' +
+                '}';
     }
 }

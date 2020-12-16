@@ -5,6 +5,9 @@ import com.sanshi.fileserver.service.FileSampleService;
 import com.sanshi.fileserver.utils.UploadUtil;
 import com.sanshi.fileserver.vo.FileExists;
 import com.sanshi.fileserver.vo.Result;
+import com.sanshi.fileserver.vo.ScreenShareFile;
+import com.sanshi.fileserver.vo.SessionUser;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -12,8 +15,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -64,5 +70,13 @@ public class FileSampleController {
         fileSampleService.updateByIdSetPathAndSize(parent, path, total);
         fileSampleService.deleteByParent(parent);
         return Result.OK();
+    }
+    @GetMapping("/getAllShareFile")
+    @ResponseBody
+    public  Page<FileSample> getAllShareFile(HttpServletRequest request){
+
+
+        ScreenShareFile screenShareFile=new ScreenShareFile(2,1,0,1,0,0,"jdk",null,null);
+        return fileSampleService.ScreenALL(screenShareFile,request);
     }
 }
