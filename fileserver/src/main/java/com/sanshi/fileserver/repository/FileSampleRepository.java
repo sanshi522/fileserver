@@ -18,9 +18,9 @@ public interface FileSampleRepository extends JpaRepository<FileSample,Integer> 
      * 添加记录
      * @param file
      */
-    @Modifying
-    @Query(value = "insert into file_sample(patch_index,parent,name,path,md5,size) value(:#{#file.patchIndex},:#{#file.name},:#{#file.parent},:#{#file.md5}},:#{#file.size})", nativeQuery = true)
-    void insertFileSample(FileSample file);
+//    @Modifying
+//    @Query(value = "insert into file_sample(patch_index,parent,name,path,md5,size) value(:#{#file.patchIndex},:#{#file.name},:#{#file.parent},:#{#file.md5}},:#{#file.size})", nativeQuery = true)
+//    void insertFileSample(FileSample file);
 
     FileSample save(FileSample file);
 
@@ -47,4 +47,14 @@ public interface FileSampleRepository extends JpaRepository<FileSample,Integer> 
     FileSample findByMd5(String md5);
     List<Integer> findPatchIndexByParent(Integer id);
 
+    @Modifying
+    @Query(value = "select * from file_sample where id in (select s.file_id from share_file as s where s.owner_ident=?1 and s.owner_id=?2 )", nativeQuery = true)
+    List<FileSample> findAllByShareFileAtOwnerIdentAndOwnerId(Integer OwnerIdent,Integer OwnerId);
+
+    /**
+     * id组查询
+     * @param lsit
+     * @return
+     */
+    FileSample findByIdIn(List<Integer> lsit);
 }

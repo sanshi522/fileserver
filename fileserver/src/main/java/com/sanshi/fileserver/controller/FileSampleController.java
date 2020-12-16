@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/file")
 public class FileSampleController {
-    FileSampleService fileSampleService;
+    private FileSampleService fileSampleService;
 
     public FileSampleController(FileSampleService fileSampleService) {
         this.fileSampleService = fileSampleService;

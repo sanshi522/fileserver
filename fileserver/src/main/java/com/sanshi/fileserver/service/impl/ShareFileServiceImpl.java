@@ -15,7 +15,12 @@ public class ShareFileServiceImpl implements ShareFileService {
 
     @Override
     public Integer getIdIsNoAdd(ShareFile shareFile) {
-
-        return null;
+        ShareFile shareFile1=shareFileRepository.findByOwnerIdentAndOwnerIdAndFileId(shareFile.getOwnerIdent(),shareFile.getOwnerId(),shareFile.getFileId());
+        if(shareFile1!=null){
+            return shareFile1.getId();
+        }else {
+            shareFileRepository.save(shareFile);
+            return shareFile.getId();
+        }
     }
 }

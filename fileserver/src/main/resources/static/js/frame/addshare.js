@@ -54,12 +54,18 @@ $(function(){
         $(".file").each(function(){
             var file=$(this).children(".inp_file")[0].files[0];
            // alert($(this).html());
-          parent.frames["uploadiframe"].addtalk(file);//返回文件id
-           // var id=parent.frames["uploadiframe"].addtalk(file);//返回文件id
-           // $(".target").each(function(){
-            //循环入库共享授权表（排除授权重复的id相同，授权人相同，目标相同，文件相同）
-               // alert("文件名："+file.name+"大小："+file.size+"分享到:"+$("#channels1").val()+"的"+$(this).attr("data_id"));
-           // });
+            let talk={};
+            talk["type"]=0;
+            talk["upfile"]=file;
+            talk["ident"]=$("#channels1").val();
+            talk["id"]=[];
+            $('input:checkbox[name="checkItem"]').each(function(){
+                if (this.checked){
+                    talk.id.push($(this).attr("data_id"));
+                }
+            });
+            parent.frames["uploadiframe"].addtalk(talk);//添加文件上传任务
+
             this.remove();
         });
     });

@@ -59,6 +59,9 @@ public class ShareRight {
         this.allottedTime = allottedTime;
     }
 
+    public ShareRight() {
+    }
+
     public ShareRight(Integer id, Integer shareIdent, Integer shareId, Integer shareFileId, Date allottedTime) {
         this.id = id;
         this.shareIdent = shareIdent;

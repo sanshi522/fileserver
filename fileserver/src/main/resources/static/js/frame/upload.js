@@ -36,7 +36,7 @@ function getKbMbGb(limit){
     }
     return size;
 }
-function addtalk(file,talk){
+function addtalk(talk){
     const timestamp = parseInt((new Date()).valueOf()); //唯一的标识
     $(".talks").append('<div id='+timestamp+' class="talk nowtalk">\n' +
         '        <div class="filename"></div>\n' +
@@ -44,16 +44,14 @@ function addtalk(file,talk){
         '            <div  class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">' +
         '            </div>\n' +
         '        </div>\n' +
-        '        <div class="talkstate"> - '+getKbMbGb(file.size)+'</div>\n' +
+        '        <div class="talkstate"> - '+getKbMbGb(talk.upfile.size)+'</div>\n' +
         '        <div class="pausetalkdiv">\n' +
         '            <i class="my-icon lsm-sidebar-icon icon-shezhi pausetalkbth"></i>\n' +
         '        </div>\n' +
         '    </div>');
-    $("#" + timestamp).children(".filename").html(file.name);
-    //let talk={};
-    talk['divid']=timestamp;
-    talk['upfile']=file;
+    $("#" + timestamp).children(".filename").html(talk.upfile.name);
 
+    talk['divid']=timestamp;
 
     //talk['state']=0;//等待
     talks.push(talk);
@@ -97,6 +95,66 @@ function startnewtalk() {
 function talkend(){
     upstate=0;
     startnewtalk();
+}
+
+/**
+ * 添加共享文件数据及授权数据
+ * @param id
+ */
+function addShareFileAndRight(id){
+    //添加共享文件数据（返回共享文件id）并添加授权信息
+    let sharefileid;
+    let ShareFile={
+        "id":null,
+        "ownerIdent":null,
+        "ownerId":null,
+        "fileId":id
+    }
+    if(nowtalk.type==0){
+        $.ajax({
+            url: "/ShareFile/getIdIsNoAdd",
+            contentType:"application/json;charset=UTF-8",
+            type: "post",
+            data:JSON.stringify(ShareFile),
+            dataType: "json",
+            success: function(data) {
+                sharefileid=data.resoult;
+                if(sharefileid!=-1){
+                    for(let g=0;g<nowtalk.id.length;g++){
+                        let ShareRight={
+                            "id":null,
+                            "shareIdent": nowtalk.ident,
+                            "shareId":nowtalk.id[g],
+                            "shareFileId":sharefileid,
+                            "allottedTime":null
+                        }
+                        //添加授权信息
+                        $.ajax({
+                            url: "/ShareRight/AddIsHaveUpTime",
+                            contentType:"application/json;charset=UTF-8",
+                            type: "post",
+                            data:JSON.stringify(ShareRight),
+                            dataType: "json",
+                            success: function(data) {
+                                console.log("添加授权信息成功");
+                            },
+                            error: function(data){
+                                console.log("添加授权信息服务器异常");
+                            }
+                        });
+                    }
+
+                }else{
+                    console.log("添加共享文件失败");
+                }
+            },
+            error: function(data){
+                console.log("添加共享文件服务器异常");
+            }
+        });
+        //循环添加共享文件授权表
+        // for()
+    }
 }
 //
 // let talks=[];//任务集合
@@ -224,13 +282,7 @@ var patchUpload = {
                     $("#"+me.div).find(".talkstate").html("已完成 - "+getKbMbGb(file.size));
                     $("#"+me.div).find(".progress").remove();
                    // alert("急速秒传！");
-                    //添加共享文件数据（返回共享文件id）
-                    let shareid;
-                    if(nowtalk.type==0){
-
-                        //循环添加共享文件授权表
-                       // for()
-                    }
+                    addShareFileAndRight(data.id);
                     talkend();
                     return ;
                 }
@@ -289,6 +341,7 @@ var patchUpload = {
      * @param file
      */
     upload: function (id, file) {
+        addShareFileAndRight(id);
         var me = this;
         if(!id) return;
         var shardCount = Math.ceil(file.size / this.shardSize);//文件片数

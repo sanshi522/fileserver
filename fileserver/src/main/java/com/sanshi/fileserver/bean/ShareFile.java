@@ -27,6 +27,9 @@ public class ShareFile {
                 '}';
     }
 
+    public ShareFile() {
+    }
+
     public ShareFile(Integer id, Integer ownerIdent, Integer ownerId, Integer fileId) {
         this.id = id;
         this.ownerIdent = ownerIdent;

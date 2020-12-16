@@ -4,6 +4,7 @@ import com.sanshi.fileserver.bean.ShareFile;
 import com.sanshi.fileserver.service.ShareFileService;
 import com.sanshi.fileserver.vo.SessionUser;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,10 +17,15 @@ import java.util.Map;
 @Controller
 @RequestMapping(path = "/ShareFile")
 public class ShareFileController {
-    ShareFileService shareFileService;
-    @RequestMapping(path = "/getid")
+    private ShareFileService shareFileService;
+
+    public ShareFileController(ShareFileService shareFileService) {
+        this.shareFileService = shareFileService;
+    }
+
+    @RequestMapping(path = "/getIdIsNoAdd")
     @ResponseBody
-    public Map login(@RequestParam ShareFile shareFile, HttpServletRequest request) {
+    public Map login(@RequestBody ShareFile shareFile, HttpServletRequest request) {
         HttpSession session = request.getSession();
         Map json = new HashMap();
         if(session!=null&&session.getAttribute("user") != null){
@@ -29,7 +35,7 @@ public class ShareFileController {
             shareFile.setOwnerId(sessionUser.getUserId());
             Integer id=shareFileService.getIdIsNoAdd(shareFile);
             json.put("resoult", id);
-            json.put("ident", sessionUser.getIdent());
+           // json.put("ident", sessionUser.getIdent());
         }else{
             json.put("resoult",-1);//返回登陆页面
         }

@@ -64,18 +64,18 @@
                                     <div class="user-title" style="width:100%;height:45px;">
                                         <div id="channels11" style="float: left;margin-top:5px;margin-left: 5px;width: auto;">
                                             <select name="channels" id="channels1" title="选择共享级别" data-style="btn-primary" class="selectpicker">
-                                                <option value="0">班级</option>
-                                                <option value="1">老师</option>
-                                                <option value="2">小组</option>
-                                                <option value="3">学生</option>
+                                                <option value=0 >班级</option>
+                                                <option value=1 >老师</option>
+                                                <option value=2 >小组</option>
+                                                <option value=3 >学生</option>
                                             </select>
                                         </div>
                                         <div id="channels21" style="float: left;margin-top:5px;margin-left: 5px;width: auto;">
                                             <select name="channels" id="channels2" title="选择班级" data-style="btn-primary" class="selectpicker" style="display:none;">
-                                                <option  value="1">1</option>
-                                                <option  value="2">2</option>
-                                                <option  value="3">3</option>
-                                                <option  value="4">4</option>
+                                                <option  value=1 >1</option>
+                                                <option  value=2 >2</option>
+                                                <option  value=3 >3</option>
+                                                <option  value=4 ></option>
                                             </select>
                                         </div>
                                     </div>
@@ -85,9 +85,9 @@
                                         <tr><th><input id="checkAll" type="checkbox"/></th><th>目标</th></tr>
                                         </thead>
                                         <tbody id="selecttarget">
-                                        <tr class="target" data_id="1"><td><input id="" name="checkItem" type="checkbox" /></td><td>郭靖</td></tr>
-                                        <tr class="target" data_id="2"><td><input id="" name="checkItem" type="checkbox" /></td><td>黄蓉</td></tr>
-                                        <tr class="target" data_id="3"><td><input id="" name="checkItem" type="checkbox" /></td><td>杨过</td></tr>
+                                        <tr class="target" ><td><input data_id=1 name="checkItem" type="checkbox" /></td><td>郭靖</td></tr>
+                                        <tr class="target" ><td><input data_id=2 name="checkItem" type="checkbox" /></td><td>黄蓉</td></tr>
+                                        <tr class="target" ><td><input data_id=3 name="checkItem" type="checkbox" /></td><td>杨过</td></tr>
                                         </tbody>
                                     </table>
                                 </div>
