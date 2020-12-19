@@ -14,8 +14,8 @@ public class Tests {
 
     @Test
     public void test() {
-        ScreenShareFile screenShareFile=new ScreenShareFile(2,1,0,1,0,0,"jdk",null,null);
-        Page<FileSample> page = fileSampleService.ScreenALL(screenShareFile);
-        System.out.println(page);
+       // ScreenShareFile screenShareFile=new ScreenShareFile(2,1,0,1,0,0,"jdk",null,null);
+        //Page<FileSample> page = fileSampleService.ScreenALL(screenShareFile);
+        //System.out.println(page);
     }
 }

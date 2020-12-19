@@ -22,7 +22,11 @@ public class ScreenShareFile {
      */
     Integer queryLevel;
     /**
-     * 级别id(0所有)
+     * 筛选级别
+     */
+    Integer screenLevel;
+    /**
+     * 筛选id(0所有)
      */
     Integer issistId;
     /**
@@ -41,10 +45,11 @@ public class ScreenShareFile {
     public ScreenShareFile() {
     }
 
-    public ScreenShareFile(Integer pageNumber, Integer pageIndex, Integer queryLevel, Integer issistId, String likeName, String sort, String sortName) {
+    public ScreenShareFile(Integer pageNumber, Integer pageIndex, Integer queryLevel, Integer screenLevel, Integer issistId, String likeName, String sort, String sortName) {
         this.pageNumber = pageNumber;
         this.pageIndex = pageIndex;
         this.queryLevel = queryLevel;
+        this.screenLevel = screenLevel;
         this.issistId = issistId;
         this.likeName = likeName;
         this.sort = sort;
@@ -73,6 +78,14 @@ public class ScreenShareFile {
 
     public void setQueryLevel(Integer queryLevel) {
         this.queryLevel = queryLevel;
+    }
+
+    public Integer getScreenLevel() {
+        return screenLevel;
+    }
+
+    public void setScreenLevel(Integer screenLevel) {
+        this.screenLevel = screenLevel;
     }
 
     public Integer getIssistId() {
@@ -113,6 +126,7 @@ public class ScreenShareFile {
                 "pageNumber=" + pageNumber +
                 ", pageIndex=" + pageIndex +
                 ", queryLevel=" + queryLevel +
+                ", screenLevel=" + screenLevel +
                 ", issistId=" + issistId +
                 ", likeName='" + likeName + '\'' +
                 ", sort='" + sort + '\'' +

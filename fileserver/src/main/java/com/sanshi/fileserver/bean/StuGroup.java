@@ -9,17 +9,17 @@ import javax.persistence.Id;
  * 小组
  */
 @Entity
-public class Group {
+public class StuGroup {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     Integer id;
     String name;
     Integer cclassId;
 
-    public Group() {
+    public StuGroup() {
     }
 
-    public Group(Integer id, String name, Integer cclassId) {
+    public StuGroup(Integer id, String name, Integer cclassId) {
         this.id = id;
         this.name = name;
         this.cclassId = cclassId;
@@ -51,7 +51,7 @@ public class Group {
 
     @Override
     public String toString() {
-        return "Group{" +
+        return "StuGroup{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", cclassId=" + cclassId +

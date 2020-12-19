@@ -2,9 +2,11 @@ package com.sanshi.fileserver.repository;
 
 import com.sanshi.fileserver.bean.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface StudentRepository extends JpaRepository<Student, Integer> {
     List<Student> findAll();
     List<Student> findByStuNumber(String stuNumber);
@@ -15,5 +17,20 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
      * @param stuId
      * @return
      */
-    Student findOneById(Integer stuId);
+    Student findOneByStuId(Integer stuId);
+
+    /**
+     * 根据小组id组查询学生id集合
+     * @return
+     */
+    @Query(value="select s.stuId from Student s where  s.stuGroup = ?1")
+    List<Integer>  findIdsByStuGroup(Integer ids);
+
+    /**
+     * 根据小组id组查询学生id集合
+     * @return
+     */
+    @Query(value="select s.stuId from Student s where  s.stuGroup in ?1")
+    List<Integer>  findIdsByStuGroupIn(List<Integer> ids);
+
 }

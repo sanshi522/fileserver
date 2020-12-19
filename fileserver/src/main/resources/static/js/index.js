@@ -3,27 +3,24 @@ $(function(){
         url:"login/Islogin",
         type:"post",
         dataType:"json",
-        success:function(data){
-           if(data.resoult)
-               document.getElementById("frameId").src="/home";
-                //根据登陆账户的类型初始化导航栏
-                if (data.ident==0){//学生
-                    $(".lsm-sidebar-item").css("display","none");
-                    $(".stu-show").css("display","block");
-                }else if(data.ident==1){//老师
-                    $(".lsm-sidebar-item").css("display","none");
-                    $(".tea-show").css("display","block");
-                }else if(data.ident==2){//管理员老师
-                    $(".lsm-sidebar-item").css("display","none");
-                    $(".tea-show").css("display","block");
-                    $(".man-show").css("display","block");
-                }else if(data.ident==3){//管理员
-                    $(".lsm-sidebar-item").css("display","none");
-                    $(".man-show").css("display","block");
+        success:function(data) {
+            if (data.resoult)
+                document.getElementById("frameId").src = "/home";
+            //根据登陆账户的类型初始化导航栏
+            if (data.logintype == 0) {//学生
+                $(".stu-show").css("display", "block");
+            } else {
+                if (data.user.teaIdentity == 1) {//老师
+                    $(".tea-show").css("display", "block");
+                } else if (data.user.teaIdentity == 2) {//管理员老师
+                    $(".tea-show").css("display", "block");
+                    $(".man-show").css("display", "block");
+                } else if (data.user.teaIdentity == 3) {//管理员
+                    $(".man-show").css("display", "block");
+                } else {
+                    location.href = "/";
                 }
-           else{
-               location.href = "/";
-           }
+            }
         },
         error:function(jqXHR){
             alert("发生错误："+ jqXHR.status);

@@ -41,9 +41,8 @@ public class TeacherServiceImpl implements TeacherService {
             if (teacher.getTeaPass().equals(pass)) {
                 SessionUser sessionUser = new SessionUser();
                 sessionUser.setLogin(true);
-                sessionUser.setIdent(identity);
-                sessionUser.setUserId(teacher.getTeaId());
-                sessionUser.setUserName(teacher.getTeaName());
+                sessionUser.setLogintype(identity);
+                sessionUser.setTeacher(teacher);
                 session.setAttribute("user", sessionUser);
                 return 1;
             } else {

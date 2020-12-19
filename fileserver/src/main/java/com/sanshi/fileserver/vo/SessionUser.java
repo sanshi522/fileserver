@@ -1,19 +1,22 @@
 package com.sanshi.fileserver.vo;
 
+import com.sanshi.fileserver.bean.Student;
+import com.sanshi.fileserver.bean.Teacher;
+
 public class SessionUser {
     private Boolean isLogin;
-    private Integer ident;
-    private Integer userId;
-    private String userName;
+    private Integer logintype;
+    private Student student;
+    private Teacher teacher;
 
-    @Override
-    public String toString() {
-        return "SessionUser{" +
-                "isLogin=" + isLogin +
-                ", ident=" + ident +
-                ", userId=" + userId +
-                ", userName='" + userName + '\'' +
-                '}';
+    public SessionUser() {
+    }
+
+    public SessionUser(Boolean isLogin, Integer logintype, Student student, Teacher teacher) {
+        this.isLogin = isLogin;
+        this.logintype = logintype;
+        this.student = student;
+        this.teacher = teacher;
     }
 
     public Boolean getLogin() {
@@ -24,27 +27,37 @@ public class SessionUser {
         isLogin = login;
     }
 
-    public Integer getIdent() {
-        return ident;
+    public Integer getLogintype() {
+        return logintype;
     }
 
-    public void setIdent(Integer ident) {
-        this.ident = ident;
+    public void setLogintype(Integer logintype) {
+        this.logintype = logintype;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    public String getUserName() {
-        return userName;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    @Override
+    public String toString() {
+        return "SessionUser{" +
+                "isLogin=" + isLogin +
+                ", logintype=" + logintype +
+                ", student=" + student +
+                ", teacher=" + teacher +
+                '}';
     }
 }

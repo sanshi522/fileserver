@@ -71,12 +71,11 @@ public class FileSampleController {
         fileSampleService.deleteByParent(parent);
         return Result.OK();
     }
-    @GetMapping("/getAllShareFile")
+    @PostMapping("/getAllShareFile")
     @ResponseBody
-    public  Page<FileSample> getAllShareFile(HttpServletRequest request){
-
-
-        ScreenShareFile screenShareFile=new ScreenShareFile(2,1,0,1,0,0,"jdk",null,null);
+    public  Map getAllShareFile(@RequestBody ScreenShareFile screenShareFile,HttpServletRequest request){
+        //ScreenShareFile screenShareFile=new ScreenShareFile(2,1,0,0,0,"jdk",null,null);
         return fileSampleService.ScreenALL(screenShareFile,request);
+        //return null;
     }
 }

@@ -31,7 +31,7 @@ public class HelloController {
         if(session!=null&&session.getAttribute("user") != null){
             SessionUser sessionUser=new SessionUser();
             sessionUser = (SessionUser) session.getAttribute("user");
-            if(sessionUser.getIdent()==0){
+            if(sessionUser.getLogintype()==0){
                 return "frame/stuhome";
             }else{
                 return "frame/teahome";
@@ -50,7 +50,7 @@ public class HelloController {
         if(session!=null&&session.getAttribute("user") != null){
             SessionUser sessionUser=new SessionUser();
             sessionUser = (SessionUser) session.getAttribute("user");
-            if(sessionUser.getIdent()==0){
+            if(sessionUser.getLogintype()==0){
                 int a=0;
 
             }else{

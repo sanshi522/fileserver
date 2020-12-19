@@ -44,9 +44,8 @@ public class StudentServiceImpl implements StudentService {
             if (student.getStuPass().equals(pass)) {
                 SessionUser sessionUser = new SessionUser();
                 sessionUser.setLogin(true);
-                sessionUser.setIdent(identity);
-                sessionUser.setUserId(student.getStuId());
-                sessionUser.setUserName(student.getStuName());
+                sessionUser.setLogintype(identity);
+                sessionUser.setStudent(student);
                 session.setAttribute("user", sessionUser);
                 return 1;
             } else {

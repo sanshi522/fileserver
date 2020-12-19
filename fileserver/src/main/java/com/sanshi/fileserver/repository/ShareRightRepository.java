@@ -10,11 +10,17 @@ import java.util.List;
 @Repository
 public interface ShareRightRepository  extends JpaRepository<ShareRight,Integer> {
 
-    @Query(value="select s.shareFileId from ShareRight s where s.shareIdent=?1 and s.shareId=?2")
+
     /**
      * 查询授权某个级别某个目标的所有文件id
      */
+    @Query(value="select s.shareFileId from ShareRight s where s.shareIdent=?1 and s.shareId=?2")
     List<Integer> findIdByShareIdentAndShareId(Integer shareIdent,Integer shareId);
+    /**
+     * 查询授权某个级别某个目标集合的所有文件id
+     */
+    @Query(value="select s.shareFileId from ShareRight s where s.shareIdent=?1 and s.shareId in ?2")
+    List<Integer>findIdByShareIdentAndShareIdIn(Integer shareIdent,List<Integer> shareIdList);
     /**
      * 查询授权某个级别的
      */

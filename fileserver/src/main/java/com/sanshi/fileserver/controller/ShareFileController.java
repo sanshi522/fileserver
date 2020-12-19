@@ -31,8 +31,13 @@ public class ShareFileController {
         if(session!=null&&session.getAttribute("user") != null){
             SessionUser sessionUser=new SessionUser();
             sessionUser = (SessionUser) session.getAttribute("user");
-            shareFile.setOwnerIdent(sessionUser.getIdent());
-            shareFile.setOwnerId(sessionUser.getUserId());
+            if (sessionUser.getLogintype()==0){
+                shareFile.setOwnerIdent(0);
+                shareFile.setOwnerId(sessionUser.getStudent().getStuId());
+            }else{
+                shareFile.setOwnerIdent(sessionUser.getTeacher().getTeaIdentity());
+                shareFile.setOwnerId(sessionUser.getTeacher().getTeaId());
+            }
             Integer id=shareFileService.getIdIsNoAdd(shareFile);
             json.put("resoult", id);
            // json.put("ident", sessionUser.getIdent());

@@ -33,6 +33,21 @@ public class Teacher {
                 '}';
     }
 
+    public Teacher() {
+    }
+
+    public Teacher(Integer teaId, String teaNumber, String teaName, String teaGender, String teaPass, String teaHead, Integer teaIdentity, Integer teaState, String teaRemake) {
+        this.teaId = teaId;
+        this.teaNumber = teaNumber;
+        this.teaName = teaName;
+        this.teaGender = teaGender;
+        this.teaPass = teaPass;
+        this.teaHead = teaHead;
+        this.teaIdentity = teaIdentity;
+        this.teaState = teaState;
+        this.teaRemake = teaRemake;
+    }
+
     public Integer getTeaId() {
         return teaId;
     }

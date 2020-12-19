@@ -20,7 +20,7 @@
 	border-radius: .58571429rem;
 }
 .ui.segment{
-	font-size: 1rem;
+	/*font-size: 1rem;*/
 	position: relative;
     /*background: #fff;*/
 	padding: 1em 1em;
@@ -87,6 +87,9 @@
     background-image: none;
 }
 .blue.ui.buttons .button:hover{
+	background-color:#0B3277;
+}
+.blue.ui.buttons .select{
 	background-color:#0B3277;
 }
 button{

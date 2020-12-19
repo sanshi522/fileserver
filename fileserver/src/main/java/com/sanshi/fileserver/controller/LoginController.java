@@ -1,5 +1,7 @@
 package com.sanshi.fileserver.controller;
 
+import com.sanshi.fileserver.bean.Student;
+import com.sanshi.fileserver.bean.Teacher;
 import com.sanshi.fileserver.vo.SessionUser;
 import com.sanshi.fileserver.repository.StudentRepository;
 import com.sanshi.fileserver.service.StudentService;
@@ -75,7 +77,16 @@ public class LoginController {
             SessionUser sessionUser=new SessionUser();
             sessionUser = (SessionUser) session.getAttribute("user");
             json.put("resoult", true);
-            json.put("ident", sessionUser.getIdent());
+            json.put("logintype", sessionUser.getLogintype());
+            if(sessionUser.getLogintype()==0){
+                Student student=sessionUser.getStudent();
+                student.setStuPass("禁止非法获取");
+                json.put("user",student);
+            }else{
+                Teacher teacher=sessionUser.getTeacher();
+                teacher.setTeaPass("禁止非法获取");
+                json.put("user",teacher);
+            }
         }else{
             json.put("resoult", false);
         }
