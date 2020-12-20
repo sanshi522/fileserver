@@ -67,6 +67,26 @@ $(function() {
                             $("#adminScreenDiv").css("display","block");
                         if (queryLevel!=7){
                             //获取该身份下的学年
+                            $.ajax({
+                                url:"Grade/GetYear",
+                                type:"post",
+                                dataType:"json",
+                                success:function(data) {
+                                    if (data.resoult){
+                                        $("#yearScreen").children("option").remove();
+                                        $("#yearScreen").append('<option value="0">全部学年</option>');
+                                        for (let i=0;i<data.years.length;i++){
+                                            $("#yearScreen").append('<option value="'+data.years[i]+'">'+data.years[i]+'</option>');
+                                        }
+                                        //$("#yearScreen").selectpicker('val','全部学年');
+                                        $('#yearScreen').selectpicker('refresh');
+                                        $('#yearScreen').val('0').trigger("change");
+                                    }
+                                },
+                                error:function(data){
+                                    console.log("获取学年服务器错误")
+                                }
+                            });
                         }else{
                             //获取所有管理员
                         }
@@ -91,7 +111,27 @@ $(function() {
             if (queryLevel!=1){
                 $("#gradeScreenDiv").css("display","block");
                 //查询学年下的学院
-
+                $.ajax({
+                    url:"Grade/GetGrade",
+                    type:"post",
+                    data: {yearNumber: issistId},
+                    dataType:"json",
+                    success:function(data) {
+                        if (data.resoult){
+                            $("#gradeScreen").children("option").remove();
+                            $("#gradeScreen").append('<option value="0">全部院系</option>');
+                            for (let i=0;i<data.grades.length;i++){
+                                $("#gradeScreen").append('<option value="'+data.grades[i].id+'">'+data.grades[i].name+'</option>');
+                            }
+                           // $("#gradeScreen").selectpicker('val','0');
+                            $('#gradeScreen').selectpicker('refresh');
+                            $('#gradeScreen').val('0').trigger("change");
+                        }
+                    },
+                    error:function(data){
+                        console.log("获取院系服务器错误")
+                    }
+                });
             }
         }
     })

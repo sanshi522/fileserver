@@ -49,7 +49,7 @@ public class GradeController {
     }
     @RequestMapping(path = "/GetGrade")
     @ResponseBody
-    public Map GetGrade(@RequestParam Integer yearNumber, HttpServletRequest request){
+    public Map GetGrade(Integer yearNumber, HttpServletRequest request){
         HttpSession session = request.getSession();
         Map json = new HashMap();
         if (session != null && session.getAttribute("user") != null) {
