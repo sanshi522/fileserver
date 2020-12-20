@@ -24,6 +24,13 @@ public interface CclassRepository extends JpaRepository<Cclass,Integer>, JpaSpec
      */
     List<Cclass> findByGradeId(Integer id);
 
+    List<Cclass> findByGradeIdAndIdIn(Integer gradeid,List<Integer> ids);
+    /**
+     * 获取学院id
+     * @param id
+     * @return
+     */
+    Integer findGradeIdById(Integer id);
     /**
      * 根据班级id集合获取院系id集合
      * @param ids
@@ -67,4 +74,6 @@ public interface CclassRepository extends JpaRepository<Cclass,Integer>, JpaSpec
      */
     @Query(value="select s.id from Cclass s")
     List<Integer> findAllId();
+
+
 }

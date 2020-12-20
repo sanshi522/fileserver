@@ -22,7 +22,7 @@ public interface GroupRepository extends JpaRepository<StuGroup,Integer>, JpaSpe
      * @param id
      * @return
      */
-    List<StuGroup> findByCclassId(Integer id);
+    List<StuGroup> findAllByCclassId(Integer id);
     /**
      * 根据班级id获取小组id集合
      * @param id

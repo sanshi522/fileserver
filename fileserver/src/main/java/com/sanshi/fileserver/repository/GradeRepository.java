@@ -26,6 +26,11 @@ public interface GradeRepository extends JpaRepository<Grade,Integer>, JpaSpecif
     List<Grade> findAllByYear(Integer Year);
 
     /**
+     * 获取年级id集合
+     * @return
+     */
+    List<Grade> findAllByYearAndIdIn(Integer Year,List<Integer> ids);
+    /**
      * 一组院系的学年分组查询
      * @return
      */
