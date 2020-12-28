@@ -22,10 +22,20 @@ spring:
     tomcat:
       max-active: 200
       initial-size: 30
-  mvc:   #配置jsp设置
-    view:
-      prefix: /WEB-INF/jsp/ #前缀
-      suffix: .jsp #后缀
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HEML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    cache: false
+  #  mvc:   #配置jsp设置
+#    view:
+#      prefix: /templates/ #前缀
+#      suffix: .html #后缀
+##      prefix: /WEB-INF/jsp/ #前缀
+##      suffix: .jsp #后缀
   servlet:
     multipart:
       max-file-size: 50MB #单个数据大小

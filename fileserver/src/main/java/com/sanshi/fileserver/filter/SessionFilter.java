@@ -13,7 +13,7 @@ public class SessionFilter implements Filter {
     String NO_LOGIN = "您还未登录";
 
     //不需要登录就可以访问的路径(比如:注册登录等)
-    String[] includeUrls = new String[]{"/login","/js","/css","/images","/favicon.ico","/join","/findpass","file"};
+    String[] includeUrls = new String[]{"/login","/js","/css","/images","/favicon.ico","/join","/findpass","file","/error","/hello"};
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

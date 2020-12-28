@@ -100,7 +100,7 @@ function sub1(){
 function StuClick(){
     $('.toggle_btn1').css("background","#fff");
     $('.toggle_btn2').css("background","#C9C2C2");
-    $('.toggle_btn1').css("color","red");
+    $('.toggle_btn1').css("color","#0d71bb");
     $('.toggle_btn2').css("color","#fff");
     $('.from2').css("display","none");
     $('.from1').css("display","block");
@@ -109,7 +109,7 @@ function TeaClick(){
     $('.toggle_btn1').css("background","#C9C2C2");
     $('.toggle_btn2').css("background","#fff");
     $('.toggle_btn1').css("color","#fff");
-    $('.toggle_btn2').css("color","red");
+    $('.toggle_btn2').css("color","#0d71bb");
     $('.from1').css("display","none");
     $('.from2').css("display","block");
 }

@@ -3,6 +3,7 @@ package com.sanshi.fileserver.controller;
 import com.sanshi.fileserver.vo.SessionUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,16 +16,16 @@ public class HelloController {
     }
     @GetMapping("/file")
     public String sharedfile(){
-        return "frame/sharedfile";
+        return "sharedfile";
     }
     @GetMapping("/share")
-    public String share( ){return "frame/share";}
+    public String share( ){return "sharehome";}
     @GetMapping("/myshare")
-    public String myshare( ){return "frame/myshare";}
+    public String myshare( ){return "myshare";}
     @GetMapping("/addshare")
-    public String addshare( ){return "frame/addshare";}
+    public String addshare( ){return "addshare";}
     @GetMapping("/uploadview")
-    public String uploadview( ){return "frame/upload";}
+    public String uploadview( ){return "uploadadmin";}
     @GetMapping("/home")
     public String home(HttpServletRequest request){
         HttpSession session = request.getSession();
@@ -32,12 +33,12 @@ public class HelloController {
             SessionUser sessionUser=new SessionUser();
             sessionUser = (SessionUser) session.getAttribute("user");
             if(sessionUser.getLogintype()==0){
-                return "frame/stuhome";
+                return "stuhome";
             }else{
-                return "frame/teahome";
+                return "teahome";
             }
         }else{
-            return "error/404";
+            return "error";
         }
     }
     /**
