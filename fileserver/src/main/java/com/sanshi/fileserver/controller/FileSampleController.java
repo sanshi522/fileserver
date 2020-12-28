@@ -74,8 +74,11 @@ public class FileSampleController {
     @PostMapping("/getAllShareFile")
     @ResponseBody
     public  Map getAllShareFile(@RequestBody ScreenShareFile screenShareFile,HttpServletRequest request){
-        //ScreenShareFile screenShareFile=new ScreenShareFile(2,1,0,0,0,"jdk",null,null);
         return fileSampleService.ScreenALL(screenShareFile,request);
-        //return null;
+    }
+    @PostMapping("/getAllMyShareFile")
+    @ResponseBody
+    public  Map getAllMyShareFile(@RequestBody ScreenShareFile screenShareFile,HttpServletRequest request){
+        return fileSampleService.ScreenMyALL(screenShareFile,request);
     }
 }

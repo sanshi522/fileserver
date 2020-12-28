@@ -1,5 +1,6 @@
 package com.sanshi.fileserver.service.impl;
 
+import com.sanshi.fileserver.repository.TeacherBindCclassRepository;
 import com.sanshi.fileserver.vo.SessionUser;
 import com.sanshi.fileserver.bean.Student;
 import com.sanshi.fileserver.bean.Teacher;
@@ -9,15 +10,17 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Service("TeacherServiceImpl")
 public class TeacherServiceImpl implements TeacherService {
-    private final TeacherRepository teacherRepository;
-
-    public TeacherServiceImpl(TeacherRepository teacherRepository) {
+    private  TeacherRepository teacherRepository;
+    private TeacherBindCclassRepository teacherBindCclassRepository;
+    public TeacherServiceImpl(TeacherRepository teacherRepository, TeacherBindCclassRepository teacherBindCclassRepository) {
         this.teacherRepository = teacherRepository;
+        this.teacherBindCclassRepository = teacherBindCclassRepository;
     }
 
     @Override
@@ -49,5 +52,18 @@ public class TeacherServiceImpl implements TeacherService {
                 return 0;
             }
         }
+    }
+
+    @Override
+    public List<Teacher> findTeacherByClassId(Integer classId) {
+        return teacherRepository.findAllByTeaIdIn(teacherBindCclassRepository.findIdsByTeaCclasesId(classId));
+    }
+
+    @Override
+    public List<Teacher> findAdmin() {
+        List<Integer> idents=new ArrayList<Integer>();
+        idents.add(2);
+        idents.add(3);
+        return teacherRepository.findAllByTeaIdentityIn(idents);
     }
 }

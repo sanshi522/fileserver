@@ -21,12 +21,16 @@
     <script src="/js/bootstrap/bootstrap-select/i18n/defaults-zh_CN.min.js"></script>
     <script type="text/javascript" src="/js/frame/addshare.js"></script>
 </head>
+<style>
+    body{
+        margin: 8px;
+    }
+</style>
 <body>
 <div id="contextWrap">
     <div class="mainWrap navslide">
         <div class="ui equal width left aligned padded grid stackable">
             <!--Site Content-->
-            <div class="row">
                 <div class="sixteen wide tablet sixteen wide computer column">
                     <div class="ui segments">
                         <div class="ui segment">
@@ -63,26 +67,39 @@
                                 <div class="ui filemesg" style="">
                                     <div class="user-title" style="width:100%;height:45px;">
                                         <div id="channels11" style="float: left;margin-top:5px;margin-left: 5px;width: auto;">
-                                            <select name="channels" id="channels1" title="选择共享级别" data-style="btn-primary" class="selectpicker">
-                                                <option value=0 >班级</option>
-                                                <option value=1 >老师</option>
-                                                <option value=2 >小组</option>
-                                                <option value=3 >学生</option>
-                                            </select>
-                                        </div>
-                                        <div id="channels21" style="float: left;margin-top:5px;margin-left: 5px;width: auto;">
-                                            <select name="channels" id="channels2" title="选择班级" data-style="btn-primary" class="selectpicker" style="display:none;">
-                                                <option  value=1 >1</option>
-                                                <option  value=2 >2</option>
-                                                <option  value=3 >3</option>
-                                                <option  value=4 ></option>
+                                            <select name="channels" id="queryLevels" title="选择共享级别" data-style="btn-primary" class="selectpicker">
+
                                             </select>
                                         </div>
                                     </div>
 
                                     <table class="table" style="width:100%;border: 1px solid rgba(34, 36, 38, .15); ">
                                         <thead>
-                                        <tr><th><input id="checkAll" type="checkbox"/></th><th>目标</th></tr>
+                                        <tr><th><input id="checkAll" type="checkbox"/></th><th>
+                                            <div style="float: left;line-height: 30px;">目标</div>
+                                            <div  id="yearScreenDiv" >
+                                                <select name="channels" id="yearScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
+                                                    <option value="0">全部学年</option>
+
+                                                </select>
+                                            </div>
+                                            <div  id="gradeScreenDiv" >
+                                                <select name="channels" id="gradeScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
+                                                    <option  value="0">全部院系</option>
+
+                                                </select>
+                                            </div>
+                                            <div  id="classScreenDiv" >
+                                                <select name="channels" id="classScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
+                                                    <option  value="0">全部班级</option>
+                                                </select>
+                                            </div>
+                                            <div  id="groupScreenDiv" >
+                                                <select name="channels" id="groupScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
+                                                    <option  value="0">全部小组</option>
+                                                </select>
+                                            </div>
+                                        </th></tr>
                                         </thead>
                                         <tbody id="selecttarget">
                                         <tr class="target" ><td><input data_id=1 name="checkItem" type="checkbox" /></td><td>郭靖</td></tr>
@@ -103,7 +120,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
             <!--Site Content-->
         </div>
     </div>

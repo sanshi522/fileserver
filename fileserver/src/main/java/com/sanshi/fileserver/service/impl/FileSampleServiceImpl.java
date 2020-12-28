@@ -321,6 +321,7 @@ public class FileSampleServiceImpl implements FileSampleService {
      */
     @Override
     public Map ScreenMyALL(ScreenShareFile screenShareFile,HttpServletRequest request) {
+
         HttpSession session = request.getSession();
         Map json = new HashMap();
         if(session!=null&&session.getAttribute("user") != null){
@@ -330,14 +331,14 @@ public class FileSampleServiceImpl implements FileSampleService {
             Integer shareId=(sessionUser.getLogintype()==0?sessionUser.getStudent().getStuId():sessionUser.getTeacher().getTeaId());;
             Sort sort;
             Pageable pageable;
-            if (screenShareFile.getSort()!=null){
+            if (!screenShareFile.getSort().isEmpty()){
                 if (screenShareFile.getSort().equals("esc"))//升序
                     sort=Sort.by(screenShareFile.getSortName()).ascending();
                 else
                     sort=Sort.by(screenShareFile.getSortName()).descending();
-                pageable = PageRequest.of(screenShareFile.getPageIndex()-1,screenShareFile.getPageNumber(),sort);
+                pageable = PageRequest.of(screenShareFile.getPageIndex(),screenShareFile.getPageNumber(),sort);
             }
-            pageable = PageRequest.of(screenShareFile.getPageIndex()-1,screenShareFile.getPageNumber());
+            pageable = PageRequest.of(screenShareFile.getPageIndex(),screenShareFile.getPageNumber());
             List<Integer> ShareFileIdList=new ArrayList<Integer>();
             //screenShareFile.getQueryLevel()==0;//查询所有
             List<Integer> classes=cclassRepository.findAllId();//所有班级id
@@ -345,9 +346,9 @@ public class FileSampleServiceImpl implements FileSampleService {
 
             if (screenShareFile.getQueryLevel() == 1 || screenShareFile.getQueryLevel() == 0) {//查询权限开给学年
                 if (screenShareFile.getScreenLevel() == 0)//任课班级的院系所有学年
-                    ShareFileIdList.addAll(shareRightRepository.findIdByShareIdentAndShareIdIn(0, gradeRepository.findYearsByIdIn(grades)));
+                    ShareFileIdList.addAll(shareRightRepository.findIdByShareIdentAndShareIdIn(1, gradeRepository.findYearsByIdIn(grades)));
                 else
-                    ShareFileIdList.addAll(shareRightRepository.findIdByShareIdentAndShareId(0, screenShareFile.getIssistId()));
+                    ShareFileIdList.addAll(shareRightRepository.findIdByShareIdentAndShareId(1, screenShareFile.getIssistId()));
             }
             if (screenShareFile.getQueryLevel() == 2 || screenShareFile.getQueryLevel() == 0) {//查询权限开给院系(所有院系)
                 if (screenShareFile.getScreenLevel() == 0)//0-所有任课班级-所有院系-所有学年

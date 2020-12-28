@@ -13,7 +13,7 @@ $(function(){
                 if (data.user.teaIdentity == 1) {//老师
                     $(".tea-show").css("display", "block");
                 } else if (data.user.teaIdentity == 2) {//管理员老师
-                    $(".tea-show").css("display", "block");
+                    //$(".tea-show").css("display", "block");
                     $(".man-show").css("display", "block");
                 } else if (data.user.teaIdentity == 3) {//管理员
                     $(".man-show").css("display", "block");

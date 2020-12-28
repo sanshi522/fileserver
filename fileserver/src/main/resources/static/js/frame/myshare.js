@@ -13,30 +13,32 @@ $(function() {
                 if (data.logintype == 0) {//学生
                     logintype=data.logintype;
                     $("#queryLevels").append(' <button class="ui button queryLevel select" data-filter="0">所有文件</button>\n' +
-                        '                                <button class="ui button queryLevel" data-filter="1">学届共享</button>\n' +
-                        '                                <button class="ui button queryLevel" data-filter="2">院系共享</button>\n' +
-                        '                                <button class="ui button queryLevel" data-filter="3">班级共享</button>\n' +
-                        '                                <button class="ui button queryLevel" data-filter="4">小组共享</button>\n' +
-                        '                                <button class="ui button queryLevel" data-filter="5">学生共享</button>');
+                        '<button class="ui button queryLevel" data-filter="1">学届共享</button>\n' +
+                        '<button class="ui button queryLevel" data-filter="2">院系共享</button>\n' +
+                        '<button class="ui button queryLevel" data-filter="3">班级共享</button>\n' +
+                        '<button class="ui button queryLevel" data-filter="4">小组共享</button>\n' +
+                        '<button class="ui button queryLevel" data-filter="5">学生共享</button>\n' +
+                        '<button class="ui button queryLevel" data-filter="6">老师共享</button>');
                 } else if (data.user.teaIdentity == 1) {//老师
                     logintype=data.user.teaIdentity;
                     $("#queryLevels").append(' <button class="ui button queryLevel select" data-filter="0">所有文件</button>\n' +
-                        '                                <button class="ui button queryLevel" data-filter="1">学届共享</button>\n' +
-                        '                                <button class="ui button queryLevel" data-filter="2">院系共享</button>\n' +
-                        '                                <button class="ui button queryLevel" data-filter="3">班级共享</button>\n' +
-                        '                                <button class="ui button queryLevel" data-filter="4">小组共享</button>\n' +
-                        '                                <button class="ui button queryLevel" data-filter="5">学生共享</button>\n' +
-                        '                                <button class="ui button queryLevel" data-filter="6">老师共享</button>')
+                        '<button class="ui button queryLevel" data-filter="1">学届共享</button>\n' +
+                        '<button class="ui button queryLevel" data-filter="2">院系共享</button>\n' +
+                        '<button class="ui button queryLevel" data-filter="3">班级共享</button>\n' +
+                        '<button class="ui button queryLevel" data-filter="4">小组共享</button>\n' +
+                        '<button class="ui button queryLevel" data-filter="5">学生共享</button>\n' +
+                        '<button class="ui button queryLevel" data-filter="6">老师共享</button>\n' +
+                        '<button class="ui button queryLevel" data-filter="7">管理员共享</button>')
                 } else if (data.user.teaIdentity == 2 || data.user.teaIdentity == 3) {//管理员老师 及 管理员
                     logintype=data.user.teaIdentity;
                     $("#queryLevels").append('<button class="ui button queryLevel select" data-filter="0">所有文件</button>\n' +
-                        '                                <button class="ui button queryLevel" data-filter="1">学届共享</button>\n' +
-                        '                                <button class="ui button queryLevel" data-filter="2">院系共享</button>\n' +
-                        '                                <button class="ui button queryLevel" data-filter="3">班级共享</button>\n' +
-                        '                                <button class="ui button queryLevel" data-filter="4">小组共享</button>\n' +
-                        '                                <button class="ui button queryLevel" data-filter="5">学生共享</button>\n' +
-                        '                                <button class="ui button queryLevel" data-filter="6">老师共享</button>\n' +
-                        '                                <button class="ui button queryLevel" data-filter="7">管理员共享</button>')
+                        '<button class="ui button queryLevel" data-filter="1">学届共享</button>\n' +
+                        '<button class="ui button queryLevel" data-filter="2">院系共享</button>\n' +
+                        '<button class="ui button queryLevel" data-filter="3">班级共享</button>\n' +
+                        '<button class="ui button queryLevel" data-filter="4">小组共享</button>\n' +
+                        '<button class="ui button queryLevel" data-filter="5">学生共享</button>\n' +
+                        '<button class="ui button queryLevel" data-filter="6">老师共享</button>\n' +
+                        '<button class="ui button queryLevel" data-filter="7">管理员共享</button>')
                 }
                 $(".queryLevel").bind('click',function () {
                     screenLevel=0; //筛选级别-所有
@@ -53,7 +55,7 @@ $(function() {
                     //根据权限级别显示二级筛选框
                     if(logintype==0 || queryLevel==0){//（登陆方式为学生/查询级别所有）
                         $("#screendiv").css("display","none");
-                       // $("#screendiv").html("");
+                        // $("#screendiv").html("");
                     }else {//老师/管理员：按顺序做出选择 通过身份获取
                         $("#screendiv").css("display","block");
                         $("#yearScreenDiv").css("display","block");
@@ -150,7 +152,7 @@ $(function() {
                             for (let i=0;i<data.grades.length;i++){
                                 $("#gradeScreen").append('<option value="'+data.grades[i].id+'">'+data.grades[i].name+'</option>');
                             }
-                           // $("#gradeScreen").selectpicker('val','0');
+                            // $("#gradeScreen").selectpicker('val','0');
                             $('#gradeScreen').selectpicker('refresh');
                             $('#gradeScreen').val('0').trigger("change");
                         }
@@ -384,7 +386,6 @@ $(function() {
         pageIndex=index;
         Init(pageIndex);
     }
-
     function Init(Index) { // 参数就是点击的那个分页的页数索引值
         let ScreenShareFile={
             "pageNumber":pageNumber,
@@ -396,9 +397,9 @@ $(function() {
             "sort":sort,
             "sortName":sortName
         }
-        var me = this.showtype;
+        let me = this.showtype;
         $.ajax({
-            url: "/file/getAllShareFile",
+            url: "/file/getAllMyShareFile",
             contentType:"application/json;charset=UTF-8",
             type: "post",
             async: false,
@@ -408,7 +409,7 @@ $(function() {
                 $(".filtr-container").empty();
                 for(let i=0;i<data.page.content.length;i++){
                     if (me==0){
-                        $(".filtr-container").append('<div class="filtr-item chunk1" fileid='+data.page.content[i].id+'>\n' +
+                        $(".filtr-container").append('<div class="filtr-item chunk" fileid='+data.page.content[i].id+'>\n' +
                             '<img src="../../images/file_logo_png/1140224.png"/>\n' +
                             '<div class="sharefilename">'+data.page.content[i].name+'</div>\n' +
                             '<div class="sharefilesize">'+getKbMbGb(data.page.content[i].size)+'</div>\n' +
@@ -419,7 +420,7 @@ $(function() {
                             '</div>\n' +
                             '</div>');
                     }else{
-                        $(".filtr-container").append('<div class="filtr-item line1" fileid='+data.page.content[i].id+'>\n' +
+                        $(".filtr-container").append('<div class="filtr-item line" fileid='+data.page.content[i].id+'>\n' +
                             '<img src="../../images/file_logo_png/1140224.png"/>\n' +
                             '<div class="sharefilename">'+data.page.content[i].name+'</div>\n' +
                             '<div class="sharefilesize">'+getKbMbGb(data.page.content[i].size)+'</div>\n' +
@@ -432,12 +433,13 @@ $(function() {
                     }
                 }
                 total=data.page.totalElements;
-                $(".totalmsg").html("【共"+total+"条记录，当前显示："+(data.page.pageable.pageNumber*data.page.pageable.pageSize+1)+"~"+(data.page.pageable.pageNumber*data.page.pageable.pageSize+data.page.numberOfElements)+"】");
+                 $(".totalmsg").html("【共"+total+"条记录，当前显示："+(data.page.pageable.pageNumber*data.page.pageable.pageSize+1)+"~"+(data.page.pageable.pageNumber*data.page.pageable.pageSize+data.page.numberOfElements)+"】");
+                //$(".filtr-container").html(JSON.stringify(data));
             },
             error: function(data){
                 console.log("服务器异常");
             }
-            });
+        });
     }
     function getKbMbGb(limit){
         var size = "";
@@ -460,3 +462,5 @@ $(function() {
         return size;
     }
 });
+
+

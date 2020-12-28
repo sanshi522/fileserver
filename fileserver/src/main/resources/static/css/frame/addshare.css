@@ -1,7 +1,4 @@
 /* CSS Document */
-.ui.segments {
-    margin: 1rem 2rem;
-}
 .ui.filelist{
     overflow:auto;
     margin-top: 5px;
@@ -98,4 +95,19 @@
     background: rgba(150,28,32,0.60);
     text-align: center;
     color:#B4DD33
+}
+/*//=============*/
+#yearScreenDiv, #gradeScreenDiv, #classScreenDiv, #groupScreenDiv, #studentScreenDiv, #teacherScreenDiv {
+    float: left;
+    margin-left: 5px;
+    width: auto;
+    display: none;
+}
+
+#adminScreenDiv {
+    float: left;
+    margin-top: 5px;
+    margin-left: 5px;
+    width: 120px;
+    display: none;
 }

@@ -25,8 +25,20 @@
 
 </head>
 <style>
-    .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    #yearScreenDiv, #gradeScreenDiv, #classScreenDiv, #groupScreenDiv, #studentScreenDiv, #teacherScreenDiv {
+        float: left;
+        margin-top: 5px;
+        margin-left: 5px;
         width: 100px;
+        display: none;
+    }
+
+    #adminScreenDiv {
+        float: left;
+        margin-top: 5px;
+        margin-left: 5px;
+        width: 120px;
+        display: none;
     }
     body{
         margin: 8px;
@@ -45,14 +57,7 @@
                         </div>
                         <div class="ui segment fullheight">
                             <div id="queryLevels" class="blue ui buttons">
-<%--                                <button class="ui button" data-filter="0">所有文件</button>--%>
-<%--                                <button class="ui button" data-filter="1">学届共享</button>--%>
-<%--                                <button class="ui button" data-filter="2">院系共享</button>--%>
-<%--                                <button class="ui button" data-filter="3">班级共享</button>--%>
-<%--                                <button class="ui button" data-filter="4">小组共享</button>--%>
-<%--                                <button class="ui button" data-filter="5">学生共享</button>--%>
-<%--                                <button class="ui button" data-filter="6">老师共享</button>--%>
-<%--                                <button class="ui button" data-filter="6">管理员共享</button>--%>
+
                             </div>
 
                             <div class="blue ui buttons">
@@ -68,210 +73,69 @@
                             </div>
 <%--                            border: #982B2D 1px solid;--%>
                             <div id="screendiv" style="width:100%;float: left;height: 35px;display: none">
-                                <div  id="yearScreenDiv" style="float: left;margin-top:5px;margin-left: 5px;width: 100px;display: none">
+                                <div  id="yearScreenDiv" >
                                     <select name="channels" id="yearScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
                                         <option value="0">全部学年</option>
-                                        <option value="1">2021</option>
-                                        <option value="2">2020</option>
-                                        <option value="3">2019</option>
+
                                     </select>
                                 </div>
-                                <div  id="gradeScreenDiv" style="float: left;margin-top:5px;margin-left: 5px;width: 100px;display: none">
-                                 <select name="channels" id="gradeScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
-                                     <option  value="0">全部院系</option>
-                                     <option  value="1">1</option>
-                                 </select>
+                                <div  id="gradeScreenDiv" >
+                                    <select name="channels" id="gradeScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
+                                        <option  value="0">全部院系</option>
+
+                                    </select>
                                 </div>
-                                <div  id="classScreenDiv" style="float: left;margin-top:5px;margin-left: 5px;width: 100px;display: none">
-                                <select name="channels" id="classScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
-                                    <option  value="0">全部班级</option>
-                                    <option  value="1">1</option>
-                                </select>
+                                <div  id="classScreenDiv" >
+                                    <select name="channels" id="classScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
+                                        <option  value="0">全部班级</option>
+                                    </select>
                                 </div>
-                                <div  id="groupScreenDiv" style="float: left;margin-top:5px;margin-left: 5px;width: 100px;display: none">
-                                <select name="channels" id="groupScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
-                                    <option  value="0">全部小组</option>
-                                    <option  value="1">1</option>
-                                </select>
+                                <div  id="groupScreenDiv" >
+                                    <select name="channels" id="groupScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
+                                        <option  value="0">全部小组</option>
+                                    </select>
                                 </div>
-                                <div  id="teacherScreenDiv" style="float: left;margin-top:5px;margin-left: 5px;width: 100px;display: none">
-                                <select name="channels" id="teacherScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
-                                    <option  value="0">全部老师</option>
-                                    <option  value="1">1</option>
-                                </select>
+                                <div  id="teacherScreenDiv" >
+                                    <select name="channels" id="teacherScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
+                                        <option  value="0">全部老师</option>
+                                    </select>
                                 </div>
-                                <div  id="studentScreenDiv" style="float: left;margin-top:5px;margin-left: 5px;width: 100px;display: none">
-                                <select name="channels" id="studentScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
-                                    <option  value="0">全部学生</option>
-                                    <option  value="1">1</option>
-                                </select>
+                                <div  id="studentScreenDiv" >
+                                    <select name="channels" id="studentScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
+                                        <option  value="0">全部学生</option>
+                                    </select>
                                 </div>
-                                <div  id="adminScreenDiv" style="float: left;margin-top:5px;margin-left: 5px;width: 100px;display: none">
-                                <select name="channels" id="adminScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
-                                    <option  value="0">全部管理员</option>
-                                    <option  value="1">1</option>
-                                </select>
+                                <div  id="adminScreenDiv" >
+                                    <select name="channels" id="adminScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
+                                        <option  value="0">全部管理员</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="ui divider"></div>
                             <div class="filtr-container">
-                                <div class="filtr-item" data-category="1, 2" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140150.png"/>
-                                    <div class="sharefilename">采集文件</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="2" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140192.png"/>
-                                    <div class="sharefilename">中国地图</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="1" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140192.png"/>
-                                    <div class="sharefilename">中国地图</div>
-                                    <div class="susdiv"></div>
-                                </div>
 
-                                <div class="filtr-item" data-category="1" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140192.png"/>
-                                    <div class="sharefilename">中国地图</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="2" data-sort="value">
-
-                                    <img src="../../images/file_logo_png/1140192.png"/>
-                                    <div class="sharefilename">中国地图</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="1" data-sort="value">
-
-                                    <img src="../../images/file_logo_png/1140192.png"/>
-                                    <div class="sharefilename">中国地图</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="3" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140192.png"/>
-                                    <div class="sharefilename">中国地图</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="2, 3" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140192.png"/>
-                                    <div class="sharefilename">中国地图</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="2" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140192.png"/>
-                                    <div class="sharefilename">中国地图</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="3" data-sort="value">
-
-                                    <img src="../../images/file_logo_png/1140192.png"/>
-                                    <div class="sharefilename">中国地图</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="2, 3" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140192.png"/>
-                                    <div class="sharefilename">中国地图</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="3" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140192.png"/>
-                                    <div class="sharefilename">中国地图</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="2" data-sort="value">
-
-                                    <img src="../../images/file_logo_png/1140192.png"/>
-                                    <div class="sharefilename">中国地图</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="2" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140192.png"/>
-                                    <div class="sharefilename">中国地图</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="2, 3" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140192.png"/>
-                                    <div class="sharefilename">中国地图</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="2, 4" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140192.png"/>
-                                    <div class="sharefilename">中国地图</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="1, 3" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140192.png"/>
-                                    <div class="sharefilename">中国地图</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="1, 2" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140192.png"/>
-                                    <div class="sharefilename">中国地图</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="1, 3" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140192.png"/>
-                                    <div class="sharefilename">中国地图</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="2" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140224.png"/>
-                                    <div class="sharefilename">男儿当自强</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="4" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140224.png"/>
-                                    <div class="sharefilename">男儿当自强</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="3" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140224.png"/>
-                                    <div class="sharefilename">男儿当自强</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="2, 4" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140224.png"/>
-                                    <div class="sharefilename">男儿当自强</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="2" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140224.png"/>
-                                    <div class="sharefilename">男儿当自强</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="2, 3" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140232.png"/>
-                                    <div class="sharefilename">Orcal安装程序</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="2, 4" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140232.png"/>
-                                    <div class="sharefilename">Orcal安装程序</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="2" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140232.png"/>
-                                    <div class="sharefilename">Orcal安装程序</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="2, 3" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140232.png"/>
-                                    <div class="sharefilename">Orcal安装程序</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="2" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140224.png"/>
-                                    <div class="sharefilename">男儿当自强</div>
-                                    <div class="susdiv"></div>
-                                </div>
-                                <div class="filtr-item" data-category="2" data-sort="value">
-                                    <img src="../../images/file_logo_png/1140224.png"/>
-                                    <div class="sharefilename">男儿当自强</div>
-                                    <div class="susdiv"></div>
-                                </div>
                             </div>
-                            <div class="paginationParent"><div id="Pagination"></div></div>
+
+                            <div class="paginationParent">
+                                <div id="showNumberdiv" style="float: right;margin-top: 20px;width:60px">
+                                    <select name="channels" id="showNumber" data-style="btn-info" class="selectpicker" >
+                                        <option  value="5">5条</option>
+                                        <option  value="10">10条</option>
+                                        <option  value="20">20条</option>
+                                        <option  value="30">30条</option>
+                                        <option  value="40">40条</option>
+                                        <option  value="50">50条</option>
+                                        <option  value="60">60条</option>
+                                        <option  value="70">70条</option>
+                                        <option  value="80">80条</option>
+                                        <option  value="90">90条</option>
+                                        <option  value="100">100条</option>
+                                    </select>
+                                </div>
+                                <div style="float: right;margin-top: 20px;">单页显示：</div>
+                                <label class="totalmsg" style="float: right;margin-top: 20px;"></label>
+                                <div id="Pagination"></div>
+                            </div>
                         </div>
                     </div>
                 </div>

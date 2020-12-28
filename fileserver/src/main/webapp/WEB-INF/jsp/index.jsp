@@ -63,62 +63,57 @@
                           </a>
                       </li>
                       <li class="lsm-sidebar-item tea-show">
-                          <a href="javascript:;"><i class="my-icon lsm-sidebar-icon icon-banjiguanli"></i><span>班级管理</span><i class="my-icon lsm-sidebar-more"></i></a>
+                          <a href="javascript:;"><i class="my-icon lsm-sidebar-icon icon-banjiguanli"></i><span>教学管理</span><i class="my-icon lsm-sidebar-more"></i></a>
                           <ul>
-                              <li><a href="javascript:;"><span>我的班级</span></a></li>
-                              <li><a href="javascript:;"><i class="my-icon lsm-sidebar-icon icon-xiaozuguanli"></i><span>小组管理</span></a></li>
-                              <li class="lsm-sidebar-item">
-                                  <a  class="active" href="javascript:;"><i class="my-icon lsm-sidebar-icon icon-xuesheng"></i><span>学生管理</span><i class="my-icon lsm-sidebar-more"></i></a>
-                                  <ul>
-                                      <li><a href="javascript:;"><span>查找学生</span></a></li>
-                                      <li><a href="javascript:;"><span>修改学生信息</span></a></li>
-                                      <li><a href="javascript:;"><span>批量导入</span></a></li>
-                                      <li><a href="javascript:;"><span>批量导出</span></a></li>
-                                  </ul>
-                              </li>
+                              <li><a href="javascript:;"><span>班级</span></a></li>
+                              <li><a href="javascript:;"><span>小组</span></a></li>
+                              <li><a href="javascript:;"><span>学生</span></a></li>
                           </ul>
                       </li>
-                      <li class="lsm-sidebar-item stu-show tea-show">
-                          <a href="javascript:;"><i class="my-icon lsm-sidebar-icon icon-shishiboxingjiankongtu"></i><span>样本库</span><i class="my-icon lsm-sidebar-more"></i></a>
+                    <li class="lsm-sidebar-item man-show">
+                        <a href="javascript:;"><i class="my-icon lsm-sidebar-icon icon-banjiguanli"></i><span>教学管理</span><i class="my-icon lsm-sidebar-more"></i></a>
+                        <ul>
+                            <li><a href="javascript:;"><span>老师</span></a></li>
+                            <li><a href="javascript:;"><span>班级</span></a></li>
+                            <li><a href="javascript:;"><span>小组</span></a></li>
+                            <li><a href="javascript:;"><span>学生</span></a></li>
+                        </ul>
+                    </li>
+                      <li class="lsm-sidebar-item stu-show tea-show man-show">
+                          <a href="javascript:;"><i class="my-icon lsm-sidebar-icon icon-shishiboxingjiankongtu"></i><span>题库</span><i class="my-icon lsm-sidebar-more"></i></a>
                           <ul>
-                              <li><a href="javascript:;"><span>地爆天星1</span></a></li>
-                              <li><a href="javascript:;"><span>神罗天征1</span></a></li>
-                              <li><a href="javascript:;"><span>八门遁甲1</span></a></li>
+                              <li><a href="javascript:;"><span>选择题</span></a></li>
+                              <li><a href="javascript:;"><span>简答题</span></a></li>
+                              <li><a href="javascript:;"><span>填空题</span></a></li>
+                              <li><a href="javascript:;"><span>简答题</span></a></li>
+                              <li><a href="javascript:;"><span>样本文件</span></a></li>
                           </ul>
                       </li>
-                      <li class="lsm-sidebar-item tea-show">
+                      <li class="lsm-sidebar-item tea-show man-show">
                           <a href="javascript:;"><i class="my-icon lsm-sidebar-icon icon-ceshi"></i><span>训练管理</span><i class="my-icon lsm-sidebar-more"></i></a>
                           <ul>
-                              <li><a href="javascript:;"><span>火之国2</span></a></li>
-                              <li><a href="javascript:;"><span>沙之国3</span></a></li>
-                              <li><a href="javascript:;"><span>火影忍者3</span></a></li>
+                              <li><a href="javascript:;"><span>任务管理</span></a></li>
                           </ul>
                       </li>
                     <li class="lsm-sidebar-item stu-show">
                         <a href="javascript:;"><i class="my-icon lsm-sidebar-icon icon-ceshi"></i><span>训练中心</span><i class="my-icon lsm-sidebar-more"></i></a>
                         <ul>
-                            <li><a href="javascript:;"><span>火之国2</span></a></li>
-                            <li><a href="javascript:;"><span>沙之国3</span></a></li>
-                            <li><a href="javascript:;"><span>火影忍者3</span></a></li>
+                            <li><a href="javascript:;"><span>训练任务</span></a></li>
                         </ul>
                     </li>
-                      <li class="lsm-sidebar-item tea-show">
+                      <li class="lsm-sidebar-item tea-show man-show">
                           <a href="javascript:;"><i class="my-icon lsm-sidebar-icon icon-kaoshifenxi"></i><span>考核管理</span><i class="my-icon lsm-sidebar-more"></i></a>
                           <ul>
-                              <li><a href="javascript:;"><span>火之国4</span></a></li>
-                              <li><a href="javascript:;"><span>沙之国4</span></a></li>
-                              <li><a href="javascript:;"><span>火影忍者4</span></a></li>
+                              <li><a href="javascript:;"><span>考试发布</span></a></li>
                           </ul>
                       </li>
                     <li class="lsm-sidebar-item stu-show">
                         <a href="javascript:;"><i class="my-icon lsm-sidebar-icon icon-kaoshifenxi"></i><span>考核中心</span><i class="my-icon lsm-sidebar-more"></i></a>
                         <ul>
-                            <li><a href="javascript:;"><span>火之国4</span></a></li>
-                            <li><a href="javascript:;"><span>沙之国4</span></a></li>
-                            <li><a href="javascript:;"><span>火影忍者4</span></a></li>
+                            <li><a href="javascript:;"><span>考核测试</span></a></li>
                         </ul>
                     </li>
-                      <li class="lsm-sidebar-item stu-show tea-show">
+                      <li class="lsm-sidebar-item stu-show tea-show man-show">
                           <a href="javascript:;"><i class="my-icon lsm-sidebar-icon icon-gongxiangtubiaozhuangtaileicaozuolei23"></i><span>共享站</span><i class="my-icon lsm-sidebar-more"></i></a>
                           <ul>
                               <li><a href="javascript:openshare();"><span>共享中心</span></a></li>
@@ -137,8 +132,7 @@
                       <li class="lsm-sidebar-item man-show tea-show">
                           <a href="javascript:;"><i class="my-icon lsm-sidebar-icon icon-shezhi"></i><span>设置</span><i class="my-icon lsm-sidebar-more"></i></a>
                           <ul>
-                              <li><a href="javascript:;"><span>火之国</span></a></li>
-                              <li><a href="javascript:;"><span>最后一条子菜单</span></a></li>
+                              <li><a href="javascript:;"><span>通用设置</span></a></li>
                           </ul>
                       </li>
                   </ul>

@@ -33,4 +33,5 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
     @Query(value="select s.stuId from Student s where  s.stuGroup in ?1")
     List<Integer>  findIdsByStuGroupIn(List<Integer> ids);
 
+    List<Student> findAllByStuGroup(Integer StuGroup);
 }
