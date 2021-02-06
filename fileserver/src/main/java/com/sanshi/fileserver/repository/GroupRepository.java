@@ -1,6 +1,8 @@
 package com.sanshi.fileserver.repository;
 
 import com.sanshi.fileserver.bean.StuGroup;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -23,6 +25,19 @@ public interface GroupRepository extends JpaRepository<StuGroup,Integer>, JpaSpe
      * @return
      */
     List<StuGroup> findAllByCclassId(Integer id);
+    /**
+     * 根据班级id获取小组集合
+     * @param id
+     * @return
+     */
+    Page<StuGroup> findAllByCclassId(Integer id, Pageable pageable);
+    /**
+     * 根据班级id获取小组集合
+     * @param id
+     * @return
+     */
+    Page<StuGroup> findAllByCclassIdAndNameLike(Integer id, String name,Pageable pageable);
+
     /**
      * 根据班级id获取小组id集合
      * @param id

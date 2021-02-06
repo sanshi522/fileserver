@@ -1,8 +1,10 @@
 package com.sanshi.fileserver.service;
 
 import com.sanshi.fileserver.bean.Grade;
+import com.sanshi.fileserver.vo.PageGet;
 
 import java.util.List;
+import java.util.Map;
 
 public interface GradeService {
     /**
@@ -22,8 +24,11 @@ public interface GradeService {
      */
    public List<Integer> findAllYear(Integer Ident, Integer Id);
 
+    public Map GetGradesByyearNumber(PageGet val);
     /**
      * 获取学院信息
      */
     public Grade findOneById(Integer id);
+    public Grade save(Grade grade);
+    public Integer deleteById(Integer id);
 }

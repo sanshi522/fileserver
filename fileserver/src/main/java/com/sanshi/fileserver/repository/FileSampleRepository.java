@@ -29,6 +29,8 @@ public interface FileSampleRepository extends JpaRepository<FileSample,Integer> 
 
     FileSample save(FileSample file);
 
+    FileSample findOneById(Integer id);
+
     Optional<FileSample> findById(Integer id);
     /**
      * 通过MD5和父类id查询

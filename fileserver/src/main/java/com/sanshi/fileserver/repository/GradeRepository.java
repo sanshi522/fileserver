@@ -1,6 +1,8 @@
 package com.sanshi.fileserver.repository;
 
 import com.sanshi.fileserver.bean.Grade;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -25,6 +27,10 @@ public interface GradeRepository extends JpaRepository<Grade,Integer>, JpaSpecif
      */
     List<Grade> findAllByYear(Integer Year);
 
+    Page<Grade> findAllByYear(Integer Year,Pageable pageable);
+
+    Page<Grade> findAllByYearAndNameLike(Integer tear, String name, Pageable pageable);
+
     /**
      * 获取年级id集合
      * @return
@@ -37,6 +43,8 @@ public interface GradeRepository extends JpaRepository<Grade,Integer>, JpaSpecif
     @Query(value="select s.year from Grade s where s.id in ?1 group by s.year")
     List<Integer> findYearsByIdIn(List<Integer> list);
 
+    @Query(value="select s.year from Grade s group by s.year")
+    List<Integer> findAllYears();
     /**
      * 一组院系根据学年过滤
      */

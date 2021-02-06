@@ -60,7 +60,7 @@ public class FileSampleServiceImpl implements FileSampleService {
     }
     @Override
     public FileSample findById(Integer Id) {
-        return fileSampleRepository.findById(Id).get();
+        return fileSampleRepository.findOneById(Id);
     }
     @Override
     public int deleteById(Integer id) {

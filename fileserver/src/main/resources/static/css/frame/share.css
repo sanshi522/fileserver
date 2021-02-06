@@ -333,20 +333,31 @@ button{
 	line-height: 75px;
 	height:50%;
 }
+.filtr-item.chunk .download i{
+	font-size: 50px;
+	line-height: 75px;
+}
 .filtr-item.line .download{
 	height: 100%;
 	font-size: 28px;
 	line-height: 30px;
 	width:33.33%;
-
 }
+.filtr-item.line .download i{
+	font-size: 28px;
+	line-height: 30px;
+}
+
 .filtr-item.line1 .download{
 	height: 100%;
 	font-size: 28px;
 	line-height: 30px;
 	float:right;
 	width:50%;
-
+}
+.filtr-item.line1 .download i{
+	font-size: 28px;
+	line-height: 30px;
 }
 .filtr-item.chunk1 .download{
 	border-radius: 20px;
@@ -356,6 +367,10 @@ button{
 	line-height: 75px;
 	width:100%;
 }
+.filtr-item.chunk1 .download i{
+	font-size: 50px;
+	line-height: 75px;
+}
 .filtr-item.chunk .compile{
 	border-radius: 20px;
 	height: 50%;
@@ -363,11 +378,19 @@ button{
 	line-height: 75px;
 	width:50%;
 }
+.filtr-item.chunk .compile i{
+	font-size: 35px;
+	line-height: 75px;
+}
 .filtr-item.line .compile{
 	height: 100%;
 	font-size: 28px;
 	line-height: 30px;
 	width:33.33%;
+}
+.filtr-item.line .compile i{
+	font-size: 28px;
+	line-height: 30px;
 }
 .filtr-item.chunk .delete{
 	border-radius: 20px;
@@ -376,11 +399,20 @@ button{
 	line-height: 75px;
 	width:50%;
 }
+.filtr-item.chunk .delete i{
+	font-size: 35px;
+	line-height: 75px;
+}
+
 .filtr-item.line .delete{
 	height: 100%;
 	font-size: 28px;
 	line-height: 30px;
 	width:33.33%;
+}
+.filtr-item.line .delete i{
+	font-size: 28px;
+	line-height: 30px;
 }
 .operation{
 	text-align: center;

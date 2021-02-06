@@ -395,7 +395,7 @@ function checkItemAddBindClick(){
 function initadd(){
     $(".ui.filelist").append("<div  class='addfile'>"+
         "<input type='file' class='inp_file' class='inp_file' style='display: none;'>"+
-        "<i id='addfilebtn' class='my-icon lsm-sidebar-icon icon-tianjiazengjiajia'></i>"+
+        "<i id='addfilebtn' class='my-icon lsm-sidebar-icon icon-tianjia'></i>"+
         "</div>");
     //添加文件
     $("#addfilebtn").bind("click",function(){

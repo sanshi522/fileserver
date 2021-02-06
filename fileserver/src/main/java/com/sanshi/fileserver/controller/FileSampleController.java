@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,5 +81,48 @@ public class FileSampleController {
     @ResponseBody
     public  Map getAllMyShareFile(@RequestBody ScreenShareFile screenShareFile,HttpServletRequest request){
         return fileSampleService.ScreenMyALL(screenShareFile,request);
+    }
+    @RequestMapping("/downloadShareFile")
+    public String downLoad(Integer fileId,HttpServletResponse response) throws UnsupportedEncodingException {
+        FileSample fileSample=fileSampleService.findById(fileId);
+       // String filename="navicatformysql.zip";
+        String filename=fileSample.getName();
+        File file = new File(fileSample.getPath());
+        //String filePath = "D:/软件安装包/数据库管理工具" ;
+        //File file = new File(filePath + "/" + filename);
+        if(file.exists()){ //判断文件父目录是否存在
+            //response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/force-download");
+            response.setHeader("Content-Disposition", "attachment;fileName=" +   java.net.URLEncoder.encode(filename,"UTF-8"));
+            byte[] buffer = new byte[1024];
+            FileInputStream fis = null; //文件输入流
+            BufferedInputStream bis = null;
+
+            OutputStream os = null; //输出流
+            try {
+                os = response.getOutputStream();
+                fis = new FileInputStream(file);
+                bis = new BufferedInputStream(fis);
+                int i = bis.read(buffer);
+                while(i != -1){
+                    os.write(buffer);
+                    i = bis.read(buffer);
+                }
+
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            System.out.println("----------file download---" + filename);
+            try {
+                bis.close();
+                fis.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 }

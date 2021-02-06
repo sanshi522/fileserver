@@ -1,8 +1,12 @@
 package com.sanshi.fileserver.controller;
 
+import com.sanshi.fileserver.bean.Cclass;
+import com.sanshi.fileserver.bean.Grade;
+import com.sanshi.fileserver.bean.StuGroup;
 import com.sanshi.fileserver.service.CclassService;
 import com.sanshi.fileserver.service.GradeService;
 import com.sanshi.fileserver.service.StuGroupService;
+import com.sanshi.fileserver.vo.PageGet;
 import com.sanshi.fileserver.vo.SessionUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -68,5 +74,37 @@ public class GradeController {
             json.put("resoult", false);
 
         return json;
+    }
+    @RequestMapping(path = "/GetGradeByyearNumber")
+    @ResponseBody
+    public List<Map> GetGradeByyearNumber(@RequestParam Integer yearNumber, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        if (session != null && session.getAttribute("user") != null) {
+            SessionUser sessionUser = new SessionUser();
+            sessionUser = (SessionUser) session.getAttribute("user");
+            Integer ident = (sessionUser.getLogintype() == 0 ? 0 : sessionUser.getTeacher().getTeaIdentity());
+            Integer id = (sessionUser.getLogintype() == 0 ? sessionUser.getStudent().getStuId() : sessionUser.getTeacher().getTeaId());
+            List<Grade> Gradelist = gradeService.findAll(ident, id, yearNumber);
+            List<Map> listdata = new ArrayList<Map>();
+            Map json;
+            for (int i = 0; i < Gradelist.size(); i++) {
+                json = new HashMap();
+                json.put("key", Gradelist.get(i).getId());
+                json.put("val", Gradelist.get(i).getName());
+                listdata.add(json);
+            }
+            return listdata;
+        }else
+            return null;
+    }
+    @RequestMapping(path = "/GetGradesByyearNumber")
+    @ResponseBody
+    public Map GetGradesByyearNumber(PageGet  val, HttpServletRequest request){
+       return gradeService.GetGradesByyearNumber(val);
+    }
+    @RequestMapping(path = "/save")
+    @ResponseBody
+    public Grade SaveClass(Grade val, HttpServletRequest request){
+        return gradeService.save(val);
     }
 }

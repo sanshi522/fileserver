@@ -78,6 +78,23 @@ function  openaddshare(){
                 }
             })
 }
+function open(lrc){
+    $.ajax({
+        url:"login/Islogin",
+        type:"post",
+        dataType:"json",
+        success:function(data){
+            if(data.resoult)
+                document.getElementById("frameId").src="/"+lrc;
+            else{
+                location.href = "/";
+            }
+        },
+        error:function(jqXHR){
+            alert("发生错误："+ jqXHR.status);
+        }
+    })
+}
 //最小化上传窗口
 function upload_minview(){
     $('.frame2').addClass("min-upload-frame");

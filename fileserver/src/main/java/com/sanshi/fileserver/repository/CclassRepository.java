@@ -1,6 +1,8 @@
 package com.sanshi.fileserver.repository;
 
 import com.sanshi.fileserver.bean.Cclass;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -23,6 +25,10 @@ public interface CclassRepository extends JpaRepository<Cclass,Integer>, JpaSpec
      * @return
      */
     List<Cclass> findByGradeId(Integer id);
+
+    Page<Cclass> findAllByGradeId(Integer id,Pageable pageable);
+
+    Page<Cclass> findAllByGradeIdAndNameLike(Integer id, String name, Pageable pageable);
 
     List<Cclass> findByGradeIdAndIdIn(Integer gradeid,List<Integer> ids);
     /**
