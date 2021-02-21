@@ -1,9 +1,13 @@
 package com.sanshi.fileserver.bean;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 /**
  * 小组
@@ -15,6 +19,10 @@ public class StuGroup {
     Integer id;
     String name;
     Integer cclassId;
+    @CreationTimestamp
+    private Date createTime;
+    @UpdateTimestamp
+    private Date uapdateTime;
 
     public StuGroup() {
     }

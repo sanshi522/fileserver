@@ -9,28 +9,29 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
 
-/**
- * 年级
- */
 @Entity
-public class Grade {
+public class Answer {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-    private String name;
-    private Integer year;
+    private Integer choiceId;//试题id
+    private Integer Respondents;//答卷id
+    private String answer;//答案
+    private Double score;//得分
     @CreationTimestamp
     private Date createTime;
     @UpdateTimestamp
     private Date uapdateTime;
 
-    public Grade() {
+    public Answer() {
     }
 
-    public Grade(Integer id, String name, Integer year, Date createTime, Date uapdateTime) {
+    public Answer(Integer id, Integer choiceId, Integer respondents, String answer, Double score, Date createTime, Date uapdateTime) {
         this.id = id;
-        this.name = name;
-        this.year = year;
+        this.choiceId = choiceId;
+        Respondents = respondents;
+        this.answer = answer;
+        this.score = score;
         this.createTime = createTime;
         this.uapdateTime = uapdateTime;
     }
@@ -43,20 +44,36 @@ public class Grade {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Integer getChoiceId() {
+        return choiceId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setChoiceId(Integer choiceId) {
+        this.choiceId = choiceId;
     }
 
-    public Integer getYear() {
-        return year;
+    public Integer getRespondents() {
+        return Respondents;
     }
 
-    public void setYear(Integer year) {
-        this.year = year;
+    public void setRespondents(Integer respondents) {
+        Respondents = respondents;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
     }
 
     public Date getCreateTime() {
@@ -77,10 +94,12 @@ public class Grade {
 
     @Override
     public String toString() {
-        return "Grade{" +
+        return "Answer{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", year=" + year +
+                ", choiceId=" + choiceId +
+                ", Respondents=" + Respondents +
+                ", answer='" + answer + '\'' +
+                ", score=" + score +
                 ", createTime=" + createTime +
                 ", uapdateTime=" + uapdateTime +
                 '}';

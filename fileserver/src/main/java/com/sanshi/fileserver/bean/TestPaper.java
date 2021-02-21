@@ -1,32 +1,37 @@
 package com.sanshi.fileserver.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 
-/**
- * 班级
- */
 @Entity
-public class Cclass {
+public class TestPaper {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-    private String name;
-    private Integer gradeId;
+    private Integer subId;//学科id
+    private String name;//试卷名字
+    private Integer creationId;//创建人id
     @CreationTimestamp
     private Date createTime;
     @UpdateTimestamp
     private Date uapdateTime;
-    public Cclass() {
+
+    public TestPaper() {
     }
 
-    public Cclass(Integer id, String name, Integer gradeId, Date createTime, Date uapdateTime) {
+    public TestPaper(Integer id, Integer subId, String name, Integer creationId, Date createTime, Date uapdateTime) {
         this.id = id;
+        this.subId = subId;
         this.name = name;
-        this.gradeId = gradeId;
+        this.creationId = creationId;
         this.createTime = createTime;
         this.uapdateTime = uapdateTime;
     }
@@ -39,6 +44,14 @@ public class Cclass {
         this.id = id;
     }
 
+    public Integer getSubId() {
+        return subId;
+    }
+
+    public void setSubId(Integer subId) {
+        this.subId = subId;
+    }
+
     public String getName() {
         return name;
     }
@@ -47,12 +60,12 @@ public class Cclass {
         this.name = name;
     }
 
-    public Integer getGradeId() {
-        return gradeId;
+    public Integer getCreationId() {
+        return creationId;
     }
 
-    public void setGradeId(Integer gradeId) {
-        this.gradeId = gradeId;
+    public void setCreationId(Integer creationId) {
+        this.creationId = creationId;
     }
 
     public Date getCreateTime() {
@@ -73,10 +86,11 @@ public class Cclass {
 
     @Override
     public String toString() {
-        return "Cclass{" +
+        return "TestPaper{" +
                 "id=" + id +
+                ", subId=" + subId +
                 ", name='" + name + '\'' +
-                ", gradeId=" + gradeId +
+                ", creationId=" + creationId +
                 ", createTime=" + createTime +
                 ", uapdateTime=" + uapdateTime +
                 '}';

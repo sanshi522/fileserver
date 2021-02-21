@@ -2,6 +2,7 @@ package com.sanshi.fileserver.bean;
 
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -32,22 +33,25 @@ public class FileSample {
     @CreationTimestamp
     @Column(updatable = false, nullable = false)
     private Date createTime;
+    @UpdateTimestamp
+    private Date uapdateTime;
 
     public FileSample() {
 
     }
 
-    public FileSample(Integer patchIndex, Integer parent, String name, String path, String md5, Long size,Date createTime) {
+    public FileSample(Integer patchIndex, Integer parent, String name, String path, String md5, Long size, Date createTime, Date uapdateTime) {
         this.patchIndex = patchIndex;
         this.parent = parent;
         this.name = name;
         this.path = path;
         this.md5 = md5;
         this.size = size;
-        this.createTime=createTime;
+        this.createTime = createTime;
+        this.uapdateTime = uapdateTime;
     }
 
-    public FileSample(Integer id, Integer patchIndex, Integer parent, String name, String path, String md5, Long size, Date createTime) {
+    public FileSample(Integer id, Integer patchIndex, Integer parent, String name, String path, String md5, Long size, Date createTime, Date uapdateTime) {
         this.id = id;
         this.patchIndex = patchIndex;
         this.parent = parent;
@@ -56,20 +60,7 @@ public class FileSample {
         this.md5 = md5;
         this.size = size;
         this.createTime = createTime;
-    }
-
-    @Override
-    public String toString() {
-        return "FileSample{" +
-                "id=" + id +
-                ", patchIndex=" + patchIndex +
-                ", parent=" + parent +
-                ", name='" + name + '\'' +
-                ", path='" + path + '\'' +
-                ", md5='" + md5 + '\'' +
-                ", size=" + size +
-                ", createTime=" + createTime +
-                '}';
+        this.uapdateTime = uapdateTime;
     }
 
     public Integer getId() {
@@ -134,5 +125,28 @@ public class FileSample {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Date getUapdateTime() {
+        return uapdateTime;
+    }
+
+    public void setUapdateTime(Date uapdateTime) {
+        this.uapdateTime = uapdateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "FileSample{" +
+                "id=" + id +
+                ", patchIndex=" + patchIndex +
+                ", parent=" + parent +
+                ", name='" + name + '\'' +
+                ", path='" + path + '\'' +
+                ", md5='" + md5 + '\'' +
+                ", size=" + size +
+                ", createTime=" + createTime +
+                ", uapdateTime=" + uapdateTime +
+                '}';
     }
 }

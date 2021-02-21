@@ -3,30 +3,31 @@ package com.sanshi.fileserver.bean;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 
-/**
- * 班级
- */
 @Entity
-public class Cclass {
+public class Respondents {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-    private String name;
-    private Integer gradeId;
+    private Integer TestPaperId;
+    private Integer stuId;//学生id
     @CreationTimestamp
     private Date createTime;
     @UpdateTimestamp
     private Date uapdateTime;
-    public Cclass() {
+
+    public Respondents() {
     }
 
-    public Cclass(Integer id, String name, Integer gradeId, Date createTime, Date uapdateTime) {
+    public Respondents(Integer id, Integer testPaperId, Integer stuId, Date createTime, Date uapdateTime) {
         this.id = id;
-        this.name = name;
-        this.gradeId = gradeId;
+        TestPaperId = testPaperId;
+        this.stuId = stuId;
         this.createTime = createTime;
         this.uapdateTime = uapdateTime;
     }
@@ -39,20 +40,20 @@ public class Cclass {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Integer getTestPaperId() {
+        return TestPaperId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTestPaperId(Integer testPaperId) {
+        TestPaperId = testPaperId;
     }
 
-    public Integer getGradeId() {
-        return gradeId;
+    public Integer getStuId() {
+        return stuId;
     }
 
-    public void setGradeId(Integer gradeId) {
-        this.gradeId = gradeId;
+    public void setStuId(Integer stuId) {
+        this.stuId = stuId;
     }
 
     public Date getCreateTime() {
@@ -73,10 +74,10 @@ public class Cclass {
 
     @Override
     public String toString() {
-        return "Cclass{" +
+        return "Respondents{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", gradeId=" + gradeId +
+                ", TestPaperId=" + TestPaperId +
+                ", stuId=" + stuId +
                 ", createTime=" + createTime +
                 ", uapdateTime=" + uapdateTime +
                 '}';

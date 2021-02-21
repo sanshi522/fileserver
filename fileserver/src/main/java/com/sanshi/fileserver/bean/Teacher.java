@@ -1,9 +1,14 @@
 package com.sanshi.fileserver.bean;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
+
 @Entity
 public class Teacher {
     @Id
@@ -17,26 +22,16 @@ public class Teacher {
     private Integer teaIdentity;
     private Integer teaState;
     private String teaRemake;
+    @CreationTimestamp
+    private Date createTime;
+    @UpdateTimestamp
+    private Date uapdateTime;
 
-    @Override
-    public String toString() {
-        return "Teacher{" +
-                "teaId=" + teaId +
-                ", teaNumber='" + teaNumber + '\'' +
-                ", teaName='" + teaName + '\'' +
-                ", teaGender='" + teaGender + '\'' +
-                ", teaPass='" + teaPass + '\'' +
-                ", teaHead='" + teaHead + '\'' +
-                ", teaIdentity=" + teaIdentity +
-                ", teaState=" + teaState +
-                ", teaRemake='" + teaRemake + '\'' +
-                '}';
-    }
 
     public Teacher() {
     }
 
-    public Teacher(Integer teaId, String teaNumber, String teaName, String teaGender, String teaPass, String teaHead, Integer teaIdentity, Integer teaState, String teaRemake) {
+    public Teacher(Integer teaId, String teaNumber, String teaName, String teaGender, String teaPass, String teaHead, Integer teaIdentity, Integer teaState, String teaRemake, Date createTime, Date uapdateTime) {
         this.teaId = teaId;
         this.teaNumber = teaNumber;
         this.teaName = teaName;
@@ -46,6 +41,8 @@ public class Teacher {
         this.teaIdentity = teaIdentity;
         this.teaState = teaState;
         this.teaRemake = teaRemake;
+        this.createTime = createTime;
+        this.uapdateTime = uapdateTime;
     }
 
     public Integer getTeaId() {
@@ -118,5 +115,38 @@ public class Teacher {
 
     public void setTeaRemake(String teaRemake) {
         this.teaRemake = teaRemake;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUapdateTime() {
+        return uapdateTime;
+    }
+
+    public void setUapdateTime(Date uapdateTime) {
+        this.uapdateTime = uapdateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "teaId=" + teaId +
+                ", teaNumber='" + teaNumber + '\'' +
+                ", teaName='" + teaName + '\'' +
+                ", teaGender='" + teaGender + '\'' +
+                ", teaPass='" + teaPass + '\'' +
+                ", teaHead='" + teaHead + '\'' +
+                ", teaIdentity=" + teaIdentity +
+                ", teaState=" + teaState +
+                ", teaRemake='" + teaRemake + '\'' +
+                ", createTime=" + createTime +
+                ", uapdateTime=" + uapdateTime +
+                '}';
     }
 }

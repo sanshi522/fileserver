@@ -1,6 +1,10 @@
 package com.sanshi.fileserver.bean;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.util.Date;
 
 //@Table(name = "student")//用来命名当前实体类对应数据库的名字
 @Entity
@@ -16,6 +20,10 @@ public class Student {
     private Integer stuGroup;
     private Integer stuState;
     private String stuRemake;
+    @CreationTimestamp
+    private Date createTime;
+    @UpdateTimestamp
+    private Date uapdateTime;
 
     public Student() {
     }

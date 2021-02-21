@@ -97,7 +97,7 @@ public class FileSampleServiceImpl implements FileSampleService {
 
     @Override
     public int updateByIdSetPathAndSize(Integer parent, String path, Long total) {
-        FileSample fileSample=new FileSample(parent,null,null,null,path,null,total,null);
+        FileSample fileSample=new FileSample(parent,null,null,null,path,null,total,null,null);
         return this.updateById(fileSample);
     }
 

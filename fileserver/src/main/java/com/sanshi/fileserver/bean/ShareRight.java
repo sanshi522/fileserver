@@ -1,5 +1,10 @@
 package com.sanshi.fileserver.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +22,26 @@ public class ShareRight {
     private Integer shareIdent;//权限人身份
     private Integer shareId;//权限人id
     private Integer shareFileId;//共享文件id
+    @DateTimeFormat(pattern ="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     private Date allottedTime;//到期时间
+    @CreationTimestamp
+    private Date createTime;
+    @UpdateTimestamp
+    private Date uapdateTime;
+
+    public ShareRight() {
+    }
+
+    public ShareRight(Integer id, Integer shareIdent, Integer shareId, Integer shareFileId, Date allottedTime, Date createTime, Date uapdateTime) {
+        this.id = id;
+        this.shareIdent = shareIdent;
+        this.shareId = shareId;
+        this.shareFileId = shareFileId;
+        this.allottedTime = allottedTime;
+        this.createTime = createTime;
+        this.uapdateTime = uapdateTime;
+    }
 
     public Integer getId() {
         return id;
@@ -59,15 +83,20 @@ public class ShareRight {
         this.allottedTime = allottedTime;
     }
 
-    public ShareRight() {
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public ShareRight(Integer id, Integer shareIdent, Integer shareId, Integer shareFileId, Date allottedTime) {
-        this.id = id;
-        this.shareIdent = shareIdent;
-        this.shareId = shareId;
-        this.shareFileId = shareFileId;
-        this.allottedTime = allottedTime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUapdateTime() {
+        return uapdateTime;
+    }
+
+    public void setUapdateTime(Date uapdateTime) {
+        this.uapdateTime = uapdateTime;
     }
 
     @Override
@@ -78,6 +107,8 @@ public class ShareRight {
                 ", shareId=" + shareId +
                 ", shareFileId=" + shareFileId +
                 ", allottedTime=" + allottedTime +
+                ", createTime=" + createTime +
+                ", uapdateTime=" + uapdateTime +
                 '}';
     }
 }

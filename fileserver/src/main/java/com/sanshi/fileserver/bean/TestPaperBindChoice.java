@@ -9,28 +9,29 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
 
-/**
- * 年级
- */
 @Entity
-public class Grade {
+public class TestPaperBindChoice {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-    private String name;
-    private Integer year;
+    private Integer index;
+    private Integer choiceId;//试题id
+    private Integer TestPaperId;//试卷id
+    private Double score;//分值
     @CreationTimestamp
     private Date createTime;
     @UpdateTimestamp
     private Date uapdateTime;
 
-    public Grade() {
+    public TestPaperBindChoice() {
     }
 
-    public Grade(Integer id, String name, Integer year, Date createTime, Date uapdateTime) {
+    public TestPaperBindChoice(Integer id, Integer index, Integer choiceId, Integer testPaperId, Double score, Date createTime, Date uapdateTime) {
         this.id = id;
-        this.name = name;
-        this.year = year;
+        this.index = index;
+        this.choiceId = choiceId;
+        TestPaperId = testPaperId;
+        this.score = score;
         this.createTime = createTime;
         this.uapdateTime = uapdateTime;
     }
@@ -43,20 +44,36 @@ public class Grade {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Integer getIndex() {
+        return index;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 
-    public Integer getYear() {
-        return year;
+    public Integer getChoiceId() {
+        return choiceId;
     }
 
-    public void setYear(Integer year) {
-        this.year = year;
+    public void setChoiceId(Integer choiceId) {
+        this.choiceId = choiceId;
+    }
+
+    public Integer getTestPaperId() {
+        return TestPaperId;
+    }
+
+    public void setTestPaperId(Integer testPaperId) {
+        TestPaperId = testPaperId;
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
     }
 
     public Date getCreateTime() {
@@ -77,10 +94,12 @@ public class Grade {
 
     @Override
     public String toString() {
-        return "Grade{" +
+        return "TestPaperBindChoice{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", year=" + year +
+                ", index=" + index +
+                ", choiceId=" + choiceId +
+                ", TestPaperId=" + TestPaperId +
+                ", score=" + score +
                 ", createTime=" + createTime +
                 ", uapdateTime=" + uapdateTime +
                 '}';

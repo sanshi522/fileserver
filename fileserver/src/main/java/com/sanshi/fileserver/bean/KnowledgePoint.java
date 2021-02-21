@@ -3,30 +3,31 @@ package com.sanshi.fileserver.bean;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 
-/**
- * 班级
- */
 @Entity
-public class Cclass {
+public class KnowledgePoint {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-    private String name;
-    private Integer gradeId;
+    private String name;//知识点名字
+    private String analysis;//解析
     @CreationTimestamp
     private Date createTime;
     @UpdateTimestamp
     private Date uapdateTime;
-    public Cclass() {
+
+    public KnowledgePoint() {
     }
 
-    public Cclass(Integer id, String name, Integer gradeId, Date createTime, Date uapdateTime) {
+    public KnowledgePoint(Integer id, String name, String analysis, Date createTime, Date uapdateTime) {
         this.id = id;
         this.name = name;
-        this.gradeId = gradeId;
+        this.analysis = analysis;
         this.createTime = createTime;
         this.uapdateTime = uapdateTime;
     }
@@ -47,12 +48,12 @@ public class Cclass {
         this.name = name;
     }
 
-    public Integer getGradeId() {
-        return gradeId;
+    public String getAnalysis() {
+        return analysis;
     }
 
-    public void setGradeId(Integer gradeId) {
-        this.gradeId = gradeId;
+    public void setAnalysis(String analysis) {
+        this.analysis = analysis;
     }
 
     public Date getCreateTime() {
@@ -73,10 +74,10 @@ public class Cclass {
 
     @Override
     public String toString() {
-        return "Cclass{" +
+        return "KnowledgePoint{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", gradeId=" + gradeId +
+                ", analysis='" + analysis + '\'' +
                 ", createTime=" + createTime +
                 ", uapdateTime=" + uapdateTime +
                 '}';

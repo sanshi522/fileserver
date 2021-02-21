@@ -49,7 +49,7 @@ public class FileSampleController {
         FileSample file = fileSampleService.findByParentAndMd5(parent, md5);
         if(file == null || !file.getSize().equals(size)) {
             Optional.ofNullable(file).ifPresent(e -> fileSampleService.deleteById(e.getId()));
-            fileSampleService.insertFileSample(new FileSample(index, parent, name, UploadUtil.saveFile(patch, size), md5, size,null));
+            fileSampleService.insertFileSample(new FileSample(index, parent, name, UploadUtil.saveFile(patch, size), md5, size,null,null));
             return Result.OK();
         }
         return file.getSize().equals(size) ? Result.OK() : Result.FAIL();
