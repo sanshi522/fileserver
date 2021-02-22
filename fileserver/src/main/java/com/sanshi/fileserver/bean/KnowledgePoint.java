@@ -14,6 +14,7 @@ public class KnowledgePoint {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
+    private Integer subId;//学科id
     private String name;//知识点名字
     private String analysis;//解析
     @CreationTimestamp
@@ -24,8 +25,9 @@ public class KnowledgePoint {
     public KnowledgePoint() {
     }
 
-    public KnowledgePoint(Integer id, String name, String analysis, Date createTime, Date uapdateTime) {
+    public KnowledgePoint(Integer id, Integer subId, String name, String analysis, Date createTime, Date uapdateTime) {
         this.id = id;
+        this.subId = subId;
         this.name = name;
         this.analysis = analysis;
         this.createTime = createTime;
@@ -38,6 +40,14 @@ public class KnowledgePoint {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getSubId() {
+        return subId;
+    }
+
+    public void setSubId(Integer subId) {
+        this.subId = subId;
     }
 
     public String getName() {
@@ -76,6 +86,7 @@ public class KnowledgePoint {
     public String toString() {
         return "KnowledgePoint{" +
                 "id=" + id +
+                ", subId=" + subId +
                 ", name='" + name + '\'' +
                 ", analysis='" + analysis + '\'' +
                 ", createTime=" + createTime +

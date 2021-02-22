@@ -9,14 +9,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
 
+/**
+ * 答题
+ */
 @Entity
 public class Answer {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
     private Integer choiceId;//试题id
-    private Integer Respondents;//答卷id
+    private Integer assessId;//考核id
     private String answer;//答案
+    private String fileIds;//附件id集合
     private Double score;//得分
     @CreationTimestamp
     private Date createTime;
@@ -26,11 +30,12 @@ public class Answer {
     public Answer() {
     }
 
-    public Answer(Integer id, Integer choiceId, Integer respondents, String answer, Double score, Date createTime, Date uapdateTime) {
+    public Answer(Integer id, Integer choiceId, Integer assessId, String answer, String fileIds, Double score, Date createTime, Date uapdateTime) {
         this.id = id;
         this.choiceId = choiceId;
-        Respondents = respondents;
+        this.assessId = assessId;
         this.answer = answer;
+        this.fileIds = fileIds;
         this.score = score;
         this.createTime = createTime;
         this.uapdateTime = uapdateTime;
@@ -52,12 +57,12 @@ public class Answer {
         this.choiceId = choiceId;
     }
 
-    public Integer getRespondents() {
-        return Respondents;
+    public Integer getAssessId() {
+        return assessId;
     }
 
-    public void setRespondents(Integer respondents) {
-        Respondents = respondents;
+    public void setAssessId(Integer assessId) {
+        this.assessId = assessId;
     }
 
     public String getAnswer() {
@@ -66,6 +71,14 @@ public class Answer {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public String getFileIds() {
+        return fileIds;
+    }
+
+    public void setFileIds(String fileIds) {
+        this.fileIds = fileIds;
     }
 
     public Double getScore() {
@@ -97,8 +110,9 @@ public class Answer {
         return "Answer{" +
                 "id=" + id +
                 ", choiceId=" + choiceId +
-                ", Respondents=" + Respondents +
+                ", assessId=" + assessId +
                 ", answer='" + answer + '\'' +
+                ", fileIds='" + fileIds + '\'' +
                 ", score=" + score +
                 ", createTime=" + createTime +
                 ", uapdateTime=" + uapdateTime +

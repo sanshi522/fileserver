@@ -10,7 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
-//考核数据库
+/**
+ * 考核数据库
+ */
 @Entity
 public class Assess {
     @Id
@@ -23,6 +25,8 @@ public class Assess {
     @DateTimeFormat(pattern ="yyyy-MM-dd")
     @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     private Date endTime;//结束时间
+    private Integer makeTime;//答题时间
+    private Integer issueId;//发布人id
     private Integer testObject;//考试级别
     private Integer testObjectId;//考试对象id
     @CreationTimestamp
@@ -33,11 +37,13 @@ public class Assess {
     public Assess() {
     }
 
-    public Assess(Integer id, Integer testPaperId, Date startTime, Date endTime, Integer testObject, Integer testObjectId, Date createTime, Date uapdateTime) {
+    public Assess(Integer id, Integer testPaperId, Date startTime, Date endTime, Integer makeTime, Integer issueId, Integer testObject, Integer testObjectId, Date createTime, Date uapdateTime) {
         this.id = id;
         this.testPaperId = testPaperId;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.makeTime = makeTime;
+        this.issueId = issueId;
         this.testObject = testObject;
         this.testObjectId = testObjectId;
         this.createTime = createTime;
@@ -74,6 +80,22 @@ public class Assess {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public Integer getMakeTime() {
+        return makeTime;
+    }
+
+    public void setMakeTime(Integer makeTime) {
+        this.makeTime = makeTime;
+    }
+
+    public Integer getIssueId() {
+        return issueId;
+    }
+
+    public void setIssueId(Integer issueId) {
+        this.issueId = issueId;
     }
 
     public Integer getTestObject() {
@@ -115,6 +137,8 @@ public class Assess {
                 ", testPaperId=" + testPaperId +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
+                ", makeTime=" + makeTime +
+                ", issueId=" + issueId +
                 ", testObject=" + testObject +
                 ", testObjectId=" + testObjectId +
                 ", createTime=" + createTime +

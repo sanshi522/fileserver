@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
 
+/**
+ * 试卷试题绑定
+ */
 @Entity
 public class TestPaperBindChoice {
     @Id

@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
 
+/**
+ * 答卷
+ */
 @Entity
 public class Respondents {
     @Id
