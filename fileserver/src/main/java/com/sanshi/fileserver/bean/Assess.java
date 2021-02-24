@@ -18,6 +18,7 @@ public class Assess {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
+    private Integer subId;//学科id
     private Integer testPaperId;//试卷id
     @DateTimeFormat(pattern ="yyyy-MM-dd")
     @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
@@ -37,8 +38,9 @@ public class Assess {
     public Assess() {
     }
 
-    public Assess(Integer id, Integer testPaperId, Date startTime, Date endTime, Integer makeTime, Integer issueId, Integer testObject, Integer testObjectId, Date createTime, Date uapdateTime) {
+    public Assess(Integer id, Integer subId, Integer testPaperId, Date startTime, Date endTime, Integer makeTime, Integer issueId, Integer testObject, Integer testObjectId, Date createTime, Date uapdateTime) {
         this.id = id;
+        this.subId = subId;
         this.testPaperId = testPaperId;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -56,6 +58,14 @@ public class Assess {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getSubId() {
+        return subId;
+    }
+
+    public void setSubId(Integer subId) {
+        this.subId = subId;
     }
 
     public Integer getTestPaperId() {
@@ -134,6 +144,7 @@ public class Assess {
     public String toString() {
         return "Assess{" +
                 "id=" + id +
+                ", subId=" + subId +
                 ", testPaperId=" + testPaperId +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +

@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import java.util.Date;
 
 /**
- * 年级
+ * 学院
  */
 @Entity
 public class Grade {

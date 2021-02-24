@@ -21,6 +21,7 @@ public interface GradeRepository extends JpaRepository<Grade,Integer>, JpaSpecif
      */
     Grade findOneById(Integer id);
 
+
     /**
      * 获取年级id集合
      * @return

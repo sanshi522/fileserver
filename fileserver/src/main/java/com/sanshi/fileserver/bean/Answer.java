@@ -22,6 +22,7 @@ public class Answer {
     private String answer;//答案
     private String fileIds;//附件id集合
     private Double score;//得分
+    private Integer correct;//批改状态
     @CreationTimestamp
     private Date createTime;
     @UpdateTimestamp
@@ -30,13 +31,14 @@ public class Answer {
     public Answer() {
     }
 
-    public Answer(Integer id, Integer choiceId, Integer assessId, String answer, String fileIds, Double score, Date createTime, Date uapdateTime) {
+    public Answer(Integer id, Integer choiceId, Integer assessId, String answer, String fileIds, Double score, Integer correct, Date createTime, Date uapdateTime) {
         this.id = id;
         this.choiceId = choiceId;
         this.assessId = assessId;
         this.answer = answer;
         this.fileIds = fileIds;
         this.score = score;
+        this.correct = correct;
         this.createTime = createTime;
         this.uapdateTime = uapdateTime;
     }
@@ -89,6 +91,14 @@ public class Answer {
         this.score = score;
     }
 
+    public Integer getCorrect() {
+        return correct;
+    }
+
+    public void setCorrect(Integer correct) {
+        this.correct = correct;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -114,6 +124,7 @@ public class Answer {
                 ", answer='" + answer + '\'' +
                 ", fileIds='" + fileIds + '\'' +
                 ", score=" + score +
+                ", correct=" + correct +
                 ", createTime=" + createTime +
                 ", uapdateTime=" + uapdateTime +
                 '}';

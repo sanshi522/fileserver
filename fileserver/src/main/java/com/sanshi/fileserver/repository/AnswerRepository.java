@@ -6,8 +6,28 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 /**
- * 答题数据库
+ * 答题dao
  */
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer,Integer>, JpaSpecificationExecutor {
+    /**
+     * 通过试题id和答卷id获取答题
+     * @param choideid
+     * @param assessid
+     * @return
+     */
+    Answer findOneByChoiceIdAndAssessId(Integer choideid,Integer assessid);
+
+    /**
+     * 添加修改答题
+     * @param answer
+     * @return
+     */
+    Answer save(Answer answer);
+
+    /**
+     *删除答题
+     * @param id
+     */
+    void deleteById(Integer id);
 }

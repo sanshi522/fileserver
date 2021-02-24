@@ -19,6 +19,10 @@ public class Respondents {
     private Integer id;
     private Integer TestPaperId;
     private Integer stuId;//学生id
+    private Integer makeTime;//答题时间
+    private Integer submit;//提交状态
+    private Integer correct;//批改状态
+    private Integer correctId;//批阅人id
     @CreationTimestamp
     private Date createTime;
     @UpdateTimestamp
@@ -27,10 +31,14 @@ public class Respondents {
     public Respondents() {
     }
 
-    public Respondents(Integer id, Integer testPaperId, Integer stuId, Date createTime, Date uapdateTime) {
+    public Respondents(Integer id, Integer testPaperId, Integer stuId, Integer makeTime, Integer submit, Integer correct, Integer correctId, Date createTime, Date uapdateTime) {
         this.id = id;
         TestPaperId = testPaperId;
         this.stuId = stuId;
+        this.makeTime = makeTime;
+        this.submit = submit;
+        this.correct = correct;
+        this.correctId = correctId;
         this.createTime = createTime;
         this.uapdateTime = uapdateTime;
     }
@@ -59,6 +67,38 @@ public class Respondents {
         this.stuId = stuId;
     }
 
+    public Integer getMakeTime() {
+        return makeTime;
+    }
+
+    public void setMakeTime(Integer makeTime) {
+        this.makeTime = makeTime;
+    }
+
+    public Integer getSubmit() {
+        return submit;
+    }
+
+    public void setSubmit(Integer submit) {
+        this.submit = submit;
+    }
+
+    public Integer getCorrect() {
+        return correct;
+    }
+
+    public void setCorrect(Integer correct) {
+        this.correct = correct;
+    }
+
+    public Integer getCorrectId() {
+        return correctId;
+    }
+
+    public void setCorrectId(Integer correctId) {
+        this.correctId = correctId;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -81,6 +121,10 @@ public class Respondents {
                 "id=" + id +
                 ", TestPaperId=" + TestPaperId +
                 ", stuId=" + stuId +
+                ", makeTime=" + makeTime +
+                ", submit=" + submit +
+                ", correct=" + correct +
+                ", correctId=" + correctId +
                 ", createTime=" + createTime +
                 ", uapdateTime=" + uapdateTime +
                 '}';
