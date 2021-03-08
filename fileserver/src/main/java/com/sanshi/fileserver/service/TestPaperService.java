@@ -1,7 +1,10 @@
 package com.sanshi.fileserver.service;
 
 import com.sanshi.fileserver.bean.TestPaper;
+import com.sanshi.fileserver.vo.ReadTestPaper;
+import com.sanshi.fileserver.vo.TestPaperVo;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -11,6 +14,21 @@ import java.util.List;
  * 3.删除试卷
  */
 public interface TestPaperService {
+    /**
+     * 进行考试
+     * @param assessId
+     * @return
+     */
+    TestPaperVo Exam(Integer assessId, HttpServletRequest request);
+
+    /**
+     * 读取试卷
+     * @param testPaperId
+     * @return
+     */
+    ReadTestPaper read(Integer testPaperId);
+
+    TestPaper findOneById(Integer id);
     /**
      * 获取试卷集合
      * @param testPaper

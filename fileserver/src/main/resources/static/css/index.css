@@ -14,12 +14,20 @@ body,html{height: 100%;background: #E2E2E2}
     width: 220px;
     height:100%;
     float: left;
+    font-size: 28px;
+    line-height: 60px;
+    color: #7aa61a;
+    text-align:center;
 }
 .close_div{
+    font-size: 20px;
+    line-height: 60px;
     background-color:#EB1014;
     width: 60px;
     height:100%;
-    float:right;}
+    float:right;
+    text-align:center;
+}
 .user_div {
     background-color:#7F5455;
     width: 220px;

@@ -17,6 +17,12 @@ public interface KnowledgePointRepository extends JpaRepository<KnowledgePoint,I
     List<KnowledgePoint> findAllByIdIn(List<Integer> ids);
 
     /**
+     *
+     * @param id
+     * @return
+     */
+    KnowledgePoint findOneById(Integer id);
+    /**
      * 添加修改知识点
      * @param k
      * @return

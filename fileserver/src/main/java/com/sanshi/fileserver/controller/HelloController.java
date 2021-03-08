@@ -12,6 +12,22 @@ import java.io.*;
 
 @Controller
 public class HelloController {
+    @GetMapping("/choice")
+    public String choice(){
+        return "choice";
+    }
+    @GetMapping("/testPaper")
+    public String testPaper(){
+        return "testPaper";
+    }
+    @GetMapping("/sample")
+    public String sample(){
+        return "sample";
+    }
+    @GetMapping("/knowledgePoint")
+    public String knowledgePoint(){
+        return "knowledgePoint";
+    }
     @GetMapping("/student")
     public String student(){
         return "student";

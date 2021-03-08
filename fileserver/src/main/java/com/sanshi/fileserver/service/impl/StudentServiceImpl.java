@@ -32,6 +32,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public Student findOneById(Integer id) {
+        return studentRepository.findOneByStuId(id);
+    }
+
+    @Override
     public Student selectByNumber(String slumber) {
         List<Student> students = studentRepository.findByStuNumber(slumber);
         if (students == null || students.size() == 0) {

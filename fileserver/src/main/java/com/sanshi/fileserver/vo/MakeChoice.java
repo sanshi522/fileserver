@@ -1,33 +1,24 @@
 package com.sanshi.fileserver.vo;
 
+import com.sanshi.fileserver.bean.Answer;
 import com.sanshi.fileserver.bean.Choice;
 import lombok.Data;
 
-/**
- * 试卷vo
- */
 @Data
-public class ChoiceDetails implements Comparable<ChoiceDetails>{
-    /**
-     * 试题下标
-     */
-    Integer index;
-    /**
-     * 分值
-     */
-    Double score;
-    /**
-     * 试题
-     */
-    Choice choice;
+public class MakeChoice implements Comparable<MakeChoice>{
+    private Integer index;
+    private Double score;
+    private Choice choice;
+    private Answer answer;
 
-    public ChoiceDetails() {
+    public MakeChoice() {
     }
 
-    public ChoiceDetails(Integer index, Double score, Choice choice) {
+    public MakeChoice(Integer index, Double score, Choice choice, Answer answer) {
         this.index = index;
         this.score = score;
         this.choice = choice;
+        this.answer = answer;
     }
 
     public Integer getIndex() {
@@ -54,17 +45,25 @@ public class ChoiceDetails implements Comparable<ChoiceDetails>{
         this.choice = choice;
     }
 
+    public Answer getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
+    }
     @Override
-    public String toString() {
-        return "ChoiceDetails{" +
-                "index=" + index +
-                ", score=" + score +
-                ", choice=" + choice +
-                '}';
+    public int compareTo(MakeChoice o) {
+        return this.getIndex()-o.getIndex();
     }
 
     @Override
-    public int compareTo(ChoiceDetails o) {
-        return this.getIndex()-o.getIndex();
+    public String toString() {
+        return "MakeChoice{" +
+                "index=" + index +
+                ", score=" + score +
+                ", choice=" + choice +
+                ", answer=" + answer +
+                '}';
     }
 }

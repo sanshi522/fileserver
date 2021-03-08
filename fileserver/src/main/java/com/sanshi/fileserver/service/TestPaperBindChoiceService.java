@@ -27,6 +27,12 @@ public interface TestPaperBindChoiceService {
     TestPaperBindChoice save(TestPaperBindChoice testPaperBindChoice);
 
     /**
+     * 获取试卷总分
+     * @param id 试卷id
+     * @return
+     */
+    Double findScoreSum(Integer id);
+    /**
      * 删除
      * @param Id
      * @return

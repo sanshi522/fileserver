@@ -20,9 +20,9 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public List<Answer> findall(Answer answer) {
-        if(answer.getAssessId()!=null && answer.getChoiceId()!=null){
+        if(answer.getRespondentsId()!=null && answer.getChoiceId()!=null){
             List<Answer> list=new ArrayList<Answer>();
-            list.add(answerRepository.findOneByChoiceIdAndAssessId(answer.getChoiceId(),answer.getAssessId()));
+            list.add(answerRepository.findOneByChoiceIdAndRespondentsId(answer.getChoiceId(),answer.getRespondentsId()));
             return list;
         }else{
             return null;

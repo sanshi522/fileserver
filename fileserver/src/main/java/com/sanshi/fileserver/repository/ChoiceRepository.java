@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * 试题dao
  */
@@ -24,6 +26,21 @@ public interface ChoiceRepository extends JpaRepository<Choice,Integer>, JpaSpec
      */
     Choice findOneById(Integer id);
 
+    List<Choice> findAllBySubIdAndTypeAndTopicLike(Integer subid,Integer type,String name);
+
+    List<Choice> findAllBySubIdAndTopicLike(Integer subid,String name);
+
+    List<Choice> findAllByTypeAndTopicLike(Integer type,String name);
+
+    List<Choice> findAllByTopicLike(String name);
+
+    List<Choice> findAllBySubIdAndType(Integer subid,Integer type);
+
+    List<Choice> findAllBySubId(Integer subid);
+
+    List<Choice> findAllByType(Integer type);
+
+    List<Choice> findAll();
     /**
      * 通过id删除试题
      * @param id

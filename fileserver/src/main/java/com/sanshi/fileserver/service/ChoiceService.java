@@ -1,8 +1,10 @@
 package com.sanshi.fileserver.service;
 
 import com.sanshi.fileserver.bean.Choice;
+import com.sanshi.fileserver.vo.ScreenChoice;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 【试题service】
@@ -20,7 +22,7 @@ public interface ChoiceService {
      * @param choice
      * @return
      */
-    List<Choice> findAll(Choice choice);
+    Map findAll(ScreenChoice choice);
 
     /**
      * 删除

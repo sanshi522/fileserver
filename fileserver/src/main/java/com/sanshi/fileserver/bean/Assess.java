@@ -18,6 +18,7 @@ public class Assess {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
+    private String name;
     private Integer subId;//学科id
     private Integer testPaperId;//试卷id
     @DateTimeFormat(pattern ="yyyy-MM-dd")
@@ -30,6 +31,7 @@ public class Assess {
     private Integer issueId;//发布人id
     private Integer testObject;//考试级别
     private Integer testObjectId;//考试对象id
+    private Integer state;
     @CreationTimestamp
     private Date createTime;
     @UpdateTimestamp
@@ -38,8 +40,9 @@ public class Assess {
     public Assess() {
     }
 
-    public Assess(Integer id, Integer subId, Integer testPaperId, Date startTime, Date endTime, Integer makeTime, Integer issueId, Integer testObject, Integer testObjectId, Date createTime, Date uapdateTime) {
+    public Assess(Integer id, String name, Integer subId, Integer testPaperId, Date startTime, Date endTime, Integer makeTime, Integer issueId, Integer testObject, Integer testObjectId, Integer state, Date createTime, Date uapdateTime) {
         this.id = id;
+        this.name = name;
         this.subId = subId;
         this.testPaperId = testPaperId;
         this.startTime = startTime;
@@ -48,6 +51,7 @@ public class Assess {
         this.issueId = issueId;
         this.testObject = testObject;
         this.testObjectId = testObjectId;
+        this.state = state;
         this.createTime = createTime;
         this.uapdateTime = uapdateTime;
     }
@@ -58,6 +62,14 @@ public class Assess {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getSubId() {
@@ -140,10 +152,19 @@ public class Assess {
         this.uapdateTime = uapdateTime;
     }
 
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
     @Override
     public String toString() {
         return "Assess{" +
                 "id=" + id +
+                ", name='" + name + '\'' +
                 ", subId=" + subId +
                 ", testPaperId=" + testPaperId +
                 ", startTime=" + startTime +
@@ -152,6 +173,7 @@ public class Assess {
                 ", issueId=" + issueId +
                 ", testObject=" + testObject +
                 ", testObjectId=" + testObjectId +
+                ", state=" + state +
                 ", createTime=" + createTime +
                 ", uapdateTime=" + uapdateTime +
                 '}';

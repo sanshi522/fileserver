@@ -13,10 +13,10 @@ public interface AnswerRepository extends JpaRepository<Answer,Integer>, JpaSpec
     /**
      * 通过试题id和答卷id获取答题
      * @param choideid
-     * @param assessid
+     * @param respondentsId
      * @return
      */
-    Answer findOneByChoiceIdAndAssessId(Integer choideid,Integer assessid);
+    Answer findOneByChoiceIdAndRespondentsId(Integer choideid,Integer respondentsId);
 
     /**
      * 添加修改答题

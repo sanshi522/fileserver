@@ -18,11 +18,12 @@ public class Answer {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
     private Integer choiceId;//试题id
-    private Integer assessId;//考核id
+    private Integer respondentsId;//答卷id
     private String answer;//答案
     private String fileIds;//附件id集合
     private Double score;//得分
     private Integer correct;//批改状态
+    private Integer correctUserid;
     @CreationTimestamp
     private Date createTime;
     @UpdateTimestamp
@@ -31,14 +32,15 @@ public class Answer {
     public Answer() {
     }
 
-    public Answer(Integer id, Integer choiceId, Integer assessId, String answer, String fileIds, Double score, Integer correct, Date createTime, Date uapdateTime) {
+    public Answer(Integer id, Integer choiceId, Integer respondentsId, String answer, String fileIds, Double score, Integer correct, Integer correctUserid, Date createTime, Date uapdateTime) {
         this.id = id;
         this.choiceId = choiceId;
-        this.assessId = assessId;
+        this.respondentsId = respondentsId;
         this.answer = answer;
         this.fileIds = fileIds;
         this.score = score;
         this.correct = correct;
+        this.correctUserid = correctUserid;
         this.createTime = createTime;
         this.uapdateTime = uapdateTime;
     }
@@ -59,12 +61,12 @@ public class Answer {
         this.choiceId = choiceId;
     }
 
-    public Integer getAssessId() {
-        return assessId;
+    public Integer getRespondentsId() {
+        return respondentsId;
     }
 
-    public void setAssessId(Integer assessId) {
-        this.assessId = assessId;
+    public void setRespondentsId(Integer respondentsId) {
+        respondentsId = respondentsId;
     }
 
     public String getAnswer() {
@@ -99,6 +101,14 @@ public class Answer {
         this.correct = correct;
     }
 
+    public Integer getCorrectUserid() {
+        return correctUserid;
+    }
+
+    public void setCorrectUserid(Integer correctUserid) {
+        this.correctUserid = correctUserid;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -120,11 +130,12 @@ public class Answer {
         return "Answer{" +
                 "id=" + id +
                 ", choiceId=" + choiceId +
-                ", assessId=" + assessId +
+                ", respondentsId=" + respondentsId +
                 ", answer='" + answer + '\'' +
                 ", fileIds='" + fileIds + '\'' +
                 ", score=" + score +
                 ", correct=" + correct +
+                ", correctUserid=" + correctUserid +
                 ", createTime=" + createTime +
                 ", uapdateTime=" + uapdateTime +
                 '}';

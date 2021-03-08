@@ -17,11 +17,11 @@ public class Respondents {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-    private Integer TestPaperId;
+    private Integer assessId;
     private Integer stuId;//学生id
     private Integer makeTime;//答题时间
-    private Integer submit;//提交状态
-    private Integer correct;//批改状态
+    private Integer submit;//提交状态 0:无；1:未提交；2：已提交
+    private Integer correct;//批改状态 1:未完成 2：已完成
     private Integer correctId;//批阅人id
     @CreationTimestamp
     private Date createTime;
@@ -31,9 +31,15 @@ public class Respondents {
     public Respondents() {
     }
 
-    public Respondents(Integer id, Integer testPaperId, Integer stuId, Integer makeTime, Integer submit, Integer correct, Integer correctId, Date createTime, Date uapdateTime) {
+    public Respondents(Integer assessId, Integer stuId, Integer correct) {
+        this.assessId = assessId;
+        this.stuId = stuId;
+        this.correct = correct;
+    }
+
+    public Respondents(Integer id, Integer assessId, Integer stuId, Integer makeTime, Integer submit, Integer correct, Integer correctId, Date createTime, Date uapdateTime) {
         this.id = id;
-        TestPaperId = testPaperId;
+        this.assessId = assessId;
         this.stuId = stuId;
         this.makeTime = makeTime;
         this.submit = submit;
@@ -51,12 +57,12 @@ public class Respondents {
         this.id = id;
     }
 
-    public Integer getTestPaperId() {
-        return TestPaperId;
+    public Integer getAssessId() {
+        return assessId;
     }
 
-    public void setTestPaperId(Integer testPaperId) {
-        TestPaperId = testPaperId;
+    public void setAssessId(Integer assessId) {
+        this.assessId = assessId;
     }
 
     public Integer getStuId() {
@@ -119,7 +125,7 @@ public class Respondents {
     public String toString() {
         return "Respondents{" +
                 "id=" + id +
-                ", TestPaperId=" + TestPaperId +
+                ", assessId=" + assessId +
                 ", stuId=" + stuId +
                 ", makeTime=" + makeTime +
                 ", submit=" + submit +

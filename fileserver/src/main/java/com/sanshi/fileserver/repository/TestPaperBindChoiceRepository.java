@@ -21,6 +21,13 @@ public interface TestPaperBindChoiceRepository extends JpaRepository<TestPaperBi
     List<TestPaperBindChoice> findAllByTestPaperId(Integer id);
 
     /**
+     * 查询试卷总分
+     * @param id
+     * @return
+     */
+    @Query(value="select sum(t.score) from TestPaperBindChoice t where t.testPaperId in ?1")
+    Double findScoreSum(Integer id);
+    /**
      * 添加修改试题试卷绑定
      * @param t
      * @return
@@ -32,5 +39,11 @@ public interface TestPaperBindChoiceRepository extends JpaRepository<TestPaperBi
      * @param id
      */
     void deleteById(Integer id);
+
+    /**
+     * 通过试卷id删除绑定信息
+     * @param id
+     */
+    void deleteByTestPaperId(Integer id);
 
 }

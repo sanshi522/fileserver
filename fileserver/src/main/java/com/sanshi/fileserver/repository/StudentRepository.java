@@ -39,5 +39,8 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
     List<Student> findAllByStuGroup(Integer StuGroup);
 
     Page<Student> findAllByStuGroupIn(List<Integer> StuGroups, Pageable pageable);
+
+    List<Student> findAllByStuGroupIn(List<Integer> StuGroups);
+
     Page<Student> findAllByStuGroupInAndStuNameLike(List<Integer> StuGroups, String name,Pageable pageable);
 }

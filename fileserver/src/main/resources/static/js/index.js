@@ -8,8 +8,10 @@ $(function(){
                 document.getElementById("frameId").src = "/home";
             //根据登陆账户的类型初始化导航栏
             if (data.logintype == 0) {//学生
+                $(".user_name").html(data.user.stuName);
                 $(".stu-show").css("display", "block");
             } else {
+                $(".user_name").html(data.user.teaName);
                 if (data.user.teaIdentity == 1) {//老师
                     $(".tea-show").css("display", "block");
                 } else if (data.user.teaIdentity == 2) {//管理员老师
@@ -26,6 +28,14 @@ $(function(){
             alert("发生错误："+ jqXHR.status);
         }
     })
+
+    $(".close_div").click(function(){
+        if (confirm("退出账号!")==true)
+        {
+            location.href = "exit";
+        }else
+            return;
+    });
 });
 function  openshare(){
     $.ajax({

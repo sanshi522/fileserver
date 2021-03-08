@@ -17,9 +17,9 @@ public class TestPaperBindChoice {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-    private Integer index;
+    private Integer indexNum;
     private Integer choiceId;//试题id
-    private Integer TestPaperId;//试卷id
+    private Integer testPaperId;//试卷id
     private Double score;//分值
     @CreationTimestamp
     private Date createTime;
@@ -29,11 +29,11 @@ public class TestPaperBindChoice {
     public TestPaperBindChoice() {
     }
 
-    public TestPaperBindChoice(Integer id, Integer index, Integer choiceId, Integer testPaperId, Double score, Date createTime, Date uapdateTime) {
+    public TestPaperBindChoice(Integer id, Integer indexNum, Integer choiceId, Integer testPaperId, Double score, Date createTime, Date uapdateTime) {
         this.id = id;
-        this.index = index;
+        this.indexNum = indexNum;
         this.choiceId = choiceId;
-        TestPaperId = testPaperId;
+        this.testPaperId = testPaperId;
         this.score = score;
         this.createTime = createTime;
         this.uapdateTime = uapdateTime;
@@ -47,12 +47,12 @@ public class TestPaperBindChoice {
         this.id = id;
     }
 
-    public Integer getIndex() {
-        return index;
+    public Integer getIndexNum() {
+        return indexNum;
     }
 
-    public void setIndex(Integer index) {
-        this.index = index;
+    public void setIndexNum(Integer indexNum) {
+        this.indexNum = indexNum;
     }
 
     public Integer getChoiceId() {
@@ -64,11 +64,11 @@ public class TestPaperBindChoice {
     }
 
     public Integer getTestPaperId() {
-        return TestPaperId;
+        return testPaperId;
     }
 
     public void setTestPaperId(Integer testPaperId) {
-        TestPaperId = testPaperId;
+        this.testPaperId = testPaperId;
     }
 
     public Double getScore() {
@@ -99,9 +99,9 @@ public class TestPaperBindChoice {
     public String toString() {
         return "TestPaperBindChoice{" +
                 "id=" + id +
-                ", index=" + index +
+                ", indexNum=" + indexNum +
                 ", choiceId=" + choiceId +
-                ", TestPaperId=" + TestPaperId +
+                ", testPaperId=" + testPaperId +
                 ", score=" + score +
                 ", createTime=" + createTime +
                 ", uapdateTime=" + uapdateTime +

@@ -73,5 +73,5 @@ public interface AssessRepository extends JpaRepository<Assess,Integer>, JpaSpec
     /**
      * 删除考核信息
      */
-    void deleteById();
+    void deleteById(Integer id);
 }

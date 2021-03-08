@@ -1,9 +1,7 @@
 package com.sanshi.fileserver.bean;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,30 +9,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
 
-/**
- * 试卷
- */
 @Entity
-public class TestPaper {
+public class Subject {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Integer id;
-    private String name;//试卷名字
-    private Integer subId;//学科id
-    private Integer creationId;//创建人id
+    Integer id;
+    String name;//学科名称
     @CreationTimestamp
     private Date createTime;
     @UpdateTimestamp
     private Date uapdateTime;
 
-    public TestPaper() {
+    public Subject() {
     }
 
-    public TestPaper(Integer id, Integer subId, String name, Integer creationId, Date createTime, Date uapdateTime) {
+    public Subject(Integer id, String name, Date createTime, Date uapdateTime) {
         this.id = id;
-        this.subId = subId;
         this.name = name;
-        this.creationId = creationId;
         this.createTime = createTime;
         this.uapdateTime = uapdateTime;
     }
@@ -47,28 +38,12 @@ public class TestPaper {
         this.id = id;
     }
 
-    public Integer getSubId() {
-        return subId;
-    }
-
-    public void setSubId(Integer subId) {
-        this.subId = subId;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getCreationId() {
-        return creationId;
-    }
-
-    public void setCreationId(Integer creationId) {
-        this.creationId = creationId;
     }
 
     public Date getCreateTime() {
@@ -89,11 +64,9 @@ public class TestPaper {
 
     @Override
     public String toString() {
-        return "TestPaper{" +
+        return "Subject{" +
                 "id=" + id +
-                ", subId=" + subId +
                 ", name='" + name + '\'' +
-                ", creationId=" + creationId +
                 ", createTime=" + createTime +
                 ", uapdateTime=" + uapdateTime +
                 '}';
