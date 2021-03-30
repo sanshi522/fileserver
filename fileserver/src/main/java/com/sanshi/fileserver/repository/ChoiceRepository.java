@@ -1,6 +1,8 @@
 package com.sanshi.fileserver.repository;
 
 import com.sanshi.fileserver.bean.Choice;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -26,21 +28,21 @@ public interface ChoiceRepository extends JpaRepository<Choice,Integer>, JpaSpec
      */
     Choice findOneById(Integer id);
 
-    List<Choice> findAllBySubIdAndTypeAndTopicLike(Integer subid,Integer type,String name);
+    Page<Choice> findAllBySubIdAndTypeAndTopicLike(Integer subid, Integer type, String name,Pageable pageable);
 
-    List<Choice> findAllBySubIdAndTopicLike(Integer subid,String name);
+    Page<Choice> findAllBySubIdAndTopicLike(Integer subid,String name,Pageable pageable);
 
-    List<Choice> findAllByTypeAndTopicLike(Integer type,String name);
+    Page<Choice> findAllByTypeAndTopicLike(Integer type,String name,Pageable pageable);
 
-    List<Choice> findAllByTopicLike(String name);
+    Page<Choice> findAllByTopicLike(String name,Pageable pageable);
 
-    List<Choice> findAllBySubIdAndType(Integer subid,Integer type);
+    Page<Choice> findAllBySubIdAndType(Integer subid,Integer type,Pageable pageable);
 
-    List<Choice> findAllBySubId(Integer subid);
+    Page<Choice> findAllBySubId(Integer subid,Pageable pageable);
 
-    List<Choice> findAllByType(Integer type);
+    Page<Choice> findAllByType(Integer type,Pageable pageable);
 
-    List<Choice> findAll();
+    Page<Choice> findAll(Pageable pageable);
     /**
      * 通过id删除试题
      * @param id

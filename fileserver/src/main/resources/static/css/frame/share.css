@@ -114,7 +114,7 @@ button{
     text-decoration: none;
 }
 .ui.query{
-	float: left;
+	float: right;
 /*	position:static;*/
 	border: 1px solid rgba(34, 36, 38, .15);
 	border-radius: .28571429rem;

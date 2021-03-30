@@ -21,14 +21,26 @@ public class KnowledgePointServiceImpl implements KnowledgePointService {
     }
 
     @Override
-    public List<KnowledgePoint> findAll(KnowledgePoint knowledgePoint) {
-        if(knowledgePoint.getId()!=null){
-            List<KnowledgePoint> list=new ArrayList<KnowledgePoint>();
-            list.add(knowledgePointRepository.findOneById(knowledgePoint.getId()));
-            return list;
-        }
-        return null;
+    public List<KnowledgePoint> findAllBySubIdAndNameLike(Integer subId,String name) {
+        return knowledgePointRepository.findAllBySubIdAndNameLike(subId,"%"+name+"%");
     }
+
+    @Override
+    public KnowledgePoint findOneById(Integer id) {
+        return findOneById(id);
+    }
+//
+//    @Override
+//    public List<KnowledgePoint> findAll(KnowledgePoint knowledgePoint) {
+//        List<KnowledgePoint> list=new ArrayList<KnowledgePoint>();
+//        if(knowledgePoint.getId()!=null){
+//            list.add(knowledgePointRepository.findOneById(knowledgePoint.getId()));
+//            return list;
+//        }else if (!knowledgePoint.getName().isEmpty()){
+//            list.addAll(knowledgePointRepository.findAllByNameLike(knowledgePoint.getName()));
+//        }
+//        return null;
+//    }
 
     @Override
     public KnowledgePoint save(KnowledgePoint knowledgePoint) {

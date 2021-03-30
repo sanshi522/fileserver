@@ -18,6 +18,12 @@ public interface ChoiceService {
     Choice findOneById(Integer id);
 
     /**
+     * save试题
+     * @param choice
+     * @return
+     */
+    Choice save(Choice choice);
+    /**
      * 获取
      * @param choice
      * @return
@@ -26,7 +32,7 @@ public interface ChoiceService {
 
     /**
      * 删除
-     * @param choice
+     * @param id
      */
-    void delete(Choice choice);
+    Map deleteById(Integer id);
 }

@@ -3,3 +3,268 @@
     margin-left: 5px;
     width: auto;
 }
+.allchoice{
+	float: left;
+	width: 100%;
+	min-height:500px;
+/*	border:  1px #1B2E9B solid;*/
+}
+.choice{
+	width: 100%;
+	height: auto;
+	border-bottom:  1px #C7C6C6 solid;
+	float: left;
+	padding-top: 15px;
+	padding-bottom: 20px;
+}
+.choice-title{
+	float: left;
+	width: 100%;
+	height: 30px;
+	padding-left: 20px;
+}
+.choice-type{
+	background-color: #EEF0A9;
+	line-height: 30px;
+	border-radius: 15px 15px 15px 15px;
+	font-size: 18px;
+	font-weight: 700;
+	color:#777071;
+	text-align: center;
+	border: 1px red solid;
+	float:left;
+	width:80px;
+}
+.choice-name{
+/*	background-color: #65DEED;*/
+	font-size: 20px;
+	float: left;
+	width: auto;
+	height: 30px;
+	padding: 5px;
+	padding-left: 20px;
+}
+.choice-oper{
+	float: right;
+	cursor:pointer;
+	font-size: 30px;
+	line-height: 30px;
+	text-align: center;
+	color:#9B8F8F;
+	width: 30px;
+	height: 30px;
+}
+.choice-oper:hover{
+	background-color: #FFFFFF;
+	color:#CEF51C;
+}
+.choice-details{
+	display:none;
+	width:100%;
+	height: auto;
+	float: left;
+}
+.make-choice{
+	font-size: 16px;
+	float: left;
+	width:100%;
+	height: auto;
+	padding: 15px;
+}
+.answer{
+	float:left;
+	width:auto;
+	min-width: 60%;
+	max-width: 90%;
+	height: auto;
+	margin-left: 30px;
+	padding: 5px;
+}
+.difficulty{
+	float:left;
+	width:auto;
+	min-width: 60%;
+	max-width: 90%;
+	height: auto;
+	margin-left: 30px;
+	padding: 5px;
+}
+.analysis{
+	float:left;
+	width:auto;
+	min-width: 60%;
+	max-width: 90%;
+	height: auto;
+	margin-left: 30px;
+	padding: 5px;
+}
+.knowledge{
+	float:left;
+	width:auto;
+	min-width: 60%;
+	max-width: 90%;
+	height: auto;
+	margin-left: 30px;
+	padding: 5px;
+}
+
+.single{
+	margin-right: 30px;
+}
+.input-cho:hover{
+	box-shadow: 0px 0px 10px 5px #aaa;
+}
+.input-cho{
+	cursor:pointer;
+	width: auto;
+	float: left;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-left: 30px;
+}
+.text-cho{
+	width: auto;
+	float: left;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-left: 30px;
+}
+
+
+/************悬浮窗口css*********************/
+.popWindow{
+  min-width: 300px;
+  min-height: 300px;
+	background: #FFFFFF;
+  padding: 2px;
+  margin: 10px;
+  position: absolute;
+	display: none;
+  left: 0;
+  top: 0;
+  z-index: 2;
+	max-height: 600px;
+}
+.popWindow h3{
+	border-bottom: 2px #D7D7D7 solid;
+	width: 100%;
+  	height: 30px;
+  	line-height: 30px;
+}
+.popWindow h3 span{
+  float: right;
+  font-size: 14px;
+  font-weight: normal;
+  cursor: pointer;
+}
+.popWindow h3 span:hover{
+  color: #f00;
+}
+.popWindow .content{
+  height: 270px;
+  background: #fff;
+}
+.mask{
+  background: #000;
+  opacity: 0.4;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+.choice_table{
+	width: 100%;
+	height: auto;
+	margin-bottom: 10px;
+}
+.choice_table tr{
+	border-bottom: 1px #E8E2E2 solid;
+	
+}
+.choice_table tr td {
+	padding: 5px;
+}
+.yaperoter{
+	text-align: center;
+	height:35px;
+	width: auto;
+}
+/*难度级别*/
+.star-box{
+	float: left;
+}
+.star-box label {
+   float: right;
+   color: #999;
+ }
+
+ .star-box label::after {
+	content: '★';
+	font-size: 28px;
+	padding: 5px;
+	display: inline-block;
+	line-height: 1;
+}
+
+.star-box input:checked~label,
+.star-box label:hover~label,
+.star-box label:hover {
+	color:#E5E422;
+}
+/*知识点*/
+.knowledge_a{
+	border: 1px #77CBE9 solid;
+	float: left;
+	height: 22px;
+	font-size: 15px;
+	color:#8C0F11;
+	padding-left: 2px;
+	padding-right: 2px;
+	margin-left: 2px;
+	margin-right: 2px;
+	cursor: pointer;
+}
+/*难度级别*/
+/*添加内容--知识点*/
+.knowledge_b{
+	width:100%;
+	height:30px;
+	float: left;
+	box-shadow:#7FC3E9 0px 0px 15px 2px inset;
+}
+.knowledge_bp1{
+	font-size: 16px;
+	color:#204096;
+	line-height: 30px;
+	padding-left: 10px;
+	float: left;
+}
+.knowledge_bp2{
+	float: right;
+	font-size: 20px;
+	margin-right: 10px;
+	font-weight: 900;
+}
+/*选择知识点附件框div*/
+.addtext{
+	width: 400px;
+	float: left;
+	height: auto;
+	padding-left:10px;
+}
+.addtexttitle{
+	float: left;
+	border-bottom:2px #E3DDDD solid;
+	width: 100%
+}
+.addtitel{
+	float: left;
+	height: 30px;
+	color: #82EAEC;
+	text-align: center;
+	font-size: 22px;
+}
+.addcontext{
+	width:100%;height: auto;float: left;overflow-y: auto;
+}
+/*********************************/

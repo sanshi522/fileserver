@@ -94,9 +94,9 @@ function open(lrc){
         type:"post",
         dataType:"json",
         success:function(data){
-            if(data.resoult)
+            if(data.resoult){
                 document.getElementById("frameId").src="/"+lrc;
-            else{
+            } else{
                 location.href = "/";
             }
         },

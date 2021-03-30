@@ -18,12 +18,15 @@ public interface KnowledgePointService {
      */
     List<KnowledgePoint> findAllByIds(List<Integer> ids);
 
+    List<KnowledgePoint> findAllBySubIdAndNameLike(Integer subId,String name);
+
+    KnowledgePoint findOneById(Integer id);
     /**
      * 获取
      * @param knowledgePoint
      * @return
      */
-    List<KnowledgePoint> findAll(KnowledgePoint knowledgePoint);
+//    List<KnowledgePoint> findAll(KnowledgePoint knowledgePoint);
 
     /**
      * 添加修改
