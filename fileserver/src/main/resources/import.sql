@@ -1,1 +1,1 @@
-INSERT INTO teacher (tea_number,tea_name,tea_gender,tea_pass,tea_identity,tea_state,tea_remake) VALUES (1, '颜磊', '男', 'sanshi522@163.com',3, 1, '默认管理员');
+INSERT INTO teacher (tea_id,tea_number,tea_name,tea_gender,tea_pass,tea_identity,tea_state,tea_remake) VALUES (1,1, '颜磊', '男', 'sanshi522@163.com',3, 1, '默认管理员')ON DUPLICATE KEY UPDATE tea_state = 1;
