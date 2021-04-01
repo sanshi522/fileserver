@@ -1,6 +1,8 @@
 package com.sanshi.fileserver.repository;
 
 import com.sanshi.fileserver.bean.KnowledgePoint;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -17,6 +19,13 @@ public interface KnowledgePointRepository extends JpaRepository<KnowledgePoint,I
     List<KnowledgePoint> findAllByIdIn(List<Integer> ids);
 
     List<KnowledgePoint> findAllBySubIdAndNameLike(Integer subId,String name);
+
+    Page<KnowledgePoint> findAllBySubIdAndNameLike(Integer subId, String name, Pageable pageable);
+
+    Page<KnowledgePoint> findAllByNameLike(String name, Pageable pageable);
+
+
+
     /**
      *
      * @param id

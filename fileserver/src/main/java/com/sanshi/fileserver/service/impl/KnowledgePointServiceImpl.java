@@ -1,12 +1,22 @@
 package com.sanshi.fileserver.service.impl;
 
 import com.sanshi.fileserver.bean.KnowledgePoint;
+import com.sanshi.fileserver.bean.Subject;
 import com.sanshi.fileserver.repository.KnowledgePointRepository;
 import com.sanshi.fileserver.service.KnowledgePointService;
+import com.sanshi.fileserver.vo.PageGet;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Service("KnowledgePointServiceImpl")
 public class KnowledgePointServiceImpl implements KnowledgePointService {
     private KnowledgePointRepository knowledgePointRepository;
@@ -50,5 +60,26 @@ public class KnowledgePointServiceImpl implements KnowledgePointService {
     @Override
     public void delete(KnowledgePoint knowledgePoint) {
         knowledgePointRepository.deleteById(knowledgePoint.getId());
+    }
+
+    @Override
+    public Map getAll(PageGet pageGet) {
+        Pageable pageable;
+        pageable = PageRequest.of(pageGet.getPageIndex() , pageGet.getPageNumber());
+        Map json = new HashMap();
+        json.put("resoult", true);
+        if (pageGet.getLikeName().isEmpty()) pageGet.setLikeName("");
+        if (pageGet.getIssistId()==0)
+            json.put("page", knowledgePointRepository.findAllByNameLike("%"+pageGet.getLikeName()+"%",pageable));
+        else
+            json.put("page", knowledgePointRepository.findAllBySubIdAndNameLike(pageGet.getIssistId(),"%"+pageGet.getLikeName()+"%",pageable));
+        return json;
+    }
+
+    @RequestMapping(path = "/deleteById")
+    @ResponseBody
+    public Integer deleteById(Integer val, HttpServletRequest request){
+         knowledgePointRepository.deleteById(val);
+        return 1;
     }
 }

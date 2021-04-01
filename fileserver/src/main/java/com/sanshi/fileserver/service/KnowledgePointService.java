@@ -1,8 +1,10 @@
 package com.sanshi.fileserver.service;
 
 import com.sanshi.fileserver.bean.KnowledgePoint;
+import com.sanshi.fileserver.vo.PageGet;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 【知识点Service】
@@ -40,4 +42,6 @@ public interface KnowledgePointService {
      * @param knowledgePoint
      */
     void delete(KnowledgePoint knowledgePoint);
+
+    Map getAll(PageGet val);
 }

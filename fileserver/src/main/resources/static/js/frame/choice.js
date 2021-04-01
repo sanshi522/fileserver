@@ -469,14 +469,14 @@ function openWindw(x,y,id){
 				console.log(data);
 			},
 			error: function(data) {
-				alert("服务器异常");
+				$.alert("服务器异常");
 			}
 		});
 	}
 	//获取知识点
 	function getknowleged(){
 		$.ajax({
-			url:"/KnowledgePoint/findAllByNameLike",
+			url:"/knowledgePoint/findAllByNameLike",
 			type:"post",
 			data:{subid:$('#subjectId').val(),name:$("#query1").val()},
 			dataType:"json",
@@ -499,7 +499,7 @@ function openWindw(x,y,id){
 				});
 			},
 			error: function(data) {
-				alert("服务器异常");
+				$.alert("服务器异常");
 			}
 		});
 	}
@@ -550,7 +550,7 @@ function openWindw(x,y,id){
 		subId=$("#subjectId").val();
 		topic=$("#choice_name").val();
 		if (topic==""||topic.length==0){
-			alert("请添加题目");
+			$.alert("请添加题目");
 			return;
 		}
 		type=$("#choicetype").val();
@@ -570,26 +570,26 @@ function openWindw(x,y,id){
 		}
 		if (type==1||type==2){
 			if (optionA==""||optionB==""||optionC==""||optionD==""||optionE==""||optionF==""){
-				alert("请完善选项");
+				$.alert("请完善选项");
 				return;
 			}
 			correct=$("#anwser").val();
 			if (correct==""||correct.length==0){
-				alert("请勾选正确选项");
+				$.alert("请勾选正确选项");
 				return;
 			}
 		}
 		if (type==3){
 			correct=$("input[name='judje']:checked").val();
 			if (correct==null){
-				alert("请勾选正确选项");
+				$.alert("请勾选正确选项");
 				return;
 			}
 		}
 		if (type==4){
 			correct=$("#answer2").val();
 			if (correct==null||correct.length==0){
-				alert("请输入参考答案");
+				$.alert("请输入参考答案");
 				return;
 			}
 		}
@@ -598,7 +598,7 @@ function openWindw(x,y,id){
 		abilityIds="";
 		difficultyLevel=$("input[name='star']:checked").val();
 		if (difficultyLevel==null){
-			alert("请选择难易程度");
+			$.alert("请选择难易程度");
 			return;
 		}
 		scaleRule=$("#scaleofmarks").val();
@@ -637,7 +637,7 @@ function openWindw(x,y,id){
 				Init(pageIndex);
 			},
 			error: function(data){
-				alert("服务器异常,添加失败！");
+				$.alert("服务器异常,添加失败！");
 			}
 		});
 	})
