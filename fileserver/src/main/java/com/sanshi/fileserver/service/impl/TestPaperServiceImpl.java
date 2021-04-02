@@ -4,13 +4,15 @@ import com.sanshi.fileserver.bean.*;
 import com.sanshi.fileserver.repository.*;
 import com.sanshi.fileserver.service.TestPaperService;
 import com.sanshi.fileserver.vo.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
 @Service("TestPaperServiceImpl")
 public class TestPaperServiceImpl implements TestPaperService {
     private TestPaperRepository testPaperRepository;
@@ -78,20 +80,19 @@ public class TestPaperServiceImpl implements TestPaperService {
     }
 
     @Override
-    public List<TestPaper> findAll(TestPaper testPaper) {
-        if(testPaper.getSubId()!=0){//科目
-            if (testPaper.getName().isEmpty()){
-               return testPaperRepository.findAllBySubId(testPaper.getSubId());
-            }else {
-                return testPaperRepository.findAllBySubIdAndNameLike(testPaper.getSubId(),"%"+testPaper.getName()+"%");
-            }
+    public Map findAll(PageGet val) {
+        Pageable pageable;
+        pageable = PageRequest.of(val.getPageIndex() , val.getPageNumber());
+        Map json = new HashMap();
+        json.put("resoult", true);
+        if (val.getLikeName().isEmpty())
+            val.setLikeName("");
+        if(val.getIssistId()!=0){//科目
+            json.put("page",testPaperRepository.findAllBySubIdAndNameLike(val.getIssistId(),"%"+val.getLikeName()+"%",pageable));
         }else{
-            if (testPaper.getName().isEmpty()){
-                return testPaperRepository.findAll();
-            }else {
-                return testPaperRepository.findAllByNameLike("%"+testPaper.getName()+"%");
-            }
+            json.put("page",testPaperRepository.findAllByNameLike("%"+val.getLikeName()+"%",pageable));
         }
+        return json;
     }
 
     @Override

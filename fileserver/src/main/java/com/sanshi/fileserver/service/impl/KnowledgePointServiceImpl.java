@@ -58,9 +58,10 @@ public class KnowledgePointServiceImpl implements KnowledgePointService {
     }
 
     @Override
-    public void delete(KnowledgePoint knowledgePoint) {
-        knowledgePointRepository.deleteById(knowledgePoint.getId());
+    public void deleteById(Integer id) {
+        knowledgePointRepository.deleteById(id);
     }
+
 
     @Override
     public Map getAll(PageGet pageGet) {

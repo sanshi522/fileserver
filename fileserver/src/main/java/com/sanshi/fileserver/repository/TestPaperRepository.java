@@ -1,6 +1,8 @@
 package com.sanshi.fileserver.repository;
 
 import com.sanshi.fileserver.bean.TestPaper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -37,11 +39,11 @@ public interface TestPaperRepository extends JpaRepository<TestPaper,Integer>, J
      * @param subId
      * @return
      */
-    List<TestPaper> findAllBySubId(Integer subId);
 
-    List<TestPaper> findAllBySubIdAndNameLike(Integer subId,String name);
 
-    List<TestPaper> findAllByNameLike(String name);
+    Page<TestPaper> findAllBySubIdAndNameLike(Integer subId,String name,Pageable pa);
+
+    Page<TestPaper> findAllByNameLike(String name, Pageable pa);
 
     List<TestPaper> findAll();
 

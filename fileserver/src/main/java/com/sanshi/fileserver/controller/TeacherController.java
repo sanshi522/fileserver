@@ -101,4 +101,10 @@ public class TeacherController {
             json.put("name","管理员");
         return  json;
     }
+    @RequestMapping(path = "/deleteById")
+    @ResponseBody
+    public Integer deleteById(Integer val, HttpServletRequest request){
+        teacherService.deleteByTeaId(val);
+        return 1;
+    }
 }
