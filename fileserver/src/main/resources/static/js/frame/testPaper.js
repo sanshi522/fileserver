@@ -68,46 +68,61 @@ $(function(){
            url: "/testPaper/findAll",
          //contentType:"application/json;charset=UTF-8",
           type: "post",
-           async: false,
+           async: true,
            data:val,
            dataType: "json",
            success: function(data) {
            	if(data.resoult){
 				$(".allTestPaper").empty();
 				for(let i=0;i<data.page.content.length;i++){
-					$(".allTestPaper").append('<div class="testPaper" style="">\n' +
-						'        <table width="100%">\n' +
-						'            <tr >\n' +
-						'                <th colspan="2" style="text-align:center;">'+data.page.content[i].name+'</th>\n' +
-						'            </tr>\n' +
-						'            <tr>\n' +
-						'                <td>试卷总分：</td>\n' +
-						'                <td>100</td>\n' +
-						'            </tr>\n' +
-						'\n' +
-						'            <tr>\n' +
-						'                <td>题目数量：</td>\n' +
-						'                <td>100</td>\n' +
-						'            </tr>\n' +
-						'            <tr>\n' +
-						'                <td>创建时间：</td>\n' +
-						'                <td>'+data.page.content[i].createTime+'</td>\n' +
-						'            </tr>\n' +
-						'            <tr>\n' +
-						'                <td>发布时间：</td>\n' +
-						'                <td>50（分钟）</td>\n' +
-						'            </tr>\n' +
-						'            <tr>\n' +
-						'                <td>编辑操作：</td>\n' +
-						'                <td style="font-size: 20px;">\n' +
-						'                    <label style="margin-right: 10px;cursor: pointer;"><i class="my-icon lsm-sidebar-icon icon-bianji del"></i></label>\n' +
-						'                    <label><i class="my-icon lsm-sidebar-icon icon-shanchu del" style="cursor: pointer;"></i></label>\n' +
-						'                </td>\n' +
-						'            </tr>\n' +
-						'\n' +
-						'\n' +
-						'        </table>\n' +
-						'    </div>')
+					$.ajax({
+						url: "/testPaper/findMsg",
+						//contentType:"application/json;charset=UTF-8",
+						type: "post",
+						async: false,
+						data:{id:data.page.content[i].id},
+						dataType: "json",
+						success: function(data2) {
+							$(".allTestPaper").append('<div class="testPaper" style="">\n' +
+								'        <table width="100%">\n' +
+								'            <tr >\n' +
+								'                <th colspan="2" style="text-align:center;">'+data.page.content[i].name+'</th>\n' +
+								'            </tr>\n' +
+								'            <tr>\n' +
+								'                <td>学科：</td>\n' +
+								'                <td>'+data2.subName+'</td>\n' +
+								'            </tr>\n' +
+								'            <tr>\n' +
+								'                <td>试卷总分：</td>\n' +
+								'                <td>'+data2.choiceScoreNum+'</td>\n' +
+								'            </tr>\n' +
+								'\n' +
+								'            <tr>\n' +
+								'                <td>题目数量：</td>\n' +
+								'                <td>'+data2.choiceNum+'</td>\n' +
+								'            </tr>\n' +
+								'            <tr>\n' +
+								'                <td>创建时间：</td>\n' +
+								'                <td>'+data.page.content[i].createTime+'</td>\n' +
+								'            </tr>\n' +
+								'            <tr>\n' +
+								'                <td>创建人：</td>\n' +
+								'                <td>'+data2.creatUserName+'</td>\n' +
+								'            </tr>\n' +
+								'            <tr>\n' +
+								'                <td>编辑操作：</td>\n' +
+								'                <td style="font-size: 20px;">\n' +
+								'                    <label style="margin-right: 10px;cursor: pointer;"><i class="my-icon lsm-sidebar-icon icon-bianji del"></i></label>\n' +
+								'                    <label><i class="my-icon lsm-sidebar-icon icon-shanchu del" style="cursor: pointer;"></i></label>\n' +
+								'                </td>\n' +
+								'            </tr>\n' +
+								'\n' +
+								'\n' +
+								'        </table>\n' +
+								'    </div>')
+						},error(data2){
+						}
+					});
 				}
 				total=data.page.totalElements;
 				$(".totalmsg").html("【共"+total+"条记录，当前显示："+(data.page.pageable.pageNumber*data.page.pageable.pageSize+1)+"~"+(data.page.pageable.pageNumber*data.page.pageable.pageSize+data.page.numberOfElements)+"】");

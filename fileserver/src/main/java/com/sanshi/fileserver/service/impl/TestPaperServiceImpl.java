@@ -4,7 +4,6 @@ import com.sanshi.fileserver.bean.*;
 import com.sanshi.fileserver.repository.*;
 import com.sanshi.fileserver.service.TestPaperService;
 import com.sanshi.fileserver.vo.*;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,14 +20,18 @@ public class TestPaperServiceImpl implements TestPaperService {
     private TestPaperBindChoiceRepository testPaperBindChoiceRepository;
     private AnswerRepository answerRepository;
     private ChoiceRepository choiceRepository;
+    private SubjectRepository subjectRepository;
+    private TeacherRepository teacherRepository;
 
-    public TestPaperServiceImpl(TestPaperRepository testPaperRepository, AssessRepository assessRepository, RespondentsRepository respondentsRepository, TestPaperBindChoiceRepository testPaperBindChoiceRepository, AnswerRepository answerRepository, ChoiceRepository choiceRepository) {
+    public TestPaperServiceImpl(TestPaperRepository testPaperRepository, AssessRepository assessRepository, RespondentsRepository respondentsRepository, TestPaperBindChoiceRepository testPaperBindChoiceRepository, AnswerRepository answerRepository, ChoiceRepository choiceRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository) {
         this.testPaperRepository = testPaperRepository;
         this.assessRepository = assessRepository;
         this.respondentsRepository = respondentsRepository;
         this.testPaperBindChoiceRepository = testPaperBindChoiceRepository;
         this.answerRepository = answerRepository;
         this.choiceRepository = choiceRepository;
+        this.subjectRepository = subjectRepository;
+        this.teacherRepository = teacherRepository;
     }
 
     @Override
@@ -103,5 +106,13 @@ public class TestPaperServiceImpl implements TestPaperService {
     @Override
     public void deleteById(TestPaper testPaper) {
         testPaperRepository.deleteById(testPaper.getId());
+    }
+
+    @Override
+    public TestPaperMsg findMsg(Integer id) {
+
+       TestPaper testPaper = testPaperRepository.findOneById(id);
+       String name = teacherRepository.findOneByTeaId(testPaper.getCreationId()).getTeaName();
+        return new TestPaperMsg(testPaperBindChoiceRepository.findAllByTestPaperId(id).size(),testPaperBindChoiceRepository.findScoreSum(id),subjectRepository.findOneById(testPaper.getSubId()).getName(),teacherRepository.findOneByTeaId(testPaper.getCreationId()).getTeaName());
     }
 }
