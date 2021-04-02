@@ -2,9 +2,356 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>试题</title>
+    <link rel="stylesheet" type="text/css" href="css/frame/share.css" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/iconfont1.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-select/bootstrap-select.min.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery-pagination/pagination.css">
+    <link rel="stylesheet" type="text/css" href="css/frame/testPaper.css" />
+
+    <script src="js/jquery/jquery-3.5.1.min.js"></script>
+    <script src="js/bootstrap/bootstrap.min.js"></script>
+    <script src="js/bootstrap/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="js/bootstrap/bootstrap-select/i18n/defaults-zh_CN.min.js"></script>
+    <script src="js/jquery/jquery-pagination/jquery.pagination.js"></script>
+    <script src="js/jquery/jquery.wresize.js"></script>
+    <script src="js/frame/testPaper.js"></script>
 </head>
+<style>
+    body{
+        margin: 8px;
+    }
+</style>
 <body>
-    试卷管理
+<div style="width:100%;height:40px;">
+    <div  id="subIdDiv"  >
+
+        <select name="channels" id="subIdScreen" data-style="btn-info" class="selectpicker" placeholder="请输入学科">
+            <option value="0">全部学科</option>
+        </select>
+    </div>
+
+    <div class="blue ui buttons" style="float: right;margin-left: 10px;">
+        <button id="addchoice" class="ui button" >创建试卷</button>
+    </div>
+
+
+    <div class="ui query">
+        <input class="query"  type="text" id="query">
+        <i class="my-icon lsm-sidebar-icon icon-chazhao querybtn"></i>
+    </div>
+</div>
+<hr>
+<div style="float: left;width: auto">
+
+
+</div>
+
+
+
+
+<hr>
+<div style="width: 80%;margin: 0 auto">
+    <div style="background-color:  red;width: 20%;height: 50%;float: left;margin-left: 20px">
+        <table width="100%">
+            <tr >
+                <th colspan="2" style="text-align:center;">数学月考试卷（一）</th>
+            </tr>
+            <tr>
+                <td>试卷总分：</td>
+                <td>100</td>
+            </tr>
+
+            <tr>
+                <td>题目数量：</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>创建时间：</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>发布时间：</td>
+                <td>50（分钟）</td>
+            </tr>
+            <tr>
+                <td>编辑操作：</td>
+                <td style="font-size: 20px;">
+                    <label style="margin-right: 10px;cursor: pointer;"><i class="my-icon lsm-sidebar-icon icon-bianji del"></i></label>
+                    <label><i class="my-icon lsm-sidebar-icon icon-shanchu del" style="cursor: pointer;"></i></label>
+                </td>
+            </tr>
+
+
+        </table>
+    </div>
+    <div style="background-color:  red;width: 20%;height: 50%;float: left;margin-left: 20px">
+        <table>
+            <tr>
+                <th >数学月考试卷（一）</th>
+            </tr>
+            <tr>
+                <td>试卷总分：</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>考试时长：</td>
+                <td>50（分钟）</td>
+            </tr>
+
+            <tr>
+                <td>题目数量：</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>创建时间：</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>发布时间：</td>
+                <td>50（分钟）</td>
+            </tr>
+
+        </table>
+    </div>
+
+    <div style="background-color:  red;width: 20%;height: 50%;float: left;margin-left: 20px">
+        <table>
+            <tr>
+                <th >数学月考试卷（一）</th>
+            </tr>
+            <tr>
+                <td>试卷总分：</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>考试时长：</td>
+                <td>50（分钟）</td>
+            </tr>
+            <tr>
+                <td>题目数量：</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>创建时间：</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>发布时间：</td>
+                <td>50（分钟）</td>
+            </tr>
+
+
+        </table>
+    </div>
+
+
+    <div style="background-color:  red;width: 20%;height: 50%;float: left;margin-left: 20px">
+        <table>
+            <tr>
+                <th >数学月考试卷（一）</th>
+            </tr>
+            <tr>
+                <td>试卷总分：</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>考试时长：</td>
+                <td>50（分钟）</td>
+            </tr>
+            <tr>
+                <td>题目数量：</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>创建时间：</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>发布时间：</td>
+                <td>50（分钟）</td>
+            </tr>
+
+        </table>
+    </div>
+
+
+
+
+    <div style="background-color:  red;width: 20%;height: 50%;float: left;margin-left: 20px;margin-top:10px">
+        <table>
+            <tr>
+                <th >数学月考试卷（一）</th>
+            </tr>
+            <tr>
+                <td>试卷总分：</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>考试时长：</td>
+                <td>50（分钟）</td>
+            </tr>
+            <tr>
+                <td>题目数量：</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>创建时间：</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>发布时间：</td>
+                <td>50（分钟）</td>
+            </tr>
+
+
+        </table>
+    </div>
+
+</div>
+
+<div class="paginationParent">
+    <div id="showNumberdiv" style="float: right;width:60px;margin-right: 20px;">
+        <select name="channels" id="showNumber" data-style="btn-info" class="selectpicker" >
+            <option  value="5">5条</option>
+            <option  value="10">10条</option>
+            <option  value="20">20条</option>
+            <option  value="30">30条</option>
+            <option  value="40">40条</option>
+            <option  value="50">50条</option>
+            <option  value="60">60条</option>
+            <option  value="70">70条</option>
+            <option  value="80">80条</option>
+            <option  value="90">90条</option>
+            <option  value="100">100条</option>
+        </select>
+    </div>
+    <div style="float: right;">单页显示：</div>
+    <label class="totalmsg" style="float: right;"></label>
+    <div id="Pagination"></div>
+</div>
+
+<div class="popWindow">
+    <h3>试题编辑<span>关闭</span></h3>
+    <div class="choicecontent" style="width: auto;float: left;">
+        <div class="wContent" style="width:300px;float: left;overflow-y: auto;">
+            <table class="choice_table">
+                <tr>
+                    <td>题目类型</td>
+                    <td>
+                        <select name="channels" id="choicetype" data-style="btn-info" class="selectpicker" placeholder="题目">
+                            <option  value="1">单选题</option>
+                            <option  value="2">多选题</option>
+                            <option  value="3">判断题</option>
+                            <option  value="4">简答题</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>学科</td>
+                    <td><select name="channels" id="subId" data-style="btn-info" class="selectpicker" >
+                        <option  value="1">高数</option>
+                    </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>题目</td>
+                    <td><textarea rows="2" cols="" style="max-width: 210px;" wrap="hard" id="choice_name" placeholder="请输入题目"></textarea></td>
+                </tr>
+                <tr class="choice_option_tr">
+                    <td>选项个数</td>
+                    <td><select name="channels" id="choicenum" data-style="btn-info" class="selectpicker" >
+                        <option  value="4">4</option>
+                        <option  value="5">5</option>
+                        <option  value="6">6</option>
+                    </select>
+                    </td>
+                </tr>
+                <tr class="choice_option_tr optionA"><td><input type="radio" name="opt" value="A" class="choice_option"/>A</td><td><input type="text" class="form-control"  onkeypress="onkey(event)" id="" placeholder="请输入选项内容"></td></tr>
+                <tr class="choice_option_tr optionB"><td><input type="radio" name="opt" value="B"  class="choice_option"/>B</td><td><input type="text" class="form-control"  onkeypress="onkey(event)" id="" placeholder="请输入选项内容"></td></tr>
+                <tr class="choice_option_tr optionC"><td><input type="radio" name="opt" value="C"  class="choice_option"/>C</td><td><input type="text" class="form-control"  onkeypress="onkey(event)" id="" placeholder="请输入选项内容"></td></tr>
+                <tr class="choice_option_tr optionD"><td><input type="radio" name="opt" value="D"  class="choice_option"/>D</td><td><input type="text" class="form-control"  onkeypress="onkey(event)" id="" placeholder="请输入选项内容"></td></tr>
+                <tr class="choice_option_tr optionE"><td><input type="radio" name="opt" value="E"  class="choice_option"/>E</td><td><input type="text" class="form-control"  onkeypress="onkey(event)" id="" placeholder="请输入选项内容"></td></tr>
+                <tr class="choice_option_tr optionF"><td><input type="radio" name="opt" value="F"  class="choice_option"/>F</td><td><input type="text" class="form-control"  onkeypress="onkey(event)" id="" placeholder="请输入选项内容"></td></tr>
+                <tr><td>标答</td><td><input type="text" readonly="true" class="form-control"  onkeypress="onkey(event)" id="anwser" placeholder="请选择正确选项"></td></tr>
+                <tr><td>难度</td>
+                    <td>
+                        <div class="star-box">
+                            <input type="radio" name="star" id="star5" value="5"  hidden/>
+                            <label for="star5"></label>
+
+                            <input type="radio" name="star" id="star4" value="5" hidden/>
+                            <label for="star4"></label>
+
+                            <input type="radio" name="star" id="star3" value="5" hidden/>
+                            <label for="star3"></label>
+
+                            <input type="radio" name="star" id="star2" value="5" hidden/>
+                            <label for="star2"></label>
+
+                            <input type="radio" name="star" id="star1" value="5" hidden />
+                            <label for="star1"></label>
+                        </div>
+                    </td>
+                </tr>
+                <tr id="knowledge"><td>知识点</td>
+                    <td>
+                        <div style="border: 1px #77CBE9 solid;float: left;height: 22px;font-size: 15px;color:#8C0F11;padding-left: 2px;padding-right: 2px;margin-left: 2px;margin-right: 2px; cursor: pointer;">鹅鹅鹅</div>
+                        <div style="border: 1px #77CBE9 solid;float: left;height: 22px;font-size: 15px;color:#8C0F11;padding-left: 2px;padding-right: 2px;cursor: pointer;">鹅鹅鹅</div>
+                        <div style="border: 1px #77CBE9 solid;float: left;height: 22px;font-size: 15px;color:#8C0F11;padding-left: 2px;padding-right: 2px;cursor: pointer;">鹅鹅鹅</div>
+                        <div class="knowledge_min" style="border: 1px #77CBE9 solid;float: left;height: 22px;font-size: 15px;color:#8C0F11;padding-left: 2px;padding-right: 2px;cursor: pointer;">鹅鹅鹅</div>
+                    </td>
+                </tr>
+                <tr id="accessory"><td>附件</td><td></td></tr>
+                <tr>
+                    <td>评分标准</td>
+                    <td>
+                        <select name="channels" id="scaleofmarks" data-style="btn-info" class="selectpicker" >
+                            <option  value="0">自动全等</option>
+                            <option  value="1">少选百分比+多选不得分</option>
+                            <option  value="2">人工</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="addtext" style="width: 400px;float: left;height: auto;" hidden>
+            <div style="float: left;border-bottom:2px #E3DDDD solid;width: 100%">
+                <div class="addtitel" style="float: left; height: 30px;color: #82EAEC;text-align: center;font-size: 22px;">添加知识点</div>
+                <div class="library_div" style="float: left">
+                    <select name="channels" id="library" data-style="btn-info" class="selectpicker" >
+                        <option  value="0">文件</option>
+                        <option  value="1">样本</option>
+                    </select>
+                </div>
+                <div class="ui query">
+                    <input class="query" type="text" id="query1"><i class="my-icon lsm-sidebar-icon icon-chazhao querybtn" id="query101"></i>
+                </div>
+            </div>
+            <div class="addcontext" style="width:100%;border: 1px red solid;float: left;">
+
+            </div>
+            <div knowid="" style="width:100%;height:30px;float: left;box-shadow:#7FC3E9 0px 0px 15px 2px inset;">
+                <span style="font-size: 16px;color:#204096;line-height: 30px;padding-left: 10px;float: left;">鹅鹅鹅</span>
+
+                <span  style="float: right;font-size: 20px;margin-right: 10px;font-weight: 900;">
+					<i  class="my-icon lsm-sidebar-icon icon-tianjia know_add"></i>
+				</span>
+            </div>
+        </div>
+    </div>
+    <div class="yaperoter">
+        <div class="ui buttons" style="margin-left: 10px;width: 80px;">
+            <button id="resetchoice" class="ui button" style="width: 100%;">重置</button>
+        </div>
+        <div class="blue ui buttons" style="margin-left: 10px;width: 80px;">
+            <button id="savechoice" class="ui button" style="width: 100%;">提交</button>
+        </div>
+        <div class="ui buttons" style="margin-left: 10px;width: 80px;">
+            <button id="cancel" class="ui button" style="width: 100%;">取消</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
