@@ -12,110 +12,146 @@ import java.io.*;
 
 @Controller
 public class HelloController {
+
+    @GetMapping("/addTestPaper")
+    public String addTestPaper() {
+        return "addTestPaper";
+    }
+
     @GetMapping("/subject")
-    public String subject(){
+    public String subject() {
         return "sub";
     }
+
     @GetMapping("/choice")
-    public String choice(){
+    public String choice() {
         return "choice";
     }
+
     @GetMapping("/testPaper")
-    public String testPaper(){
+    public String testPaper() {
         return "testPaper";
     }
+
     @GetMapping("/sample")
-    public String sample(){
+    public String sample() {
         return "sample";
     }
+
     @GetMapping("/knowledgePoint")
-    public String knowledgePoint(){
+    public String knowledgePoint() {
         return "knowledgePoint";
     }
+
     @GetMapping("/student")
-    public String student(){
+    public String student() {
         return "student";
     }
+
     @GetMapping("/group")
-    public String group(){
+    public String group() {
         return "group";
     }
+
     @GetMapping("/grade")
-    public String grade(){
+    public String grade() {
         return "grade";
     }
+
     @GetMapping("/class")
-    public String cclass(){ return "class"; }
+    public String cclass() {
+        return "class";
+    }
+
     @GetMapping("/teacher")
-    public String teacher(){
+    public String teacher() {
         return "teacher";
     }
+
     @GetMapping("/table")
-    public String table(){
+    public String table() {
         return "table";
     }
+
     @GetMapping("/join")
-    public String sayHello(){
+    public String sayHello() {
         return "login";
     }
+
     @GetMapping("/file")
-    public String sharedfile(){
+    public String sharedfile() {
         return "sharedfile";
     }
+
     @GetMapping("/share")
-    public String share( ){return "sharehome";}
+    public String share() {
+        return "sharehome";
+    }
+
     @GetMapping("/myshare")
-    public String myshare( ){return "myshare";}
+    public String myshare() {
+        return "myshare";
+    }
+
     @GetMapping("/addshare")
-    public String addshare( ){return "addshare";}
+    public String addshare() {
+        return "addshare";
+    }
+
     @GetMapping("/uploadview")
-    public String uploadview( ){return "uploadadmin";}
+    public String uploadview() {
+        return "uploadadmin";
+    }
+
     @GetMapping("/home")
-    public String home(HttpServletRequest request){
+    public String home(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(session!=null&&session.getAttribute("user") != null){
-            SessionUser sessionUser=new SessionUser();
+        if (session != null && session.getAttribute("user") != null) {
+            SessionUser sessionUser = new SessionUser();
             sessionUser = (SessionUser) session.getAttribute("user");
-            if(sessionUser.getLogintype()==0){
+            if (sessionUser.getLogintype() == 0) {
                 return "stuhome";
-            }else{
+            } else {
                 return "teahome";
             }
-        }else{
+        } else {
             return "error";
         }
     }
+
     /**
      * 域名的根目录，已登录返回对应的主页，否则去登录页
+     *
      * @return
      */
-    @GetMapping(path="/")
-    public String welcomePage(HttpServletRequest request){
+    @GetMapping(path = "/")
+    public String welcomePage(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(session!=null&&session.getAttribute("user") != null){
-            SessionUser sessionUser=new SessionUser();
+        if (session != null && session.getAttribute("user") != null) {
+            SessionUser sessionUser = new SessionUser();
             sessionUser = (SessionUser) session.getAttribute("user");
-            if(sessionUser.getLogintype()==0){
-                int a=0;
+            if (sessionUser.getLogintype() == 0) {
+                int a = 0;
 
-            }else{
+            } else {
 
             }
             return "index";
-        }else{
+        } else {
             return "login";
         }
     }
+
     @RequestMapping("/download")
     public String downLoad(HttpServletResponse response) throws UnsupportedEncodingException {
-        String filename="navicatformysql.zip";
-        String filePath = "D:/软件安装包/数据库管理工具" ;
+        String filename = "navicatformysql.zip";
+        String filePath = "D:/软件安装包/数据库管理工具";
         File file = new File(filePath + "/" + filename);
-        if(file.exists()){ //判断文件父目录是否存在
+        if (file.exists()) { //判断文件父目录是否存在
             //response.setContentType("application/vnd.ms-excel;charset=UTF-8");
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/force-download");
-            response.setHeader("Content-Disposition", "attachment;fileName=" +   java.net.URLEncoder.encode(filename,"UTF-8"));
+            response.setHeader("Content-Disposition", "attachment;fileName=" + java.net.URLEncoder.encode(filename, "UTF-8"));
             byte[] buffer = new byte[1024];
             FileInputStream fis = null; //文件输入流
             BufferedInputStream bis = null;
@@ -126,7 +162,7 @@ public class HelloController {
                 fis = new FileInputStream(file);
                 bis = new BufferedInputStream(fis);
                 int i = bis.read(buffer);
-                while(i != -1){
+                while (i != -1) {
                     os.write(buffer);
                     i = bis.read(buffer);
                 }
