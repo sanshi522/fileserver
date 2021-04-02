@@ -1,0 +1,118 @@
+#subIdDiv {
+    float: left;
+    margin-left: 5px;
+    width: auto;
+}
+
+.allTestPaper {
+    width: 100%;
+}
+
+.testPaper {
+    padding: 20px;
+    background-color: #eceeee;
+    width: 250px;
+    height: 180px;
+    float: left;
+    margin-left: 20px
+}
+.testPaper:hover{
+    box-shadow:0px 0px 10px #000;
+}
+
+
+/************悬浮窗口css*********************/
+.popWindow {
+    min-width: 300px;
+    min-height: 300px;
+    background: #FFFFFF;
+    padding: 2px;
+    margin: 10px;
+    position: absolute;
+    display: none;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    max-height: 600px;
+}
+
+.popWindow h3 {
+    border-bottom: 2px #D7D7D7 solid;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+}
+
+.popWindow h3 span {
+    float: right;
+    font-size: 14px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.popWindow h3 span:hover {
+    color: #f00;
+}
+
+.popWindow .content {
+    height: 270px;
+    background: #fff;
+}
+
+.mask {
+    background: #000;
+    opacity: 0.4;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
+.choice_table {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.choice_table tr {
+    border-bottom: 1px #E8E2E2 solid;
+
+}
+
+.choice_table tr td {
+    padding: 5px;
+}
+
+.yaperoter {
+    text-align: center;
+    height: 35px;
+    width: auto;
+}
+
+/*难度级别*/
+.star-box {
+    float: left;
+}
+
+.star-box label {
+    float: right;
+    color: #999;
+}
+
+.star-box label::after {
+    content: '★';
+    font-size: 28px;
+    padding: 5px;
+    display: inline-block;
+    line-height: 1;
+}
+
+.star-box input:checked ~ label,
+.star-box label:hover ~ label,
+.star-box label:hover {
+    color: #E5E422;
+}
+
+/*难度级别*/
+
+/*********************************/
