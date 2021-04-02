@@ -47,4 +47,5 @@ public interface TestPaperBindChoiceRepository extends JpaRepository<TestPaperBi
     void deleteByTestPaperId(Integer id);
 
     List<TestPaperBindChoice> findAllByChoiceId(Integer id);
+
 }

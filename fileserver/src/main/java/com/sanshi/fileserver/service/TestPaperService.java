@@ -3,6 +3,7 @@ package com.sanshi.fileserver.service;
 import com.sanshi.fileserver.bean.TestPaper;
 import com.sanshi.fileserver.vo.PageGet;
 import com.sanshi.fileserver.vo.ReadTestPaper;
+import com.sanshi.fileserver.vo.TestPaperMsg;
 import com.sanshi.fileserver.vo.TestPaperVo;
 import org.springframework.data.domain.Page;
 
@@ -51,4 +52,6 @@ public interface TestPaperService {
      * @return
      */
     public void deleteById(TestPaper testPaper);
+
+    public TestPaperMsg findMsg(Integer testPaperId);
 }

@@ -5,6 +5,7 @@ import com.sanshi.fileserver.bean.TestPaper;
 import com.sanshi.fileserver.service.TestPaperService;
 import com.sanshi.fileserver.vo.PageGet;
 import com.sanshi.fileserver.vo.ReadTestPaper;
+import com.sanshi.fileserver.vo.TestPaperMsg;
 import com.sanshi.fileserver.vo.TestPaperVo;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -57,4 +58,16 @@ public class TestPaperController {
     public ReadTestPaper read(Integer testPaperId){
         return testPaperService.read(testPaperId);
     }
+
+    /**
+     *
+     * @param testPaperId
+     * @return
+     */
+    @RequestMapping(path = "/findMsg")
+    @ResponseBody
+    public TestPaperMsg findMsg(Integer id){
+        return testPaperService.findMsg(id);
+    }
+
 }
