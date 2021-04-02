@@ -41,5 +41,10 @@ public class KnowledgePointController {
         return knowledgePointService.save(knowledgePoint);
     };
 
-
+    @RequestMapping(path = "/deleteById")
+    @ResponseBody
+    public Integer deleteById(Integer val, HttpServletRequest request){
+        knowledgePointService.deleteById(val);
+        return 1;
+    }
 }

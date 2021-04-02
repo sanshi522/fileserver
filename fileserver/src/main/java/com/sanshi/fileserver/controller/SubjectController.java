@@ -37,4 +37,10 @@ public class SubjectController {
     public Subject save(Subject subject){
         return subjectService.save(subject);
     };
+    @RequestMapping(path = "/deleteById")
+    @ResponseBody
+    public Integer deleteById(Integer val, HttpServletRequest request){
+         subjectService.deleteById(val);
+        return 1;
+    }
 }

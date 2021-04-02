@@ -69,8 +69,8 @@ function tablebind(){
 		let thetr=$(this).parents("tr");
 		//if (confirm("确定要删除这条信息吗?") == true) {
 			if ($(this).parents("tr").attr("data_val")!=""&&$(this).parents("tr").attr("data_val")!=""){
-				alert($(this).parents("tr").attr("data_val"));
-				alert($(this).parents("table").attr("dellrc"));
+				//alert($(this).parents("tr").attr("data_val"));
+				//alert($(this).parents("table").attr("dellrc"));
 				$.ajax({
 					url: $(thetable).attr("dellrc"),
 					type: "post",

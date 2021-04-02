@@ -1,11 +1,14 @@
 package com.sanshi.fileserver.service;
 
 import com.sanshi.fileserver.bean.TestPaper;
+import com.sanshi.fileserver.vo.PageGet;
 import com.sanshi.fileserver.vo.ReadTestPaper;
 import com.sanshi.fileserver.vo.TestPaperVo;
+import org.springframework.data.domain.Page;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 【试卷service】
@@ -31,10 +34,10 @@ public interface TestPaperService {
     TestPaper findOneById(Integer id);
     /**
      * 获取试卷集合
-     * @param testPaper
+     * @param val
      * @return
      */
-    public List<TestPaper> findAll(TestPaper testPaper);
+    public Map findAll(PageGet val);
 
     /**
      * 添加修改试卷

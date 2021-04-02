@@ -94,4 +94,9 @@ public class TeacherServiceImpl implements TeacherService {
         }
         return json;
     }
+
+    @Override
+    public void deleteByTeaId(Integer id) {
+        teacherRepository.deleteByTeaId(id);
+    }
 }

@@ -3,17 +3,20 @@ package com.sanshi.fileserver.controller;
 
 import com.sanshi.fileserver.bean.TestPaper;
 import com.sanshi.fileserver.service.TestPaperService;
+import com.sanshi.fileserver.vo.PageGet;
 import com.sanshi.fileserver.vo.ReadTestPaper;
 import com.sanshi.fileserver.vo.TestPaperVo;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @Controller
-@RequestMapping("/TestPaper")
+@RequestMapping("/testPaper")
 public class TestPaperController {
     private TestPaperService testPaperService;
 
@@ -35,13 +38,13 @@ public class TestPaperController {
 
     /**
      * 获取试卷
-     * @param testPaper
+     * @param val
      * @return
      */
     @RequestMapping(path = "/findAll")
     @ResponseBody
-    public List<TestPaper> findAll(TestPaper testPaper){
-        return testPaperService.findAll(testPaper);
+    public Map findAll(PageGet val){
+        return testPaperService.findAll(val);
     }
 
     /**

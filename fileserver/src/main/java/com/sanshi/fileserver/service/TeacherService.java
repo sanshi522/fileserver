@@ -15,4 +15,5 @@ public interface TeacherService {
     List<Teacher> findTeacherByClassId(Integer classId);
     List<Teacher> findAdmin();
     Map finTeachers(PageGet val);
+    void deleteByTeaId(Integer id);
 }

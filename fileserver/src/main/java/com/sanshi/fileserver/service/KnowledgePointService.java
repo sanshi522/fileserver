@@ -39,9 +39,9 @@ public interface KnowledgePointService {
 
     /**
      * 删除
-     * @param knowledgePoint
+     * @param id
      */
-    void delete(KnowledgePoint knowledgePoint);
+    void deleteById(Integer id);
 
     Map getAll(PageGet val);
 }
