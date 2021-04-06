@@ -35,4 +35,9 @@ public interface ChoiceService {
      * @param id
      */
     Map deleteById(Integer id);
+
+    /**
+     * 根据试卷Id查询试题
+     */
+    List<Choice> selectChoiceByTestPaperId(Integer id);
 }

@@ -3,16 +3,15 @@ package com.sanshi.fileserver.controller;
 
 import com.sanshi.fileserver.bean.TestPaper;
 import com.sanshi.fileserver.service.TestPaperService;
-import com.sanshi.fileserver.vo.PageGet;
-import com.sanshi.fileserver.vo.ReadTestPaper;
-import com.sanshi.fileserver.vo.TestPaperMsg;
-import com.sanshi.fileserver.vo.TestPaperVo;
+import com.sanshi.fileserver.vo.*;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -69,5 +68,19 @@ public class TestPaperController {
     public TestPaperMsg findMsg(Integer id){
         return testPaperService.findMsg(id);
     }
+
+    /**
+     * @param  testPaper
+     * @return
+     */
+    @RequestMapping(path = "/save")
+    @ResponseBody
+    public TestPaper save(TestPaper testPaper, HttpSession  session){
+        SessionUser  sessionUser=(SessionUser) session.getAttribute("user");
+        testPaper.setCreationId(sessionUser.getTeacher().getTeaId());
+        testPaper.setCreateTime(new Date());
+        return testPaperService.save(testPaper);
+
+    };
 
 }

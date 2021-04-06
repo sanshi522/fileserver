@@ -100,4 +100,9 @@ public class ChoiceServiceImpl implements ChoiceService {
         }
         return json;
     }
+
+    @Override
+    public List<Choice> selectChoiceByTestPaperId(Integer id) {
+        return choiceRepository.findByIdIn(testPaperBindChoiceRepository.findChoicesIdByTestPaperId(id));
+    }
 }

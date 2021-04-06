@@ -3,12 +3,14 @@ package com.sanshi.fileserver.controller;
 import com.sanshi.fileserver.bean.Choice;
 import com.sanshi.fileserver.service.ChoiceService;
 import com.sanshi.fileserver.vo.ScreenChoice;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -40,4 +42,9 @@ public class ChoiceController {
     public Map deleteById(Integer id){
         return choiceService.deleteById(id);
     }
+    @PostMapping("/selectChoiceByTestPaperId")
+    @ResponseBody
+    public List<Choice> selectChoiceByTestPaperId(Integer  id){
+        return choiceService.selectChoiceByTestPaperId(id);};
+
 }

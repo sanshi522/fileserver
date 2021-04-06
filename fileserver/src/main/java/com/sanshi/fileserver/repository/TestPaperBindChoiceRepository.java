@@ -25,7 +25,7 @@ public interface TestPaperBindChoiceRepository extends JpaRepository<TestPaperBi
      * @param id
      * @return
      */
-    @Query(value="select sum(t.score) from TestPaperBindChoice t where t.testPaperId in ?1")
+    @Query(value="select sum(t.score) from TestPaperBindChoice t where t.testPaperId = ?1")
     Double findScoreSum(Integer id);
     /**
      * 添加修改试题试卷绑定
@@ -48,4 +48,6 @@ public interface TestPaperBindChoiceRepository extends JpaRepository<TestPaperBi
 
     List<TestPaperBindChoice> findAllByChoiceId(Integer id);
 
+    @Query(value="select t.choiceId from TestPaperBindChoice t where t.testPaperId = ?1")
+    List<Integer> findChoicesIdByTestPaperId(Integer id);
 }

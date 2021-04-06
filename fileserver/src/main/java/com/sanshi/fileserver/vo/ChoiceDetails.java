@@ -1,6 +1,7 @@
 package com.sanshi.fileserver.vo;
 
 import com.sanshi.fileserver.bean.Choice;
+import com.sanshi.fileserver.bean.TestPaperBindChoice;
 import lombok.Data;
 
 /**
@@ -8,42 +9,23 @@ import lombok.Data;
  */
 @Data
 public class ChoiceDetails implements Comparable<ChoiceDetails>{
-    /**
-     * 试题下标
-     */
-    Integer index;
-    /**
-     * 分值
-     */
-    Double score;
-    /**
-     * 试题
-     */
+    TestPaperBindChoice testPaperBindChoice;
     Choice choice;
 
     public ChoiceDetails() {
     }
 
-    public ChoiceDetails(Integer index, Double score, Choice choice) {
-        this.index = index;
-        this.score = score;
+    public ChoiceDetails(TestPaperBindChoice testPaperBindChoice, Choice choice) {
+        this.testPaperBindChoice = testPaperBindChoice;
         this.choice = choice;
     }
 
-    public Integer getIndex() {
-        return index;
+    public TestPaperBindChoice getTestPaperBindChoice() {
+        return testPaperBindChoice;
     }
 
-    public void setIndex(Integer index) {
-        this.index = index;
-    }
-
-    public Double getScore() {
-        return score;
-    }
-
-    public void setScore(Double score) {
-        this.score = score;
+    public void setTestPaperBindChoice(TestPaperBindChoice testPaperBindChoice) {
+        this.testPaperBindChoice = testPaperBindChoice;
     }
 
     public Choice getChoice() {
@@ -57,14 +39,12 @@ public class ChoiceDetails implements Comparable<ChoiceDetails>{
     @Override
     public String toString() {
         return "ChoiceDetails{" +
-                "index=" + index +
-                ", score=" + score +
+                "testPaperBindChoice=" + testPaperBindChoice +
                 ", choice=" + choice +
                 '}';
     }
-
-    @Override
+        @Override
     public int compareTo(ChoiceDetails o) {
-        return this.getIndex()-o.getIndex();
+        return this.getTestPaperBindChoice().getIndexNum()-o.getTestPaperBindChoice().getIndexNum();
     }
 }

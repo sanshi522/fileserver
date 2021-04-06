@@ -67,10 +67,9 @@ public class TestPaperServiceImpl implements TestPaperService {
         ReadTestPaper readTestPaper= new ReadTestPaper();
         readTestPaper.setTestPaper(testPaperRepository.findOneById(testPaperId));
         List<ChoiceDetails> choices=new ArrayList<ChoiceDetails>();
-        List<TestPaperBindChoice> testPaperBindChoicesList=testPaperBindChoiceRepository.findAllByTestPaperId(testPaperId);//获取试题集合
+        List<TestPaperBindChoice> testPaperBindChoicesList=testPaperBindChoiceRepository.findAllByTestPaperId(testPaperId);//获取试题bind集合
         for (int i=0;i<testPaperBindChoicesList.size();i++){
-            choices.add(new ChoiceDetails(testPaperBindChoicesList.get(i).getIndexNum(),
-                    testPaperBindChoicesList.get(i).getScore(),choiceRepository.findOneById(testPaperBindChoicesList.get(i).getChoiceId())));
+            choices.add(new ChoiceDetails(testPaperBindChoicesList.get(i),choiceRepository.findOneById(testPaperBindChoicesList.get(i).getChoiceId())));
         }
         Collections.sort(choices);
         readTestPaper.setChoices(choices);
