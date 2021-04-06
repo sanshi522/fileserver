@@ -112,7 +112,7 @@ $(function(){
 								'            <tr>\n' +
 								'                <td>编辑操作：</td>\n' +
 								'                <td style="font-size: 20px;">\n' +
-								'                    <label style="margin-right: 10px;cursor: pointer;"><i class="my-icon lsm-sidebar-icon icon-bianji del"></i></label>\n' +
+								'                    <label style="margin-right: 10px;cursor: pointer;"><i onclick="javascript:parent.open(\'addTestPaper?id='+data.page.content[i].id+'\')" class="my-icon lsm-sidebar-icon icon-bianji del"></i></label>\n' +
 								'                    <label><i class="my-icon lsm-sidebar-icon icon-shanchu del" style="cursor: pointer;"></i></label>\n' +
 								'                </td>\n' +
 								'            </tr>\n' +
