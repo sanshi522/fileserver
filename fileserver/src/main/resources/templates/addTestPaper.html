@@ -42,48 +42,14 @@
         </div>
     </div>
     <div id="choices">
-        <frame src="main.asp" name="main" id="main" title="mainF" />
-        </frameset>
-        </frameset>
+        <div class="choice">
+            <div class="choice-title"><div class="choice-index" index="0">1</div><div class="choice-name" >你所熟练的语言？</div>
+                <div class="choice-oper pack-up"><i class="my-icon lsm-sidebar-icon  icon-jiantouxia"></i></div>
+                <div class="choice-oper delete-choice"><i class="my-icon lsm-sidebar-icon icon-shanchu "></i></div>
+                <div class="choice-oper edit-choice"><i class="my-icon lsm-sidebar-icon icon-bianji "></i></div>
+            </div>
 
-        问题：
-        页面Main.asp中有一DIV，如何设置DIV的高度与宽度为当前可视区域高度与宽度
-        2009-04-08 00:16:05
-        楼主
-
-        Steve
-        等级
-        勋章
-        Blank
-        <div id="aa" style="background-color:yellow;border:2px solid #000;width:100%;height:100%;"/>
-        2009-04-08 02:31:56
-        #1得分 0
-
-        ZhangYaoxing
-        等级
-        document.documentElement.clientWidth/clientHeight
-        注意在框架里面调用的话得到的是框架的可视区域。一定要找到顶层的document
-        2009-04-08 04:04:12
-        #2得分 0
-
-        look4sword
-        等级
-        首先，html,body{width:100%,height:100%;}
-        然后div全是100%即可。
-        2009-04-08 08:02:01
-        #3得分 0
-
-        jasondct
-        等级
-        div全是100% 都是可以的
-        但是我认为 还是设置坐标比较好。
-        window. moveto(x,y)
-        2009-04-08 09:48:45
-        #4得分 0
-
-        luojihaidao
-        等级
-        设置DIV宽高为100%　当然你的main的宽度也要设置你想要的。
+        </div>
     </div>
 </div>
 <div class="right_div">
@@ -95,5 +61,6 @@
         <button class="ui button green" onclick="javascript:saveTestPaper()">保存试卷</button>
     </div>
 </div>
+
 </body>
 </html>
