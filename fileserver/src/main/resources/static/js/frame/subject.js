@@ -69,6 +69,7 @@ $(function () {
                         '</tr>')
                 }
                 total=data.page.totalElements;
+                $(".totalmsg").html("【共"+total+"条记录，当前显示："+(data.page.pageable.pageNumber*data.page.pageable.pageSize+1)+"~"+(data.page.pageable.pageNumber*data.page.pageable.pageSize+data.page.numberOfElements)+"】");
                 tablebind();
             },
             error: function (data) {
