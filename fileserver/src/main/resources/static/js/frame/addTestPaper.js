@@ -126,6 +126,8 @@ $(function () {
    // if (testPaperid!=0){
         init();
    // }
+
+    getsubtype();
     function init() {
         $.ajax({
             url: "/testPaper/read",
@@ -134,6 +136,12 @@ $(function () {
             dataType: "json",
             success: function(data) {
                 console.log(data);
+                if(data.testPaper !=null){
+                    $("#subIdScreen").val(data.testPaper.subId).trigger("change");
+                    $("#subIdScreen").prop("disabled",true);
+                    $('#subIdScreen').selectpicker('refresh');
+                    $("#testPaperName").val(data.testPaper.name);
+                }
                 information(data);
             },
             error: function(data){
@@ -161,19 +169,19 @@ function   information(data) {
          return  false;
      }else {
          let difficul="";
-         for(let i=0;i>data.length;i++){
+         for(let i=0;i>data.choices.length;i++){
              difficul="";
              for (let k=0;k<5;k++){
-                 if (k<data[i].difficultyLevel)
+                 if (k<data.choices[i].difficultyLevel)
                      difficul+='<label style="color: #85822b;font-size: 14px;">★</label>';
                  else
                      difficul+='<label style="color: #9d9ea3;font-size: 14px;">★</label>';
              }
-             if(data[i].type==1||data[i].type==2){//单选题和多选
+             if(data.choices[i].type==1||data.choices[i].type==2){//单选题和多选
                  let type="";
                  let opent="";
-                 if (data[i].type==1)type="单选题";else type="多选题"
-                 for (let o=0;o<data[i].optionNum;o++){
+                 if (data[i].choices.type==1)type="单选题";else type="多选题"
+                 for (let o=0;o<data.choices[i].optionNum;o++){
                      let op='';
                      switch (o) {
                          case 0:op="A."+data[i].optionA;break;
@@ -247,23 +255,20 @@ function   information(data) {
 
 }
 
-function  getsubtype(){
+//获取学科
+function getsubtype(){
     $.ajax({
         url:"/subject/findAll",
         type:"post",
         data:{},
         dataType:"json",
         success: function(data) {
-            $("#subjectId").empty();
             $("#subIdScreen").empty();
             $("#subIdScreen").append('<option value="0">全部学科</option>');
             for (let i = 0; i < data.length; i++) {
-                $("#subjectId").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
                 $("#subIdScreen").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
             }
-            $('#subjectId').selectpicker('refresh');
             $('#subIdScreen').selectpicker('refresh');
-            $('#subjectId').val(data[0].id).trigger("change");
             $('#subIdScreen').val(0).trigger("change");
         },
         error: function(data) {
