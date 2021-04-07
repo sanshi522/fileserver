@@ -47,4 +47,14 @@ public class KnowledgePointController {
         knowledgePointService.deleteById(val);
         return 1;
     }
+
+    @RequestMapping(path = "/selectBySubId")
+    @ResponseBody
+    public  List<KnowledgePoint> selectBySubId(Integer  id){
+        return  knowledgePointService.selectBySubId(id);
+
+    }
+
+
+
 }

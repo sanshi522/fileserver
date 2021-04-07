@@ -44,4 +44,11 @@ public interface KnowledgePointRepository extends JpaRepository<KnowledgePoint,I
      * @param id
      */
     void deleteById(Integer id);
+
+    /**
+     * 获取知识点
+     */
+
+   List<KnowledgePoint> findAllBySubId(Integer id);
+
 }

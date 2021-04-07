@@ -16,6 +16,8 @@ public class ScreenChoice {
      * 学科id
      */
     private Integer subId;
+
+
     /**
      * 类型
      */
@@ -33,10 +35,21 @@ public class ScreenChoice {
      */
     String sortName;
 
+    /**
+     * 知识点ID
+     */
+    private String abilityIds;
+
+    /**
+     * 难度级别
+     */
+    private Integer difficultyLevel;
+
+
     public ScreenChoice() {
     }
 
-    public ScreenChoice(Integer pageNumber, Integer pageIndex, Integer subId, Integer type, String name, String sort, String sortName) {
+    public ScreenChoice(Integer pageNumber, Integer pageIndex, Integer subId, Integer type, String name, String sort, String sortName,String abilityIds,Integer difficultyLevel) {
         this.pageNumber = pageNumber;
         this.pageIndex = pageIndex;
         this.subId = subId;
@@ -44,6 +57,8 @@ public class ScreenChoice {
         this.name = name;
         this.sort = sort;
         this.sortName = sortName;
+        this.abilityIds=abilityIds;
+        this.difficultyLevel=difficultyLevel;
     }
 
     public Integer getPageNumber() {
@@ -60,6 +75,21 @@ public class ScreenChoice {
 
     public void setPageIndex(Integer pageIndex) {
         this.pageIndex = pageIndex;
+    }
+    public String getAbilityIds() {
+        return abilityIds;
+    }
+
+    public Integer getDifficultyLevel() {
+        return difficultyLevel;
+    }
+
+    public void setAbilityIds(String abilityIds) {
+        this.abilityIds = abilityIds;
+    }
+
+    public void setDifficultyLevel(Integer difficultyLevel) {
+        this.difficultyLevel = difficultyLevel;
     }
 
     public Integer getSubId() {

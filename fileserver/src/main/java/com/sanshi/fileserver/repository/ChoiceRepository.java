@@ -37,13 +37,33 @@ public interface ChoiceRepository extends JpaRepository<Choice,Integer>, JpaSpec
 
     Page<Choice> findAllByTopicLike(String name,Pageable pageable);
 
-    Page<Choice> findAllBySubIdAndType(Integer subid,Integer type,Pageable pageable);
 
-    Page<Choice> findAllBySubId(Integer subid,Pageable pageable);
+    Page<Choice> findAllByAbilityIdsAndTopicLike(String AbilityIds,String name,Pageable pageable);
 
-    Page<Choice> findAllByType(Integer type,Pageable pageable);
+    Page<Choice> findAllByTypeAndTopicLikeAndAbilityIds(Integer type,String name,String AbilityIds,Pageable pageable);
 
-    Page<Choice> findAll(Pageable pageable);
+    Page<Choice> findAllBySubIdAndTopicLikeAndAbilityIds(Integer subid,String name,String AbilityIds,Pageable pageable);
+
+    Page<Choice> findAllBySubIdAndTypeAndTopicLikeAndAbilityIds(Integer subid, Integer type, String name,String AbilityIds,Pageable pageable);
+
+
+    Page<Choice> findAllByTopicLikeAndDifficultyLevel(String name,Integer difficultyLevel, Pageable pageable);
+
+    Page<Choice> findAllByTypeAndTopicLikeAndDifficultyLevel(Integer type,String name,Integer difficultyLevel,Pageable pageable);
+
+    Page<Choice> findAllBySubIdAndTopicLikeAndDifficultyLevel(Integer subid,String name,Integer difficultyLevel,Pageable pageable);
+
+    Page<Choice> findAllBySubIdAndTypeAndTopicLikeAndDifficultyLevel(Integer subid, Integer type, String name,Integer difficultyLevel,Pageable pageable);
+
+
+    Page<Choice> findAllByAbilityIdsAndTopicLikeAndDifficultyLevel(String AbilityIds,String name,Integer difficultyLevel,Pageable pageable);
+
+    Page<Choice> findAllByTypeAndTopicLikeAndAbilityIdsAndDifficultyLevel(Integer type,String name,String AbilityIds,Integer difficultyLevel,Pageable pageable);
+
+    Page<Choice> findAllBySubIdAndTopicLikeAndAbilityIdsAndDifficultyLevel(Integer subid,String name,String AbilityIds,Integer difficultyLevel,Pageable pageable);
+
+    Page<Choice> findAllBySubIdAndTypeAndTopicLikeAndAbilityIdsAndDifficultyLevel(Integer subid, Integer type, String name,String AbilityIds,Integer difficultyLevel,Pageable pageable);
+
     /**
      * 通过id删除试题
      * @param id

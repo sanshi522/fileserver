@@ -90,16 +90,6 @@
 
     <div id="navigation">
         <lable class="anchor" state="1">1</lable>
-        <lable class="anchor" state="2">2</lable>
-        <lable class="anchor" state="">3</lable>
-        <lable class="anchor" state="">4</lable>
-        <lable class="anchor" state="">5</lable>
-        <lable class="anchor" state="">6</lable>
-        <lable class="anchor" state="">7</lable>
-        <lable class="anchor" state="">8</lable>
-        <lable class="anchor" state="">9</lable>
-        <lable class="anchor" state="">10</lable>
-        <lable class="anchor" state="">11</lable>
     </div>
     <hr>
     <div class="blue ui buttons" style="margin: 0 auto;width: 100px;float: none;">
@@ -117,7 +107,21 @@
                 <option  value="4">简答题</option>
             </select>
         </div>
-
+        <div  id="subIdDiv2" >
+            <select name="channels" id="abilityId" data-style="btn-info" class="selectpicker"  data-live-search="true" >
+                <option value="0">全部知识点</option>
+            </select>
+        </div>
+        <div  id="typeDiv2" >
+            <select name="channels" id="typeScreen2" data-style="btn-info" class="selectpicker"  data-live-search="true" >
+                <option  value="0">全部</option>
+                <option  value="1">一级</option>
+                <option  value="2">二级</option>
+                <option  value="3">三级</option>
+                <option  value="4">四级</option>
+                <option  value="5">五级</option>
+            </select>
+        </div>
         <div class="ui query">
             <input class="query"  type="text" id="query">
             <i class="my-icon lsm-sidebar-icon icon-chazhao querybtn"></i>
@@ -141,6 +145,26 @@
                     <div class="answer">标答：</div>
                 </div>
             </div>
+        </div>
+        <div class="paginationParent">
+            <div id="showNumberdiv" style="float: right;margin-top: 20px;width:60px">
+                <select name="channels" id="showNumber" data-style="btn-info" class="selectpicker" >
+                    <option  value="5">5条</option>
+                    <option  value="10">10条</option>
+                    <option  value="20">20条</option>
+                    <option  value="30">30条</option>
+                    <option  value="40">40条</option>
+                    <option  value="50">50条</option>
+                    <option  value="60">60条</option>
+                    <option  value="70">70条</option>
+                    <option  value="80">80条</option>
+                    <option  value="90">90条</option>
+                    <option  value="100">100条</option>
+                </select>
+            </div>
+            <div style="float: right;margin-top: 20px;">单页显示：</div>
+            <label class="totalmsg" style="float: right;margin-top: 20px;"></label>
+            <div id="Pagination"></div>
         </div>
         <div class="yaperoter">
             <div class="ui buttons" style="margin-left: 10px;width: 80px;">

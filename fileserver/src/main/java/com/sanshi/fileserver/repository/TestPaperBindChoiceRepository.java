@@ -38,7 +38,7 @@ public interface TestPaperBindChoiceRepository extends JpaRepository<TestPaperBi
      * 通过id删除试题试卷绑定
      * @param id
      */
-    void deleteById(Integer id);
+    void  deleteById(Integer id);
 
     /**
      * 通过试卷id删除绑定信息

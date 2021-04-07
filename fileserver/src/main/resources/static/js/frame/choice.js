@@ -9,12 +9,16 @@ $(function(){
 			data:{},
 			dataType:"json",
 			success: function(data) {
+				$("#subjectId").empty();
 				$("#subIdScreen").empty();
 				$("#subIdScreen").append('<option value="0">全部学科</option>');
 				for (let i = 0; i < data.length; i++) {
+					$("#subjectId").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
 					$("#subIdScreen").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
 				}
+				$('#subjectId').selectpicker('refresh');
 				$('#subIdScreen').selectpicker('refresh');
+				$('#subjectId').val(data[0].id).trigger("change");
 				$('#subIdScreen').val(0).trigger("change");
 			},
 			error: function(data) {
@@ -61,6 +65,11 @@ $(function(){
 	});
 	$("#typeScreen").change(function(){
 		choicetype=$("#typeScreen").val();
+		Init(0);
+	});
+
+	$(".querybtn").click(function(){
+		likeName=$("#query").val();
 		Init(0);
 	});
 	function Init(index) { // 参数就是点击的那个分页的页数索引值

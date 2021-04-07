@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class TestPaperBindChoiceController {
     private TestPaperBindChoiceService  TestPaperBindChoiceService;
 
+    public TestPaperBindChoiceController(com.sanshi.fileserver.service.TestPaperBindChoiceService testPaperBindChoiceService) {
+        TestPaperBindChoiceService = testPaperBindChoiceService;
+    }
+
     @PostMapping("/save")
     @ResponseBody
     public TestPaperBindChoice  save(TestPaperBindChoice testPaperBindChoice){ return TestPaperBindChoiceService.save(testPaperBindChoice);};
@@ -19,8 +23,10 @@ public class TestPaperBindChoiceController {
 
     @PostMapping("/delete")
     @ResponseBody
-    public void  deleteById(TestPaperBindChoice testPaperBindChoice){ TestPaperBindChoiceService.deleteById(testPaperBindChoice); };
-
-
-
+    public Integer  deleteById(Integer id){
+        TestPaperBindChoice  testPaperBindChoice=new  TestPaperBindChoice();
+        testPaperBindChoice.setId(id);
+        TestPaperBindChoiceService.deleteById(testPaperBindChoice);
+        return 1;
+    };
 }

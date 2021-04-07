@@ -33,6 +33,9 @@
 #subIdDiv{
     float:left;
 }
+#subIdDiv2{
+    float:left;
+}
 #choices{
     width: 100%;
     min-height:1200px;
@@ -51,6 +54,7 @@
     height: auto;
     padding: 6px;
     margin-bottom: 20px;
+    width: 100%;
 }
 /*快速锚点*/
 .anchor{
@@ -66,14 +70,16 @@
     box-shadow: 0px 0px 10px 3px #aaa;
 }
 
-.choice{
+.choice,.choice1{
     width: 100%;
     height: auto;
     border-bottom:  1px #C7C6C6 solid;
     float: left;
     padding-top: 15px;
     padding-bottom: 10px;
+
 }
+
 .choice-title{
     float: left;
     width: 100%;
@@ -116,8 +122,13 @@
     /*	background-color: #FFFFFF;*/
     color:#CEF51C;
 }
+.choice-details1{
+    width:100%;
+    height: auto;
+    float: left;
+}
 .choice-details{
-    /*	display:none;*/
+    display:none;
     width:100%;
     height: auto;
     float: left;
@@ -129,6 +140,7 @@
     height: auto;
     padding: 15px;
 }
+
 .input-cho:hover{
     box-shadow: 0px 0px 10px 5px #aaa;
 }
@@ -165,6 +177,10 @@
     float:left;
 }
 
+#typeDiv2{
+    float:left;
+}
+
 .popWindow .content{
     height: 270px;
     background: #fff;
@@ -180,9 +196,47 @@
 .yaperoter{
     text-align: center;
     height:35px;
-    width: auto;
+    width: 100%;
+    float: left;
 }
 .yaperoter .ui.buttons{
     float: none;
     margin: 0 auto;
+}
+
+.allchoice{
+    float: left;
+    width: 100%;
+    min-height:500px;
+    /*	border:  1px #1B2E9B solid;*/
+}
+
+
+.choice-type{
+    background-color: #EEF0A9;
+    line-height: 30px;
+    border-radius: 15px 15px 15px 15px;
+    font-size: 18px;
+    font-weight: 700;
+    color:#777071;
+    text-align: center;
+    border: 1px red solid;
+    float:left;
+    width:80px;
+}
+
+
+.choice-oper{
+    float: right;
+    cursor:pointer;
+    font-size: 30px;
+    line-height: 30px;
+    text-align: center;
+    color:#9B8F8F;
+    width: 30px;
+    height: 30px;
+}
+.choice-oper:hover{
+    background-color: #FFFFFF;
+    color:#CEF51C;
 }

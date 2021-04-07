@@ -44,4 +44,6 @@ public interface KnowledgePointService {
     void deleteById(Integer id);
 
     Map getAll(PageGet val);
+
+    List<KnowledgePoint>  selectBySubId(Integer id);
 }

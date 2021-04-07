@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,10 +76,17 @@ public class KnowledgePointServiceImpl implements KnowledgePointService {
         return json;
     }
 
+
     @RequestMapping(path = "/deleteById")
     @ResponseBody
     public Integer deleteById(Integer val, HttpServletRequest request){
          knowledgePointRepository.deleteById(val);
         return 1;
     }
+
+    @Override
+    public List<KnowledgePoint> selectBySubId(Integer id) {
+        return knowledgePointRepository.findAllBySubId(id);
+    }
+
 }

@@ -46,39 +46,74 @@ public class ChoiceServiceImpl implements ChoiceService {
                 sort = Sort.by(choice.getSortName()).ascending();
             else
                 sort = Sort.by(choice.getSortName()).descending();
-            pageable = PageRequest.of(choice.getPageIndex() , choice.getPageNumber(), sort);
+            pageable = PageRequest.of(choice.getPageIndex(), choice.getPageNumber(), sort);
         }
-        pageable = PageRequest.of(choice.getPageIndex() , choice.getPageNumber());
+        pageable = PageRequest.of(choice.getPageIndex(), choice.getPageNumber());
         json.put("resoult", true);
-        if (choice.getName().isEmpty()){
-            if (choice.getSubId() == 0) {
-                if (choice.getType() == 0) {
-                    json.put("page",  choiceRepository.findAll(pageable));
+        if (choice.getName().isEmpty()) choice.setName("");
+        if (choice.getSubId() == 0) {
+            if (choice.getType() == 0) {
+                if (!choice.getAbilityIds().equals("0")) {
+                    if (choice.getDifficultyLevel() != 0) {
+                        json.put("page", choiceRepository.findAllByAbilityIdsAndTopicLikeAndDifficultyLevel(choice.getAbilityIds(), choice.getName(), choice.getDifficultyLevel(), pageable));
+                    } else {
+                        json.put("page", choiceRepository.findAllByAbilityIdsAndTopicLike(choice.getAbilityIds(), choice.getName(), pageable));
+                    }
                 } else {
-                    json.put("page",  choiceRepository.findAllByType(choice.getType(),pageable));
+                    if (choice.getDifficultyLevel() != 0) {
+                        json.put("page", choiceRepository.findAllByTopicLikeAndDifficultyLevel("%" + choice.getName() + "%", choice.getDifficultyLevel(), pageable));
+                    } else {
+                        json.put("page", choiceRepository.findAllByTopicLike("%" + choice.getName() + "%", pageable));
+                    }
                 }
             } else {
-                if (choice.getType() == 0) {
-                    json.put("page",  choiceRepository.findAllBySubId(choice.getSubId(),pageable));
+                if (!choice.getAbilityIds().equals("0")) {
+                    if (choice.getDifficultyLevel() != 0) {
+                        json.put("page", choiceRepository.findAllByTypeAndTopicLikeAndAbilityIdsAndDifficultyLevel(choice.getType(), choice.getName(), choice.getAbilityIds(), choice.getDifficultyLevel(), pageable));
+                    } else {
+                        json.put("page", choiceRepository.findAllByTypeAndTopicLikeAndAbilityIds(choice.getType(), choice.getName(), choice.getAbilityIds(), pageable));
+                    }
                 } else {
-                    json.put("page",  choiceRepository.findAllBySubIdAndType(choice.getSubId(),choice.getType(),pageable));
+                    if (choice.getDifficultyLevel() != 0) {
+                        json.put("page", choiceRepository.findAllByTypeAndTopicLikeAndDifficultyLevel(choice.getType(), "%" + choice.getName() + "%", choice.getDifficultyLevel(), pageable));
+                    } else {
+                        json.put("page", choiceRepository.findAllByTypeAndTopicLike(choice.getType(), "%" + choice.getName() + "%", pageable));
+                    }
                 }
             }
-        }else {
-            if (choice.getSubId() == 0) {
-                if (choice.getType() == 0) {
-                    json.put("page",  choiceRepository.findAllByTopicLike("%"+choice.getName()+"%",pageable));
+        } else {
+            if (choice.getType() == 0) {
+                if (!choice.getAbilityIds().equals("0")) {
+                    if (choice.getDifficultyLevel() != 0) {
+                        json.put("page", choiceRepository.findAllBySubIdAndTopicLikeAndAbilityIdsAndDifficultyLevel(choice.getSubId(), "%" + choice.getName() + "%", choice.getAbilityIds(), choice.getDifficultyLevel(), pageable));
+                    } else {
+                        json.put("page", choiceRepository.findAllBySubIdAndTopicLikeAndAbilityIds(choice.getSubId(), "%" + choice.getName() + "%", choice.getAbilityIds(), pageable));
+                    }
                 } else {
-                    json.put("page",  choiceRepository.findAllByTypeAndTopicLike(choice.getType(),"%"+choice.getName()+"%",pageable));
+                    if (choice.getDifficultyLevel() != 0) {
+                        json.put("page", choiceRepository.findAllBySubIdAndTopicLikeAndDifficultyLevel(choice.getSubId(), "%" + choice.getName() + "%", choice.getDifficultyLevel(), pageable));
+                    } else {
+                        json.put("page", choiceRepository.findAllBySubIdAndTopicLike(choice.getSubId(), "%" + choice.getName() + "%", pageable));
+                    }
                 }
             } else {
-                if (choice.getType() == 0) {
-                    json.put("page",  choiceRepository.findAllBySubIdAndTopicLike(choice.getSubId(),"%"+choice.getName()+"%",pageable));
+                if (!choice.getAbilityIds().equals("0")) {
+                    if (choice.getDifficultyLevel() != 0) {
+                        json.put("page", choiceRepository.findAllBySubIdAndTypeAndTopicLikeAndAbilityIdsAndDifficultyLevel(choice.getSubId(), choice.getType(), "%" + choice.getName() + "%", choice.getAbilityIds(), choice.getDifficultyLevel(), pageable));
+                    } else {
+
+                        json.put("page", choiceRepository.findAllBySubIdAndTypeAndTopicLikeAndAbilityIds(choice.getSubId(), choice.getType(), "%" + choice.getName() + "%", choice.getAbilityIds(), pageable));
+                    }
                 } else {
-                    json.put("page",  choiceRepository.findAllBySubIdAndTypeAndTopicLike(choice.getSubId(),choice.getType(),"%"+choice.getName()+"%",pageable));
+                    if (choice.getDifficultyLevel() != 0) {
+                        json.put("page", choiceRepository.findAllBySubIdAndTypeAndTopicLikeAndDifficultyLevel(choice.getSubId(), choice.getType(), "%" + choice.getName() + "%", choice.getDifficultyLevel(), pageable));
+                    } else {
+                        json.put("page", choiceRepository.findAllBySubIdAndTypeAndTopicLike(choice.getSubId(), choice.getType(), "%" + choice.getName() + "%", pageable));
+                    }
                 }
             }
         }
+
         return json;
     }
 
@@ -86,17 +121,17 @@ public class ChoiceServiceImpl implements ChoiceService {
     public Map deleteById(Integer id) {
         Map json = new HashMap();
         List<TestPaperBindChoice> testPaperBindChoices = testPaperBindChoiceRepository.findAllByChoiceId(id);
-        if (testPaperBindChoices.size()==0){
+        if (testPaperBindChoices.size() == 0) {
             choiceRepository.deleteById(id);
-            json.put("resoult",true);
-        }else{
-            json.put("resoult",false);
-            json.put("msg","已被"+testPaperBindChoices.size()+"张试卷关联，无删除权限");
-            String testPaperNames = "" ;
-            for(int i = 0;i < testPaperBindChoices.size(); i ++){
-                testPaperNames+="\r\n"+(i+1)+"."+testPaperRepository.findOneById(testPaperBindChoices.get(i).getTestPaperId()).getName();
+            json.put("resoult", true);
+        } else {
+            json.put("resoult", false);
+            json.put("msg", "已被" + testPaperBindChoices.size() + "张试卷关联，无删除权限");
+            String testPaperNames = "";
+            for (int i = 0; i < testPaperBindChoices.size(); i++) {
+                testPaperNames += "\r\n" + (i + 1) + "." + testPaperRepository.findOneById(testPaperBindChoices.get(i).getTestPaperId()).getName();
             }
-            json.put("testPaperNames",testPaperNames);
+            json.put("testPaperNames", testPaperNames);
         }
         return json;
     }
