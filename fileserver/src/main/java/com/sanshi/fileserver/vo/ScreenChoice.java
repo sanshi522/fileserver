@@ -49,11 +49,20 @@ public class ScreenChoice {
     public ScreenChoice() {
     }
 
-    public ScreenChoice(Integer pageNumber, Integer pageIndex, Integer subId, Integer type, String name, String sort, String sortName,String abilityIds,Integer difficultyLevel) {
+    public ScreenChoice(Integer pageNumber, Integer pageIndex, Integer subId, Integer type, String name, String sort, String sortName) {
         this.pageNumber = pageNumber;
         this.pageIndex = pageIndex;
         this.subId = subId;
         this.type = type;
+        this.name = name;
+        this.sort = sort;
+        this.sortName = sortName;
+    }
+
+    public ScreenChoice(Integer pageNumber, Integer pageIndex, Integer subId, Integer type, String name, String sort, String sortName, String abilityIds, Integer difficultyLevel) {
+        this.pageNumber = pageNumber;
+        this.pageIndex = pageIndex;
+        this.subId = subId;
         this.name = name;
         this.sort = sort;
         this.sortName = sortName;

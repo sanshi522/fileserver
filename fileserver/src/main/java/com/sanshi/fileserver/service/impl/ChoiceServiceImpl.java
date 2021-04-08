@@ -53,28 +53,28 @@ public class ChoiceServiceImpl implements ChoiceService {
         if (choice.getName().isEmpty()) choice.setName("");
         if (choice.getSubId() == 0) {
             if (choice.getType() == 0) {
-                if (!choice.getAbilityIds().equals("0")) {
-                    if (choice.getDifficultyLevel() != 0) {
+                if (!choice.getAbilityIds().equals("0") && !choice.getAbilityIds().isEmpty()) {
+                    if (choice.getDifficultyLevel() != 0 && choice.getDifficultyLevel()!=null) {
                         json.put("page", choiceRepository.findAllByAbilityIdsAndTopicLikeAndDifficultyLevel(choice.getAbilityIds(), choice.getName(), choice.getDifficultyLevel(), pageable));
                     } else {
                         json.put("page", choiceRepository.findAllByAbilityIdsAndTopicLike(choice.getAbilityIds(), choice.getName(), pageable));
                     }
                 } else {
-                    if (choice.getDifficultyLevel() != 0) {
+                    if (choice.getDifficultyLevel() != 0  && choice.getDifficultyLevel()!=null) {
                         json.put("page", choiceRepository.findAllByTopicLikeAndDifficultyLevel("%" + choice.getName() + "%", choice.getDifficultyLevel(), pageable));
                     } else {
                         json.put("page", choiceRepository.findAllByTopicLike("%" + choice.getName() + "%", pageable));
                     }
                 }
             } else {
-                if (!choice.getAbilityIds().equals("0")) {
-                    if (choice.getDifficultyLevel() != 0) {
+                if (!choice.getAbilityIds().equals("0") && !choice.getAbilityIds().isEmpty()) {
+                    if (choice.getDifficultyLevel() != 0 && choice.getDifficultyLevel()!=null) {
                         json.put("page", choiceRepository.findAllByTypeAndTopicLikeAndAbilityIdsAndDifficultyLevel(choice.getType(), choice.getName(), choice.getAbilityIds(), choice.getDifficultyLevel(), pageable));
                     } else {
                         json.put("page", choiceRepository.findAllByTypeAndTopicLikeAndAbilityIds(choice.getType(), choice.getName(), choice.getAbilityIds(), pageable));
                     }
                 } else {
-                    if (choice.getDifficultyLevel() != 0) {
+                    if (choice.getDifficultyLevel() != 0 && choice.getDifficultyLevel()!=null) {
                         json.put("page", choiceRepository.findAllByTypeAndTopicLikeAndDifficultyLevel(choice.getType(), "%" + choice.getName() + "%", choice.getDifficultyLevel(), pageable));
                     } else {
                         json.put("page", choiceRepository.findAllByTypeAndTopicLike(choice.getType(), "%" + choice.getName() + "%", pageable));
@@ -83,14 +83,14 @@ public class ChoiceServiceImpl implements ChoiceService {
             }
         } else {
             if (choice.getType() == 0) {
-                if (!choice.getAbilityIds().equals("0")) {
-                    if (choice.getDifficultyLevel() != 0) {
+                if (!choice.getAbilityIds().equals("0") && !choice.getAbilityIds().isEmpty()) {
+                    if (choice.getDifficultyLevel() != 0 && choice.getDifficultyLevel()!=null) {
                         json.put("page", choiceRepository.findAllBySubIdAndTopicLikeAndAbilityIdsAndDifficultyLevel(choice.getSubId(), "%" + choice.getName() + "%", choice.getAbilityIds(), choice.getDifficultyLevel(), pageable));
                     } else {
                         json.put("page", choiceRepository.findAllBySubIdAndTopicLikeAndAbilityIds(choice.getSubId(), "%" + choice.getName() + "%", choice.getAbilityIds(), pageable));
                     }
                 } else {
-                    if (choice.getDifficultyLevel() != 0) {
+                    if (choice.getDifficultyLevel() != 0 && choice.getDifficultyLevel()!=null) {
                         json.put("page", choiceRepository.findAllBySubIdAndTopicLikeAndDifficultyLevel(choice.getSubId(), "%" + choice.getName() + "%", choice.getDifficultyLevel(), pageable));
                     } else {
                         json.put("page", choiceRepository.findAllBySubIdAndTopicLike(choice.getSubId(), "%" + choice.getName() + "%", pageable));
@@ -98,14 +98,14 @@ public class ChoiceServiceImpl implements ChoiceService {
                 }
             } else {
                 if (!choice.getAbilityIds().equals("0")) {
-                    if (choice.getDifficultyLevel() != 0) {
+                    if (choice.getDifficultyLevel() != 0  && choice.getDifficultyLevel()!=null) {
                         json.put("page", choiceRepository.findAllBySubIdAndTypeAndTopicLikeAndAbilityIdsAndDifficultyLevel(choice.getSubId(), choice.getType(), "%" + choice.getName() + "%", choice.getAbilityIds(), choice.getDifficultyLevel(), pageable));
                     } else {
 
                         json.put("page", choiceRepository.findAllBySubIdAndTypeAndTopicLikeAndAbilityIds(choice.getSubId(), choice.getType(), "%" + choice.getName() + "%", choice.getAbilityIds(), pageable));
                     }
                 } else {
-                    if (choice.getDifficultyLevel() != 0) {
+                    if (choice.getDifficultyLevel() != 0  && choice.getDifficultyLevel()!=null) {
                         json.put("page", choiceRepository.findAllBySubIdAndTypeAndTopicLikeAndDifficultyLevel(choice.getSubId(), choice.getType(), "%" + choice.getName() + "%", choice.getDifficultyLevel(), pageable));
                     } else {
                         json.put("page", choiceRepository.findAllBySubIdAndTypeAndTopicLike(choice.getSubId(), choice.getType(), "%" + choice.getName() + "%", pageable));
