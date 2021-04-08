@@ -73,30 +73,52 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Map finTeachers(PageGet pageGet) {
-        Pageable pageable;
-        pageable = PageRequest.of(pageGet.getPageIndex() , pageGet.getPageNumber());
+    public Map finTeachers(PageGet pageGet,HttpServletRequest request) {
         Map json = new HashMap();
-        json.put("resoult", true);
-        if (pageGet.getIssistId()==2){
-            List<Integer> list = new ArrayList<Integer>();
-            list.add(1);
-            list.add(2);
-            if (pageGet.getLikeName().isEmpty())
-                json.put("page",teacherRepository.findAllByTeaIdentityIn(list,pageable));
-            else
-                json.put("page",teacherRepository.findAllByTeaIdentityInAndTeaNameLike(list,pageGet.getLikeName(),pageable));
+        HttpSession session = request.getSession();
+        if (session != null && session.getAttribute("user") != null) {
+            SessionUser sessionUser = new SessionUser();
+            sessionUser = (SessionUser) session.getAttribute("user");
+            Integer ident = (sessionUser.getLogintype() == 0 ? 0 : sessionUser.getTeacher().getTeaIdentity());
+            Integer id = (sessionUser.getLogintype() == 0 ? sessionUser.getStudent().getStuId() : sessionUser.getTeacher().getTeaId());
+            json.put("resoult", true);
+            Pageable pageable;
+            pageable = PageRequest.of(pageGet.getPageIndex() , pageGet.getPageNumber());
+            if (ident==3) {
+                if (pageGet.getIssistId()==2){
+                    List<Integer> list = new ArrayList<Integer>();
+                    list.add(1);
+                    list.add(2);
+                    if (pageGet.getLikeName().isEmpty())
+                        json.put("page",teacherRepository.findAllByTeaIdentityIn(list,pageable));
+                    else
+                        json.put("page",teacherRepository.findAllByTeaIdentityInAndTeaNameLike(list,pageGet.getLikeName(),pageable));
+                }else{
+                    if (pageGet.getLikeName().isEmpty())
+                        json.put("page",teacherRepository.findAll(pageable));
+                    else
+                        json.put("page",teacherRepository.findAllByTeaNameLike(pageGet.getLikeName(),pageable));
+                }
+            }
+            else{
+                if (pageGet.getLikeName().isEmpty())
+                    json.put("page",teacherRepository.findAll(pageable));
+                else
+                    json.put("page",teacherRepository.findAllByTeaNameLike(pageGet.getLikeName(),pageable));
+            }
+            return json;
         }else{
-            if (pageGet.getLikeName().isEmpty())
-                json.put("page",teacherRepository.findAll(pageable));
-            else
-                json.put("page",teacherRepository.findAllByTeaNameLike(pageGet.getLikeName(),pageable));
+            return null;
         }
-        return json;
     }
 
     @Override
     public void deleteByTeaId(Integer id) {
         teacherRepository.deleteByTeaId(id);
+    }
+
+    @Override
+    public Teacher save(Teacher teacher) {
+        return teacherRepository.save(teacher);
     }
 }

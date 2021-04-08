@@ -51,7 +51,7 @@ $(function () {
             "likeName":likeName==""?null:likeName
         }
         $.ajax({
-            url: "/Teacher/GetTeachers",
+            url: "/Teacher/findTeachers",
             //contentType: "application/json;charset=UTF-8",
             type: "post",
             async: false,
