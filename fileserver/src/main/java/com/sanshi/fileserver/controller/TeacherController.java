@@ -1,6 +1,7 @@
 package com.sanshi.fileserver.controller;
 
 import com.sanshi.fileserver.bean.StuGroup;
+import com.sanshi.fileserver.bean.Teacher;
 import com.sanshi.fileserver.service.StuGroupService;
 import com.sanshi.fileserver.service.TeacherService;
 import com.sanshi.fileserver.vo.PageGet;
@@ -26,7 +27,11 @@ public class TeacherController {
         this.teacherService = teacherService;
         this.stuGroupService = stuGroupService;
     }
-
+    @RequestMapping(path = "/save")
+    @ResponseBody
+    public Teacher save(Teacher teacher){
+        return teacherService.save(teacher);
+    }
     @RequestMapping(path = "/GetTeacher")
     @ResponseBody
     public Map GetTeacher(Integer classId,HttpServletRequest request){
@@ -54,24 +59,11 @@ public class TeacherController {
         json.put("teachers",teacherService.findAdmin());
         return json;
     }
-    @RequestMapping(path = "/GetTeachers")
+    @RequestMapping(path = "/findTeachers")
     @ResponseBody
-    public Map GetTeachers(PageGet val,HttpServletRequest request){
-        Map json = new HashMap();
-        HttpSession session = request.getSession();
-        if (session != null && session.getAttribute("user") != null) {
-            SessionUser sessionUser = new SessionUser();
-            sessionUser = (SessionUser) session.getAttribute("user");
-            Integer ident = (sessionUser.getLogintype() == 0 ? 0 : sessionUser.getTeacher().getTeaIdentity());
-            Integer id = (sessionUser.getLogintype() == 0 ? sessionUser.getStudent().getStuId() : sessionUser.getTeacher().getTeaId());
-            json.put("resoult", true);
-            if (ident==2) {
-                val.setIssistId(2);
-                return teacherService.finTeachers(val);
-            }else
-                return null;
-        }else
-            return null;
+    public Map findTeachers(PageGet val,HttpServletRequest request){
+        val.setIssistId(2);
+        return teacherService.finTeachers(val,request);
     }
 
     @RequestMapping(path = "/GetteaIdentity")

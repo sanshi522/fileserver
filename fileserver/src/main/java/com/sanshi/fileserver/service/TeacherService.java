@@ -14,6 +14,7 @@ public interface TeacherService {
     Integer Login(String name, String pass,Integer identity, HttpServletRequest request);
     List<Teacher> findTeacherByClassId(Integer classId);
     List<Teacher> findAdmin();
-    Map finTeachers(PageGet val);
+    Map finTeachers(PageGet val,HttpServletRequest request);
     void deleteByTeaId(Integer id);
+    Teacher save(Teacher teacher);
 }
