@@ -354,65 +354,6 @@ $(function () {
     }
 
 
-    function save() {
-        let TestPaperBindChoice = {
-            "indexNum": pageNumber,
-            "choiceId": pageIndex,
-            "testPaperId": subId,
-            "score": choicetype,
-        }
-        $.ajax({
-            url: "/TestPaperBindChoice/save",
-            contentType: "application/json;charset=UTF-8",
-            type: "post",
-            data: JSON.stringify(TestPaperBindChoice),
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-
-            },
-            error: function (data) {
-                console.log("服务器异常");
-            }
-        })
-    }
-
-
-    function saveTestPaper() {
-        let name = $("#testPaperName").val();
-        let subId = $("#subIdScreen option:selected").val();
-        if (name != "" && name != null) {
-
-        } else {
-            console.log("试卷名不能为空");
-            return false;
-        }
-        let TestPaper = {
-            "name": name,
-            "subId": subId
-        }
-        $.ajax({
-            url: "/testPaper/save",
-            contentType: "application/json;charset=UTF-8",
-            type: "post",
-            data: JSON.stringify(TestPaper),
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-            },
-
-            error: function (data) {
-                console.log("服务器异常");
-            }
-        })
-    }
-
-    function popup() {
-        $("#myModalLabel").text("添加视题");
-        $('#myModal').modal();
-    }
-
-
     function init() {
         $.ajax({
             url: "/testPaper/read",
@@ -645,6 +586,63 @@ $(function () {
     }
 
 
+
+
+
+    function save() {
+        let name = $("#testPaperName").val();
+        let subId = $("#subIdScreen option:selected").val();
+        let testPaperid = $("#testPaper").attr("testPaperId");
+        if(name==null || name==""){
+
+
+            return false;
+        }
+
+
+        let TestPaper = {
+            "name": name,
+            "subId": subId
+        }
+        $.ajax({
+            url: "/testPaper/save",
+            contentType: "application/json;charset=UTF-8",
+            type: "post",
+            data: JSON.stringify(TestPaper),
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+            },
+
+            error: function (data) {
+                console.log("服务器异常");
+            }
+        })
+    }
+
+
+    function saveTestPaper() {
+        let TestPaper= {
+            "indexNum": pageNumber,
+            "choiceId": pageIndex,
+            "testPaperId": subId,
+            "score": choicetype,
+        }
+        $.ajax({
+            url: "/TestPaperBindChoice/save",
+            contentType: "application/json;charset=UTF-8",
+            type: "post",
+            data: JSON.stringify(TestPaperBindChoice),
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+
+            },
+            error: function (data) {
+                console.log("服务器异常");
+            }
+        })
+    }
 
 
 });
