@@ -24,7 +24,7 @@ public interface TestPaperBindChoiceService {
      * @param testPaperBindChoice
      * @return
      */
-    TestPaperBindChoice save(TestPaperBindChoice testPaperBindChoice);
+    void save(List<TestPaperBindChoice> testPaperBindChoice);
 
     /**
      * 获取试卷总分

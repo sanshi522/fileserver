@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/TestPaperBindChoice")
 public class TestPaperBindChoiceController {
@@ -17,8 +19,11 @@ public class TestPaperBindChoiceController {
     }
 
     @PostMapping("/save")
+
+
+
     @ResponseBody
-    public TestPaperBindChoice  save(TestPaperBindChoice testPaperBindChoice){ return TestPaperBindChoiceService.save(testPaperBindChoice);};
+    public int  save(List<TestPaperBindChoice> testPaperBindChoices){TestPaperBindChoiceService.save(testPaperBindChoices); return 1;}
 
 
     @PostMapping("/delete")

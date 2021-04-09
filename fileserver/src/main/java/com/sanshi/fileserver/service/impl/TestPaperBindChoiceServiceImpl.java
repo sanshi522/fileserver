@@ -23,9 +23,11 @@ public class TestPaperBindChoiceServiceImpl implements TestPaperBindChoiceServic
     }
 
     @Override
-    public TestPaperBindChoice save(TestPaperBindChoice testPaperBindChoice) {
-        return testPaperBindChoiceRepository.save(testPaperBindChoice);
+    public void save(List<TestPaperBindChoice> testPaperBindChoices) {
+        for (int i=0;i<testPaperBindChoices.size();i++)
+            testPaperBindChoiceRepository.save(testPaperBindChoices.get(i));
     }
+
 
     @Override
     public Double findScoreSum(Integer id) {
