@@ -112,6 +112,8 @@ public class TestPaperServiceImpl implements TestPaperService {
 
        TestPaper testPaper = testPaperRepository.findOneById(id);
        String name = teacherRepository.findOneByTeaId(testPaper.getCreationId()).getTeaName();
-        return new TestPaperMsg(testPaperBindChoiceRepository.findAllByTestPaperId(id).size(),testPaperBindChoiceRepository.findScoreSum(id),subjectRepository.findOneById(testPaper.getSubId()).getName(),teacherRepository.findOneByTeaId(testPaper.getCreationId()).getTeaName());
+       Double scoreSum = testPaperBindChoiceRepository.findScoreSum(id);
+       if (scoreSum==null) scoreSum=0.0;
+        return new TestPaperMsg(testPaperBindChoiceRepository.findAllByTestPaperId(id).size(),scoreSum,subjectRepository.findOneById(testPaper.getSubId()).getName(),teacherRepository.findOneByTeaId(testPaper.getCreationId()).getTeaName());
     }
 }

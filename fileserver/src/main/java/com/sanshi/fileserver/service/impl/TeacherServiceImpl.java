@@ -29,14 +29,19 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<Student> selectAll() {
-        return null;
+    public List<Teacher> findAllNoInClass(Integer clasId) {
+        List<Integer> ids=teacherBindCclassRepository.findIdsByTeaCclasesId(clasId);
+        if (ids.size()==0);
+            ids.add(0);
+        return teacherRepository.findAllByTeaIdNotIn(ids);
     }
 
+
     @Override
-    public Student selectByName(String name) {
-        return null;
+    public Teacher findOneByTeaId(Integer id) {
+        return teacherRepository.findOneByTeaId(id);
     }
+
 
     @Override
     public Integer Login(String name, String pass,Integer identity, HttpServletRequest request) {

@@ -74,14 +74,16 @@ $(function(){
 	});
 	function Init(index) { // 参数就是点击的那个分页的页数索引值
 		pageIndex=index;
-		let ScreenChoice={
-			"pageNumber":pageNumber,
-			"pageIndex":pageIndex,
-			"subId":subId,
-			"type":choicetype,
-			"name":likeName,
-			"sort":sort,
-			"sortName":sortName
+		let ScreenChoice = {
+			"pageNumber": pageNumber,
+			"pageIndex": pageIndex,
+			"subId": subId,
+			"type": choicetype,
+			"name": likeName,
+			"sort": sort,
+			"sortName": sortName,
+			"abilityIds":null,
+			"difficultyLevel":null
 		}
 		var win=window;
 		$.ajax({

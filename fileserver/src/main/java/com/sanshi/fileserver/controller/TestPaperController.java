@@ -65,7 +65,7 @@ public class TestPaperController {
 
     /**
      *
-     * @param testPaperId
+     * @param id
      * @return
      */
     @RequestMapping(path = "/findMsg")
@@ -84,7 +84,6 @@ public class TestPaperController {
         SessionUser  sessionUser=(SessionUser) session.getAttribute("user");
         testPaper.setCreationId(sessionUser.getTeacher().getTeaId());
         return testPaperService.save(testPaper);
-
     };
 
 

@@ -101,7 +101,7 @@ function tableadd(){
         '<td type="text" notnull="1" state="1" data_key="teaName" data_val=""></td>\n' +
         '<td type="text" notnull="1" state="1" data_key="teaGender" data_val=""></td>\n' +
         '<td type="text" notnull="1" state="1" data_key="teaPass" data_val=""></td>\n' +
-        '<td type="select" notnull="1" state="1" data_key="teaIdentity" data_val="" getlrc="/Group/GetGroupByClassId" getval=""> </td>\n' +
+        '<td type="select" notnull="1" state="1" data_key="teaIdentity" data_val="" getlrc="/Teacher/GetteaIdentity" getval=""> </td>\n' +
         '<td type="text" state="1" data_key="teaRemake" data_val=""></td>\n' +
         '<td style="color: red;font-size: 20px;"><i class="my-icon lsm-sidebar-icon icon-shanchu del"></i></td>' +
         '</tr>');

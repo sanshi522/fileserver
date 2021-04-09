@@ -18,8 +18,10 @@ $(function () {
                 for (let i = 0; i < data.years.length; i++) {
                     $("#yearScreen").append('<option value="' + data.years[i] + '">' + data.years[i] + '</option>');
                 }
-                $('#yearScreen').selectpicker('refresh');
-                $('#yearScreen').val(data.years[0]).trigger("change");
+                if (data.years.length > 0){
+                    $('#yearScreen').selectpicker('refresh');
+                    $('#yearScreen').val(data.years[0]).trigger("change");
+                }
             }
         },
         error: function (data) {
@@ -40,8 +42,10 @@ $(function () {
                     for (let i=0;i<data.grades.length;i++){
                         $("#gradeScreen").append('<option value="'+data.grades[i].id+'">'+data.grades[i].name+'</option>');
                     }
-                    $('#gradeScreen').selectpicker('refresh');
-                    $('#gradeScreen').val(data.grades[0].id).trigger("change");
+                    if (data.grades.length>0){
+                        $('#gradeScreen').selectpicker('refresh');
+                        $('#gradeScreen').val(data.grades[0].id).trigger("change");
+                    }
                 }
             },
             error:function(data){
@@ -61,8 +65,10 @@ $(function () {
                     for (let i=0;i<data.clases.length;i++){
                         $("#classScreen").append('<option value="'+data.clases[i].id+'">'+data.clases[i].name+'</option>');
                     }
-                    $('#classScreen').selectpicker('refresh');
-                    $('#classScreen').val(data.clases[0].id).trigger("change");
+                    if (data.clases.length>0){
+                        $('#classScreen').selectpicker('refresh');
+                        $('#classScreen').val(data.clases[0].id).trigger("change");
+                    }
                 }
             },
             error:function(data){

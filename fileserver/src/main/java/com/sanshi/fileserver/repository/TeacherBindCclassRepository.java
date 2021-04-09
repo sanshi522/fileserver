@@ -1,6 +1,8 @@
 package com.sanshi.fileserver.repository;
 
 import com.sanshi.fileserver.bean.TeacherBindCclass;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -25,4 +27,10 @@ public interface TeacherBindCclassRepository extends JpaRepository<TeacherBindCc
      */
     @Query(value="select s.teeaId from TeacherBindCclass s where s.cclassId = ?1")
     List<Integer> findIdsByTeaCclasesId(Integer teaid);
+
+    Page<TeacherBindCclass> findAllByCclassId(Integer cid, Pageable pa);
+
+    TeacherBindCclass save(TeacherBindCclass t);
+
+    void deleteById(Integer id);
 }

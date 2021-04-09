@@ -23,6 +23,11 @@ public class HelloController {
         return modelAndView;
     }
 
+    @GetMapping("/schooling")
+    public String schooling() {
+        return "schooling";
+    }
+
     @GetMapping("/subject")
     public String subject() {
         return "sub";

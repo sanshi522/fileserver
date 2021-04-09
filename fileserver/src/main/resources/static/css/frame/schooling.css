@@ -1,0 +1,9 @@
+#yearScreenDiv, #gradeScreenDiv, #classScreenDiv{
+    float: left;
+    margin-left: 5px;
+    width: auto;
+}
+td input{
+    width:100%;
+    border: 0px;
+}
