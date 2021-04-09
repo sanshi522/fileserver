@@ -60,7 +60,7 @@ public class TestPaperController {
 
     /**
      *
-     * @param testPaperId
+     * @param id
      * @return
      */
     @RequestMapping(path = "/findMsg")
@@ -78,9 +78,7 @@ public class TestPaperController {
     public TestPaper save(TestPaper testPaper, HttpSession  session){
         SessionUser  sessionUser=(SessionUser) session.getAttribute("user");
         testPaper.setCreationId(sessionUser.getTeacher().getTeaId());
-        testPaper.setCreateTime(new Date());
         return testPaperService.save(testPaper);
-
     };
 
 

@@ -136,7 +136,7 @@ $(function () {
                 for (let i = 0; i < data.page.content.length; i++) {
                     dealNull(data.page.content[i]);
                     let TeaName="";
-                    $.ajax({url: "/Teacher/GetNameById", type: "post", async: false, data: {val:data.page.content[i].teeaId}, dataType: "json", success: function (da) {TeaName=JSON.stringify(da)}});
+                    $.ajax({url: "/Teacher/GetNameById", type: "post", async: false, data: {val:data.page.content[i].teeaId}, dataType: "json", success: function (da) {TeaName=da.name}});
                     $("#schooling").children("tbody").append('<tr data_key="id" data_val="' + data.page.content[i].id + '" up="0">\n' +
                         '<td class="serial">' + (i + 1) + '</td>\n' +
                         '<td type="select" notnull="1" state="1" data_key="teeaId" data_val="' + data.page.content[i].teeaId + '" getlrc="/Teacher/findAllNoInClass" getval="'+classid+'" class="stugroup" > ' + TeaName + '</td>\n' +

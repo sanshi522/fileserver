@@ -101,8 +101,10 @@ public class TeacherController {
     }
     @RequestMapping(path = "/GetNameById")
     @ResponseBody
-    public String GetNameById(Integer val){
-        return teacherService.findOneByTeaId(val).getTeaName();
+    public Map GetNameById(Integer val){
+        Map json= new HashMap();
+        json.put("name",teacherService.findOneByTeaId(val).getTeaName());
+        return  json;
     }
 
     @RequestMapping(path = "/findAllNoInClass")
