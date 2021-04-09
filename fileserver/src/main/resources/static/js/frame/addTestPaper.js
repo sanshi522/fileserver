@@ -250,6 +250,7 @@ $(function () {
 
     }
 
+
     function information(data) {
         if (data == null) {
             return false;
@@ -330,6 +331,7 @@ $(function () {
                 }
             }
             deleteChoiceBind();
+            sortRef();
         }
 
     }
@@ -363,7 +365,7 @@ $(function () {
         $.ajax({
             url: "/testPaper/read",
             type: "post",
-            data: {testPaperId: 1},
+            data: {testPaperId: $("#testPaper").attr("testPaperId")},
             dataType: "json",
             success: function (data) {
                 console.log(data);
@@ -624,10 +626,9 @@ function save() {
             console.log(data);
             if(data!=undefined && data !=null){
                 $("#testPaper").attr("testPaperId",data.id);
-                saveTestPaper(data.id);
+                saveTestPaperBindChoice();
             }
         },
-
         error: function (data) {
             console.log("服务器异常");
         }
@@ -646,23 +647,21 @@ function saveTestPaperBindChoice() {
             "score":3.0
         }
         testPaperList.push(TestPaperBindChoice);
-          console.log(JSON.stringify(TestPaperBindChoice));
     });
-    console.log(JSON.stringify(testPaperList));
 
-    // $.ajax({
-    //     url: "/TestPaperBindChoice/save",
-    //     contentType: "application/json;charset=UTF-8",
-    //     type: "post",
-    //     data: JSON.stringify(TestPaperBindChoice),
-    //     dataType: "json",
-    //     success: function (data) {
-    //         console.log(data);
-    //     },
-    //     error: function (data) {
-    //         console.log("服务器异常");
-    //     }
-    // })
+    $.ajax({
+        url: "/TestPaperBindChoice/save",
+        contentType: "application/json;charset=UTF-8",
+        type: "post",
+        data: JSON.stringify(testPaperList),
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (data) {
+            console.log("服务器异常");
+        }
+    })
 }
 
 
