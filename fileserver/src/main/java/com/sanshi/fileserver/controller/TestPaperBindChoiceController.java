@@ -29,4 +29,6 @@ public class TestPaperBindChoiceController {
         TestPaperBindChoiceService.deleteById(testPaperBindChoice);
         return 1;
     };
+
+
 }

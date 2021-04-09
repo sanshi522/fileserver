@@ -9,8 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface TeacherService {
-    List<Student> selectAll();
-    Student selectByName(String name);
+
+    List<Teacher> findAllNoInClass(Integer clasId);
+    Teacher findOneByTeaId(Integer id);
     Integer Login(String name, String pass,Integer identity, HttpServletRequest request);
     List<Teacher> findTeacherByClassId(Integer classId);
     List<Teacher> findAdmin();

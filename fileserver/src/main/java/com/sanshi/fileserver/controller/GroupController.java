@@ -60,7 +60,8 @@ public class GroupController {
 //            listdata.add(json);
 //        }
 //        return listdata;
-    }  @RequestMapping(path = "/GetGroupByClassId")
+    }
+    @RequestMapping(path = "/GetGroupByClassId")
     @ResponseBody
     public List<Map> GetGroupsByClassId(Integer val){
         List<StuGroup> Grouplist = stuGroupService.findGroupsByCclassId(val);

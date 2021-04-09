@@ -99,4 +99,24 @@ public class TeacherController {
         teacherService.deleteByTeaId(val);
         return 1;
     }
+    @RequestMapping(path = "/GetNameById")
+    @ResponseBody
+    public String GetNameById(Integer val){
+        return teacherService.findOneByTeaId(val).getTeaName();
+    }
+
+    @RequestMapping(path = "/findAllNoInClass")
+    @ResponseBody
+    public List<Map> findAllNoInClass(Integer val){
+        List<Teacher> Tealist = teacherService.findAllNoInClass(val);
+        List<Map> listdata=new ArrayList<Map>();
+        Map json;
+        for (int i=0;i<Tealist.size();i++){
+            json = new HashMap();
+            json.put("key",Tealist.get(i).getTeaId());
+            json.put("val",Tealist.get(i).getTeaName());
+            listdata.add(json);
+        }
+        return listdata;
+    }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface TeacherRepository extends JpaRepository<Teacher, Integer> {
+    List<Teacher> findAllByTeaIdNotIn(List<Integer> ids);
     Teacher save(Teacher t);
     Teacher findOneByTeaId(Integer id);
     List<Teacher> findByTeaName(String teaName);

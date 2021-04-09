@@ -78,10 +78,10 @@ public class StudentServiceImpl implements StudentService {
         pageable = PageRequest.of(pageGet.getPageIndex() , pageGet.getPageNumber());
         Map json = new HashMap();
         json.put("resoult", true);
-        if (pageGet.getLikeName().isEmpty())
-            json.put("page", studentRepository.findAllByStuGroupIn(groupRepository.findALLIdByCclassId(pageGet.getIssistId()),pageable));
-        else
-            json.put("page", studentRepository.findAllByStuGroupInAndStuNameLike(groupRepository.findALLIdByCclassId(pageGet.getIssistId()),pageGet.getLikeName(),pageable));
+        if (pageGet.getLikeName().isEmpty()) pageGet.setLikeName("");
+//            json.put("page", studentRepository.findAllByStuGroupIn(groupRepository.findALLIdByCclassId(pageGet.getIssistId()),pageable));
+//        else
+        json.put("page", studentRepository.findAllByStuGroupInAndStuNameLike(groupRepository.findALLIdByCclassId(pageGet.getIssistId()),"%"+pageGet.getLikeName()+"%",pageable));
 
         return json;
     }
