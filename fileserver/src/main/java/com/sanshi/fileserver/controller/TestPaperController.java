@@ -4,8 +4,10 @@ package com.sanshi.fileserver.controller;
 import com.sanshi.fileserver.bean.TestPaper;
 import com.sanshi.fileserver.service.TestPaperService;
 import com.sanshi.fileserver.vo.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,8 +22,11 @@ import java.util.Map;
 public class TestPaperController {
     private TestPaperService testPaperService;
 
-    public TestPaperController(TestPaperService testPaperService) {
+    private  HttpSession   session;
+
+    public TestPaperController(TestPaperService testPaperService,HttpSession   session) {
         this.testPaperService = testPaperService;
+        this.session=session;
     }
 
     /**
@@ -75,10 +80,9 @@ public class TestPaperController {
      */
     @RequestMapping(path = "/save")
     @ResponseBody
-    public TestPaper save(TestPaper testPaper, HttpSession  session){
+    public TestPaper save(@RequestBody TestPaper testPaper){
         SessionUser  sessionUser=(SessionUser) session.getAttribute("user");
         testPaper.setCreationId(sessionUser.getTeacher().getTeaId());
-        testPaper.setCreateTime(new Date());
         return testPaperService.save(testPaper);
 
     };

@@ -158,9 +158,11 @@ $(function () {
     }
 
     var testPaperid = $("#testPaper").attr("testPaperId");
-    // if (testPaperid!=0){
+    if (testPaperid!=0 && testPaperid!=null){
     init();
-    // }
+    }else{
+        getsubtype();
+    }
 
 
 
@@ -288,6 +290,7 @@ $(function () {
                     $("#choices").append(' <div class="choice" choiceid="' + data.choices[i].choice.id + '"  bindId="' + data.choices[i].testPaperBindChoice.id + '" c_index="' + data.choices[i].testPaperBindChoice.indexNum + '">\n' +
                         '            <div class="choice-title"><div class="choice-index">' + (data.choices[i].testPaperBindChoice.indexNum + 1) + '</div><div class="choice-name" >你所熟练的语言？</div>\n' +
                         '                <div class="choice-oper delete-choice"><i class="my-icon lsm-sidebar-icon icon-shanchu "></i></div>\n' +
+                        '                <div class="choice-oper delete-choice"><input type="checkbox" name="TestPaper"/></div>\n' +
                         '            </div>\n' +
                         '            <div class="choice-details1">\n' +
                         '                <div class="make-choice">\n' +
@@ -301,6 +304,7 @@ $(function () {
                     $("#choices").append('<div class="choice"  choiceid="' + data.choices[i].choice.id + '" bindId="' + data.choices[i].testPaperBindChoice.id + '" c_index="' + data.choices[i].testPaperBindChoice.indexNum + '">\n' +
                         ' <div class="choice-title"><div class="choice-index">' + (data.choices[i].testPaperBindChoice.indexNum + 1) + '</div><div class="choice-name" >' + data.choices[i].choice.topic + '</div>\n' +
                         ' <div class="choice-oper delete-choice"><i class="my-icon lsm-sidebar-icon icon-shanchu " ></i></div>\n' +
+                        ' <div class="choice-oper "><input type="checkbox" name="TestPaper"/></div>\n' +
                         '\t\t\t</div>\n' +
                         '\t\t\t<div class="choice-details1">\n' +
                         '\t\t\t\t<div class="make-choice">\n' +
@@ -311,9 +315,10 @@ $(function () {
                         '\t\t\t</div>\n' +
                         '\t\t</div>');
                 } else if (data.choices[i].choice.type == 4) {//简答题
-                    $("#choices").append('<div class="choice"  choiceid="' + data.choices[i].choice.id + '">\n' +
+                    $("#choices").append('<div class="choice"  choiceid="' + data.choices[i].choice.id +  '" bindId="' + data.choices[i].testPaperBindChoice.id + '" c_index="' + data.choices[i].testPaperBindChoice.indexNum + '">\n' +
                         ' <div class="choice-title"><div class="choice-index">' + (data.choices[i].testPaperBindChoice.indexNum + 1) + '</div><div class="choice-name" >' + data.choices[i].choice.topic + '</div>\n' +
                         ' <div class="choice-oper delete-choice"><i class="my-icon lsm-sidebar-icon icon-shanchu " ></i></div>\n' +
+                        ' <div class="choice-oper delete-choice"><input type="checkbox" name="TestPaper"/></i></div>\n' +
                         '\t\t\t</div>\n' +
                         '\t\t\t<div class="choice-details1">\n' +
                         '\t\t\t\t<div class="make-choice">\n' +
@@ -589,62 +594,75 @@ $(function () {
 
 
 
-    function save() {
-        let name = $("#testPaperName").val();
-        let subId = $("#subIdScreen option:selected").val();
-        let testPaperid = $("#testPaper").attr("testPaperId");
-        if(name==null || name==""){
-
-
-            return false;
-        }
-
-
-        let TestPaper = {
-            "name": name,
-            "subId": subId
-        }
-        $.ajax({
-            url: "/testPaper/save",
-            contentType: "application/json;charset=UTF-8",
-            type: "post",
-            data: JSON.stringify(TestPaper),
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-            },
-
-            error: function (data) {
-                console.log("服务器异常");
-            }
-        })
-    }
-
-
-    function saveTestPaper() {
-        let TestPaper= {
-            "indexNum": pageNumber,
-            "choiceId": pageIndex,
-            "testPaperId": subId,
-            "score": choicetype,
-        }
-        $.ajax({
-            url: "/TestPaperBindChoice/save",
-            contentType: "application/json;charset=UTF-8",
-            type: "post",
-            data: JSON.stringify(TestPaperBindChoice),
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-
-            },
-            error: function (data) {
-                console.log("服务器异常");
-            }
-        })
-    }
 
 
 });
+
+function save() {
+    let name = $("#testPaperName").val();
+    let subId = $("#subIdScreen option:selected").val();
+    let testPaperid = $("#testPaper").attr("testPaperId");
+    if(name==null || name==""){
+        $.alert("试卷名称不能为空");
+        return false;
+    }
+
+    let TestPaper = {
+        "name": name,
+        "subId": subId,
+        "id":testPaperid
+    }
+
+    console.log(name);
+    $.ajax({
+        url: "/testPaper/save",
+        contentType: "application/json;charset=UTF-8",
+        type: "post",
+        data: JSON.stringify(TestPaper),
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            if(data!=undefined && data !=null){
+                $("#testPaper").attr("testPaperId",data.id);
+                saveTestPaper(data.id);
+            }
+        },
+
+        error: function (data) {
+            console.log("服务器异常");
+        }
+    })
+}
+
+function saveTestPaperBindChoice() {
+    var choices = $(".choice");
+    let testPaperList=[];
+    choices.each(function (i, choice) {
+        let TestPaperBindChoice={
+            "id":$(choice).attr("bindId"),
+            "indexNum":$(choice).attr("c_index"),
+            "choiceId":$(choice).attr("choiceid"),
+            "testPaperId":$("#testPaper").attr("testPaperId"),
+            "score":3.0
+        }
+        testPaperList.push(TestPaperBindChoice);
+          console.log(JSON.stringify(TestPaperBindChoice));
+    });
+    console.log(JSON.stringify(testPaperList));
+
+    // $.ajax({
+    //     url: "/TestPaperBindChoice/save",
+    //     contentType: "application/json;charset=UTF-8",
+    //     type: "post",
+    //     data: JSON.stringify(TestPaperBindChoice),
+    //     dataType: "json",
+    //     success: function (data) {
+    //         console.log(data);
+    //     },
+    //     error: function (data) {
+    //         console.log("服务器异常");
+    //     }
+    // })
+}
 
 
