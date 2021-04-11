@@ -10,6 +10,7 @@ var  difficultyLevel=0; //难度
 //分页元素
 var total = 50; // 总共多少记录
 
+let quan=0;//是否批量操作标识符
 //界面存在试题集合
 choiceids=[];
 
@@ -249,7 +250,7 @@ $(function () {
 
 
     }
-
+//遍历试卷信息及试题
     function information(data) {
         if (data == null) {
             return false;
@@ -290,6 +291,9 @@ $(function () {
                     $("#choices").append(' <div class="choice" choiceid="' + data.choices[i].choice.id + '"  bindId="' + data.choices[i].testPaperBindChoice.id + '" c_index="' + data.choices[i].testPaperBindChoice.indexNum + '">\n' +
                         '            <div class="choice-title"><div class="choice-index">' + (data.choices[i].testPaperBindChoice.indexNum + 1) + '</div><div class="choice-name" >你所熟练的语言？</div>\n' +
                         '                <div class="choice-oper delete-choice"><i class="my-icon lsm-sidebar-icon icon-shanchu "></i></div>\n' +
+                        '<div class="score_div">\n' +
+                        '<input class="form-control score1" type="text" placeholder="分值" >\n' +
+                        '</div>' +
                         '                <div class="choice-oper delete-choice"><input type="checkbox" name="TestPaper"/></div>\n' +
                         '            </div>\n' +
                         '            <div class="choice-details1">\n' +
@@ -304,6 +308,9 @@ $(function () {
                     $("#choices").append('<div class="choice"  choiceid="' + data.choices[i].choice.id + '" bindId="' + data.choices[i].testPaperBindChoice.id + '" c_index="' + data.choices[i].testPaperBindChoice.indexNum + '">\n' +
                         ' <div class="choice-title"><div class="choice-index">' + (data.choices[i].testPaperBindChoice.indexNum + 1) + '</div><div class="choice-name" >' + data.choices[i].choice.topic + '</div>\n' +
                         ' <div class="choice-oper delete-choice"><i class="my-icon lsm-sidebar-icon icon-shanchu " ></i></div>\n' +
+                        '<div class="score_div">\n' +
+                        '<input class="form-control score1" type="text" placeholder="分值" >\n' +
+                        '</div>' +
                         ' <div class="choice-oper "><input type="checkbox" name="TestPaper"/></div>\n' +
                         '\t\t\t</div>\n' +
                         '\t\t\t<div class="choice-details1">\n' +
@@ -318,6 +325,9 @@ $(function () {
                     $("#choices").append('<div class="choice"  choiceid="' + data.choices[i].choice.id +  '" bindId="' + data.choices[i].testPaperBindChoice.id + '" c_index="' + data.choices[i].testPaperBindChoice.indexNum + '">\n' +
                         ' <div class="choice-title"><div class="choice-index">' + (data.choices[i].testPaperBindChoice.indexNum + 1) + '</div><div class="choice-name" >' + data.choices[i].choice.topic + '</div>\n' +
                         ' <div class="choice-oper delete-choice"><i class="my-icon lsm-sidebar-icon icon-shanchu " ></i></div>\n' +
+                        '<div class="score_div">\n' +
+                        '<input class="form-control score1" type="text" placeholder="分值" >\n' +
+                        '</div>' +
                         ' <div class="choice-oper delete-choice"><input type="checkbox" name="TestPaper"/></i></div>\n' +
                         '\t\t\t</div>\n' +
                         '\t\t\t<div class="choice-details1">\n' +
@@ -535,6 +545,9 @@ $(function () {
             $("#choices").append('<div class="choice"  choiceid="' + choiceid + '"  c_index=""  bindId="">\n' +
                 ' <div class="choice-title"><div class="choice-index"></div><div class="choice-name" >' + choicename+ '</div>\n' +
                 ' <div class="choice-oper delete-choice"><i class="my-icon lsm-sidebar-icon icon-shanchu "></i></div>\n' +
+                '<div class="score_div">\n' +
+                '<input class="form-control score1" type="text" placeholder="分值" >\n' +
+                '</div>' +
                 '\t\t\t</div>\n' +
                 '\t\t\t<div class="choice-details1">\n' +
                 '\t\t\t\t<div class="make-choice">\n' +
@@ -562,7 +575,20 @@ $(function () {
             }
         });
     }
-
+    //多选操作
+    $("#batchop").click(function(){
+        if(quan==0){
+            quan=1;
+            $(this).text("完成");
+            $(this).css("background","#924343")
+        }else{
+            quan=0;
+            $(".choice").removeClass("choice-check");
+            $(this).text("多选");
+            $(this).css("background","#848484")
+        }
+    })
+//试卷内题目绑定事件
     function deleteChoiceBind(){
         $(".delete-choice").bind("click",function () {
             let choice=$(this).parent().parent();
@@ -588,6 +614,29 @@ $(function () {
                 })
             }
         })
+        $(".choice").bind("click",function(e){
+           if (quan==1){
+               $(this).addClass("choice-check");
+               $(".choice-check").bind("click",function(e){
+                   $(this).removeClass("choice-check");
+               })
+           }
+        });
+        $(".score1").bind("click",function(e){
+            e.stopPropagation();
+        });
+        //批量操作时，被选中的分数同步
+        $(".score1").bind("change",function(){
+            let sco=$(this).val();
+            if(quan==1){
+                let choices = $(".choice-check");
+                choices.each(function (i, choice) {
+                    $(choice).children(".choice-title").children(".score_div").children(".score1").val(sco)
+                });
+            }
+        });
+
+
     }
 
 
