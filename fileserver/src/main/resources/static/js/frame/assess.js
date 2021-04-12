@@ -10,9 +10,6 @@ $(function(){
 			dataType:"json",
 			success: function(data) {
 
-
-
-
 				$("#subIdScreen2").empty();
 				$("#subIdScreen2").append('<option value="0">全部学科</option>');
 				$("#subjectId").empty();
