@@ -1,6 +1,41 @@
 // JavaScript Document
 var upident;
 $(function(){
+	var nowdatatime="";
+	//起始时间部分
+	countdown();
+	function countdown() {
+		var myDate = new Date();
+		//获取当前年
+		var year=myDate.getFullYear();
+		//获取当前月
+		var month=myDate.getMonth()+1;
+		//获取当前日
+		var date=myDate.getDate();
+		var h=myDate.getHours();       //获取当前小时数(0-23)
+		var m=myDate.getMinutes();     //获取当前分钟数(0-59)
+		var s=myDate.getSeconds();
+		var now=year+'-'+getNow(month)+"-"+getNow(date)+" "+getNow(h)+':'+getNow(m)+":"+getNow(s);
+		nowdatatime = now;
+	}
+
+	// 获取当前时间
+	function getNow(s) {
+		return s < 10 ? '0' + s: s;
+	}
+	//显示起始时间为系统当前时间
+	$('#search-from-date, #search-to-date').datetimepicker({
+		format:'Y-m-d H:i:00',
+		theme: 'dark',
+		step:1
+	});
+	$.datetimepicker.setLocale('zh');
+
+	$('#search-from-date').bind("change",function(){
+		var d = $('#search-from-date').datetimepicker('getValue');
+		alert(d.getFullYear());
+	});
+
 	//获取学科
 	function getsubtype(){
 		$.ajax({

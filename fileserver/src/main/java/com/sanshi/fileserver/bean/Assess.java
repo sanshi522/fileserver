@@ -16,21 +16,19 @@ import java.util.Date;
 @Entity
 public class Assess {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private Integer subId;//学科id
     private Integer testPaperId;//试卷id
-    @DateTimeFormat(pattern ="yyyy-MM-dd")
-    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date startTime;//开始时间
-    @DateTimeFormat(pattern ="yyyy-MM-dd")
-    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date endTime;//结束时间
     private Integer makeTime;//答题时间
     private Integer issueId;//发布人id
-    private Integer testObject;//考试级别
-    private Integer testObjectId;//考试对象id
     private Integer state;
     @CreationTimestamp
     private Date createTime;
@@ -40,7 +38,7 @@ public class Assess {
     public Assess() {
     }
 
-    public Assess(Integer id, String name, Integer subId, Integer testPaperId, Date startTime, Date endTime, Integer makeTime, Integer issueId, Integer testObject, Integer testObjectId, Integer state, Date createTime, Date uapdateTime) {
+    public Assess(Integer id, String name, Integer subId, Integer testPaperId, Date startTime, Date endTime, Integer makeTime, Integer issueId, Integer state, Date createTime, Date uapdateTime) {
         this.id = id;
         this.name = name;
         this.subId = subId;
@@ -49,8 +47,6 @@ public class Assess {
         this.endTime = endTime;
         this.makeTime = makeTime;
         this.issueId = issueId;
-        this.testObject = testObject;
-        this.testObjectId = testObjectId;
         this.state = state;
         this.createTime = createTime;
         this.uapdateTime = uapdateTime;
@@ -120,20 +116,12 @@ public class Assess {
         this.issueId = issueId;
     }
 
-    public Integer getTestObject() {
-        return testObject;
+    public Integer getState() {
+        return state;
     }
 
-    public void setTestObject(Integer testObject) {
-        this.testObject = testObject;
-    }
-
-    public Integer getTestObjectId() {
-        return testObjectId;
-    }
-
-    public void setTestObjectId(Integer testObjectId) {
-        this.testObjectId = testObjectId;
+    public void setState(Integer state) {
+        this.state = state;
     }
 
     public Date getCreateTime() {
@@ -152,14 +140,6 @@ public class Assess {
         this.uapdateTime = uapdateTime;
     }
 
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
-
     @Override
     public String toString() {
         return "Assess{" +
@@ -171,8 +151,6 @@ public class Assess {
                 ", endTime=" + endTime +
                 ", makeTime=" + makeTime +
                 ", issueId=" + issueId +
-                ", testObject=" + testObject +
-                ", testObjectId=" + testObjectId +
                 ", state=" + state +
                 ", createTime=" + createTime +
                 ", uapdateTime=" + uapdateTime +

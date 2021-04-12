@@ -16,7 +16,7 @@ public class AssessUser {
     private Integer id;
     private Integer AssessId;//考核id
     /**
-     * (0表示学年 1 表示学院 2表示班级 3表示小组 )
+     * (0表示学年 1 表示学院 2表示班级 3表示小组 4学生)
      */
     private Integer testObject;//考试级别
     private Integer testObjectId;//考试对象id

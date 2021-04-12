@@ -43,6 +43,11 @@ public class HelloController {
         return "testPaper";
     }
 
+    @GetMapping("/assess")
+    public String assess() {
+        return "assess";
+    }
+
     @GetMapping("/sample")
     public String sample() {
         return "sample";

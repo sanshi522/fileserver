@@ -25,11 +25,11 @@ public interface AssessRepository extends JpaRepository<Assess,Integer>, JpaSpec
     /**
      *学生获取指定学科学生可以加入的考核
      */
-    List<Assess> findAllBySubIdAndTestObjectAndTestObjectIdAndStartTimeLessThanAndEndTimeGreaterThan(Integer subid, Integer testObject, Integer testObjectId, Date start,Date end);
+//    List<Assess> findAllBySubIdAndTestObjectAndTestObjectIdAndStartTimeLessThanAndEndTimeGreaterThan(Integer subid, Integer testObject, Integer testObjectId, Date start,Date end);
     /**
      * 学生获取学生可以加入的所有考核
      */
-    List<Assess> findAllByTestObjectAndTestObjectIdAndStartTimeLessThanAndEndTimeGreaterThan(Integer testObject, Integer testObjectId, Date start,Date end);
+//    List<Assess> findAllByTestObjectAndTestObjectIdAndStartTimeLessThanAndEndTimeGreaterThan(Integer testObject, Integer testObjectId, Date start,Date end);
 
     /**
      * 老师获取指定学科本人发布的进行中考核

@@ -37,57 +37,6 @@ $(function(){
             return;
     });
 });
-function  openshare(){
-    $.ajax({
-        url:"login/Islogin",
-        type:"post",
-        dataType:"json",
-        success:function(data){
-            if(data.resoult)
-                document.getElementById("frameId").src="/share";
-            else{
-                location.href = "/";
-            }
-        },
-        error:function(jqXHR){
-            alert("发生错误："+ jqXHR.status);
-        }
-    })
-}
-function  openmyshare(){
-        $.ajax({
-            url:"login/Islogin",
-            type:"post",
-            dataType:"json",
-            success:function(data){
-                if(data.resoult)
-                    document.getElementById("frameId").src="/myshare";
-                else{
-                    location.href = "/";
-                }
-            },
-            error:function(jqXHR){
-                alert("发生错误："+ jqXHR.status);
-            }
-        })
-}
-function  openaddshare(){
-            $.ajax({
-                url:"login/Islogin",
-                type:"post",
-                dataType:"json",
-                success:function(data){
-                    if(data.resoult)
-                        document.getElementById("frameId").src="/addshare";
-                    else{
-                        location.href = "/";
-                    }
-                },
-                error:function(jqXHR){
-                    alert("发生错误："+ jqXHR.status);
-                }
-            })
-}
 function open(lrc){
     $.ajax({
         url:"login/Islogin",
