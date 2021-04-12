@@ -288,13 +288,14 @@ $(function () {
                             opent += '<div class="input-cho"><input class="single" type="checkbox" name="single1" />' + op + '</div>\n';
                     }
 
-                    $("#choices").append(' <div class="choice" choiceid="' + data.choices[i].choice.id + '"  bindId="' + data.choices[i].testPaperBindChoice.id + '" c_index="' + data.choices[i].testPaperBindChoice.indexNum + '">\n' +
+                    $("#choices").append(' <div class="choice" choicecheck="0" choiceid="' + data.choices[i].choice.id + '"  bindId="' + data.choices[i].testPaperBindChoice.id + '" c_index="' + data.choices[i].testPaperBindChoice.indexNum + '">\n' +
                         '            <div class="choice-title"><div class="choice-index">' + (data.choices[i].testPaperBindChoice.indexNum + 1) + '</div><div class="choice-name" >你所熟练的语言？</div>\n' +
+                        '<input class="choice-box"  name="checkItem" type="checkbox" />' +
                         '                <div class="choice-oper delete-choice"><i class="my-icon lsm-sidebar-icon icon-shanchu "></i></div>\n' +
                         '<div class="score_div">\n' +
                         '<input class="form-control score1" type="text" placeholder="分值" >\n' +
                         '</div>' +
-                        '                <div class="choice-oper delete-choice"><input type="checkbox" name="TestPaper"/></div>\n' +
+                        // '                <div class="choice-oper delete-choice"><input type="checkbox" name="TestPaper"/></div>\n' +
                         '            </div>\n' +
                         '            <div class="choice-details1">\n' +
                         '                <div class="make-choice">\n' +
@@ -305,13 +306,14 @@ $(function () {
                 } else if (data.choices[i].choice.type == 3) {//判断题
                     let correct = ""
                     if (data.choices[i].choice.correct == 1) correct = "正确"; else correct = "错误";
-                    $("#choices").append('<div class="choice"  choiceid="' + data.choices[i].choice.id + '" bindId="' + data.choices[i].testPaperBindChoice.id + '" c_index="' + data.choices[i].testPaperBindChoice.indexNum + '">\n' +
+                    $("#choices").append('<div class="choice" choicecheck="0"  choiceid="' + data.choices[i].choice.id + '" bindId="' + data.choices[i].testPaperBindChoice.id + '" c_index="' + data.choices[i].testPaperBindChoice.indexNum + '">\n' +
                         ' <div class="choice-title"><div class="choice-index">' + (data.choices[i].testPaperBindChoice.indexNum + 1) + '</div><div class="choice-name" >' + data.choices[i].choice.topic + '</div>\n' +
+                        '<input class="choice-box"  name="checkItem" type="checkbox" />' +
                         ' <div class="choice-oper delete-choice"><i class="my-icon lsm-sidebar-icon icon-shanchu " ></i></div>\n' +
                         '<div class="score_div">\n' +
                         '<input class="form-control score1" type="text" placeholder="分值" >\n' +
                         '</div>' +
-                        ' <div class="choice-oper "><input type="checkbox" name="TestPaper"/></div>\n' +
+                        // ' <div class="choice-oper "><input type="checkbox" name="TestPaper"/></div>\n' +
                         '\t\t\t</div>\n' +
                         '\t\t\t<div class="choice-details1">\n' +
                         '\t\t\t\t<div class="make-choice">\n' +
@@ -322,13 +324,14 @@ $(function () {
                         '\t\t\t</div>\n' +
                         '\t\t</div>');
                 } else if (data.choices[i].choice.type == 4) {//简答题
-                    $("#choices").append('<div class="choice"  choiceid="' + data.choices[i].choice.id +  '" bindId="' + data.choices[i].testPaperBindChoice.id + '" c_index="' + data.choices[i].testPaperBindChoice.indexNum + '">\n' +
+                    $("#choices").append('<div class="choice" choicecheck="0"  choiceid="' + data.choices[i].choice.id +  '" bindId="' + data.choices[i].testPaperBindChoice.id + '" c_index="' + data.choices[i].testPaperBindChoice.indexNum + '">\n' +
                         ' <div class="choice-title"><div class="choice-index">' + (data.choices[i].testPaperBindChoice.indexNum + 1) + '</div><div class="choice-name" >' + data.choices[i].choice.topic + '</div>\n' +
+                        '<input class="choice-box"  name="checkItem" type="checkbox" />' +
                         ' <div class="choice-oper delete-choice"><i class="my-icon lsm-sidebar-icon icon-shanchu " ></i></div>\n' +
                         '<div class="score_div">\n' +
                         '<input class="form-control score1" type="text" placeholder="分值" >\n' +
                         '</div>' +
-                        ' <div class="choice-oper delete-choice"><input type="checkbox" name="TestPaper"/></i></div>\n' +
+                        // ' <div class="choice-oper delete-choice"><input type="checkbox" name="TestPaper"/></i></div>\n' +
                         '\t\t\t</div>\n' +
                         '\t\t\t<div class="choice-details1">\n' +
                         '\t\t\t\t<div class="make-choice">\n' +
@@ -373,7 +376,7 @@ $(function () {
         $.ajax({
             url: "/testPaper/read",
             type: "post",
-            data: {testPaperId: 1},
+            data: {testPaperId: $("#testPaper").attr("testPaperId")},
             dataType: "json",
             success: function (data) {
                 console.log(data);
@@ -542,8 +545,9 @@ $(function () {
             let choicetype=$(this).parent().children(".choice-type").attr("data");
             var htmlss=$(this).parent().parent().children(".choice-details").children(".make-choice").html();
 
-            $("#choices").append('<div class="choice"  choiceid="' + choiceid + '"  c_index=""  bindId="">\n' +
+            $("#choices").append('<div class="choice" choicecheck="0"  choiceid="' + choiceid + '"  c_index=""  bindId="">\n' +
                 ' <div class="choice-title"><div class="choice-index"></div><div class="choice-name" >' + choicename+ '</div>\n' +
+                '<input class="choice-box"  name="checkItem" type="checkbox" />' +
                 ' <div class="choice-oper delete-choice"><i class="my-icon lsm-sidebar-icon icon-shanchu "></i></div>\n' +
                 '<div class="score_div">\n' +
                 '<input class="form-control score1" type="text" placeholder="分值" >\n' +
@@ -580,16 +584,68 @@ $(function () {
         if(quan==0){
             quan=1;
             $(this).text("完成");
-            $(this).css("background","#924343")
+            $(this).css("background","#924343");
+            $(".choice-box").css("display","block");
+            $("#addchoice").parent().hide();
         }else{
             quan=0;
             $(".choice").removeClass("choice-check");
             $(this).text("多选");
-            $(this).css("background","#848484")
+            $(this).css("background","#848484");
+            $(".choice-box").css("display","none");
+            $(".choice-box").prop("checked",false);
+            $("#addchoice").parent().show();
         }
     })
+    //全选框点击事件
+    $("#checkAll").bind("click", function () {
+        var checkbox = document.getElementsByName("checkItem");
+        if ($("#checkAll").is(':checked')) {//全选
+            if(checkbox.length != 0)  //判断条件是当选择的个数不为0时
+            {
+                for(var i = 0; i < checkbox.length; i ++){
+                    $(checkbox[i]).parent().parent().addClass("choice-check");
+                    $(checkbox[i]).parent().parent().attr("choicecheck",1);
+                    checkbox[i].checked=true;
+                }
+            }
+        }
+        else
+        {//全不选
+            if(checkbox.length != 0)  //判断条件是当选择的个数不为0时
+            {
+                for( i = 0; i < checkbox.length; i ++){
+                    $(checkbox[i]).parent().parent().removeClass("choice-check");
+                    $(checkbox[i]).parent().parent().attr("choicecheck",0);
+                    checkbox[i].checked=false;
+                }
+            }
+        }
+    });
 //试卷内题目绑定事件
     function deleteChoiceBind(){
+        //勾选试题
+        $('input:checkbox[name="checkItem"]').bind("click", function () {
+            var checkbox = document.getElementsByName("checkItem");
+            var exist=true;
+            for(var i = 0; i < checkbox.length; i ++){
+                if(checkbox[i].checked==false){
+                    $(checkbox[i]).parent().parent().removeClass("choice-check");
+                    $(checkbox[i]).parent().parent().attr("choicecheck",0);
+                    exist=false;
+                }else{
+                    $(checkbox[i]).parent().parent().addClass("choice-check");
+                    $(checkbox[i]).parent().parent().attr("choicecheck",1);
+                }
+            }
+            if(exist){
+                $("#checkAll").prop("checked",true);
+            }
+            else{
+                $("#checkAll").prop("checked",false);
+            }
+        });
+        //删除事件
         $(".delete-choice").bind("click",function () {
             let choice=$(this).parent().parent();
             if(choice.attr("bindid")==""){
@@ -614,21 +670,59 @@ $(function () {
                 })
             }
         })
-        $(".choice").bind("click",function(e){
-           if (quan==1){
-               $(this).addClass("choice-check");
-               $(".choice-check").bind("click",function(e){
-                   $(this).removeClass("choice-check");
-               })
-           }
-        });
+        // $(".choice").bind("click",function(e){
+        //     e.stopPropagation();
+        //    if (quan==1){
+        //        if($(this).attr("choicecheck")==0){
+        //            $(this).attr("choicecheck",1);
+        //            $(this).addClass("choice-check");
+        //        }else{
+        //            $(this).attr("choicecheck",0);
+        //            $(this).removeClass("choice-check");
+        //        }
+        //    }
+        // });
         $(".score1").bind("click",function(e){
             e.stopPropagation();
         });
+
+        // 格式化限制数字文本框输入，只能数字或者两位小数
+        function input_num(obj){
+            // 清除"数字"和"."以外的字符
+            obj.value = obj.value.replace(/[^\d.]/g,"");
+            // 验证第一个字符是数字
+            obj.value = obj.value.replace(/^\./g,"");
+            // 只保留第一个, 清除多余的
+            obj.value = obj.value.replace(/\.{2,}/g,".");
+            obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+            // 只能输入两个小数
+            obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');
+
+            //如果有小数点，不能为类似 1.10的金额
+            if(obj.value.indexOf(".")> 0  && obj.value.indexOf("0")>2){
+                obj.value= parseFloat(obj.value);
+            }
+
+            //如果有小数点，不能为类似 0.00的金额
+            if(obj.value.indexOf(".")> 0  && obj.value.lastIndexOf("0")>2){
+                obj.value= parseFloat(obj.value);
+            }
+            //以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
+            if (obj.value.indexOf(".") <= 0 && obj.value != "") {
+                obj.value = parseFloat(obj.value);
+            }
+        }
+        //失去焦点校验
+        $(".score1").bind("blur",function(e){
+            input_num(this);
+        });
         //批量操作时，被选中的分数同步
-        $(".score1").bind("change",function(){
+        $(".score1").bind("keyup",function(e){
+            var curKey = e.which;
+            if (curKey != 13) return;
+            input_num(this);
             let sco=$(this).val();
-            if(quan==1){
+            if(quan==1 && $(this).parent().parent().parent().attr("choicecheck")==1){
                 let choices = $(".choice-check");
                 choices.each(function (i, choice) {
                     $(choice).children(".choice-title").children(".score_div").children(".score1").val(sco)
