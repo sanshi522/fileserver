@@ -79,13 +79,35 @@
     padding-bottom: 10px;
 
 }
+.scoreNum{
+    margin-left: 20px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px;
+}
+.choice-check{
+    background-color:#F0BFBF;
+}
+.score_div{
+    max-width:70px;
+    float: right;
+}
 
 .choice-title{
     float: left;
     width: 100%;
     height: 30px;
     padding-left: 20px;
-    padding-right: 20px;
+}
+.delete-choice{
+    margin-right: 20px;
+}
+.choice-box{
+    display:none;
+    width: 30px;
+    height: 30px;
+    -moz-transform:scale(2);
+    float: right;
 }
 .choice-index{
     background-color: #EEF0A9;
@@ -235,8 +257,4 @@
     color:#9B8F8F;
     width: 30px;
     height: 30px;
-}
-.choice-oper:hover{
-    background-color: #FFFFFF;
-    color:#CEF51C;
 }
