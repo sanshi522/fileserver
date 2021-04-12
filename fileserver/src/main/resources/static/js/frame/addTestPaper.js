@@ -29,6 +29,14 @@ $(function () {
             else
                 $(choice).children(".choice-title").children(".addthis").show();
         });
+        if (choiceids.length < 1. && $("#testPaper").attr("testPaperId") == 0) {
+            $("#subIdScreen").prop("disabled", false);
+            $('#subIdScreen').selectpicker('refresh')
+        } else if (choiceids.length > 0){
+            $("#subIdScreen").prop("disabled", true);
+        $('#subIdScreen').selectpicker('refresh');
+    }
+
     }
 
     document.body.ondrop = function (event) {
@@ -535,6 +543,10 @@ $(function () {
 
     $("#choices").empty();
     $("#addchoice").click(function (e) {
+        if($("#subIdScreen option:selected").val()==0) {
+            $.alert("请选择科目");
+            return;
+        }
         openWindw(e.pageX, e.pageY);
         binds(0);
         Knowledge();

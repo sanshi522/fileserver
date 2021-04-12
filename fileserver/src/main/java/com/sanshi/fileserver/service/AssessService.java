@@ -1,10 +1,14 @@
 package com.sanshi.fileserver.service;
 
 import com.sanshi.fileserver.bean.Assess;
+import com.sanshi.fileserver.vo.AssessMsg;
 import com.sanshi.fileserver.vo.AssessVo;
+import com.sanshi.fileserver.vo.ScreenAssess;
+import com.sanshi.fileserver.vo.TestPaperMsg;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 【考核service】
@@ -18,7 +22,7 @@ public interface AssessService {
      * @param request
      * @return
      */
-    public List<AssessVo> findAll(Assess assess, Integer test, HttpServletRequest request);
+    public Map findAll(ScreenAssess screenAssess);
     /**
      * 获取进行中考核
      * @param assess
@@ -45,4 +49,7 @@ public interface AssessService {
      * @param assess
      */
     void delete(Assess assess);
+
+
+    public AssessMsg findMsg(Integer testPaperId);
 }

@@ -120,3 +120,4 @@ function upload_maxview() {
 function say(){
     alert("parent.html");
 }
+
