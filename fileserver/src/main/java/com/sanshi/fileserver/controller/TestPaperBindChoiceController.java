@@ -4,6 +4,7 @@ import com.sanshi.fileserver.bean.TestPaperBindChoice;
 import com.sanshi.fileserver.service.TestPaperBindChoiceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -18,12 +19,11 @@ public class TestPaperBindChoiceController {
         TestPaperBindChoiceService = testPaperBindChoiceService;
     }
 
+
+
     @PostMapping("/save")
-
-
-
     @ResponseBody
-    public int  save(List<TestPaperBindChoice> testPaperBindChoices){TestPaperBindChoiceService.save(testPaperBindChoices); return 1;}
+    public int  save(@RequestBody List<TestPaperBindChoice> testPaperList){TestPaperBindChoiceService.save(testPaperList); return 1;}
 
 
     @PostMapping("/delete")

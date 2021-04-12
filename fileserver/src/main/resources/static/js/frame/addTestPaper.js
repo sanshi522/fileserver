@@ -624,28 +624,6 @@ $(function () {
     });
 //试卷内题目绑定事件
     function deleteChoiceBind(){
-        //勾选试题
-        $('input:checkbox[name="checkItem"]').bind("click", function () {
-            var checkbox = document.getElementsByName("checkItem");
-            var exist=true;
-            for(var i = 0; i < checkbox.length; i ++){
-                if(checkbox[i].checked==false){
-                    $(checkbox[i]).parent().parent().removeClass("choice-check");
-                    $(checkbox[i]).parent().parent().attr("choicecheck",0);
-                    exist=false;
-                }else{
-                    $(checkbox[i]).parent().parent().addClass("choice-check");
-                    $(checkbox[i]).parent().parent().attr("choicecheck",1);
-                }
-            }
-            if(exist){
-                $("#checkAll").prop("checked",true);
-            }
-            else{
-                $("#checkAll").prop("checked",false);
-            }
-        });
-        //删除事件
         $(".delete-choice").bind("click",function () {
             let choice=$(this).parent().parent();
             if(choice.attr("bindid")==""){
@@ -767,10 +745,9 @@ function save() {
             console.log(data);
             if(data!=undefined && data !=null){
                 $("#testPaper").attr("testPaperId",data.id);
-                saveTestPaper(data.id);
+                saveTestPaperBindChoice();
             }
         },
-
         error: function (data) {
             console.log("服务器异常");
         }
@@ -789,23 +766,21 @@ function saveTestPaperBindChoice() {
             "score":3.0
         }
         testPaperList.push(TestPaperBindChoice);
-          console.log(JSON.stringify(TestPaperBindChoice));
     });
-    console.log(JSON.stringify(testPaperList));
 
-    // $.ajax({
-    //     url: "/TestPaperBindChoice/save",
-    //     contentType: "application/json;charset=UTF-8",
-    //     type: "post",
-    //     data: JSON.stringify(TestPaperBindChoice),
-    //     dataType: "json",
-    //     success: function (data) {
-    //         console.log(data);
-    //     },
-    //     error: function (data) {
-    //         console.log("服务器异常");
-    //     }
-    // })
+    $.ajax({
+        url: "/TestPaperBindChoice/save",
+        contentType: "application/json;charset=UTF-8",
+        type: "post",
+        data: JSON.stringify(testPaperList),
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (data) {
+            console.log("服务器异常");
+        }
+    })
 }
 
 
