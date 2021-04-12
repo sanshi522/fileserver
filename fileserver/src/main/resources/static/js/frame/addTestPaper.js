@@ -15,7 +15,9 @@ choiceids=[];
 
 $(function () {
 
-    function refaddbtn(){
+
+    //判断
+    function refaddbtn() {
         choiceids.splice(0);
         var choices = $(".choice");
         choices.each(function (i, choice) {
@@ -23,11 +25,20 @@ $(function () {
         });
         var choices1 = $(".choice1");
         choices1.each(function (i, choice) {
-            if ($.inArray($(choice).attr("choiceid"),choiceids)>=0)
+            if ($.inArray($(choice).attr("choiceid"), choiceids) >= 0) {
                 $(choice).children(".choice-title").children(".addthis").hide();
-            else
+            } else {
                 $(choice).children(".choice-title").children(".addthis").show();
+            }
         });
+        if (choiceids.length < 1. && $("#testPaper").attr("testPaperId") == 0) {
+            $("#subIdScreen").prop("disabled", false);
+            $('#subIdScreen').selectpicker('refresh')
+        } else if (choiceids.length > 0){
+            $("#subIdScreen").prop("disabled", true);
+        $('#subIdScreen').selectpicker('refresh');
+    }
+
     }
 
     document.body.ondrop = function (event) {
@@ -240,13 +251,13 @@ $(function () {
                 }
                 $('#abilityId').selectpicker('refresh');
                 $('#abilityId').val(0).trigger("change");
+
             },
             error:function (data) {
                 console.log("服务器异常");
             }
 
         })
-
 
     }
 
@@ -522,9 +533,13 @@ $(function () {
 
     $("#choices").empty();
     $("#addchoice").click(function (e) {
+        if($("#subIdScreen option:selected").val()==0) {
+            $.alert("请选择科目");
+            return;
+        }
         openWindw(e.pageX, e.pageY);
-        binds(0);
         Knowledge();
+        binds(0);
     });
 
     function choicebind() {
@@ -548,6 +563,7 @@ $(function () {
             deleteChoiceBind();
             sortRef();
             refaddbtn();
+
         });
         $(".input-cho").bind("click", function () {
             $(this).children('input')[0].click();
@@ -568,27 +584,43 @@ $(function () {
     function deleteChoiceBind(){
         $(".delete-choice").bind("click",function () {
             let choice=$(this).parent().parent();
-            if(choice.attr("bindid")==""){
-                $(this).parent().parent().remove();
-                sortRef();
-                refaddbtn();
-            }else{
-                $.ajax({
-                    url: "/TestPaperBindChoice/delete",
-                    type: "post",
-                    data: {id: $(choice).attr("bindid")},
-                    dataType: "json",
-                    success: function (data) {
-                        $(choice).remove();
+            $.confirm({
+                confirmButtonClass: 'btn-info',
+                cancelButtonClass: 'btn-danger',
+                title: '提示',
+                content: '确定要删除该试题吗？',
+                confirm: function(){
+                    if(choice.attr("bindid")==""){
+                        console.log("我进来了");
+                       $(choice).remove();
                         sortRef();
                         refaddbtn();
-                    },
-                    error: function (data) {
-                        console.log("服务器异常");
-
+                    }else{
+                        $.ajax({
+                            url: "/TestPaperBindChoice/delete",
+                            type: "post",
+                            data: {id: $(choice).attr("bindid")},
+                            dataType: "json",
+                            success: function (data) {
+                                $(choice).remove();
+                                sortRef();
+                                refaddbtn();
+                            },
+                            error: function (data) {
+                                console.log("服务器异常");
+                            }
+                        })
                     }
-                })
-            }
+
+                },
+                cancel: function(){
+
+                }
+            });
+
+
+
+
         })
     }
 
@@ -600,6 +632,8 @@ $(function () {
 
 });
 
+
+//添加试卷
 function save() {
     let name = $("#testPaperName").val();
     let subId = $("#subIdScreen option:selected").val();
@@ -635,6 +669,8 @@ function save() {
     })
 }
 
+
+//试卷绑定试题
 function saveTestPaperBindChoice() {
     var choices = $(".choice");
     let testPaperList=[];

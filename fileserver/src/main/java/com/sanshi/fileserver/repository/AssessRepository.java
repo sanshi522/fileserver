@@ -1,6 +1,8 @@
 package com.sanshi.fileserver.repository;
 
 import com.sanshi.fileserver.bean.Assess;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -62,6 +64,20 @@ public interface AssessRepository extends JpaRepository<Assess,Integer>, JpaSpec
      * 管理员获取未指定未进行的考核
      */
     List<Assess> findAllByStartTimeGreaterThanAndEndTimeLessThan( Date start,Date end);
+
+    /**
+     * 老师获取所有的考核
+     */
+
+    Page<Assess> findAll(Pageable pa);
+    /**
+     * 筛选学科选项
+     */
+  Page <Assess> findAllBySubId(Integer subId,Pageable pa);
+
+
+
+
 
     /**
      * 添加修改考核信息

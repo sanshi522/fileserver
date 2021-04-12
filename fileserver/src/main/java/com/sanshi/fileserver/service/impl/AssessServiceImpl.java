@@ -6,8 +6,9 @@ import com.sanshi.fileserver.bean.Student;
 import com.sanshi.fileserver.repository.*;
 import com.sanshi.fileserver.service.AssessService;
 import com.sanshi.fileserver.service.RespondentsService;
-import com.sanshi.fileserver.vo.AssessVo;
-import com.sanshi.fileserver.vo.SessionUser;
+import com.sanshi.fileserver.vo.*;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,6 @@ public class AssessServiceImpl implements AssessService {
     private TestPaperRepository testPaperRepository;
     private SubjectRepository subjectRepository;
     private TestPaperBindChoiceRepository testPaperBindChoiceRepository;
-
     private RespondentsService respondentsService;
 
     public AssessServiceImpl(StudentRepository studentRepository, TeacherRepository teacherRepository, AssessRepository assessRepository, GroupRepository groupRepository, CclassRepository cclassRepository, GradeRepository gradeRepository, TestPaperRepository testPaperRepository, RespondentsService respondentsService, SubjectRepository subjectRepository, TestPaperBindChoiceRepository testPaperBindChoiceRepository) {
@@ -38,85 +38,22 @@ public class AssessServiceImpl implements AssessService {
         this.testPaperRepository = testPaperRepository;
         this.subjectRepository = subjectRepository;
         this.testPaperBindChoiceRepository = testPaperBindChoiceRepository;
-
         this.respondentsService = respondentsService;
     }
 
     @Override
-    public List<AssessVo> findAll(Assess assess, Integer test, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        if (session != null && session.getAttribute("user") != null) {
-            SessionUser sessionUser = new SessionUser();
-            sessionUser = (SessionUser) session.getAttribute("user");
-            Integer logintype = (sessionUser.getLogintype() == 0 ? 0 : sessionUser.getTeacher().getTeaIdentity());
-            Integer userId = (sessionUser.getLogintype() == 0 ? sessionUser.getStudent().getStuId() : sessionUser.getTeacher().getTeaId());
-            List<AssessVo> assessVoList =new ArrayList<AssessVo>();
-            List<Assess> assessList=new ArrayList<Assess>();
-            if (test==0){
-                assessList.addAll(findAllValid(assess,logintype,userId));
-            } else{
-                assessList.addAll(findAllInvalid(assess,logintype,userId));
-            }
-            for (int i=0;i<assessList.size();i++){
-                Integer assessSum=0;
-                String testObject;
-                String testObjectName;
-                switch (assessList.get(i).getTestObject()){
-                    case 0:
-                        testObject="学院";
-                        testObjectName=gradeRepository.findOneById(assessList.get(i).getTestObjectId()).getName();
-                        if(logintype!=0)
-                            assessSum= studentRepository.findAllByStuGroupIn(groupRepository.findALLIdByCclassIdIn(cclassRepository.findIdsByGradeId(assessList.get(i).getTestObjectId()))).size();
-                        break;
-                    case 1:
-                        testObject="班级";
-                        testObjectName=gradeRepository.findOneById(cclassRepository.findOneById(assessList.get(i).getTestObjectId()).getGradeId()).getName()
-                                +"/"+cclassRepository.findOneById(assessList.get(i).getTestObjectId()).getName();
-                        if(logintype!=0)
-                            assessSum=studentRepository.findAllByStuGroupIn(groupRepository.findALLIdByCclassId(assessList.get(i).getTestObjectId())).size();
-                        break;
-                    case 2:
-                        testObject="小组";
-                        testObjectName=gradeRepository.findOneById(cclassRepository.findOneById(cclassRepository.findOneById(groupRepository.findOneById(assessList.get(i).getTestObjectId()).getCclassId()).getGradeId()).getGradeId()).getName()
-                                +"/"+cclassRepository.findOneById(groupRepository.findOneById(assessList.get(i).getTestObjectId()).getCclassId()).getName()
-                                +"/"+groupRepository.findOneById(assessList.get(i).getTestObjectId()).getName();
-                        if(logintype!=0)
-                            assessSum=studentRepository.findAllByStuGroup(assessList.get(i).getTestObjectId()).size();
-                        break;
-                    case 3:
-                        testObject="学生";
-                        testObjectName=gradeRepository.findOneById(cclassRepository.findOneById(cclassRepository.findOneById(groupRepository.findOneById(studentRepository.findOneByStuId(assessList.get(i).getTestObjectId()).getStuId()).getCclassId()).getGradeId()).getGradeId()).getName()
-                                +"/"+cclassRepository.findOneById(groupRepository.findOneById(studentRepository.findOneByStuId(assessList.get(i).getTestObjectId()).getStuId()).getCclassId()).getName()
-                                +"/"+groupRepository.findOneById(studentRepository.findOneByStuId(assessList.get(i).getTestObjectId()).getStuId()).getName()
-                                +"/"+studentRepository.findOneByStuId(assessList.get(i).getTestObjectId()).getStuName();
-                        if(logintype!=0)
-                            assessSum=1;
-                    default:
-                        testObject="错误";
-                        testObjectName="错误";
-                        break;
+    public Map findAll(ScreenAssess screenAssess) {
+        Map json = new HashMap();
+        Pageable pageable;
+        pageable = PageRequest.of(screenAssess.getPageIndex(), screenAssess.getPageNumber());
+        if(screenAssess.getSubId()!=null && screenAssess.getSubId()!=0){
+            json.put("page",   assessRepository.findAllBySubId(screenAssess.getSubId(),pageable));
 
-                }//登陆身份、试卷名、进行中数量、已完成数量、考核总人数、科目名、总分、发布人、考核对象、对象名称、用时、提交状态、考核
-
-                assessVoList.add(new AssessVo(
-                        logintype,
-                        testPaperRepository.findOneById(assessList.get(i).getTestPaperId()).getName(),
-                        respondentsService.findAll(new Respondents(assessList.get(i).getId(),null,0)).size(),
-                        respondentsService.findAll(new Respondents(assessList.get(i).getId(),null,1)).size(),
-                        assessSum,
-                        subjectRepository.findOneById(assessList.get(i).getSubId()).getName(),
-                        testPaperBindChoiceRepository.findScoreSum(assessList.get(i).getTestPaperId()),
-                        teacherRepository.findOneByTeaId(assessList.get(i).getIssueId()).getTeaName(),
-                        testObject,testObjectName,
-                        logintype==0?(respondentsService.findAll(new Respondents(assessList.get(i).getId(),userId,null)).size()==0?0:respondentsService.findAll(new Respondents(assessList.get(i).getId(),userId,null)).get(0).getMakeTime()):0,
-                        logintype==0?(respondentsService.findAll(new Respondents(assessList.get(i).getId(),userId,null)).size()==0?0:respondentsService.findAll(new Respondents(assessList.get(i).getId(),userId,null)).get(0).getSubmit()):0,
-                        assessList.get(i)
-                ));
-            }
-            return assessVoList;
-        }else{
-            return null;
+        }else {
+            json.put("page", assessRepository.findAll(pageable));
         }
+
+        return json ;
     }
 
     /**
@@ -180,5 +117,14 @@ public class AssessServiceImpl implements AssessService {
     @Override
     public void delete(Assess assess) {
         assessRepository.deleteById(assess.getId());
+    }
+
+    @Override
+    public AssessMsg findMsg(Integer id) {
+        Assess   assess=assessRepository.findOneById(id);
+        String name = teacherRepository.findOneByTeaId(assess.getIssueId()).getTeaName();
+        Double scoreSum = testPaperBindChoiceRepository.findScoreSum(assess.getTestPaperId());
+        if (scoreSum==null) scoreSum=0.0;
+        return new AssessMsg(name,testPaperBindChoiceRepository.findAllByTestPaperId(assess.getTestPaperId()).size(),scoreSum,subjectRepository.findOneById(assess.getSubId()).getName());
     }
 }
