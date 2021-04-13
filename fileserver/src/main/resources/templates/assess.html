@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <title>知识点</title>
     <link rel="stylesheet" type="text/css" href="/css/frame/share.css" />
-    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/fonts/iconfont1.css">
     <link rel="stylesheet" type="text/css" href="/css/frame/student.css" />
     <link rel="stylesheet" type="text/css" href="/css/bootstrap/bootstrap-select/bootstrap-select.min.css">
     <link rel="stylesheet" type="text/css" href="/css/jquery-confirm/jquery-confirm.css">
     <link rel="stylesheet" type="text/css" href="/css/jquery-pagination/pagination.css">
     <link rel="stylesheet" type="text/css" href="/css/jquery-datetimepicker/jquery.datetimepicker.min.css">
-
     <link rel="stylesheet" type="text/css" href="/css/frame/assess.css">
 
     <script src="/js/jquery/jquery-3.5.1.min.js"></script>
@@ -42,7 +41,6 @@
     </div>
 
     <div class="blue ui buttons" style="float: right;margin-left: 10px;">
-
         <button class="ui button green"  id="addAssess">发布考核</button>
     </div>
 
@@ -99,48 +97,63 @@
     <div style="float: right;">单页显示：</div>
     <label class="totalmsg" style="float: right;"></label>
     <div class="popWindow">
-        <div style="width: 800px;height: 600px">
-            <div style="float: left;width: 300px;height: 300px">
-
-                <div class="input-group">
+		<div class="pop-title" style="width:100%;height:40px;font-size: 20px;line-height: 40px;font-weight: 700;">考核信息</div>
+		<div class="pop-left" style="min-width: 300px;width: 300px;height: auto;float: left;margin: 5px;">
+			<div class="input-group">
                     <span class="input-group-addon" >考核名称</span>
                     <input type="text" class="form-control"  aria-describedby="basic-addon1">
                 </div>
-                <div class="input-group">
-                    <span class="input-group-addon" >开始时间</span>
-                    <input type="text" class="form-control" name="search-from-date" id="search-from-date"/>
-                </div>
-
-                <div class="input-group">
-                    <span class="input-group-addon" >结束时间</span>
-                    <input type="text" class="form-control" name="search-to-date" id="search-to-date"/>
-                </div>
-
                 <div class="input-group">
                     <span class="input-group-addon" >学科</span>
                     <select name="channels" id="subIdScreen2" data-style="btn-info" aria-describedby="basic-addon1" class="form-control" placeholder="请输入学科">
                         <option value="0">全部学科</option>
                     </select>
                 </div>
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">
-                    <span class="input-group-addon" id="basic-addon2">@example.com</span>
+				<div class="input-group">
+                    <span class="input-group-addon" >试卷</span>
+                    <input type="text" class="form-control" name="" id="" readonly/>
                 </div>
-
+            <div class="input-group">
+                <span class="input-group-addon" >开始时间</span>
+                <input type="text" class="form-control" name="search-from-date" id="search-from-date" readonly/>
             </div>
-            <div class="ui filemesg" style="">
-                <div class="user-title" style="width:100%;height:45px;">
-                    <div id="channels11" style="float: left;margin-top:5px;margin-left: 5px;width: auto;">
-                        <select name="channels" id="queryLevels" title="选择共享级别" data-style="btn-primary" class="selectpicker">
 
+            <div class="input-group">
+                <span class="input-group-addon" >结束时间</span>
+                <input type="text" class="form-control" name="search-to-date" id="search-to-date" readonly/>
+            </div>
+
+            <table class="table" style="width:100%;border: 1px solid rgba(34, 36, 38, .15);margin-top: 10px ">
+                    <thead>
+                    <tr><th colspan="2">考核对象</th><th><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"></i></th></tr>
+                    </thead>
+                    <tbody id="selecttarget">
+						<tr class="target" ><td>学年</td><td>2020</td><td><i class="my-icon lsm-sidebar-icon icon-shanchu assessuser-del"></i></td></tr>
+						<tr class="target" ><td>班级</td><td>一班</td><td><i class="my-icon lsm-sidebar-icon icon-shanchu assessuser-del"></i></td></tr>
+						<tr class="target" ><td>学生</td><td>小明</td><td><i class="my-icon lsm-sidebar-icon icon-shanchu assessuser-del"></i></td></tr>
+                    </tbody>
+                </table>
+                
+		</div>
+		<div class="pop-right" style="min-width: 400px;width: 400px; height: auto;float: left;" >
+            <div id="addUser_div">
+            <div class="user-title" style="width:100%;height:45px;">
+					<div class="input-group assesuser-inputs">
+						<span class="input-group-addon" >考核对象</span>
+						<select name="channels" id="queryLevels" aria-describedby="basic-addon1" class="form-control">
+                            <option value=1 >学年</option>
+                            <option value=2 >学院</option>
+                            <option value=3 >班级</option>
+                            <option value=4 >小组</option>
+                            <option value=5 >学生</option>
                         </select>
-                    </div>
+                	</div>
                 </div>
 
                 <table class="table" style="width:100%;border: 1px solid rgba(34, 36, 38, .15); ">
                     <thead>
-                    <tr><th><input id="checkAll" type="checkbox"/></th><th>
-                        <div style="float: left;line-height: 30px;">目标</div>
+                    <tr>
+                        <th colspan="2">
                         <div  id="yearScreenDiv" >
                             <select name="channels" id="yearScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
                                 <option value="0">全部学年</option>
@@ -163,16 +176,27 @@
                                 <option  value="0">全部小组</option>
                             </select>
                         </div>
-                    </th></tr>
+                    </th>
+                    </tr>
                     </thead>
                     <tbody id="selecttarget">
-                    <tr class="target" ><td><input data_id=1 name="checkItem" type="checkbox" /></td><td>郭靖</td></tr>
-                    <tr class="target" ><td><input data_id=2 name="checkItem" type="checkbox" /></td><td>黄蓉</td></tr>
-                    <tr class="target" ><td><input data_id=3 name="checkItem" type="checkbox" /></td><td>杨过</td></tr>
+                    <tr class="target" ><td>郭靖</td><td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>
+                    <tr class="target" ><td>黄蓉</td><td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>
+                    <tr class="target" ><td>杨过</td><td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>
                     </tbody>
                 </table>
             </div>
+            <div id="screenTest_div">
         </div>
+		<div class="pop-bootm" style="float: left; width:100%;height: 40px;text-align: center;">
+			<div class="blue ui buttons" style="float: none;margin-left: 10px;">
+        		<button class="ui button green"  id="save_ok">保存</button>
+    		</div>
+			<div class="blue ui buttons" style="float: none;margin-left: 10px;">
+        		<button class="ui button green"  id="cancel">取消</button>
+    		</div>
+		</div>
+       
         <!--  <div class="choicecontent" style="width:100%;float: left;">
                    <div class="allChoice" style="width:100%;min-height: 300px;max-height: 600px; float: left;overflow-y: auto;">
                    </div>

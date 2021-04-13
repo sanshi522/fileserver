@@ -1,11 +1,11 @@
 // JavaScript Document
 var upident;
 $(function(){
-	var nowdatatime="";
+	var startdatatime="";
+	var enddatatime="";
 	//起始时间部分
-	countdown();
-	function countdown() {
-		var myDate = new Date();
+	countdown(new Date());
+	function countdown(myDate) {
 		//获取当前年
 		var year=myDate.getFullYear();
 		//获取当前月
@@ -16,25 +16,67 @@ $(function(){
 		var m=myDate.getMinutes();     //获取当前分钟数(0-59)
 		var s=myDate.getSeconds();
 		var now=year+'-'+getNow(month)+"-"+getNow(date)+" "+getNow(h)+':'+getNow(m)+":"+getNow(s);
-		nowdatatime = now;
+		return now;
 	}
-
 	// 获取当前时间
 	function getNow(s) {
 		return s < 10 ? '0' + s: s;
 	}
+	Date.prototype.Format = function(fmt)
+	{ //author: meizz
+		var o = {
+			"M+" : this.getMonth()+1,                 //月份
+			"d+" : this.getDate(),                    //日
+			"h+" : this.getHours(),                   //小时
+			"m+" : this.getMinutes(),                 //分
+			"s+" : this.getSeconds(),                 //秒
+			"q+" : Math.floor((this.getMonth()+3)/3), //季度
+			"S"  : this.getMilliseconds()             //毫秒
+		};
+		if(/(y+)/.test(fmt))
+			fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substring(4 - RegExp.$1.length));
+		for(var k in o)
+			if(new RegExp("("+ k +")").test(fmt))
+				fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substring((""+ o[k]).length)));
+		return fmt;
+	}
 	//显示起始时间为系统当前时间
-	$('#search-from-date, #search-to-date').datetimepicker({
+	$('#search-to-date').datetimepicker({
 		format:'Y-m-d H:i:00',
+		value:new Date().Format('yyyy-MM-dd hh:mm:ss'),
 		theme: 'dark',
-		step:1
+		step:1,
+		onSelectTime: function(dateText, inst){
+			startdatatime=dateText.Format('yyyy-MM-dd hh:mm:ss');
+		}
 	});
+	$('#search-from-date').datetimepicker({
+		format:'Y-m-d H:i:00',
+		value:new Date().Format('yyyy-MM-dd hh:mm:ss'),
+		theme: 'dark',
+		step:1,
+		onSelectTime: function(dateText, inst){
+			enddatatime=dateText.Format('yyyy-MM-dd hh:mm:ss');
+		}
+	});
+	// $('#search-to-date').datetimepicker({
+	// 	format:'Y-m-d H:i:00',
+	// 	theme: 'dark',
+	// 	step:1,
+	// 	beforeShowDay:function(d) {this.minDate=startdata}
+	// });
 	$.datetimepicker.setLocale('zh');
 
-	$('#search-from-date').bind("change",function(){
-		var d = $('#search-from-date').datetimepicker('getValue');
-		alert(d.getFullYear());
-	});
+
+	// $('#search-to-date').click(function(){
+	// 	countdown($('#datetimepicker').datetimepicker('getValue'));
+	// 	$('#search-to-date').datetimepicker({
+	// 		format:'Y-m-d H:i:00',
+	// 		value:nowdatatime,
+	// 		theme: 'dark',
+	// 		step:1
+	// 	});
+	// });
 
 	//获取学科
 	function getsubtype(){
@@ -72,76 +114,61 @@ $(function(){
 	}
 
 
-	/**
-	 * 考核对象 personnel
-	 */
-	function  personnel() {
-		$("#queryLevels").empty();
-		$("#queryLevels").append('  ' +
-		'<option value=1 >学年</option>\n' +
-		'<option value=2 >学院</option>\n' +
-		'<option value=3 >班级</option>\n' +
-		'<option value=4 >小组</option>\n' +
-		'<option value=5 >学生</option> ')
-		$('#queryLevels').selectpicker('refresh');
-		$('#queryLevels').val(1).trigger("change");
-
-	}
 
 
 
-	$("#queryLevels").change(function() {
-		$("#checkAll").prop("checked",false);//全选按钮取消全选
-		upident = $("#queryLevels").val();
-		if (upident != '1') {
-			$("#yearScreenDiv").css("display", "block");
-		}
-		if (upident == '7' || upident == '1'){
-			$("#yearScreenDiv").css("display", "none");
-			$("#gradeScreenDiv").css("display", "none");
-			$("#classScreenDiv").css("display", "none");
-			$("#groupScreenDiv").css("display", "none");
-		}
-
-		$.ajax({
-			url: "Grade/GetYear",
-			type: "post",
-			dataType: "json",
-			success: function (data) {
-				var logintype=0;
-				if (data.resoult) {
-					if (upident != 1) {
-						$("#yearScreen").empty();
-						if (logintype == 0) {
-							$("#yearScreen").append('<option value="' + data.year.year + '">' + data.year.year + '</option>');
-							$('#yearScreen').selectpicker('refresh');
-							$('#yearScreen').val(data.year.year).trigger("change");
-						} else {
-							for (let i = 0; i < data.years.length; i++) {
-								$("#yearScreen").append('<option value="' + data.years[i] + '">' + data.years[i] + '</option>');
-							}
-							$('#yearScreen').selectpicker('refresh');
-							$('#yearScreen').val(data.years[0]).trigger("change");
-						}
-					} else {
-						$("#selecttarget").empty();
-						if (logintype == 0) {
-							$("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.year.year +' name="checkItem" type="checkbox" /></td><td>' + data.year.year + '</td></tr>');
-						} else {
-							$("#selecttarget").empty();
-							for (let i = 0; i < data.years.length; i++) {
-								$("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.years[i] +' name="checkItem" type="checkbox" /></td><td>' + data.years[i] + '</td></tr>');
-							}
-						}
-						checkItemAddBindClick();
-					}
-				}
-			},
-			error: function (data) {
-				console.log("获取学年服务器错误")
-			}
-		});
-	});
+	// $("#queryLevels").change(function() {
+	// 	$("#checkAll").prop("checked",false);//全选按钮取消全选
+	// 	upident = $("#queryLevels").val();
+	// 	if (upident != '1') {
+	// 		$("#yearScreenDiv").css("display", "block");
+	// 	}
+	// 	if (upident == '7' || upident == '1'){
+	// 		$("#yearScreenDiv").css("display", "none");
+	// 		$("#gradeScreenDiv").css("display", "none");
+	// 		$("#classScreenDiv").css("display", "none");
+	// 		$("#groupScreenDiv").css("display", "none");
+	// 	}
+	//
+	// 	$.ajax({
+	// 		url: "Grade/GetYear",
+	// 		type: "post",
+	// 		dataType: "json",
+	// 		success: function (data) {
+	// 			var logintype=0;
+	// 			if (data.resoult) {
+	// 				if (upident != 1) {
+	// 					$("#yearScreen").empty();
+	// 					if (logintype == 0) {
+	// 						$("#yearScreen").append('<option value="' + data.year.year + '">' + data.year.year + '</option>');
+	// 						$('#yearScreen').selectpicker('refresh');
+	// 						$('#yearScreen').val(data.year.year).trigger("change");
+	// 					} else {
+	// 						for (let i = 0; i < data.years.length; i++) {
+	// 							$("#yearScreen").append('<option value="' + data.years[i] + '">' + data.years[i] + '</option>');
+	// 						}
+	// 						$('#yearScreen').selectpicker('refresh');
+	// 						$('#yearScreen').val(data.years[0]).trigger("change");
+	// 					}
+	// 				} else {
+	// 					$("#selecttarget").empty();
+	// 					if (logintype == 0) {
+	// 						$("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.year.year +' name="checkItem" type="checkbox" /></td><td>' + data.year.year + '</td></tr>');
+	// 					} else {
+	// 						$("#selecttarget").empty();
+	// 						for (let i = 0; i < data.years.length; i++) {
+	// 							$("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.years[i] +' name="checkItem" type="checkbox" /></td><td>' + data.years[i] + '</td></tr>');
+	// 						}
+	// 					}
+	// 					checkItemAddBindClick();
+	// 				}
+	// 			}
+	// 		},
+	// 		error: function (data) {
+	// 			console.log("获取学年服务器错误")
+	// 		}
+	// 	});
+	// });
 
 
 
@@ -327,7 +354,6 @@ function ref(){
 }
 	$("#addAssess").click(function (e) {
 		openWindw(e.pageX, e.pageY);
-		personnel();
 	});
 
 
