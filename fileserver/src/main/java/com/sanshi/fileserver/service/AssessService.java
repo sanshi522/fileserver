@@ -28,7 +28,7 @@ public interface AssessService {
      * @param assess
      * @return
      */
-    List<Assess> findAllValid(Assess assess, Integer logintype,Integer userId);
+    //List<Assess> findAllValid(Assess assess, Integer logintype,Integer userId);
 
     /**
      * 获取未进行考核

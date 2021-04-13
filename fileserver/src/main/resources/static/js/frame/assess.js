@@ -11,6 +11,83 @@ var classId = 0;
 var total = 50; // 总共多少记录
 $(function () {
 
+	var startdatatime="";
+	var enddatatime="";
+	//起始时间部分
+	countdown(new Date());
+	function countdown(myDate) {
+		//获取当前年
+		var year=myDate.getFullYear();
+		//获取当前月
+		var month=myDate.getMonth()+1;
+		//获取当前日
+		var date=myDate.getDate();
+		var h=myDate.getHours();       //获取当前小时数(0-23)
+		var m=myDate.getMinutes();     //获取当前分钟数(0-59)
+		var s=myDate.getSeconds();
+		var now=year+'-'+getNow(month)+"-"+getNow(date)+" "+getNow(h)+':'+getNow(m)+":"+getNow(s);
+		return now;
+	}
+	// 获取当前时间
+	function getNow(s) {
+		return s < 10 ? '0' + s: s;
+	}
+	Date.prototype.Format = function(fmt)
+	{ //author: meizz
+		var o = {
+			"M+" : this.getMonth()+1,                 //月份
+			"d+" : this.getDate(),                    //日
+			"h+" : this.getHours(),                   //小时
+			"m+" : this.getMinutes(),                 //分
+			"s+" : this.getSeconds(),                 //秒
+			"q+" : Math.floor((this.getMonth()+3)/3), //季度
+			"S"  : this.getMilliseconds()             //毫秒
+		};
+		if(/(y+)/.test(fmt))
+			fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substring(4 - RegExp.$1.length));
+		for(var k in o)
+			if(new RegExp("("+ k +")").test(fmt))
+				fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substring((""+ o[k]).length)));
+		return fmt;
+	}
+	//显示起始时间为系统当前时间
+	$('#search-to-date').datetimepicker({
+		format:'Y-m-d H:i:00',
+		value:new Date().Format('yyyy-MM-dd hh:mm:ss'),
+		theme: 'dark',
+		step:1,
+		onSelectTime: function(dateText, inst){
+			startdatatime=dateText.Format('yyyy-MM-dd hh:mm:ss');
+		}
+	});
+	$('#search-from-date').datetimepicker({
+		format:'Y-m-d H:i:00',
+		value:new Date().Format('yyyy-MM-dd hh:mm:ss'),
+		theme: 'dark',
+		step:1,
+		onSelectTime: function(dateText, inst){
+			enddatatime=dateText.Format('yyyy-MM-dd hh:mm:ss');
+		}
+	});
+	// $('#search-to-date').datetimepicker({
+	// 	format:'Y-m-d H:i:00',
+	// 	theme: 'dark',
+	// 	step:1,
+	// 	beforeShowDay:function(d) {this.minDate=startdata}
+	// });
+	$.datetimepicker.setLocale('zh');
+
+
+	// $('#search-to-date').click(function(){
+	// 	countdown($('#datetimepicker').datetimepicker('getValue'));
+	// 	$('#search-to-date').datetimepicker({
+	// 		format:'Y-m-d H:i:00',
+	// 		value:nowdatatime,
+	// 		theme: 'dark',
+	// 		step:1
+	// 	});
+	// });
+
     /**
      * 获取身份
      */
@@ -81,10 +158,10 @@ $(function () {
             },
             error: function (data) {
 
-            }
-        });
+			}
+		});
 
-    }
+	}
 
     /**
      * 考核对象 personnel
@@ -211,17 +288,17 @@ $(function () {
                         });
                     }
 
-                    total = data.page.totalElements;
-                    $(".totalmsg").html("【共" + total + "条记录，当前显示：" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + 1) + "~" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + data.page.numberOfElements) + "】");
+				total=data.page.totalElements;
+				$(".totalmsg").html("【共"+total+"条记录，当前显示："+(data.page.pageable.pageNumber*data.page.pageable.pageSize+1)+"~"+(data.page.pageable.pageNumber*data.page.pageable.pageSize+data.page.numberOfElements)+"】");
 
-                }
+				}
 
-                console.log(data);
+           	console.log(data);
 
-            }, error: function (data) {
-                console.log("服务器异常");
-            }
-        });
+         	}, error: function(data){
+               console.log("服务器异常");
+         	}
+			});
     }
 
     /**学科筛选 **/
@@ -242,174 +319,174 @@ $(function () {
 		issueId=$("#TeacherSelect").val();
 		console.log("--参数---"+issueId)
 		Init(0);
-
-	})
+	});
 
 //////////////////////////////////////////////////////////////////////悬浮窗口js
-    //var oBtn = $('#show');
-    var popWindow = $('.popWindow');
-    var oClose = $('.popWindow h3 span');
-    //浏览器可视区域的宽度
-    var browserWidth = $(window).width();
-    //浏览器可视区域的高度
-    var browserHeight = $(window).height();
-    //浏览器纵向滚动条距离上边界的值
-    var browserScrollTop = $(window).scrollTop();
-    //浏览器横向滚动条距离左边界的值
-    var browserScrollLeft = $(window).scrollLeft();
-    //弹出窗口的宽度
-    var popWindowWidth = popWindow.outerWidth(true);
-    //弹出窗口的高度
-    var popWindowHeight = popWindow.outerHeight(true);
-    //left的值＝浏览器可视区域的宽度／2－弹出窗口的宽度／2+浏览器横向滚动条距离左边界的值
-    var positionLeft = browserWidth / 2 - popWindowWidth / 2 + browserScrollLeft;
-    //top的值＝浏览器可视区域的高度／2－弹出窗口的高度／2+浏览器纵向滚动条距离上边界的值
-    var positionTop = browserHeight / 2 - popWindowHeight / 2 + browserScrollTop;
-    var oMask = '<div class="mask"></div>'
-    //遮照层的宽度
-    var maskWidth = $(document).width();
-    //遮照层的高度
-    var maskHeight = $(document).height();
-
-    //刷新
-    function ref() {
-        maskWidth = $(document).width();
-        maskHeight = $(document).height();
-        $(popWindow).css("max-width", maskWidth / 2 + 'px');
-        $(popWindow).css("max-height", maskHeight + 'px');
-        $(".wContent").css("max-height", maskHeight / 3 * 2 + 'px');
-        $(".addcontext").css("height", $(".wContent").height());
+  //var oBtn = $('#show');
+  	var popWindow = $('.popWindow');
+  var oClose = $('.popWindow h3 span');
+  //浏览器可视区域的宽度
+  var browserWidth = $(window).width();
+  //浏览器可视区域的高度
+  var browserHeight = $(window).height();
+  //浏览器纵向滚动条距离上边界的值
+  var browserScrollTop = $(window).scrollTop();
+  //浏览器横向滚动条距离左边界的值
+  var browserScrollLeft = $(window).scrollLeft();
+  //弹出窗口的宽度
+  var popWindowWidth = popWindow.outerWidth(true);
+  //弹出窗口的高度
+  var popWindowHeight = popWindow.outerHeight(true);
+  //left的值＝浏览器可视区域的宽度／2－弹出窗口的宽度／2+浏览器横向滚动条距离左边界的值
+  var positionLeft = browserWidth/2 - popWindowWidth/2+browserScrollLeft;
+  //top的值＝浏览器可视区域的高度／2－弹出窗口的高度／2+浏览器纵向滚动条距离上边界的值
+  var positionTop = browserHeight/2 - popWindowHeight/2+browserScrollTop;
+  var oMask = '<div class="mask"></div>'
+  //遮照层的宽度
+  var maskWidth = $(document).width();
+  //遮照层的高度
+  var maskHeight = $(document).height();
+	//刷新
+function ref(){
+	maskWidth = $(document).width();
+	maskHeight = $(document).height();
+	$(popWindow).css("max-width",maskWidth/2+'px');
+	$(popWindow).css("max-height",maskHeight+'px');
+	$(".wContent").css("max-height",maskHeight/3*2+'px');
+	$(".addcontext").css("height",$(".wContent").height());
 //	popWindowWidth = popWindow.outerWidth(true);
 //	popWindowHeight = popWindow.outerHeight(true);
-        popWindowWidth = $(popWindow).width();
-        popWindowHeight = $(popWindow).height();
-        browserWidth = $(window).width();
-        browserHeight = $(window).height();
-        positionLeft = browserWidth / 2 - popWindowWidth / 2 + browserScrollLeft;
-        positionTop = browserHeight / 2 - popWindowHeight / 2 + browserScrollTop;
+	popWindowWidth = $(popWindow).width();
+	popWindowHeight = $(popWindow).height();
+	browserWidth = $(window).width();
+    browserHeight = $(window).height();
+    positionLeft = browserWidth/2 - popWindowWidth/2+browserScrollLeft;
+	positionTop = browserHeight/2 - popWindowHeight/2+browserScrollTop;
+
+
+}
+	$("#addAssess").click(function (e) {
+		openWindw(e.pageX, e.pageY);
+	});
+
+
+/** 弹出框**/
+function openWindw(x,y){
+	ref();
+	$(popWindow).css("left",x-popWindowWidth+'px');
+	$(popWindow).css("top",y+'px');
+	popWindow.show().animate({
+        'left':positionLeft+'px',
+        'top':positionTop+'px',
+    },500);
+    $('body').append(oMask);
+    $('.mask').width(maskWidth).height(maskHeight);
+	popWindow.removeClass("hide");
+};
+  $(window).resize(function(){
+	  ref();
+	  $('.mask').width(maskWidth).height(maskHeight);
+    if(popWindow.is(':visible')){
+		popWindow.animate({
+            'left':positionLeft+'px',
+            'top':positionTop+'px',
+      },100);
     }
-
-    $("#addAssess").click(function (e) {
-        openWindw(e.pageX, e.pageY);
-        personnel();
-    });
-
-
-    /**弹出框**/
-    function openWindw(x, y) {
-        ref();
-        $(popWindow).css("left", x - popWindowWidth + 'px');
-        $(popWindow).css("top", y + 'px');
-        popWindow.show().animate({
-            'left': positionLeft + 'px',
-            'top': positionTop + 'px',
-        }, 500);
-        $('body').append(oMask);
-        $('.mask').width(maskWidth).height(maskHeight);
-        popWindow.removeClass("hide");
-    };
-    $(window).resize(function () {
-        ref();
-        $('.mask').width(maskWidth).height(maskHeight);
-        if (popWindow.is(':visible')) {
-            popWindow.animate({
-                'left': positionLeft + 'px',
-                'top': positionTop + 'px',
-            }, 100);
-        }
-    });
-    $(window).scroll(function () {
-        if (popWindow.is(':visible')) {
-            browserScrollTop = $(window).scrollTop();
-            browserScrollLeft = $(window).scrollLeft();
-            //positionLeft = browserWidth/2 - popWindowWidth/2+browserScrollLeft;
-            //positionTop = browserHeight/2 - popWindowHeight/2+browserScrollTop;
-            positionLeft = browserWidth / 2 - popWindowWidth / 2;
-            positionTop = browserHeight / 2 - popWindowHeight / 2;
-            popWindow.animate({
-                'left': positionLeft + 'px',
-                'top': positionTop + 'px'
-            }, 100).dequeue();
-        }
-    });
-    $("#cancel").click(function () {
-        popWindow.hide();
-        $('.mask').remove();
-    });
-    oClose.click(function () {
-        popWindow.hide();
-        $('.mask').remove();
-    });
-    //切换题目类型
-    $("#choicetype").change(function () {
-        if ($("#choicetype").val() == 1) {
-            $(".choice_option_tr").show();
-            $("#choicenum").change();
-            $(".choice_option").attr("type", "radio");
-        } else if ($("#choicetype").val() == 2) {
-            $(".choice_option_tr").show();
-            $("#choicenum").change();
-            $(".choice_option").attr("type", "checkbox");
-        } else if ($("#choicetype").val() == 3) {
-            $(".choice_option_tr").hide();
-        } else {
-            $(".choice_option_tr").hide();
-        }
-    });
-    $("#choicetype").change();
+  });
+  $(window).scroll(function(){
+    if(popWindow.is(':visible')){
+      browserScrollTop = $(window).scrollTop();
+      browserScrollLeft = $(window).scrollLeft();
+      //positionLeft = browserWidth/2 - popWindowWidth/2+browserScrollLeft;
+      //positionTop = browserHeight/2 - popWindowHeight/2+browserScrollTop;
+		positionLeft = browserWidth/2 - popWindowWidth/2;
+      positionTop = browserHeight/2 - popWindowHeight/2;
+      popWindow.animate({
+            'left':positionLeft+'px',
+            'top':positionTop+'px'
+      },100).dequeue();
+    }
+  });
+	$("#cancel").click(function(){
+		popWindow.hide();
+    	$('.mask').remove();
+  	});
+  oClose.click(function(){
+    popWindow.hide();
+    $('.mask').remove();
+  });
+	//切换题目类型
+	$("#choicetype").change(function(){
+		if($("#choicetype").val()==1){
+			$(".choice_option_tr").show();
+			$("#choicenum").change();
+			$(".choice_option").attr("type","radio");
+		}else if($("#choicetype").val()==2){
+			$(".choice_option_tr").show();
+			$("#choicenum").change();
+			$(".choice_option").attr("type","checkbox");
+		}else if($("#choicetype").val()==3){
+			$(".choice_option_tr").hide();
+		}else{
+			$(".choice_option_tr").hide();
+		}
+	});
+	$("#choicetype").change();
 //设置选项个数
-    $(".optionE").hide();
-    $(".optionF").hide();
-    $("#choicenum").change(function () {
-        if ($("#choicenum").val() == 4) {
-            $(".choice_option_tr").show();
-            $(".optionE").hide();
-            $(".optionF").hide();
-            checkedno();
-        } else if ($("#choicenum").val() == 5) {
-            $(".choice_option_tr").show();
-            $(".optionF").hide();
-            checkedno();
-        } else {
-            $(".choice_option_tr").show();
-        }
-    });
+	$(".optionE").hide();
+	$(".optionF").hide();
+	$("#choicenum").change(function(){
+		if($("#choicenum").val()==4){
+			$(".choice_option_tr").show();
+			$(".optionE").hide();
+			$(".optionF").hide();
+			checkedno();
+		}else if($("#choicenum").val()==5){
+			$(".choice_option_tr").show();
+			$(".optionF").hide();
+			checkedno();
+		}else{
+			$(".choice_option_tr").show();
+		}
+	});
 //点击选项
-    $(".choice_option").click(function () {
-        var obj = document.getElementsByName('opt');
-        var s = '';
-        for (var i = 0; i < obj.length; i++) {
-            if (obj[i].checked) {
-                if (s == '')
-                    s += obj[i].value;
-                else
-                    s += ',' + obj[i].value;
-            }
-        }
-        $("#anwser").val(s);
-    });
+	$(".choice_option").click(function(){
+		var obj = document.getElementsByName('opt');
+		var s = '';
+		for (var i = 0; i < obj.length; i++) {
+ 			if (obj[i].checked){
+				if(s=='')
+					s += obj[i].value;
+				else
+					s += ','+ obj[i].value ;
+			}
+				
+		}
+		$("#anwser").val(s);
+	});
 
 
-    var cassname = "";
+
+
+	var cassname="";
 
 
 //////////////////////////////////////////////////////////////////////悬浮窗口js
 });
-
-function choicebind() {
-    $(".input-cho").bind("click", function () {
-        $(this).children('input')[0].click();
-    });
-    $(".pack-up").bind("click", function () {
-        var bi = $(this).parent().parent().children(".choice-details").css("display") == "none" ? "none" : "block";
-        $(".choice-details").css("display", "none");
-        $(this).parent().parent().children(".choice-details").css("display", bi == "none" ? "block" : "none");
-        $(".pack-up").children("i").removeClass("icon-jiantoushang");
-        $(".pack-up").children("i").addClass("icon-jiantouxia");
-        if ($(this).parent().parent().children(".choice-details").css("display") == "block") {
-            $(this).children("i").removeClass("icon-jiantouxia");
-            $(this).children("i").addClass("icon-jiantoushang");
-        }
-    });
+function choicebind(){
+	$(".input-cho").bind("click",function(){
+		$(this).children('input')[0].click();
+	});
+	$(".pack-up").bind("click",function(){
+		var bi=$(this).parent().parent().children(".choice-details").css("display")=="none"?"none":"block";
+		$(".choice-details").css("display","none");
+		$(this).parent().parent().children(".choice-details").css("display",bi=="none"?"block":"none");
+		$(".pack-up").children("i").removeClass("icon-jiantoushang");
+		$(".pack-up").children("i").addClass("icon-jiantouxia");
+		if($(this).parent().parent().children(".choice-details").css("display")=="block"){
+			$(this).children("i").removeClass("icon-jiantouxia");
+			$(this).children("i").addClass("icon-jiantoushang");
+		}
+	});
 }
 
