@@ -47,31 +47,7 @@
 </div>
 <hr>
 <div class="allTestPaper" >
-    <!--    <div style="background-color:  red;width: 20%;height: 50%;float: left;margin-left: 20px">-->
-    <!--        <table>-->
-    <!--            <tr>-->
-    <!--                <th >数学月考试卷（一）</th>-->
-    <!--            </tr>-->
-    <!--            <tr>-->
-    <!--                <td>试卷总分：</td>-->
-    <!--                <td>100</td>-->
-    <!--            </tr>-->
 
-    <!--            <tr>-->
-    <!--                <td>题目数量：</td>-->
-    <!--                <td>100</td>-->
-    <!--            </tr>-->
-    <!--            <tr>-->
-    <!--                <td>创建时间：</td>-->
-    <!--                <td>100</td>-->
-    <!--            </tr>-->
-    <!--            <tr>-->
-    <!--                <td>发布时间：</td>-->
-    <!--                <td>50（分钟）</td>-->
-    <!--            </tr>-->
-
-    <!--        </table>-->
-    <!--    </div>-->
 </div>
 
 <div class="paginationParent">
@@ -92,64 +68,65 @@
     </div>
     <div style="float: right;">单页显示：</div>
     <label class="totalmsg" style="float: right;"></label>
-    <div class="popWindow">
-		<div class="pop-title" style="width:100%;height:40px;font-size: 20px;line-height: 40px;font-weight: 700;">考核信息</div>
-		<div class="pop-left" style="min-width: 300px;width: 300px;height: auto;float: left;margin: 5px;">
-			<div class="input-group input-1">
-                    <span class="input-group-addon" >考核名称</span>
-                    <input type="text" class="form-control"  aria-describedby="basic-addon1">
-                </div>
-                <div class="input-group input-1">
-                    <span class="input-group-addon" >学科</span>
-                    <select name="channels" id="subIdScreen2" data-style="btn-info" aria-describedby="basic-addon1" class="form-control" placeholder="请输入学科">
-                        <option value="0">全部学科</option>
+</div>
+
+<div class="popWindow">
+    <div class="pop-title" style="width:100%;height:40px;font-size: 20px;line-height: 40px;font-weight: 700;">考核信息</div>
+    <div class="pop-left" style="min-width: 300px;width: 300px;height: auto;float: left;margin: 5px;">
+        <div class="input-group input-1">
+            <span class="input-group-addon" >考核名称</span>
+            <input type="text" class="form-control"  aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group input-1">
+            <span class="input-group-addon" >学科</span>
+            <select name="channels" id="subIdScreen2" data-style="btn-info" aria-describedby="basic-addon1" class="form-control" placeholder="请输入学科">
+                <option value="0">全部学科</option>
+            </select>
+        </div>
+        <div class="input-group input-1">
+            <span class="input-group-addon" >试卷</span>
+            <input type="text" class="form-control" name="" id="testpaper_id" readonly/>
+        </div>
+        <div class="input-group input-1">
+            <span class="input-group-addon" >开始时间</span>
+            <input type="text" class="form-control" name="search-from-date" id="search-from-date" readonly/>
+        </div>
+
+        <div class="input-group input-1">
+            <span class="input-group-addon" >结束时间</span>
+            <input type="text" class="form-control" name="search-to-date" id="search-to-date" readonly/>
+        </div>
+
+        <table class="table" style="width:100%;border: 1px solid rgba(34, 36, 38, .15);margin-top: 10px ">
+            <thead>
+            <tr><th colspan="2">考核对象</th><th><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"></i></th></tr>
+            </thead>
+            <tbody id="">
+            <tr class="target" ><td>学年</td><td>2020</td><td style="text-align: right;"><i class="my-icon lsm-sidebar-icon icon-shanchu assessuser-del"></i></td></tr>
+            <tr class="target" ><td>班级</td><td>一班</td><td style="text-align: right;"><i class="my-icon lsm-sidebar-icon icon-shanchu assessuser-del"></i></td></tr>
+            <tr class="target" ><td>学生</td><td>小明</td><td style="text-align: right;"><i class="my-icon lsm-sidebar-icon icon-shanchu assessuser-del"></i></td></tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="pop-right" style="min-width: 500px;width: 500px; height: auto;float: left;margin-left: 10px;" >
+        <div id="addUser_div" hidden>
+            <div class="user-title" style="width:100%;height:45px;">
+                <div class="input-group asses-inputs">
+                    <span class="input-group-addon" >考核对象</span>
+                    <select name="channels" id="queryLevels" aria-describedby="basic-addon1" class="form-control">
+                        <option value=1 >学年</option>
+                        <option value=2 >学院</option>
+                        <option value=3 >班级</option>
+                        <option value=4 >小组</option>
+                        <option value=5 >学生</option>
                     </select>
                 </div>
-				<div class="input-group input-1">
-                    <span class="input-group-addon" >试卷</span>
-                    <input type="text" class="form-control" name="" id="" readonly/>
-                </div>
-                <div class="input-group input-1">
-                    <span class="input-group-addon" >开始时间</span>
-                    <input type="text" class="form-control" name="search-from-date" id="search-from-date" readonly/>
-                </div>
-
-                <div class="input-group input-1">
-                    <span class="input-group-addon" >结束时间</span>
-                    <input type="text" class="form-control" name="search-to-date" id="search-to-date" readonly/>
-                </div>
-
-            <table class="table" style="width:100%;border: 1px solid rgba(34, 36, 38, .15);margin-top: 10px ">
-                    <thead>
-                    <tr><th colspan="2">考核对象</th><th><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"></i></th></tr>
-                    </thead>
-                    <tbody id="">
-						<tr class="target" ><td>学年</td><td>2020</td><td><i class="my-icon lsm-sidebar-icon icon-shanchu assessuser-del"></i></td></tr>
-						<tr class="target" ><td>班级</td><td>一班</td><td><i class="my-icon lsm-sidebar-icon icon-shanchu assessuser-del"></i></td></tr>
-						<tr class="target" ><td>学生</td><td>小明</td><td><i class="my-icon lsm-sidebar-icon icon-shanchu assessuser-del"></i></td></tr>
-                    </tbody>
-                </table>
-
-		</div>
-		<div class="pop-right" style="min-width: 400px;width: 400px; height: auto;float: left;" >
-            <div id="addUser_div">
-            <div class="user-title" style="width:100%;height:45px;">
-					<div class="input-group asses-inputs">
-						<span class="input-group-addon" >考核对象</span>
-						<select name="channels" id="queryLevels" aria-describedby="basic-addon1" class="form-control">
-                            <option value=1 >学年</option>
-                            <option value=2 >学院</option>
-                            <option value=3 >班级</option>
-                            <option value=4 >小组</option>
-                            <option value=5 >学生</option>
-                        </select>
-                	</div>
-                </div>
-
-                <table class="table" style="width:100%;border: 1px solid rgba(34, 36, 38, .15); ">
-                    <thead>
-                    <tr>
-                        <th colspan="2">
+            </div>
+            <table class="table" style="width:100%;border: 1px solid rgba(34, 36, 38, .15); ">
+                <thead>
+                <tr>
+                    <th colspan="2">
                         <div  id="yearScreenDiv" >
                             <select name="channels" id="yearScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
                                 <option value="0">全部学年</option>
@@ -173,56 +150,44 @@
                             </select>
                         </div>
                     </th>
-                    </tr>
-                    </thead>
-                    <tbody id="selecttarget">
-                    <tr class="target" ><td>郭靖</td><td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>
-                    <tr class="target" ><td>黄蓉</td><td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>
-                    <tr class="target" ><td>杨过</td><td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div id="screenTest_div"></div>
+                </tr>
+                </thead>
+                <tbody id="selecttarget">
+                <tr class="target" ><td>郭靖</td><td style="text-align: right;"><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>
+                <tr class="target" ><td>黄蓉</td><td style="text-align: right;"><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>
+                <tr class="target" ><td>杨过</td><td style="text-align: right;"><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>
+                </tbody>
+            </table>
         </div>
-		<div class="pop-bootm" style="float: left; width:100%;height: 40px;text-align: center;">
-			<div class="blue ui buttons" style="float: none;margin-left: 10px;">
-        		<button class="ui button green"  id="save_ok">保存</button>
-    		</div>
-			<div class="blue ui buttons" style="float: none;margin-left: 10px;">
-        		<button class="ui button green"  id="cancel">取消</button>
-    		</div>
-		</div>
-
-        <!--  <div class="choicecontent" style="width:100%;float: left;">
-                   <div class="allChoice" style="width:100%;min-height: 300px;max-height: 600px; float: left;overflow-y: auto;">
-                   </div>
-                   <div class="paginationParent">
-                       <div id="showNumberdiv" style="float: right;margin-top: 20px;width:60px">
-                           <select name="channels" id="showNumber" data-style="btn-info" class="selectpicker" >
-                               <option  value="5">5条</option>
-                               <option  value="10">10条</option>
-                               <option  value="20">20条</option>
-                               <option  value="30">30条</option>
-                               <option  value="40">40条</option>
-                               <option  value="50">50条</option>
-                               <option  value="60">60条</option>
-                               <option  value="70">70条</option>
-                               <option  value="80">80条</option>
-                               <option  value="90">90条</option>
-                               <option  value="100">100条</option>
-                           </select>
-                       </div>
-                       <div style="float: right;margin-top: 20px;">单页显示：</div>
-                       <label class="totalmsg" style="float: right;margin-top: 20px;"></label>
-                       <div id="Pagination"></div>
-                   </div>
-                   <div class="yaperoter">
-                       <div class="ui buttons" style="margin-left: 10px;width: 80px;">
-                           <button id="cancel" class="ui button" style="width: 100%;">关闭</button>
-                       </div>
-                   </div>
-               </div> -->
+        <div id="screenTest_div">
+            <div class="user-title" style="width:100%;height:45px;">
+                <div class="ui query">
+                    <input class="query"  type="text" id="query1">
+                    <i class="my-icon lsm-sidebar-icon icon-chazhao querybtn1"></i>
+                </div>
+            </div>
+            <table class="table" style="width:100%;border: 1px solid rgba(34, 36, 38, .15); ">
+                <thead>
+                    <tr><th>试卷名字</th><th>题目数量</th><th>总分</th><th></th></tr>
+                </thead>
+                <tbody id="allTestPaper1">
+                    <tr class="target" ><td>月考试卷一</td><td>50</td><td>90分</td><td style="text-align: right;"><i class="my-icon lsm-sidebar-icon icon-tianjia test-change"/></td></tr>
+                </tbody>
+            </table>
+            <div class="paginationParent">
+                <label class="totalmsg" style="float: right;"></label>
+            </div>
+        </div>
+    </div>
+    <div class="pop-bootm" style="float: left; width:100%;height: 40px;text-align: center;">
+        <div class="blue ui buttons" style="float: none;margin-left: 10px;">
+            <button class="ui button green"  id="save_ok">保存</button>
+        </div>
+        <div class="blue ui buttons" style="float: none;margin-left: 10px;">
+            <button class="ui button green"  id="cancel">取消</button>
+        </div>
     </div>
 
+</div>
 </body>
 </html>
