@@ -14,6 +14,11 @@ import java.io.*;
 @Controller
 public class HelloController {
 
+    @GetMapping("/assess")
+    public String assess() {
+        return "assess";
+    }
+
     @GetMapping("/addTestPaper")
     public ModelAndView addTestPaper(Integer id) {
         if (id==null) id=0;
