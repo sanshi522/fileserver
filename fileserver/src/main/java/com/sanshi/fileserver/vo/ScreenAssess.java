@@ -10,6 +10,18 @@ public class ScreenAssess {
     private  String  name;
 
     /**
+     * 发布人ID
+     */
+
+    private  Integer  issueId;
+
+    /**
+     * 状态
+     */
+
+    private  Integer state;
+
+    /**
      * 考核学年
      */
     private  String  year;
@@ -41,10 +53,13 @@ public class ScreenAssess {
 
 
     public ScreenAssess() {
-
     }
-    public ScreenAssess(String name, Integer subId, Integer gradeId, Integer classId, Integer pageNumber, Integer pageIndex) {
+
+    public ScreenAssess(String name, Integer issueId, Integer state, String year, Integer subId, Integer gradeId, Integer classId, Integer pageNumber, Integer pageIndex) {
         this.name = name;
+        this.issueId = issueId;
+        this.state = state;
+        this.year = year;
         this.subId = subId;
         this.gradeId = gradeId;
         this.classId = classId;
@@ -52,12 +67,37 @@ public class ScreenAssess {
         this.pageIndex = pageIndex;
     }
 
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getIssueId() {
+        return issueId;
+    }
+
+    public void setIssueId(Integer issueId) {
+        this.issueId = issueId;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 
     public Integer getSubId() {
@@ -100,15 +140,5 @@ public class ScreenAssess {
         this.pageIndex = pageIndex;
     }
 
-    @Override
-    public String toString() {
-        return "ScreenAssess{" +
-                "name='" + name + '\'' +
-                ", subId=" + subId +
-                ", gradeId=" + gradeId +
-                ", classId=" + classId +
-                ", pageNumber=" + pageNumber +
-                ", pageIndex=" + pageIndex +
-                '}';
-    }
+
 }

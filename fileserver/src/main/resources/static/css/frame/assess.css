@@ -1,4 +1,4 @@
-#subIdDiv {
+.subIdDiv {
     float: left;
     margin-left: 5px;
     width: auto;
@@ -12,9 +12,9 @@
     padding: 20px;
     background-color: #eceeee;
     width: 250px;
-    height: 180px;
+    height: 200px;
     float: left;
-    margin-left: 20px
+    margin: 10px
 }
 .testPaper:hover{
     box-shadow:0px 0px 10px #000;
@@ -241,5 +241,9 @@
     margin-top: 5px;
     margin-left: 5px;
     width: 120px;
+    display: none;
+}
+
+#TeacherDiv{
     display: none;
 }

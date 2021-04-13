@@ -21,7 +21,7 @@ public class Respondents {
     private Integer stuId;//学生id
     private Integer makeTime;//答题时间
     private Integer submit;//提交状态 0:无；1:未提交；2：已提交
-    private Integer correct;//批改状态 1:未完成 2：已完成
+    private Integer correct;//批改状态 0:未完成 1：已完成
     private Integer correctId;//批阅人id
     @CreationTimestamp
     private Date createTime;
