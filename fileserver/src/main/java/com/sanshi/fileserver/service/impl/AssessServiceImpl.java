@@ -30,7 +30,7 @@ public class AssessServiceImpl implements AssessService {
     private HttpSession session;
     private RespondentsRepository  respondentsRepository;
 
-    public AssessServiceImpl(StudentRepository studentRepository, TeacherRepository teacherRepository, AssessRepository assessRepository, GroupRepository groupRepository, CclassRepository cclassRepository, GradeRepository gradeRepository, TestPaperRepository testPaperRepository, RespondentsService respondentsService, SubjectRepository subjectRepository, TestPaperBindChoiceRepository testPaperBindChoiceRepository) {
+    public AssessServiceImpl(StudentRepository studentRepository, TeacherRepository teacherRepository, AssessRepository assessRepository, GroupRepository groupRepository, CclassRepository cclassRepository, GradeRepository gradeRepository, TestPaperRepository testPaperRepository, SubjectRepository subjectRepository, TestPaperBindChoiceRepository testPaperBindChoiceRepository, RespondentsService respondentsService, HttpSession session, RespondentsRepository respondentsRepository) {
         this.studentRepository = studentRepository;
         this.teacherRepository = teacherRepository;
         this.assessRepository = assessRepository;
