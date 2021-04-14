@@ -10,14 +10,7 @@ var classId = 0;
 //分页元素
 var total = 50; // 总共多少记录
 $(function () {
-
-
-
-    $(".assessuser-add").click(function () {
-        $(this).parent().attr("");
-
-    })
-
+    //===================================================时间控件
 	var startdatatime="";
 	var enddatatime="";
 	//起始时间部分
@@ -78,7 +71,7 @@ $(function () {
 	});
 
 	$.datetimepicker.setLocale('zh');
-
+//===================================================时间控件
     /**
      * 获取身份
      */
