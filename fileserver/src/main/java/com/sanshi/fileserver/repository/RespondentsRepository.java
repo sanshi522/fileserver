@@ -3,6 +3,7 @@ package com.sanshi.fileserver.repository;
 import com.sanshi.fileserver.bean.Respondents;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -73,4 +74,10 @@ public interface RespondentsRepository extends JpaRepository<Respondents,Integer
      * @param id
      */
     void deleteByAssessId(Integer assessId);
+
+    @Query(value="select count(s.id) from Respondents s where s.assessId = ?1  and  s.correct=0")
+      int findCountnotred(Integer id);
+
+    @Query(value="select count(s.id)  from Respondents s where s.assessId = ?1  and  s.correct=1")
+    int findCountred(Integer id);
 }

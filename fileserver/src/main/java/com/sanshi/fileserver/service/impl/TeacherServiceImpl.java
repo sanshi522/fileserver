@@ -126,4 +126,9 @@ public class TeacherServiceImpl implements TeacherService {
     public Teacher save(Teacher teacher) {
         return teacherRepository.save(teacher);
     }
+
+    @Override
+    public List<Teacher> findAll() {
+        return teacherRepository.findAll();
+    }
 }

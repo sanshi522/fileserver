@@ -27,8 +27,10 @@ public class AssessServiceImpl implements AssessService {
     private SubjectRepository subjectRepository;
     private TestPaperBindChoiceRepository testPaperBindChoiceRepository;
     private RespondentsService respondentsService;
+    private HttpSession session;
+    private RespondentsRepository  respondentsRepository;
 
-    public AssessServiceImpl(StudentRepository studentRepository, TeacherRepository teacherRepository, AssessRepository assessRepository, GroupRepository groupRepository, CclassRepository cclassRepository, GradeRepository gradeRepository, TestPaperRepository testPaperRepository, RespondentsService respondentsService, SubjectRepository subjectRepository, TestPaperBindChoiceRepository testPaperBindChoiceRepository) {
+    public AssessServiceImpl(StudentRepository studentRepository, TeacherRepository teacherRepository, AssessRepository assessRepository, GroupRepository groupRepository, CclassRepository cclassRepository, GradeRepository gradeRepository, TestPaperRepository testPaperRepository, SubjectRepository subjectRepository, TestPaperBindChoiceRepository testPaperBindChoiceRepository, RespondentsService respondentsService, HttpSession session, RespondentsRepository respondentsRepository) {
         this.studentRepository = studentRepository;
         this.teacherRepository = teacherRepository;
         this.assessRepository = assessRepository;
@@ -39,6 +41,8 @@ public class AssessServiceImpl implements AssessService {
         this.subjectRepository = subjectRepository;
         this.testPaperBindChoiceRepository = testPaperBindChoiceRepository;
         this.respondentsService = respondentsService;
+        this.session = session;
+        this.respondentsRepository = respondentsRepository;
     }
 
     @Override
@@ -46,11 +50,54 @@ public class AssessServiceImpl implements AssessService {
         Map json = new HashMap();
         Pageable pageable;
         pageable = PageRequest.of(screenAssess.getPageIndex(), screenAssess.getPageNumber());
-        if(screenAssess.getSubId()!=null && screenAssess.getSubId()!=0){
-            json.put("page",   assessRepository.findAllBySubId(screenAssess.getSubId(),pageable));
-
-        }else {
-            json.put("page", assessRepository.findAll(pageable));
+        SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+        if(!screenAssess.getName().isEmpty()){
+            screenAssess.setName("%"+screenAssess.getName()+"%");
+        }
+        if (sessionUser.getTeacher().getTeaIdentity() == 1) {
+            if (screenAssess.getSubId() != 0) {
+                if (!screenAssess.getName().isEmpty()) {
+                    json.put("page", assessRepository.findAllByNameLikeAndIssueIdAndSubId(screenAssess.getName(), sessionUser.getTeacher().getTeaId(), screenAssess.getSubId(), pageable));
+                } else {
+                    json.put("page", assessRepository.findAllByIssueIdAndSubId(sessionUser.getTeacher().getTeaId(), screenAssess.getSubId(), pageable));
+                }
+            } else {
+                if (!screenAssess.getName().isEmpty()) {
+                    json.put("page", assessRepository.findAllByNameLikeAndIssueId(screenAssess.getName(), sessionUser.getTeacher().getTeaId(), pageable));
+                } else {
+                    json.put("page", assessRepository.findAllByIssueId(sessionUser.getTeacher().getTeaId(), pageable));
+                }
+            }
+        } else if (sessionUser.getTeacher().getTeaIdentity() == 2) {
+            if (screenAssess.getSubId() != 0) {
+                if (screenAssess.getIssueId() != 0) {
+                    if (!screenAssess.getName().isEmpty()) {
+                        json.put("page", assessRepository.findAllByNameLikeAndIssueIdAndSubId(screenAssess.getName(), screenAssess.getIssueId(), screenAssess.getSubId(), pageable));
+                    } else {
+                        json.put("page", assessRepository.findAllByIssueIdAndSubId(screenAssess.getIssueId(), screenAssess.getSubId(), pageable));
+                    }
+                } else {
+                    if (!screenAssess.getName().isEmpty()) {
+                        json.put("page", assessRepository.findAllByNameLikeAndSubId(screenAssess.getName(), screenAssess.getSubId(), pageable));
+                    } else {
+                        json.put("page", assessRepository.findAllBySubId(screenAssess.getSubId(), pageable));
+                    }
+                }
+            } else {
+                if (screenAssess.getIssueId() != 0) {
+                    if (!screenAssess.getName().isEmpty()) {
+                        json.put("page", assessRepository.findAllByNameLikeAndIssueId(screenAssess.getName(), screenAssess.getIssueId(), pageable));
+                    } else {
+                        json.put("page", assessRepository.findAllByIssueId(screenAssess.getIssueId(), pageable));
+                    }
+                } else {
+                    if (!screenAssess.getName().isEmpty()) {
+                        json.put("page", assessRepository.findAllByNameLike(screenAssess.getName(), pageable));
+                    } else {
+                        json.put("page", assessRepository.findAll(pageable));
+                    }
+                }
+            }
         }
 
         return json ;
@@ -121,10 +168,10 @@ public class AssessServiceImpl implements AssessService {
 
     @Override
     public AssessMsg findMsg(Integer id) {
-        Assess   assess=assessRepository.findOneById(id);
+        Assess assess = assessRepository.findOneById(id);
         String name = teacherRepository.findOneByTeaId(assess.getIssueId()).getTeaName();
         Double scoreSum = testPaperBindChoiceRepository.findScoreSum(assess.getTestPaperId());
-        if (scoreSum==null) scoreSum=0.0;
-        return new AssessMsg(name,testPaperBindChoiceRepository.findAllByTestPaperId(assess.getTestPaperId()).size(),scoreSum,subjectRepository.findOneById(assess.getSubId()).getName());
+        if (scoreSum == null) scoreSum = 0.0;
+        return new AssessMsg(name, testPaperBindChoiceRepository.findAllByTestPaperId(assess.getTestPaperId()).size(), scoreSum, subjectRepository.findOneById(assess.getSubId()).getName(),respondentsRepository.findCountnotred(assess.getId()),respondentsRepository.findCountred(assess.getId()));
     }
 }

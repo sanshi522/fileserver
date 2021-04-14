@@ -23,7 +23,7 @@ public class Answer {
     private String fileIds;//附件id集合
     private Double score;//得分
     private Integer correct;//批改状态
-    private Integer correctUserid;
+    private Integer correctUserid;//0为系统批改1为老师批改
     @CreationTimestamp
     private Date createTime;
     @UpdateTimestamp

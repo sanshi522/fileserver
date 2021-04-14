@@ -121,4 +121,10 @@ public class TeacherController {
         }
         return listdata;
     }
+
+    @RequestMapping(path = "/findAll")
+    @ResponseBody
+    public List<Teacher> findAll(){ return  teacherService.findAll(); }
+
+
 }

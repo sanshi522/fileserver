@@ -18,4 +18,5 @@ public interface TeacherService {
     Map finTeachers(PageGet val,HttpServletRequest request);
     void deleteByTeaId(Integer id);
     Teacher save(Teacher teacher);
+    List<Teacher> findAll();
 }

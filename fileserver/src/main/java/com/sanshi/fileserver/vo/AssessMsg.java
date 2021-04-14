@@ -11,26 +11,40 @@ public class AssessMsg {
     /**
      * 试题数量
      */
-    Integer choiceNum;
+  private  Integer choiceNum;
     /**
      * 试卷总分
      */
-    Double choiceScoreNum;
+    private Double choiceScoreNum;
     /**
      * 学科
      */
-    String subName;
+    private String subName;
+
+    /**
+     * 未批阅数量
+     */
+    private int  notredNumber;
+
+    /***
+     * 已批阅数量
+     */
+    private  int  redNumber;
 
 
     public AssessMsg() {
     }
 
-    public AssessMsg(String name, Integer choiceNum, Double choiceScoreNum, String subName) {
+
+    public AssessMsg(String name, Integer choiceNum, Double choiceScoreNum, String subName, int notredNumber, int redNumber) {
         this.name = name;
         this.choiceNum = choiceNum;
         this.choiceScoreNum = choiceScoreNum;
         this.subName = subName;
+        this.notredNumber = notredNumber;
+        this.redNumber = redNumber;
     }
+
 
     public String getName() {
         return name;
@@ -64,7 +78,32 @@ public class AssessMsg {
         this.subName = subName;
     }
 
+    public int getNotredNumber() {
+        return notredNumber;
+    }
+
+    public void setNotredNumber(int notredNumber) {
+        this.notredNumber = notredNumber;
+    }
+
+    public int getRedNumber() {
+        return redNumber;
+    }
+
+    public void setRedNumber(int redNumber) {
+        this.redNumber = redNumber;
+    }
 
 
-
+    @Override
+    public String toString() {
+        return "AssessMsg{" +
+                "name='" + name + '\'' +
+                ", choiceNum=" + choiceNum +
+                ", choiceScoreNum=" + choiceScoreNum +
+                ", subName='" + subName + '\'' +
+                ", notredNumber=" + notredNumber +
+                ", redNumber=" + redNumber +
+                '}';
+    }
 }
