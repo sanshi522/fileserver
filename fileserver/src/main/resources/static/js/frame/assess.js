@@ -1,20 +1,19 @@
 // JavaScript Document
-var upident;
-var issueId = 0;
-var pageNumber = 10; // 每页显示多少条记录
-var pageIndex = 0;//页码
-var subId = 0;
-var name = "";
-var gradeId = 0;
-var classId = 0;
-//分页元素
-var total = 50; // 总共多少记录
-
-var arr=[];
 $(function () {
 
-
-	var startdatatime="";
+    //考核所需参数
+    var upident;
+    var issueId = 0;
+    var pageNumber = 10; // 每页显示多少条记录
+    var pageIndex = 0;//页码
+    var subId = 0;
+    var name = "";
+    var gradeId = 0;
+    var classId = 0;
+//分页元素
+    var total = 50; // 总共多少记录
+    //===================================================时间控件
+	var startdatatime=;
 	var enddatatime="";
 	//起始时间部分
 	countdown(new Date());
@@ -74,7 +73,7 @@ $(function () {
 	});
 
 	$.datetimepicker.setLocale('zh');
-
+//===================================================时间控件
     /**
      * 获取身份
      */
@@ -149,27 +148,33 @@ $(function () {
 	}
 
 
-    Init(0);
-    getsubtype();
+	getsubtype();
     Identity();
-    //初始化单页显示条数
-    $("#showNumber").val('10').trigger("change")
-    $("#showNumber").change(function () {
-        if (pageNumber != $("#showNumber").val()) {
-            pageNumber = $("#showNumber").val();
-            $("#Pagination").pagination(total, {
-                callback: PageCallback,
-                prev_text: '上一页',
-                next_text: '下一页',
-                items_per_page: pageNumber,
-                num_display_entries: 4, // 连续分页主体部分显示的分页条目数
-                num_edge_entries: 1, // 两侧显示的首尾分页的条目数
-                jump: true,
-            });
-            Init(0);
-        }
-    });
-
+	var pageNumber =16 ; // 每页显示多少条记录
+    var pageIndex= 0 ;//页码
+	var subId=0;
+	var name = "";
+	var gradeId=0;
+	var  classId=0;
+	//分页元素
+    var total=50; // 总共多少记录
+	//初始化单页显示条数
+	$("#showNumber").val('10').trigger("change")
+	$("#showNumber").change(function () {
+		if(pageNumber!=$("#showNumber").val()){
+			pageNumber=$("#showNumber").val();
+			$("#Pagination").pagination(total, {
+				callback : PageCallback,
+				prev_text : '上一页',
+				next_text : '下一页',
+				items_per_page : pageNumber,
+				num_display_entries : 4, // 连续分页主体部分显示的分页条目数
+				num_edge_entries : 1, // 两侧显示的首尾分页的条目数
+				jump:true,
+			});
+			Init(0);
+		}
+	});
     function PageCallback(index, jq) { // 前一个参数表示当前点击的那个分页的页数索引值，后一个参数表示装载容器。
         pageIndex = index;
         Init(pageIndex);
@@ -292,6 +297,7 @@ $(function () {
 //////////////////////////////////////////////////////////////////////悬浮窗口js
   //var oBtn = $('#show');
   	var popWindow = $('.popWindow');
+  var oClose = $('.popWindow h3 span');
   //浏览器可视区域的宽度
   var browserWidth = $(window).width();
   //浏览器可视区域的高度
@@ -378,8 +384,110 @@ function openWindw(x,y){
 		popWindow.hide();
     	$('.mask').remove();
   	});
-    //指定类型的对象id集合
-	var userList=[];
+
+
+
+	//试卷分页控件部分
+	var pageNumber1 =10 ; // 每页显示多少条记录
+	var pageIndex1= 0 ;//页码
+	//分页元素
+	var total1=0; // 总共多少记录
+	let likeName1="";
+	//弹出框学科id
+	let subId1=0;
+	//学科选择
+	$("#subIdScreen2").change(function () {
+		subId1=$(this).val();
+		if($("#screenTest_div").is(":visible")) findTesTPaper(0);
+		$("#testpaper_id").val("");
+		$("#testpaper_id").attr("data_value",0);
+	})
+	//点击试卷框
+	$("#testpaper_id").click(function () {
+		$(".popWindow").css("width","auto");
+		$("#addUser_div").hide();
+		$("#screenTest_div").show();
+		if (subId1==0) $.alert("请选择考核学科！");
+		findTesTPaper(0);
+	});
+	//点击添加考核对象添加按钮
+	$(".add-assessuser").click(function () {
+		$(".popWindow").css("width","auto");
+		$("#addUser_div").show();
+		$("#screenTest_div").hide();
+	})
+	//弹出框试题搜索
+	$(".querybtn1").click(function(){
+		likeName1=$("#query1").val();
+		findTesTPaper(0);
+	});
+	$("#Pagination1").pagination(total1, {
+				callback : PageCallback1,
+				prev_text : '上一页',
+				next_text : '下一页',
+				items_per_page : pageNumber,
+				num_display_entries : 4, // 连续分页主体部分显示的分页条目数
+				num_edge_entries : 1, // 两侧显示的首尾分页的条目数
+				jump:true,
+	});
+	function PageCallback1(index, jq) { // 前一个参数表示当前点击的那个分页的页数索引值，后一个参数表示装载容器。
+		pageIndex=index;
+		findTesTPaper(pageIndex);
+	}
+	//加载试卷
+	function findTesTPaper(index){
+		pageIndex=index;
+		let val={
+			"pageNumber":pageNumber1,
+			"pageIndex":pageIndex1,
+			"issistId":subId1,
+			"likeName":likeName1==""?null:likeName1
+		}
+		$.ajax({
+			url: "/testPaper/findAll",
+			//contentType:"application/json;charset=UTF-8",
+			type: "post",
+			async: true,
+			data:val,
+			dataType: "json",
+			success: function(data) {
+				if(data.resoult){
+					$("#allTestPaper1").empty();
+					for(let i=0;i<data.page.content.length;i++){
+						$.ajax({
+							url: "/testPaper/findMsg",
+							//contentType:"application/json;charset=UTF-8",
+							type: "post",
+							async: false,
+							data:{id:data.page.content[i].id},
+							dataType: "json",
+							success: function(data2) {
+								$("#allTestPaper1").append(' <tr class="testpa" test_id="'+data.page.content[i].id+'" test_name="'+data.page.content[i].name+'"><td>'+data.page.content[i].name+'</td><td>'+data2.choiceNum+'</td><td>'+data2.choiceScoreNum+'</td><td style="text-align: right;"><i class="my-icon lsm-sidebar-icon icon-tianjia test-change"/></td></tr>');
+							},error(data2){
+							}
+						});
+					}
+					total1=data.page.totalElements;
+					$(".totalmsg1").html("【共"+total1+"条记录，当前显示："+(data.page.pageable.pageNumber*data.page.pageable.pageSize+1)+"~"+(data.page.pageable.pageNumber*data.page.pageable.pageSize+data.page.numberOfElements)+"】");
+					TestPaperBind();
+				}
+				console.log(data);
+
+			}, error: function(data){
+				console.log("服务器异常");
+			}
+		});
+	}
+	function TestPaperBind(){
+		$('.test-change').bind("click",function () {
+			$("#testpaper_id").val($(this).parent().parent().attr("test_name"));
+			$("#testpaper_id").attr("data_value",$(this).parent().parent().attr("test_id"));
+		})
+	}
+
+
+//指定类型的对象id集合
+    var userList=[];
     function updatelist(){
         userList.splice(0);
         let users=$(".test_suer");
@@ -431,10 +539,10 @@ function openWindw(x,y){
                             $("#selecttarget").empty();
                             $("#selecttarget").empty();
                             for (let i = 0; i < data.years.length; i++) {
-                                    $("#selecttarget").append('<tr class="assuser" data_id=' + data.years[i] +' data_name='+data.years[i]+' ><td>' + data.years[i] + '</td>  <td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
+                                $("#selecttarget").append('<tr class="assuser" data_id=' + data.years[i] +' data_name='+data.years[i]+' ><td>' + data.years[i] + '</td>  <td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
                             }
                             assessuser_addbind();
-                            checkItemAddBindClick();
+
                             updatelist();
                         }
                     }
@@ -475,7 +583,7 @@ function openWindw(x,y){
                                 for (let i=0;i<data.grades.length;i++){
                                     $("#selecttarget").append('<tr class="assuser" data_id='+ data.grades[i].id+' data_name='+data.grades[i].name+' ><td>'+data.grades[i].name+'</td>  <td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
                                 }
-                                checkItemAddBindClick();
+
                                 assessuser_addbind();
                             }
                         }
@@ -513,7 +621,7 @@ function openWindw(x,y){
                                     $("#selecttarget").append('<tr class="assuser" data_id='+data.clases[i].id+' data_name='+data.clases[i].name+' ><td>'+data.clases[i].name+'</td> <td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
                                 }
 
-                                checkItemAddBindClick();
+
                                 assessuser_addbind();
                             }
                         }
@@ -550,7 +658,7 @@ function openWindw(x,y){
                                     for (let i = 0; i < data.Groups.length; i++) {
                                         $("#selecttarget").append('<tr class="assuser"  data_id=' + data.Groups[i].id +' data_name='+data.Groups[i].name+' ><td>' + data.Groups[i].name + '</td> <td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
                                     }
-                                    checkItemAddBindClick();
+
                                     assessuser_addbind();
                                 }
                             }
@@ -572,7 +680,7 @@ function openWindw(x,y){
                                 for (let i = 0; i < data.teachers.length; i++) {
                                     $("#selecttarget").append('<tr class="assuser"  data_id=' + data.teachers[i].teaId +'  data_name='+data.teachers[i].teaName+' ><td>' + data.teachers[i].teaName + '</td><td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
                                 }
-                                checkItemAddBindClick();
+
                                 assessuser_addbind();
                             }
                         },
@@ -598,7 +706,7 @@ function openWindw(x,y){
                             for (let i = 0; i < data.students.length; i++) {
                                 $("#selecttarget").append('<tr class="assuser" data_id=' + data.students[i].stuId + ' data_name='+data.students[i].stuName+'><td>' + data.students[i].stuName + '</td><td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
                             }
-                            checkItemAddBindClick();
+
                             assessuser_addbind();
                         }
                     },
@@ -610,8 +718,8 @@ function openWindw(x,y){
         }
     });
 
-	//添加考核对象bind方法
-function assessuser_addbind(){
+    //添加考核对象bind方法
+    function assessuser_addbind(){
         $(".assessuser-add").bind("click", function () {
             var id=  $(this).parent().parent().attr("data_id");
             var testObject=$("#queryLevels").val();
@@ -621,11 +729,11 @@ function assessuser_addbind(){
             $("#testObject").append('<tr class="test_suer" data_ident='+$("#queryLevels").val()+'  data_id='+id+' data_name='+name+' ><td>'+testObjectname+'</td><td>'+name+'</td><td><i class="my-icon lsm-sidebar-icon icon-shanchu assessuser-del"></i></td></tr>');
             updatelist();
 
-          let  ass={
-         "id":id,
-         "testObjectid":testObject
-          }
-        arr.push(ass);
+            let  ass={
+                "id":id,
+                "testObjectid":testObject
+            }
+            arr.push(ass);
             assessuser_delbind();
             contrast();
         });
@@ -651,8 +759,7 @@ function assessuser_addbind(){
         });
 
 
-        }
-        cassname="";
+    }
 
 
 
@@ -661,20 +768,4 @@ function assessuser_addbind(){
 //////////////////////////////////////////////////////////////////////悬浮窗口js
 });
 
-function checkItemAddBindClick(){
-    $('input:checkbox[name="checkItem"]').bind("click", function () {
-        var checkbox = document.getElementsByName("checkItem");
-        var exist=true;
-        for(var i = 0; i < checkbox.length; i ++){
-            if(checkbox[i].checked==false){
-                exist=false;
-            }
-        }
-        if(exist){
-            $("#checkAll").prop("checked",true);
-        }
-        else{
-            $("#checkAll").prop("checked",false);
-        }
-    });
-};
+
