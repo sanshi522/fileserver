@@ -94,6 +94,11 @@
             <input type="text" class="form-control" name="" id="testpaper_id" data_value="" readonly/>
         </div>
         <div class="input-group input-1">
+            <span class="input-group-addon" >答题时长</span>
+            <input type="number" class="form-control" name="" id="make_time" data_value="" min="1"  />
+            <span class="input-group-addon">分钟</span>
+        </div>
+        <div class="input-group input-1">
             <span class="input-group-addon" >开始时间</span>
             <input type="text" class="form-control" name="search-from-date" id="search-from-date" readonly/>
         </div>
@@ -107,10 +112,8 @@
                     <thead>
                     <tr><th colspan="2">考核对象</th><th><i class=" my-icon lsm-sidebar-icon icon-tianjia  add-assessuser"></i></th></tr>
                     </thead>
-                    <tbody id="">
-						<tr class="target" ><td>学年</td><td>2020</td><td><i class="my-icon lsm-sidebar-icon icon-shanchu assessuser-del"></i></td></tr>
-						<tr class="target" ><td>班级</td><td>一班</td><td><i class="my-icon lsm-sidebar-icon icon-shanchu assessuser-del"></i></td></tr>
-						<tr class="target" ><td>学生</td><td>小明</td><td><i class="my-icon lsm-sidebar-icon icon-shanchu assessuser-del"></i></td></tr>
+                    <tbody id="testObject">
+
                     </tbody>
                 </table>
 
@@ -159,9 +162,7 @@
                 </tr>
                 </thead>
                 <tbody id="selecttarget">
-                <tr class="target" ><td>郭靖</td><td style="text-align: right;"><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>
-                <tr class="target" ><td>黄蓉</td><td style="text-align: right;"><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>
-                <tr class="target" ><td>杨过</td><td style="text-align: right;"><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>
+
                 </tbody>
             </table>
         </div>
@@ -177,7 +178,6 @@
                     <tr><th>试卷名字</th><th>题目数量</th><th>总分</th><th></th></tr>
                 </thead>
                 <tbody id="allTestPaper1">
-                    <tr class="target" ><td>月考试卷一</td><td>50</td><td>90分</td><td style="text-align: right;"><i class="my-icon lsm-sidebar-icon icon-tianjia test-change"/></td></tr>
                 </tbody>
             </table>
             <div class="paginationParent">

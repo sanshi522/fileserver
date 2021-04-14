@@ -4,16 +4,8 @@ $(function () {
     //考核所需参数
     var upident;
     var issueId = 0;
-    var pageNumber = 10; // 每页显示多少条记录
-    var pageIndex = 0;//页码
-    var subId = 0;
-    var name = "";
-    var gradeId = 0;
-    var classId = 0;
-//分页元素
-    var total = 50; // 总共多少记录
     //===================================================时间控件
-	var startdatatime=;
+	var startdatatime="";
 	var enddatatime="";
 	//起始时间部分
 	countdown(new Date());
@@ -415,6 +407,7 @@ function openWindw(x,y){
 		$(".popWindow").css("width","auto");
 		$("#addUser_div").show();
 		$("#screenTest_div").hide();
+        $("#queryLevels").change();
 	})
 	//弹出框试题搜索
 	$(".querybtn1").click(function(){
@@ -539,7 +532,7 @@ function openWindw(x,y){
                             $("#selecttarget").empty();
                             $("#selecttarget").empty();
                             for (let i = 0; i < data.years.length; i++) {
-                                $("#selecttarget").append('<tr class="assuser" data_id=' + data.years[i] +' data_name='+data.years[i]+' ><td>' + data.years[i] + '</td>  <td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
+                                $("#selecttarget").append('<tr class="assuser" data_id=' + data.years[i] +' data_name='+data.years[i]+' ><td>' + data.years[i] + '</td>  <td  style="text-align:right;"><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
                             }
                             assessuser_addbind();
 
@@ -581,7 +574,7 @@ function openWindw(x,y){
                                 $("#selecttarget").empty();
                                 $("#selecttarget").empty();
                                 for (let i=0;i<data.grades.length;i++){
-                                    $("#selecttarget").append('<tr class="assuser" data_id='+ data.grades[i].id+' data_name='+data.grades[i].name+' ><td>'+data.grades[i].name+'</td>  <td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
+                                    $("#selecttarget").append('<tr class="assuser" data_id='+ data.grades[i].id+' data_name='+data.grades[i].name+' ><td>'+data.grades[i].name+'</td>  <td style="text-align:right;"><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
                                 }
 
                                 assessuser_addbind();
@@ -618,7 +611,7 @@ function openWindw(x,y){
                             }else{
                                 $("#selecttarget").empty();
                                 for (let i=0;i<data.clases.length;i++){
-                                    $("#selecttarget").append('<tr class="assuser" data_id='+data.clases[i].id+' data_name='+data.clases[i].name+' ><td>'+data.clases[i].name+'</td> <td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
+                                    $("#selecttarget").append('<tr class="assuser" data_id='+data.clases[i].id+' data_name='+data.clases[i].name+' ><td>'+data.clases[i].name+'</td> <td  style="text-align:right;"><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
                                 }
 
 
@@ -656,7 +649,7 @@ function openWindw(x,y){
                                 } else {
                                     $("#selecttarget").empty();
                                     for (let i = 0; i < data.Groups.length; i++) {
-                                        $("#selecttarget").append('<tr class="assuser"  data_id=' + data.Groups[i].id +' data_name='+data.Groups[i].name+' ><td>' + data.Groups[i].name + '</td> <td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
+                                        $("#selecttarget").append('<tr class="assuser"  data_id=' + data.Groups[i].id +' data_name='+data.Groups[i].name+' ><td>' + data.Groups[i].name + '</td> <td  style="text-align:right;"><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
                                     }
 
                                     assessuser_addbind();
@@ -678,7 +671,7 @@ function openWindw(x,y){
                             if (data.resoult){
                                 $("#selecttarget").empty();
                                 for (let i = 0; i < data.teachers.length; i++) {
-                                    $("#selecttarget").append('<tr class="assuser"  data_id=' + data.teachers[i].teaId +'  data_name='+data.teachers[i].teaName+' ><td>' + data.teachers[i].teaName + '</td><td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
+                                    $("#selecttarget").append('<tr class="assuser"  data_id=' + data.teachers[i].teaId +'  data_name='+data.teachers[i].teaName+' ><td>' + data.teachers[i].teaName + '</td><td style="text-align:right;"><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
                                 }
 
                                 assessuser_addbind();
@@ -704,7 +697,7 @@ function openWindw(x,y){
                         if (data.resoult){
                             $("#selecttarget").empty();
                             for (let i = 0; i < data.students.length; i++) {
-                                $("#selecttarget").append('<tr class="assuser" data_id=' + data.students[i].stuId + ' data_name='+data.students[i].stuName+'><td>' + data.students[i].stuName + '</td><td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
+                                $("#selecttarget").append('<tr class="assuser" data_id=' + data.students[i].stuId + ' data_name='+data.students[i].stuName+'><td>' + data.students[i].stuName + '</td><td  style="text-align:right;"><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
                             }
 
                             assessuser_addbind();
@@ -726,16 +719,9 @@ function openWindw(x,y){
             var testObjectname =$("#queryLevels option:selected").text();
             var  name= $(this).parent().parent().attr("data_name");
             console.log(id +"-"+testObject+""+name+""+testObjectname);
-            $("#testObject").append('<tr class="test_suer" data_ident='+$("#queryLevels").val()+'  data_id='+id+' data_name='+name+' ><td>'+testObjectname+'</td><td>'+name+'</td><td><i class="my-icon lsm-sidebar-icon icon-shanchu assessuser-del"></i></td></tr>');
+            $("#testObject").append('<tr class="test_suer" data_ident='+$("#queryLevels").val()+'  data_id='+id+' data_name='+name+' ><td>'+testObjectname+'</td><td>'+name+'</td><td style="text-align:right;"><i class="my-icon lsm-sidebar-icon icon-shanchu assessuser-del"></i></td></tr>');
             updatelist();
-
-            let  ass={
-                "id":id,
-                "testObjectid":testObject
-            }
-            arr.push(ass);
             assessuser_delbind();
-            contrast();
         });
     }
 //删除考核bind对象
@@ -745,26 +731,6 @@ function openWindw(x,y){
             updatelist();
         });
     }
-
-    //对比参数禁用添加按钮
-
-    function contrast(){
-        $('#selecttarget tr').each(function(i){
-            var testObject=$("#queryLevels").val();
-            var  id =$(this).attr("data_id");
-            let ass={
-
-            }
-            console.log(testObject+""+id);
-        });
-
-
-    }
-
-
-
-
-
 //////////////////////////////////////////////////////////////////////悬浮窗口js
 });
 
