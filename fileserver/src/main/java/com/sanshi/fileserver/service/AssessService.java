@@ -51,5 +51,7 @@ public interface AssessService {
     void delete(Assess assess);
 
 
-    public AssessMsg findMsg(Integer testPaperId);
+     AssessMsg findMsg(Integer testPaperId);
+     String  fullname(Integer testObject ,Integer testObjectId );
+
 }

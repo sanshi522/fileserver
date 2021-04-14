@@ -30,9 +30,9 @@ public class AssessController {
 
     /**
      * 获取考核
-     * @param assess
-     * @param test（0：未进行；1：进行中）
-     * @param request
+     * @param
+     * @param （0：未进行；1：进行中）
+     * @param
      * @return
      */
     @RequestMapping(path = "/findAll")
@@ -60,6 +60,15 @@ public class AssessController {
     public   Assess  save(Assess assess){
        return   assessService.save(assess);
     };
+
+    //通过id获取全称
+    @RequestMapping(path = "/fullname")
+    @ResponseBody
+    public  String   fullname(Integer testObject ,Integer testObjectId){
+
+
+        return  assessService.fullname(testObject,testObjectId);
+    }
 
 
 

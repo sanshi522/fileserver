@@ -1,6 +1,7 @@
 package com.sanshi.fileserver.service.impl;
 
 import com.sanshi.fileserver.bean.Assess;
+import com.sanshi.fileserver.bean.Grade;
 import com.sanshi.fileserver.bean.Respondents;
 import com.sanshi.fileserver.bean.Student;
 import com.sanshi.fileserver.repository.*;
@@ -29,6 +30,7 @@ public class AssessServiceImpl implements AssessService {
     private RespondentsService respondentsService;
     private HttpSession session;
     private RespondentsRepository  respondentsRepository;
+
 
     public AssessServiceImpl(StudentRepository studentRepository, TeacherRepository teacherRepository, AssessRepository assessRepository, GroupRepository groupRepository, CclassRepository cclassRepository, GradeRepository gradeRepository, TestPaperRepository testPaperRepository, SubjectRepository subjectRepository, TestPaperBindChoiceRepository testPaperBindChoiceRepository, RespondentsService respondentsService, HttpSession session, RespondentsRepository respondentsRepository) {
         this.studentRepository = studentRepository;
@@ -173,5 +175,24 @@ public class AssessServiceImpl implements AssessService {
         Double scoreSum = testPaperBindChoiceRepository.findScoreSum(assess.getTestPaperId());
         if (scoreSum == null) scoreSum = 0.0;
         return new AssessMsg(name, testPaperBindChoiceRepository.findAllByTestPaperId(assess.getTestPaperId()).size(), scoreSum, subjectRepository.findOneById(assess.getSubId()).getName(),respondentsRepository.findCountnotred(assess.getId()),respondentsRepository.findCountred(assess.getId()));
+    }
+
+    @Override
+    public String fullname(Integer testObject, Integer testObjectId) {
+        String name ="";
+        if(testObject==1 ){
+           name=""+testObjectId;
+
+        }else if(testObject==2){
+        name= gradeRepository.findOneById(testObjectId).getYear()+"-"+gradeRepository.findOneById(testObjectId).getName();
+
+        }else if(testObject==3){
+            name= gradeRepository.findOneById( cclassRepository.findOneById(testObjectId).getGradeId()).getYear()+"-"+gradeRepository.findOneById(cclassRepository.findOneById(testObjectId).getGradeId()).getName()+"-"+cclassRepository.findOneById(testObjectId).getName();
+        }else if(testObject==4){
+            name= gradeRepository.findOneById(cclassRepository.findOneById( groupRepository.findOneById(testObjectId).getCclassId()).getGradeId()).getYear()+"-"+ gradeRepository.findOneById(cclassRepository.findOneById( groupRepository.findOneById(testObjectId).getCclassId()).getGradeId()).getName()+"-"+cclassRepository.findOneById( groupRepository.findOneById(testObjectId).getCclassId()).getName() +"-"+ groupRepository.findOneById(testObjectId).getName() ;
+        }else if(testObject==5){
+            name=gradeRepository.findOneById( cclassRepository.findOneById( groupRepository.findOneById(studentRepository.findOneByStuId(testObjectId).getStuGroup()).getCclassId()).getGradeId()).getYear()+"-"+  gradeRepository.findOneById( cclassRepository.findOneById( groupRepository.findOneById(studentRepository.findOneByStuId(testObjectId).getStuGroup()).getCclassId()).getGradeId()).getName() +"-"+cclassRepository.findOneById( groupRepository.findOneById(studentRepository.findOneByStuId(testObjectId).getStuGroup()).getCclassId()).getName() +"-"+groupRepository.findOneById(studentRepository.findOneByStuId(testObjectId).getStuGroup()).getName()+"-"+studentRepository.findOneByStuId(testObjectId).getStuName();
+        }
+        return name;
     }
 }
