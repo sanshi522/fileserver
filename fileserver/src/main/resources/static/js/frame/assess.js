@@ -86,24 +86,17 @@ $(function(){
 			data:{},
 			dataType:"json",
 			success: function(data) {
-
 				$("#subIdScreen2").empty();
-				$("#subIdScreen2").append('<option value="0">全部学科</option>');
-				$("#subjectId").empty();
 				$("#subIdScreen").empty();
 				$("#subIdScreen").append('<option value="0">全部学科</option>');
 				for (let i = 0; i < data.length; i++) {
-					$("#subjectId").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
 					$("#subIdScreen").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
 					$("#subIdScreen2").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
 
 				}
-
 				$('#subIdScreen2').selectpicker('refresh');
 				$('#subIdScreen2').val(data[0].id).trigger("change");
-				$('#subjectId').selectpicker('refresh');
 				$('#subIdScreen').selectpicker('refresh');
-				$('#subjectId').val(data[0].id).trigger("change");
 				$('#subIdScreen').val(0).trigger("change");
 			},
 			error: function(data) {
@@ -112,68 +105,6 @@ $(function(){
 		});
 
 	}
-
-
-
-
-
-	// $("#queryLevels").change(function() {
-	// 	$("#checkAll").prop("checked",false);//全选按钮取消全选
-	// 	upident = $("#queryLevels").val();
-	// 	if (upident != '1') {
-	// 		$("#yearScreenDiv").css("display", "block");
-	// 	}
-	// 	if (upident == '7' || upident == '1'){
-	// 		$("#yearScreenDiv").css("display", "none");
-	// 		$("#gradeScreenDiv").css("display", "none");
-	// 		$("#classScreenDiv").css("display", "none");
-	// 		$("#groupScreenDiv").css("display", "none");
-	// 	}
-	//
-	// 	$.ajax({
-	// 		url: "Grade/GetYear",
-	// 		type: "post",
-	// 		dataType: "json",
-	// 		success: function (data) {
-	// 			var logintype=0;
-	// 			if (data.resoult) {
-	// 				if (upident != 1) {
-	// 					$("#yearScreen").empty();
-	// 					if (logintype == 0) {
-	// 						$("#yearScreen").append('<option value="' + data.year.year + '">' + data.year.year + '</option>');
-	// 						$('#yearScreen').selectpicker('refresh');
-	// 						$('#yearScreen').val(data.year.year).trigger("change");
-	// 					} else {
-	// 						for (let i = 0; i < data.years.length; i++) {
-	// 							$("#yearScreen").append('<option value="' + data.years[i] + '">' + data.years[i] + '</option>');
-	// 						}
-	// 						$('#yearScreen').selectpicker('refresh');
-	// 						$('#yearScreen').val(data.years[0]).trigger("change");
-	// 					}
-	// 				} else {
-	// 					$("#selecttarget").empty();
-	// 					if (logintype == 0) {
-	// 						$("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.year.year +' name="checkItem" type="checkbox" /></td><td>' + data.year.year + '</td></tr>');
-	// 					} else {
-	// 						$("#selecttarget").empty();
-	// 						for (let i = 0; i < data.years.length; i++) {
-	// 							$("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.years[i] +' name="checkItem" type="checkbox" /></td><td>' + data.years[i] + '</td></tr>');
-	// 						}
-	// 					}
-	// 					checkItemAddBindClick();
-	// 				}
-	// 			}
-	// 		},
-	// 		error: function (data) {
-	// 			console.log("获取学年服务器错误")
-	// 		}
-	// 	});
-	// });
-
-
-
-
-
 
 	getsubtype();
 	var pageNumber =16 ; // 每页显示多少条记录
@@ -309,9 +240,7 @@ $(function(){
 	});
 
 //////////////////////////////////////////////////////////////////////悬浮窗口js
-  //var oBtn = $('#show');
-  	var popWindow = $('.popWindow');
-  var oClose = $('.popWindow h3 span');
+  var popWindow = $('.popWindow');
   //浏览器可视区域的宽度
   var browserWidth = $(window).width();
   //浏览器可视区域的高度
@@ -349,14 +278,10 @@ function ref(){
     browserHeight = $(window).height();
     positionLeft = browserWidth/2 - popWindowWidth/2+browserScrollLeft;
 	positionTop = browserHeight/2 - popWindowHeight/2+browserScrollTop;
-
-
 }
 	$("#addAssess").click(function (e) {
 		openWindw(e.pageX, e.pageY);
 	});
-
-
 /** 弹出框**/
 function openWindw(x,y){
 	ref();
@@ -398,82 +323,106 @@ function openWindw(x,y){
 		popWindow.hide();
     	$('.mask').remove();
   	});
-  oClose.click(function(){
-    popWindow.hide();
-    $('.mask').remove();
-  });
-	//切换题目类型
-	$("#choicetype").change(function(){
-		if($("#choicetype").val()==1){
-			$(".choice_option_tr").show();
-			$("#choicenum").change();
-			$(".choice_option").attr("type","radio");
-		}else if($("#choicetype").val()==2){
-			$(".choice_option_tr").show();
-			$("#choicenum").change();
-			$(".choice_option").attr("type","checkbox");
-		}else if($("#choicetype").val()==3){
-			$(".choice_option_tr").hide();
-		}else{
-			$(".choice_option_tr").hide();
-		}
+
+
+
+	//试卷分页控件部分
+	var pageNumber1 =10 ; // 每页显示多少条记录
+	var pageIndex1= 0 ;//页码
+	//分页元素
+	var total1=0; // 总共多少记录
+	let likeName1="";
+	//弹出框学科id
+	let subId1=0;
+	//学科选择
+	$("#subIdScreen2").change(function () {
+		subId1=$(this).val();
+		if($("#screenTest_div").is(":visible")) findTesTPaper(0);
+		$("#testpaper_id").val("");
+		$("#testpaper_id").attr("data_value",0);
+	})
+	//点击试卷框
+	$("#testpaper_id").click(function () {
+		$(".popWindow").css("width","auto");
+		$("#addUser_div").hide();
+		$("#screenTest_div").show();
+		if (subId1==0) $.alert("请选择考核学科！");
+		findTesTPaper(0);
 	});
-	$("#choicetype").change();
-//设置选项个数
-	$(".optionE").hide();
-	$(".optionF").hide();
-	$("#choicenum").change(function(){
-		if($("#choicenum").val()==4){
-			$(".choice_option_tr").show();
-			$(".optionE").hide();
-			$(".optionF").hide();
-			checkedno();
-		}else if($("#choicenum").val()==5){
-			$(".choice_option_tr").show();
-			$(".optionF").hide();
-			checkedno();
-		}else{
-			$(".choice_option_tr").show();
-		}
+	//点击添加考核对象添加按钮
+	$(".add-assessuser").click(function () {
+		$(".popWindow").css("width","auto");
+		$("#addUser_div").show();
+		$("#screenTest_div").hide();
+	})
+	//弹出框试题搜索
+	$(".querybtn1").click(function(){
+		likeName1=$("#query1").val();
+		findTesTPaper(0);
 	});
-//点击选项
-	$(".choice_option").click(function(){
-		var obj = document.getElementsByName('opt');
-		var s = '';
-		for (var i = 0; i < obj.length; i++) {
- 			if (obj[i].checked){
-				if(s=='')
-					s += obj[i].value;
-				else
-					s += ','+ obj[i].value ;
+	$("#Pagination1").pagination(total1, {
+				callback : PageCallback1,
+				prev_text : '上一页',
+				next_text : '下一页',
+				items_per_page : pageNumber,
+				num_display_entries : 4, // 连续分页主体部分显示的分页条目数
+				num_edge_entries : 1, // 两侧显示的首尾分页的条目数
+				jump:true,
+	});
+	function PageCallback1(index, jq) { // 前一个参数表示当前点击的那个分页的页数索引值，后一个参数表示装载容器。
+		pageIndex=index;
+		findTesTPaper(pageIndex);
+	}
+	//加载试卷
+	function findTesTPaper(index){
+		pageIndex=index;
+		let val={
+			"pageNumber":pageNumber1,
+			"pageIndex":pageIndex1,
+			"issistId":subId1,
+			"likeName":likeName1==""?null:likeName1
+		}
+		$.ajax({
+			url: "/testPaper/findAll",
+			//contentType:"application/json;charset=UTF-8",
+			type: "post",
+			async: true,
+			data:val,
+			dataType: "json",
+			success: function(data) {
+				if(data.resoult){
+					$("#allTestPaper1").empty();
+					for(let i=0;i<data.page.content.length;i++){
+						$.ajax({
+							url: "/testPaper/findMsg",
+							//contentType:"application/json;charset=UTF-8",
+							type: "post",
+							async: false,
+							data:{id:data.page.content[i].id},
+							dataType: "json",
+							success: function(data2) {
+								$("#allTestPaper1").append(' <tr class="testpa" test_id="'+data.page.content[i].id+'" test_name="'+data.page.content[i].name+'"><td>'+data.page.content[i].name+'</td><td>'+data2.choiceNum+'</td><td>'+data2.choiceScoreNum+'</td><td style="text-align: right;"><i class="my-icon lsm-sidebar-icon icon-tianjia test-change"/></td></tr>');
+							},error(data2){
+							}
+						});
+					}
+					total1=data.page.totalElements;
+					$(".totalmsg1").html("【共"+total1+"条记录，当前显示："+(data.page.pageable.pageNumber*data.page.pageable.pageSize+1)+"~"+(data.page.pageable.pageNumber*data.page.pageable.pageSize+data.page.numberOfElements)+"】");
+					TestPaperBind();
+				}
+				console.log(data);
+
+			}, error: function(data){
+				console.log("服务器异常");
 			}
-				
-		}
-		$("#anwser").val(s);
-	});
-
-
-
-
-	var cassname="";
-
-
-//////////////////////////////////////////////////////////////////////悬浮窗口js
+		});
+	}
+	function TestPaperBind(){
+		$('.test-change').bind("click",function () {
+			$("#testpaper_id").val($(this).parent().parent().attr("test_name"));
+			$("#testpaper_id").attr("data_value",$(this).parent().parent().attr("test_id"));
+		})
+	}
 });
-function choicebind(){
-	$(".input-cho").bind("click",function(){
-		$(this).children('input')[0].click();
-	});
-	$(".pack-up").bind("click",function(){
-		var bi=$(this).parent().parent().children(".choice-details").css("display")=="none"?"none":"block";
-		$(".choice-details").css("display","none");
-		$(this).parent().parent().children(".choice-details").css("display",bi=="none"?"block":"none");
-		$(".pack-up").children("i").removeClass("icon-jiantoushang");
-		$(".pack-up").children("i").addClass("icon-jiantouxia");
-		if($(this).parent().parent().children(".choice-details").css("display")=="block"){
-			$(this).children("i").removeClass("icon-jiantouxia");
-			$(this).children("i").addClass("icon-jiantoushang");
-		}
-	});
-}
+
 
