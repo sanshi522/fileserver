@@ -9,14 +9,10 @@ var gradeId = 0;
 var classId = 0;
 //分页元素
 var total = 50; // 总共多少记录
+
+var arr=[];
 $(function () {
 
-
-
-    $(".assessuser-add").click(function () {
-        $(this).parent().attr("");
-
-    })
 
 	var startdatatime="";
 	var enddatatime="";
@@ -102,294 +98,6 @@ $(function () {
     }
 
 
-    /**
-     * 考核对象
-     */
-
-    $("#queryLevels").change(function() {
-        $("#checkAll").prop("checked",false);//全选按钮取消全选
-        upident = $("#queryLevels").val();
-        //切换则查询
-        //根据权限级别显示二级筛选框
-        $("#selecttarget").empty();
-            if (upident != '1')
-                $("#yearScreenDiv").css("display", "block");
-            if (upident == '7' || upident == '1')
-                $("#yearScreenDiv").css("display", "none");
-            $("#gradeScreenDiv").css("display", "none");
-            $("#classScreenDiv").css("display", "none");
-            $("#groupScreenDiv").css("display", "none");
-
-        if (upident != 7) {
-            //获取该身份下的学年
-            $.ajax({
-                url: "Grade/GetYear",
-                type: "post",
-                dataType: "json",
-                success: function (data) {
-                    if (data.resoult) {
-                        if (upident != 1) {
-                            $("#yearScreen").empty();
-                                for (let i = 0; i < data.years.length; i++) {
-                                    $("#yearScreen").append('<option value="' + data.years[i] + '">' + data.years[i] + '</option>');
-                                }
-                                $('#yearScreen').selectpicker('refresh');
-                                $('#yearScreen').val(data.years[0]).trigger("change");
-                        } else {
-                            $("#selecttarget").empty();
-                                $("#selecttarget").empty();
-                                for (let i = 0; i < data.years.length; i++) {
-                                    $("#selecttarget").append('<tr class="target" data_id=' + data.years[i].year +' ><td><td>' + data.years[i] + '</td>  <td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
-                                }
-
-                            checkItemAddBindClick();
-                        }
-                    }
-                },
-                error: function (data) {
-                    console.log("获取学年服务器错误")
-                }
-            });
-        } else {
-            //获取所有管理员
-            $.ajax({
-                url: "Teacher/GetAdmin",
-                type: "post",
-                dataType: "json",
-                success: function (data) {
-                    if (data.resoult) {
-                        $("#selecttarget").empty();
-                        for (let i = 0; i < data.teachers.length; i++) {
-                            $("#selecttarget").append('<tr class="target" ><td>' + data.teachers[i].teaName + '</td>  <td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
-                        }
-                        checkItemAddBindClick();
-                    }
-                },
-                error: function (data) {
-                    console.log("获取管理员服务器错误")
-                }
-            });
-        }
-    });
-
-    //根据上传授权条件展示筛选框
-    var paretid;
-    $("#yearScreen").change(function () {
-        paretid=$("#yearScreen").val();
-        $("#gradeScreenDiv").css("display","none")
-        $("#classScreenDiv").css("display","none");
-        $("#groupScreenDiv").css("display","none");
-        if (upident!=2)
-            $("#gradeScreenDiv").css("display","block")
-        //查询学年下的学院
-        $.ajax({
-            url:"Grade/GetGrade",
-            type:"post",
-            data: {yearNumber: paretid},
-            dataType:"json",
-            success:function(data) {
-                if (data.resoult){
-                    if (upident!=2){
-                        $("#gradeScreen").empty();
-                            for (let i=0;i<data.grades.length;i++){
-                                $("#gradeScreen").append('<option value="'+data.grades[i].id+'">'+data.grades[i].name+'</option>');
-                            }
-                            $('#gradeScreen').selectpicker('refresh');
-                            $('#gradeScreen').val(data.grades[0].id).trigger("change");
-                    }else{
-                        $("#selecttarget").empty();
-                            $("#selecttarget").empty();
-                            for (let i=0;i<data.grades.length;i++){
-                                $("#selecttarget").append('<tr class="target" data_id='+ data.grades[i].id+' ><td><td>'+data.grades[i].name+'</td>  <td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
-                            }
-                        checkItemAddBindClick();
-                    }
-                }
-            },
-            error:function(data){
-                console.log("获取院系服务器错误")
-            }
-        });
-    });
-
-    $("#gradeScreen").change(function () {
-        paretid=$("#gradeScreen").val();
-        $("#classScreenDiv").css("display","none");
-        $("#groupScreenDiv").css("display","none");
-        if (upident!=3)
-            $("#classScreenDiv").css("display","block");
-        $.ajax({
-            url:"Class/GetClass",
-            type:"post",
-            data: {GradeId: paretid},
-            dataType:"json",
-            success:function(data) {
-                if (data.resoult){
-                    if (upident!=3){
-                        $("#classScreen").empty();
-                            for (let i=0;i<data.clases.length;i++){
-                                $("#classScreen").append('<option value="'+data.clases[i].id+'">'+data.clases[i].name+'</option>');
-                            }
-                            $('#classScreen').selectpicker('refresh');
-                            $('#classScreen').val(data.clases[0].id).trigger("change");
-
-                    }else{
-                        $("#selecttarget").empty();
-                            for (let i=0;i<data.clases.length;i++){
-                                $("#selecttarget").append('<tr class="target" data_id='+data.clases[i].id+'  ><td>'+data.clases[i].name+'</td> <td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
-                            }
-
-                        checkItemAddBindClick();
-                    }
-                }
-            },
-            error:function(data){
-                console.log("获取班级服务器错误")
-            }
-        });
-    });
-
-    $("#classScreen").change(function () {
-        paretid=$("#classScreen").val();
-        $("#groupScreenDiv").css("display","none");
-        if (upident!=4 && upident!=6)
-            $("#groupScreenDiv").css("display","block");
-        if (upident!=6){
-            //查询班级下的小组
-            $.ajax({
-                url:"Group/GetGroup",
-                type:"post",
-                data: {CclassId: paretid},
-                dataType:"json",
-                success:function(data) {
-                    if (data.resoult) {
-                        if (upident != 4) {
-                            $("#groupScreen").empty();
-                                for (let i = 0; i < data.Groups.length; i++) {
-                                    $("#groupScreen").append('<option value="' + data.Groups[i].id + '">' + data.Groups[i].name + '</option>');
-                                $('#groupScreen').selectpicker('refresh');
-                                $('#groupScreen').val(data.Groups[0].id).trigger("change");
-                            }
-                        } else {
-                            $("#selecttarget").empty();
-                                for (let i = 0; i < data.Groups.length; i++) {
-                                    $("#selecttarget").append('<tr class="target"  data_id=' + data.Groups[i].id +'><td><td>' + data.Groups[i].name + '</td> <td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
-                                }
-                            checkItemAddBindClick();
-                        }
-                    }
-                },
-                error:function(data){
-                    console.log("获取小组服务器错误")
-                }
-            });
-        }
-        if (upident==6){
-            $.ajax({
-                url:"Teacher/GetTeacher",
-                type:"post",
-                data: {classId: paretid},
-                dataType:"json",
-                success:function(data) {
-                    if (data.resoult){
-                        $("#selecttarget").empty();
-                        for (let i = 0; i < data.teachers.length; i++) {
-                            $("#selecttarget").append('<tr class="target"  data_id=' + data.teachers[i].teaId +'><td>' + data.teachers[i].teaName + '</td><td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
-                        }
-                        checkItemAddBindClick();
-                    }
-                },
-                error:function(data){
-                    console.log("获取老师服务器错误")
-                }
-            });
-        }
-    });
-
-
-    $("#classScreen").change(function () {
-        paretid=$("#classScreen").val();
-        $("#groupScreenDiv").css("display","none");
-        if (upident!=4 && upident!=6)
-            $("#groupScreenDiv").css("display","block");
-        if (upident!=6){
-            //查询班级下的小组
-            $.ajax({
-                url:"Group/GetGroup",
-                type:"post",
-                data: {CclassId: paretid},
-                dataType:"json",
-                success:function(data) {
-                    if (data.resoult) {
-                        if (upident != 4) {
-                            $("#groupScreen").empty();
-
-                                for (let i = 0; i < data.Groups.length; i++) {
-                                    $("#groupScreen").append('<option value="' + data.Groups[i].id + '">' + data.Groups[i].name + '</option>');
-                                }
-                                $('#groupScreen').selectpicker('refresh');
-                                $('#groupScreen').val(data.Groups[0].id).trigger("change");
-
-                        } else {
-                            $("#selecttarget").empty();
-                                for (let i = 0; i < data.Groups.length; i++) {
-                                    $("#selecttarget").append('<tr class="target" ><td>' + data.Groups[i].name + '</td><td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
-                                }
-
-                            checkItemAddBindClick();
-                        }
-                    }
-                },
-                error:function(data){
-                    console.log("获取小组服务器错误")
-                }
-            });
-        }
-        if (upident==6){
-            $.ajax({
-                url:"Teacher/GetTeacher",
-                type:"post",
-                data: {classId: paretid},
-                dataType:"json",
-                success:function(data) {
-                    if (data.resoult){
-                        $("#selecttarget").empty();
-                        for (let i = 0; i < data.teachers.length; i++) {
-                            $("#selecttarget").append('<tr class="target" ><td>' + data.teachers[i].teaName + '</td> <td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
-                        }
-                        checkItemAddBindClick();
-                    }
-                },
-                error:function(data){
-                    console.log("获取老师服务器错误")
-                }
-            });
-        }
-    });
-
-
-    $("#groupScreen").change(function () {
-        paretid=$("#groupScreen").val();
-        //查询小组下的学生
-        $.ajax({
-            url:"Student/GetStudent",
-            type:"post",
-            data: {StuGroup: paretid},
-            dataType:"json",
-            success:function(data) {
-                if (data.resoult){
-                    $("#selecttarget").empty();
-                    for (let i = 0; i < data.students.length; i++) {
-                        $("#selecttarget").append('<tr class="target" data_id=' + data.students[i].stuId + '><td>' + data.students[i].stuName + '</td><td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
-                    }
-                    checkItemAddBindClick();
-                }
-            },
-            error:function(data){
-                console.log("获取学生服务器错误")
-            }
-        });
-    });
 
 
 
@@ -584,7 +292,6 @@ $(function () {
 //////////////////////////////////////////////////////////////////////悬浮窗口js
   //var oBtn = $('#show');
   	var popWindow = $('.popWindow');
-  var oClose = $('.popWindow h3 span');
   //浏览器可视区域的宽度
   var browserWidth = $(window).width();
   //浏览器可视区域的高度
@@ -671,67 +378,303 @@ function openWindw(x,y){
 		popWindow.hide();
     	$('.mask').remove();
   	});
-  oClose.click(function(){
-    popWindow.hide();
-    $('.mask').remove();
-  });
-	//切换题目类型
-	$("#choicetype").change(function(){
-		if($("#choicetype").val()==1){
-			$(".choice_option_tr").show();
-			$("#choicenum").change();
-			$(".choice_option").attr("type","radio");
-		}else if($("#choicetype").val()==2){
-			$(".choice_option_tr").show();
-			$("#choicenum").change();
-			$(".choice_option").attr("type","checkbox");
-		}else if($("#choicetype").val()==3){
-			$(".choice_option_tr").hide();
-		}else{
-			$(".choice_option_tr").hide();
-		}
-	});
-	$("#choicetype").change();
-//设置选项个数
-	$(".optionE").hide();
-	$(".optionF").hide();
-	$("#choicenum").change(function(){
-		if($("#choicenum").val()==4){
-			$(".choice_option_tr").show();
-			$(".optionE").hide();
-			$(".optionF").hide();
-			checkedno();
-		}else if($("#choicenum").val()==5){
-			$(".choice_option_tr").show();
-			$(".optionF").hide();
-			checkedno();
-		}else{
-			$(".choice_option_tr").show();
-		}
-	});
-//点击选项
-	$(".choice_option").click(function(){
-		var obj = document.getElementsByName('opt');
-		var s = '';
-		for (var i = 0; i < obj.length; i++) {
- 			if (obj[i].checked){
-				if(s=='')
-					s += obj[i].value;
-				else
-					s += ','+ obj[i].value ;
-			}
-				
-		}
-		$("#anwser").val(s);
-	});
+    //指定类型的对象id集合
+	var userList=[];
+    function updatelist(){
+        userList.splice(0);
+        let users=$(".test_suer");
+        users.each(function (i, user) {
+            if ($(user).attr("data_ident")==upident) userList.push($(user).attr("data_id"));
+        });
+        let users1=$(".assuser");
+        users1.each(function (i, user) {
+            if ($.inArray($(user).attr("data_id"),userList)>=0)
+                $(user).find(".assessuser-add").hide();
+            else
+                $(user).find(".assessuser-add").show();
+        })
+
+    }
+    /**
+     * 考核对象
+     */
+    $("#queryLevels").change(function() {
+        $("#checkAll").prop("checked",false);//全选按钮取消全选
+        upident = $("#queryLevels").val();
+        //切换则查询
+        //根据权限级别显示二级筛选框
+        $("#selecttarget").empty();
+        if (upident != '1')
+            $("#yearScreenDiv").css("display", "block");
+        if (upident == '7' || upident == '1')
+            $("#yearScreenDiv").css("display", "none");
+        $("#gradeScreenDiv").css("display", "none");
+        $("#classScreenDiv").css("display", "none");
+        $("#groupScreenDiv").css("display", "none");
+
+        if (upident != 7) {
+            //获取该身份下的学年
+            $.ajax({
+                url: "Grade/GetYear",
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    if (data.resoult) {
+                        if (upident != 1) {
+                            $("#yearScreen").empty();
+                            for (let i = 0; i < data.years.length; i++) {
+                                $("#yearScreen").append('<option value="' + data.years[i] + '">' + data.years[i] + '</option>');
+                            }
+                            $('#yearScreen').selectpicker('refresh');
+                            $('#yearScreen').val(data.years[0]).trigger("change");
+                        } else {
+                            $("#selecttarget").empty();
+                            $("#selecttarget").empty();
+                            for (let i = 0; i < data.years.length; i++) {
+                                    $("#selecttarget").append('<tr class="assuser" data_id=' + data.years[i] +' data_name='+data.years[i]+' ><td>' + data.years[i] + '</td>  <td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
+                            }
+                            assessuser_addbind();
+                            checkItemAddBindClick();
+                            updatelist();
+                        }
+                    }
+                },
+                error: function (data) {
+                    console.log("获取学年服务器错误")
+                }
+            });
+
+
+            //根据上传授权条件展示筛选框
+            var paretid;
+            $("#yearScreen").change(function () {
+                paretid=$("#yearScreen").val();
+                $("#gradeScreenDiv").css("display","none")
+                $("#classScreenDiv").css("display","none");
+                $("#groupScreenDiv").css("display","none");
+                if (upident!=2)
+                    $("#gradeScreenDiv").css("display","block")
+                //查询学年下的学院
+                $.ajax({
+                    url:"Grade/GetGrade",
+                    type:"post",
+                    data: {yearNumber: paretid},
+                    dataType:"json",
+                    success:function(data) {
+                        if (data.resoult){
+                            if (upident!=2){
+                                $("#gradeScreen").empty();
+                                for (let i=0;i<data.grades.length;i++){
+                                    $("#gradeScreen").append('<option value="'+data.grades[i].id+'">'+data.grades[i].name+'</option>');
+                                }
+                                $('#gradeScreen').selectpicker('refresh');
+                                $('#gradeScreen').val(data.grades[0].id).trigger("change");
+                            }else{
+                                $("#selecttarget").empty();
+                                $("#selecttarget").empty();
+                                for (let i=0;i<data.grades.length;i++){
+                                    $("#selecttarget").append('<tr class="assuser" data_id='+ data.grades[i].id+' data_name='+data.grades[i].name+' ><td>'+data.grades[i].name+'</td>  <td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
+                                }
+                                checkItemAddBindClick();
+                                assessuser_addbind();
+                            }
+                        }
+                    },
+                    error:function(data){
+                        console.log("获取院系服务器错误")
+                    }
+                });
+            });
+
+            $("#gradeScreen").change(function () {
+                paretid=$("#gradeScreen").val();
+                $("#classScreenDiv").css("display","none");
+                $("#groupScreenDiv").css("display","none");
+                if (upident!=3)
+                    $("#classScreenDiv").css("display","block");
+                $.ajax({
+                    url:"Class/GetClass",
+                    type:"post",
+                    data: {GradeId: paretid},
+                    dataType:"json",
+                    success:function(data) {
+                        if (data.resoult){
+                            if (upident!=3){
+                                $("#classScreen").empty();
+                                for (let i=0;i<data.clases.length;i++){
+                                    $("#classScreen").append('<option value="'+data.clases[i].id+'">'+data.clases[i].name+'</option>');
+                                }
+                                $('#classScreen').selectpicker('refresh');
+                                $('#classScreen').val(data.clases[0].id).trigger("change");
+
+                            }else{
+                                $("#selecttarget").empty();
+                                for (let i=0;i<data.clases.length;i++){
+                                    $("#selecttarget").append('<tr class="assuser" data_id='+data.clases[i].id+' data_name='+data.clases[i].name+' ><td>'+data.clases[i].name+'</td> <td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
+                                }
+
+                                checkItemAddBindClick();
+                                assessuser_addbind();
+                            }
+                        }
+                    },
+                    error:function(data){
+                        console.log("获取班级服务器错误")
+                    }
+                });
+            });
+
+            $("#classScreen").change(function () {
+                paretid=$("#classScreen").val();
+                $("#groupScreenDiv").css("display","none");
+                if (upident!=4 && upident!=6)
+                    $("#groupScreenDiv").css("display","block");
+                if (upident!=6){
+                    //查询班级下的小组
+                    $.ajax({
+                        url:"Group/GetGroup",
+                        type:"post",
+                        data: {CclassId: paretid},
+                        dataType:"json",
+                        success:function(data) {
+                            if (data.resoult) {
+                                if (upident != 4) {
+                                    $("#groupScreen").empty();
+                                    for (let i = 0; i < data.Groups.length; i++) {
+                                        $("#groupScreen").append('<option value="' + data.Groups[i].id + '">' + data.Groups[i].name + '</option>');
+                                        $('#groupScreen').selectpicker('refresh');
+                                        $('#groupScreen').val(data.Groups[0].id).trigger("change");
+                                    }
+                                } else {
+                                    $("#selecttarget").empty();
+                                    for (let i = 0; i < data.Groups.length; i++) {
+                                        $("#selecttarget").append('<tr class="assuser"  data_id=' + data.Groups[i].id +' data_name='+data.Groups[i].name+' ><td>' + data.Groups[i].name + '</td> <td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
+                                    }
+                                    checkItemAddBindClick();
+                                    assessuser_addbind();
+                                }
+                            }
+                        },
+                        error:function(data){
+                            console.log("获取小组服务器错误")
+                        }
+                    });
+                }
+                if (upident==6){
+                    $.ajax({
+                        url:"Teacher/GetTeacher",
+                        type:"post",
+                        data: {classId: paretid},
+                        dataType:"json",
+                        success:function(data) {
+                            if (data.resoult){
+                                $("#selecttarget").empty();
+                                for (let i = 0; i < data.teachers.length; i++) {
+                                    $("#selecttarget").append('<tr class="assuser"  data_id=' + data.teachers[i].teaId +'  data_name='+data.teachers[i].teaName+' ><td>' + data.teachers[i].teaName + '</td><td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
+                                }
+                                checkItemAddBindClick();
+                                assessuser_addbind();
+                            }
+                        },
+                        error:function(data){
+                            console.log("获取老师服务器错误")
+                        }
+                    });
+                }
+            });
+
+
+            $("#groupScreen").change(function () {
+                paretid=$("#groupScreen").val();
+                //查询小组下的学生
+                $.ajax({
+                    url:"Student/GetStudent",
+                    type:"post",
+                    data: {StuGroup: paretid},
+                    dataType:"json",
+                    success:function(data) {
+                        if (data.resoult){
+                            $("#selecttarget").empty();
+                            for (let i = 0; i < data.students.length; i++) {
+                                $("#selecttarget").append('<tr class="assuser" data_id=' + data.students[i].stuId + ' data_name='+data.students[i].stuName+'><td>' + data.students[i].stuName + '</td><td><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
+                            }
+                            checkItemAddBindClick();
+                            assessuser_addbind();
+                        }
+                    },
+                    error:function(data){
+                        console.log("获取学生服务器错误")
+                    }
+                });
+            });
+        }
+    });
+
+	//添加考核对象bind方法
+function assessuser_addbind(){
+        $(".assessuser-add").bind("click", function () {
+            var id=  $(this).parent().parent().attr("data_id");
+            var testObject=$("#queryLevels").val();
+            var testObjectname =$("#queryLevels option:selected").text();
+            var  name= $(this).parent().parent().attr("data_name");
+            console.log(id +"-"+testObject+""+name+""+testObjectname);
+            $("#testObject").append('<tr class="test_suer" data_ident='+$("#queryLevels").val()+'  data_id='+id+' data_name='+name+' ><td>'+testObjectname+'</td><td>'+name+'</td><td><i class="my-icon lsm-sidebar-icon icon-shanchu assessuser-del"></i></td></tr>');
+            updatelist();
+
+          let  ass={
+         "id":id,
+         "testObjectid":testObject
+          }
+        arr.push(ass);
+            assessuser_delbind();
+            contrast();
+        });
+    }
+//删除考核bind对象
+    function assessuser_delbind(){
+        $(".assessuser-del").bind("click", function () {
+            $(this).parent().parent().remove();
+            updatelist();
+        });
+    }
+
+    //对比参数禁用添加按钮
+
+    function contrast(){
+        $('#selecttarget tr').each(function(i){
+            var testObject=$("#queryLevels").val();
+            var  id =$(this).attr("data_id");
+            let ass={
+
+            }
+            console.log(testObject+""+id);
+        });
+
+
+        }
+        cassname="";
 
 
 
-
-	var cassname="";
 
 
 //////////////////////////////////////////////////////////////////////悬浮窗口js
 });
 
-
+function checkItemAddBindClick(){
+    $('input:checkbox[name="checkItem"]').bind("click", function () {
+        var checkbox = document.getElementsByName("checkItem");
+        var exist=true;
+        for(var i = 0; i < checkbox.length; i ++){
+            if(checkbox[i].checked==false){
+                exist=false;
+            }
+        }
+        if(exist){
+            $("#checkAll").prop("checked",true);
+        }
+        else{
+            $("#checkAll").prop("checked",false);
+        }
+    });
+};
