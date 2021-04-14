@@ -31,12 +31,12 @@
 <div style="width:100%;height:40px;">
     <div  class="subIdDiv"  >
 
-        <select name="channels" id="subIdScreen" data-style="btn-info" class="selectpicker" placeholder="请输入学科">
+        <select name="channels" id="subIdScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" placeholder="请选择学科">
             <option value="0">全部学科</option>
         </select>
     </div>
     <div class="subIdDiv" id="TeacherDiv" >
-        <select name="channels"  data-style="btn-info" class="selectpicker" data-live-search="true" id="TeacherSelect">
+        <select name="channels"  id="TeacherSelect" data-style="btn-info" class="selectpicker" data-live-search="true" >
             <option value="0">全部老师</option>
         </select>
     </div>
@@ -95,7 +95,7 @@
         </div>
         <div class="input-group input-1">
             <span class="input-group-addon" >答题时长</span>
-            <input type="number" class="form-control" name="" id="make_time" data_value="" min="1"  />
+            <input type="number" class="form-control" name="" id="make_time" data_value="" min="1" value="1"/>
             <span class="input-group-addon">分钟</span>
         </div>
         <div class="input-group input-1">
@@ -110,7 +110,7 @@
 
             <table class="table" style="width:100%;border: 1px solid rgba(34, 36, 38, .15);margin-top: 10px ">
                     <thead>
-                    <tr><th colspan="2">考核对象</th><th><i class=" my-icon lsm-sidebar-icon icon-tianjia  add-assessuser"></i></th></tr>
+                    <tr><th colspan="2">考核对象</th><th style="text-align: right;"><i class=" my-icon lsm-sidebar-icon icon-tianjia  add-assessuser"></i></th></tr>
                     </thead>
                     <tbody id="testObject">
 
@@ -175,7 +175,7 @@
             </div>
             <table class="table" style="width:100%;border: 1px solid rgba(34, 36, 38, .15); ">
                 <thead>
-                    <tr><th>试卷名字</th><th>题目数量</th><th>总分</th><th></th></tr>
+                    <tr><th>试卷名字</th><th>题目数量</th><th>总分</th></tr>
                 </thead>
                 <tbody id="allTestPaper1">
                 </tbody>

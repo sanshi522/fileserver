@@ -1,6 +1,5 @@
 // JavaScript Document
 $(function () {
-
     //考核所需参数
     var upident;
     var issueId = 0;
@@ -88,10 +87,6 @@ $(function () {
         });
     }
 
-
-
-
-
     /**
      * 查询所有老师
      */
@@ -108,7 +103,7 @@ $(function () {
                     $("#TeacherSelect").append('<option value="' + data[i].teaId + '">' + data[i].teaName + '</option>');
                 }
                 $('#TeacherSelect').selectpicker('refresh');
-                $('#TeacherSelect').val(0).trigger("change");
+                $('#TeacherSelect').val(0);
             }
         })
     }
@@ -122,8 +117,6 @@ $(function () {
             dataType: "json",
             success: function (data) {
                 $("#subIdScreen2").empty();
-                $("#subIdScreen").empty();
-                $("#subIdScreen").append('<option value="0">全部学科</option>');
                 for (let i = 0; i < data.length; i++) {
                     $("#subIdScreen").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
                     $("#subIdScreen2").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
@@ -131,7 +124,7 @@ $(function () {
                 $('#subIdScreen2').selectpicker('refresh');
                 $('#subIdScreen2').val(data[0].id).trigger("change");
                 $('#subIdScreen').selectpicker('refresh');
-                $('#subIdScreen').val(0).trigger("change");
+                $('#subIdScreen').val(0);
             },
             error: function (data) {
 
@@ -142,7 +135,7 @@ $(function () {
 
 	getsubtype();
     Identity();
-	var pageNumber =16 ; // 每页显示多少条记录
+	var pageNumber =0 ; // 每页显示多少条记录
     var pageIndex= 0 ;//页码
 	var subId=0;
 	var name = "";
@@ -150,8 +143,6 @@ $(function () {
 	var  classId=0;
 	//分页元素
     var total=50; // 总共多少记录
-	//初始化单页显示条数
-	$("#showNumber").val('10').trigger("change")
 	$("#showNumber").change(function () {
 		if(pageNumber!=$("#showNumber").val()){
 			pageNumber=$("#showNumber").val();
@@ -167,6 +158,8 @@ $(function () {
 			Init(0);
 		}
 	});
+    //初始化单页显示条数
+    $("#showNumber").val('10').trigger("change");
     function PageCallback(index, jq) { // 前一个参数表示当前点击的那个分页的页数索引值，后一个参数表示装载容器。
         pageIndex = index;
         Init(pageIndex);
@@ -255,11 +248,10 @@ $(function () {
                             }
                         });
                     }
-
-				total=data.page.totalElements;
-				$(".totalmsg").html("【共"+total+"条记录，当前显示："+(data.page.pageable.pageNumber*data.page.pageable.pageSize+1)+"~"+(data.page.pageable.pageNumber*data.page.pageable.pageSize+data.page.numberOfElements)+"】");
-
-				}
+                    total=data.page.totalElements;
+				    $(".totalmsg").html("【共"+total+"条记录，当前显示："+(data.page.pageable.pageNumber*data.page.pageable.pageSize+1)+"~"+(data.page.pageable.pageNumber*data.page.pageable.pageSize+data.page.numberOfElements)+"】");
+                    $("#Pagination").pagination(total);
+                }
 
            	console.log(data);
 
@@ -377,6 +369,9 @@ function openWindw(x,y){
     	$('.mask').remove();
   	});
 
+	$("#make_time").bind("keyup",function () {
+        this.value = this.value.replace(/[^\d]/g, "");
+    });
 
 
 	//试卷分页控件部分
@@ -399,8 +394,10 @@ function openWindw(x,y){
 		$(".popWindow").css("width","auto");
 		$("#addUser_div").hide();
 		$("#screenTest_div").show();
+        subId1=$("#subIdScreen2").val();
 		if (subId1==0) $.alert("请选择考核学科！");
 		findTesTPaper(0);
+        $(window).resize();
 	});
 	//点击添加考核对象添加按钮
 	$(".add-assessuser").click(function () {
@@ -408,6 +405,7 @@ function openWindw(x,y){
 		$("#addUser_div").show();
 		$("#screenTest_div").hide();
         $("#queryLevels").change();
+        $(window).resize();
 	})
 	//弹出框试题搜索
 	$(".querybtn1").click(function(){
@@ -418,7 +416,7 @@ function openWindw(x,y){
 				callback : PageCallback1,
 				prev_text : '上一页',
 				next_text : '下一页',
-				items_per_page : pageNumber,
+				items_per_page : pageNumber1,
 				num_display_entries : 4, // 连续分页主体部分显示的分页条目数
 				num_edge_entries : 1, // 两侧显示的首尾分页的条目数
 				jump:true,
@@ -455,7 +453,7 @@ function openWindw(x,y){
 							data:{id:data.page.content[i].id},
 							dataType: "json",
 							success: function(data2) {
-								$("#allTestPaper1").append(' <tr class="testpa" test_id="'+data.page.content[i].id+'" test_name="'+data.page.content[i].name+'"><td>'+data.page.content[i].name+'</td><td>'+data2.choiceNum+'</td><td>'+data2.choiceScoreNum+'</td><td style="text-align: right;"><i class="my-icon lsm-sidebar-icon icon-tianjia test-change"/></td></tr>');
+								$("#allTestPaper1").append(' <tr class="testpa" test_id="'+data.page.content[i].id+'" test_name="'+data.page.content[i].name+'"><td>'+data.page.content[i].name+'</td><td>'+data2.choiceNum+'</td><td>'+data2.choiceScoreNum+'</td></tr>');
 							},error(data2){
 							}
 						});
@@ -472,9 +470,9 @@ function openWindw(x,y){
 		});
 	}
 	function TestPaperBind(){
-		$('.test-change').bind("click",function () {
-			$("#testpaper_id").val($(this).parent().parent().attr("test_name"));
-			$("#testpaper_id").attr("data_value",$(this).parent().parent().attr("test_id"));
+		$('.testpa').bind("click",function () {
+			$("#testpaper_id").val($(this).attr("test_name"));
+			$("#testpaper_id").attr("data_value",$(this).attr("test_id"));
 		})
 	}
 
@@ -500,7 +498,6 @@ function openWindw(x,y){
      * 考核对象
      */
     $("#queryLevels").change(function() {
-        $("#checkAll").prop("checked",false);//全选按钮取消全选
         upident = $("#queryLevels").val();
         //切换则查询
         //根据权限级别显示二级筛选框
@@ -530,7 +527,6 @@ function openWindw(x,y){
                             $('#yearScreen').val(data.years[0]).trigger("change");
                         } else {
                             $("#selecttarget").empty();
-                            $("#selecttarget").empty();
                             for (let i = 0; i < data.years.length; i++) {
                                 $("#selecttarget").append('<tr class="assuser" data_id=' + data.years[i] +' data_name='+data.years[i]+' ><td>' + data.years[i] + '</td>  <td  style="text-align:right;"><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
                             }
@@ -545,7 +541,8 @@ function openWindw(x,y){
                 }
             });
 
-
+        }
+    });
             //根据上传授权条件展示筛选框
             var paretid;
             $("#yearScreen").change(function () {
@@ -572,11 +569,9 @@ function openWindw(x,y){
                                 $('#gradeScreen').val(data.grades[0].id).trigger("change");
                             }else{
                                 $("#selecttarget").empty();
-                                $("#selecttarget").empty();
                                 for (let i=0;i<data.grades.length;i++){
                                     $("#selecttarget").append('<tr class="assuser" data_id='+ data.grades[i].id+' data_name='+data.grades[i].name+' ><td>'+data.grades[i].name+'</td>  <td style="text-align:right;"><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
                                 }
-
                                 assessuser_addbind();
                             }
                         }
@@ -613,8 +608,6 @@ function openWindw(x,y){
                                 for (let i=0;i<data.clases.length;i++){
                                     $("#selecttarget").append('<tr class="assuser" data_id='+data.clases[i].id+' data_name='+data.clases[i].name+' ><td>'+data.clases[i].name+'</td> <td  style="text-align:right;"><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
                                 }
-
-
                                 assessuser_addbind();
                             }
                         }
@@ -643,15 +636,14 @@ function openWindw(x,y){
                                     $("#groupScreen").empty();
                                     for (let i = 0; i < data.Groups.length; i++) {
                                         $("#groupScreen").append('<option value="' + data.Groups[i].id + '">' + data.Groups[i].name + '</option>');
-                                        $('#groupScreen').selectpicker('refresh');
-                                        $('#groupScreen').val(data.Groups[0].id).trigger("change");
                                     }
+                                    $('#groupScreen').selectpicker('refresh');
+                                    $('#groupScreen').val(data.Groups[0].id).trigger("change");
                                 } else {
                                     $("#selecttarget").empty();
                                     for (let i = 0; i < data.Groups.length; i++) {
                                         $("#selecttarget").append('<tr class="assuser"  data_id=' + data.Groups[i].id +' data_name='+data.Groups[i].name+' ><td>' + data.Groups[i].name + '</td> <td  style="text-align:right;"><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
                                     }
-
                                     assessuser_addbind();
                                 }
                             }
@@ -699,7 +691,6 @@ function openWindw(x,y){
                             for (let i = 0; i < data.students.length; i++) {
                                 $("#selecttarget").append('<tr class="assuser" data_id=' + data.students[i].stuId + ' data_name='+data.students[i].stuName+'><td>' + data.students[i].stuName + '</td><td  style="text-align:right;"><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
                             }
-
                             assessuser_addbind();
                         }
                     },
@@ -708,8 +699,7 @@ function openWindw(x,y){
                     }
                 });
             });
-        }
-    });
+
 
     //添加考核对象bind方法
     function assessuser_addbind(){
