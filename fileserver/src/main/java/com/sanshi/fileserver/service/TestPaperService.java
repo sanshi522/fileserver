@@ -1,10 +1,7 @@
 package com.sanshi.fileserver.service;
 
 import com.sanshi.fileserver.bean.TestPaper;
-import com.sanshi.fileserver.vo.PageGet;
-import com.sanshi.fileserver.vo.ReadTestPaper;
-import com.sanshi.fileserver.vo.TestPaperMsg;
-import com.sanshi.fileserver.vo.TestPaperVo;
+import com.sanshi.fileserver.vo.*;
 import org.springframework.data.domain.Page;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +48,7 @@ public interface TestPaperService {
      * 删除试卷
      * @return
      */
-    public void deleteById(TestPaper testPaper);
+    public Result deleteById(Integer testPaperId);
 
     public TestPaperMsg findMsg(Integer testPaperId);
 }

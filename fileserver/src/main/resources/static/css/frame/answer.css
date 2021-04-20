@@ -1,0 +1,259 @@
+.right_div {
+    position:fixed;
+    top: 5px;
+    right: 10px;
+    text-align: center;
+    width: 250px;
+    background-color:#f6f5f7;
+    float: left;
+    min-height:600px;
+}
+.left_div{
+    width:calc(100% - 300px);
+    float: left;
+    background-color:#f6f5f7;
+    min-height:600px;
+    margin-left: 10px;
+    margin-top:50px;
+}
+.msg_div{
+    position:fixed;
+    top: 5px;
+    width: calc(100% - 300px);
+    height: 40px;
+    background-color:#f6f5f7;
+    border-bottom: 1px #96b6e9 solid;
+}
+#testPaperName{
+    margin-left: 50px;
+    width: 300px;
+    border-bottom: 3px #0c0c0d solid;
+    float: left;
+}
+#subIdDiv{
+
+    margin: 0 auto;
+}
+#subIdDiv2{
+    float:left;
+}
+#choices{
+    width: 100%;
+    min-height:1200px;
+    background-color:#f6f5f7;
+}
+.navigation_title{
+    text-align: center;
+    width: 100%;
+    height: 60px;
+    font-size: 35px;
+    line-height: 60px;
+    font-weight: 600;
+}
+#navigation{
+    float: left;
+    height: auto;
+    padding: 6px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+/*快速锚点*/
+.anchor{
+    cursor:pointer;
+    width:30px;
+    height: 30px;
+    border: 1px #5084ED solid;
+    float: left;
+    padding: 5px;
+    margin: 2px;
+}
+.anchor:hover{
+    box-shadow: 0px 0px 10px 3px #aaa;
+}
+
+.choice,.choice1{
+    width: 100%;
+    height: auto;
+    border-bottom:  1px #C7C6C6 solid;
+    float: left;
+    padding-top: 15px;
+    padding-bottom: 10px;
+
+}
+.scoreNum{
+    margin-left: 20px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px;
+}
+.choice-check{
+    background-color:#F0BFBF;
+}
+.score_div{
+    max-width:70px;
+    float: right;
+}
+
+.choice-title{
+    float: left;
+    width: 100%;
+    height: 30px;
+    padding-left: 20px;
+}
+.delete-choice{
+    margin-right: 20px;
+}
+.choice-box{
+    display:none;
+    width: 30px;
+    height: 30px;
+    -moz-transform:scale(2);
+    float: right;
+}
+.choice-index{
+    background-color: #EEF0A9;
+    line-height: 30px;
+    border-radius: 0px 15px 0px 15px;
+    font-size: 18px;
+    font-weight: 700;
+    color:#777071;
+    text-align: center;
+    border: 1px red solid;
+    float:left;
+    width:50px;
+}
+.choice-name{
+    /*	background-color: #65DEED;*/
+    font-size: 20px;
+    float: left;
+    width: auto;
+    height: 30px;
+    padding: 5px;
+    padding-left: 20px;
+}
+.choice-oper{
+    float: right;
+    cursor:pointer;
+    font-size: 30px;
+    line-height: 30px;
+    text-align: center;
+    color:#9B8F8F;
+    width: 30px;
+    height: 30px;
+}
+.choice-oper:hover{
+    /*	background-color: #FFFFFF;*/
+    color:#CEF51C;
+}
+.choice-details1{
+    width:100%;
+    height: auto;
+    float: left;
+}
+.choice-details{
+    display:none;
+    width:100%;
+    height: auto;
+    float: left;
+}
+.make-choice{
+    font-size: 16px;
+    float: left;
+    width:100%;
+    height: auto;
+    padding: 15px;
+}
+
+
+.input-cho{
+    cursor:pointer;
+    width: auto;
+    float: left;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 30px;
+}
+
+/************悬浮窗口css*********************/
+.popWindow{
+    min-width: 500px;
+    min-height: 400px;
+    background: #FFFFFF;
+    padding: 2px;
+    margin: 10px;
+    position: absolute;
+    display: none;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    max-height: 600px;
+}
+.popWindow .title{
+    border-bottom: 2px #D7D7D7 solid;
+    width: 100%;
+    height: 40px;
+    line-height: 30px;
+}
+#typeDiv{
+    float:left;
+}
+
+#typeDiv2{
+    float:left;
+}
+
+.popWindow .content{
+    height: 270px;
+    background: #fff;
+}
+.mask{
+    background: #000;
+    opacity: 0.4;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+.yaperoter{
+    text-align: center;
+    height:35px;
+    width: 100%;
+    float: left;
+}
+.yaperoter .ui.buttons{
+    float: none;
+    margin: 0 auto;
+}
+
+.allchoice{
+    float: left;
+    width: 100%;
+    min-height:500px;
+    /*	border:  1px #1B2E9B solid;*/
+}
+
+
+.choice-type{
+    background-color: #EEF0A9;
+    line-height: 30px;
+    border-radius: 15px 15px 15px 15px;
+    font-size: 18px;
+    font-weight: 700;
+    color:#777071;
+    text-align: center;
+    border: 1px red solid;
+    float:left;
+    width:80px;
+}
+
+
+.choice-oper{
+    float: right;
+    cursor:pointer;
+    font-size: 30px;
+    line-height: 30px;
+    text-align: center;
+    color:#9B8F8F;
+    width: 30px;
+    height: 30px;
+}

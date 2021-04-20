@@ -87,5 +87,13 @@ public class TestPaperController {
     };
 
 
+    @RequestMapping(path = "/delete")
+    @ResponseBody
+    public Result delete(Integer testPaperId){
+
+        return testPaperService.deleteById(testPaperId);
+    };
+
+
 
 }

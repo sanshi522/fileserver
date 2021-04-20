@@ -17,7 +17,7 @@ public class TestPaperBindChoiceServiceImpl implements TestPaperBindChoiceServic
     @Override
     public List<TestPaperBindChoice> findAll(TestPaperBindChoice testPaperBindChoice) {
         if(testPaperBindChoice.getTestPaperId()!=null){
-            return  testPaperBindChoiceRepository.findAllByTestPaperId(testPaperBindChoice.getTestPaperId());
+            return  testPaperBindChoiceRepository.findAllByTestPaperIdOrderByIndexNumAsc(testPaperBindChoice.getTestPaperId());
         }
         return null;
     }

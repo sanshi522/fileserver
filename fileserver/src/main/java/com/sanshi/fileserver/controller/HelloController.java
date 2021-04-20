@@ -14,6 +14,11 @@ import java.io.*;
 @Controller
 public class HelloController {
 
+    @GetMapping("/studentScore")
+    public String studentScore(Integer id) {
+        return "studentScore";
+    }
+
     @GetMapping("/assess")
     public String assess() {
         return "assess";
@@ -26,6 +31,19 @@ public class HelloController {
         modelAndView.setViewName("addTestPaper");
         modelAndView.addObject("id", id);
         return modelAndView;
+    }
+
+    @GetMapping("/answer")
+    public ModelAndView answer(Integer id) {
+        if (id==null) id=0;
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("answer");
+        modelAndView.addObject("id", id);
+        return modelAndView;
+    }
+    @GetMapping("/studentAssess")
+    public String studentAssess() {
+        return "studentAssess";
     }
 
     @GetMapping("/schooling")

@@ -112,7 +112,9 @@ public interface AssessRepository extends JpaRepository<Assess,Integer>, JpaSpec
 
     Page<Assess>findAllByNameLikeAndIssueIdAndSubId(String name,Integer issUserId,Integer subId,Pageable pa);
 
-
-
+    List  findAllByTestPaperId(Integer testPaperId);
+    void  deleteByTestPaperId(Integer testPaperId);
+   //查询学生的考核
+   Page<Assess>findAllByIdInAndStartTimeLessThanAndEndTimeGreaterThan(List<Integer> ids, Date data  ,Date data2, Pageable pa);
 
 }

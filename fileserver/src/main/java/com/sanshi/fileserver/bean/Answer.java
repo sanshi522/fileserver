@@ -22,7 +22,7 @@ public class Answer {
     private String answer;//答案
     private String fileIds;//附件id集合
     private Double score;//得分
-    private Integer correct;//批改状态
+    private Integer correct;//批改状态 //0未批改1已批改
     private Integer correctUserid;//0为系统批改1为老师批改
     @CreationTimestamp
     private Date createTime;
@@ -45,6 +45,7 @@ public class Answer {
         this.uapdateTime = uapdateTime;
     }
 
+
     public Integer getId() {
         return id;
     }
@@ -66,7 +67,7 @@ public class Answer {
     }
 
     public void setRespondentsId(Integer respondentsId) {
-        respondentsId = respondentsId;
+        this.respondentsId = respondentsId;
     }
 
     public String getAnswer() {
@@ -140,4 +141,6 @@ public class Answer {
                 ", uapdateTime=" + uapdateTime +
                 '}';
     }
+
+
 }

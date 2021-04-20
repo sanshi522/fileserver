@@ -1,17 +1,37 @@
 package com.sanshi.fileserver.service.impl;
 
 import com.sanshi.fileserver.bean.Respondents;
+import com.sanshi.fileserver.repository.AnswerRepository;
+import com.sanshi.fileserver.repository.AssessRepository;
 import com.sanshi.fileserver.repository.RespondentsRepository;
+import com.sanshi.fileserver.repository.SubjectRepository;
 import com.sanshi.fileserver.service.RespondentsService;
+import com.sanshi.fileserver.vo.PageGet;
+import com.sanshi.fileserver.vo.RespondentsMsg;
+import com.sanshi.fileserver.vo.SessionUser;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Service("RespondentsServiceImpl")
 public class RespondentsServiceImpl implements RespondentsService {
     private RespondentsRepository respondentsRepository;
+    private HttpSession      session;
+    private AssessRepository  assessRepository;
+    private SubjectRepository subjectRepository;
+    private AnswerRepository answerRepository;
 
-    public RespondentsServiceImpl(RespondentsRepository respondentsRepository) {
+    public RespondentsServiceImpl(RespondentsRepository respondentsRepository, HttpSession session, AssessRepository assessRepository, SubjectRepository subjectRepository, AnswerRepository answerRepository) {
         this.respondentsRepository = respondentsRepository;
+        this.session = session;
+        this.assessRepository = assessRepository;
+        this.subjectRepository = subjectRepository;
+        this.answerRepository = answerRepository;
     }
 
     /**
@@ -50,6 +70,12 @@ public class RespondentsServiceImpl implements RespondentsService {
 
     @Override
     public Respondents save(Respondents respondents) {
+        SessionUser  sessionUser=(SessionUser) session.getAttribute("user");
+        respondents.setStuId(sessionUser.getStudent().getStuId());
+      Respondents  respondents1=respondentsRepository.findByStuIdAndAssessId(respondents.getStuId(),respondents.getAssessId());
+        if(respondents1!=null){
+            return    respondents1;
+        }
         return respondentsRepository.save(respondents);
     }
 
@@ -63,4 +89,33 @@ public class RespondentsServiceImpl implements RespondentsService {
         }
 
     }
+
+    @Override
+    public Respondents findById(Integer id) {
+        return respondentsRepository.findOneById(id);
+    }
+
+    @Override
+    public Respondents selectSubmit(Integer assessId) {
+        SessionUser  sessionUser=(SessionUser) session.getAttribute("user");
+        return respondentsRepository.findByStuIdAndAssessId(sessionUser.getStudent().getStuId(),assessId);
+    }
+
+    @Override
+    public Map selectScore(PageGet  pageGet) {
+        SessionUser  sessionUser=(SessionUser) session.getAttribute("user");
+        Pageable pageable;
+        pageable = PageRequest.of(pageGet.getPageIndex(), pageGet.getPageNumber());
+        Map json = new HashMap();
+        json.put("page",respondentsRepository.findAllByStuIdAndCorrectOrderByCreateTimeDesc(sessionUser.getStudent().getStuId(),2,pageable));
+        return  json ;
+    }
+
+    @Override
+    public RespondentsMsg selectRespondentsMsg(Integer id) {
+       Respondents  respondents=   respondentsRepository.findOneById(id);
+        return new RespondentsMsg(assessRepository.findOneById(respondents.getAssessId()),subjectRepository.findOneById(assessRepository.findOneById(respondents.getAssessId()).getSubId()).getName(),answerRepository.selectScore(respondents.getId()));
+    }
+
+
 }

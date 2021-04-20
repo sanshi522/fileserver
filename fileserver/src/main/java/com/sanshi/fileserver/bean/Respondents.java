@@ -1,5 +1,6 @@
 package com.sanshi.fileserver.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -17,12 +18,13 @@ public class Respondents {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-    private Integer assessId;
+    private Integer assessId; //答卷ID
     private Integer stuId;//学生id
     private Integer makeTime;//答题时间
     private Integer submit;//提交状态 0:无；1:未提交；2：已提交
     private Integer correct;//批改状态 0:未完成 1：已完成
     private Integer correctId;//批阅人id
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @CreationTimestamp
     private Date createTime;
     @UpdateTimestamp
@@ -31,11 +33,7 @@ public class Respondents {
     public Respondents() {
     }
 
-    public Respondents(Integer assessId, Integer stuId, Integer correct) {
-        this.assessId = assessId;
-        this.stuId = stuId;
-        this.correct = correct;
-    }
+
 
     public Respondents(Integer id, Integer assessId, Integer stuId, Integer makeTime, Integer submit, Integer correct, Integer correctId, Date createTime, Date uapdateTime) {
         this.id = id;

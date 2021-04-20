@@ -1,5 +1,6 @@
 package com.sanshi.fileserver.repository;
 
+import com.sanshi.fileserver.bean.TestPaper;
 import com.sanshi.fileserver.bean.TestPaperBindChoice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -18,7 +19,7 @@ public interface TestPaperBindChoiceRepository extends JpaRepository<TestPaperBi
      * @param id
      * @return
      */
-    List<TestPaperBindChoice> findAllByTestPaperId(Integer id);
+    List<TestPaperBindChoice> findAllByTestPaperIdOrderByIndexNumAsc(Integer id);
 
     /**
      * 查询试卷总分
@@ -50,4 +51,10 @@ public interface TestPaperBindChoiceRepository extends JpaRepository<TestPaperBi
 
     @Query(value="select t.choiceId from TestPaperBindChoice t where t.testPaperId = ?1")
     List<Integer> findChoicesIdByTestPaperId(Integer id);
+
+
+    TestPaperBindChoice  findAllByChoiceIdAndTestPaperId(Integer choiceId,Integer testPaperId);
+
+
+
 }

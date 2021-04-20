@@ -21,20 +21,22 @@ public class Assess {
     private String name;
     private Integer subId;//学科id
     private Integer testPaperId;//试卷id
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
     private Date startTime;//开始时间
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
     private Date endTime;//结束时间
-    private Integer makeTime;//答题时间
+    private Integer makeTime;//答题时长
     private Integer issueId;//发布人id
     private Integer state;
     @CreationTimestamp
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
     @UpdateTimestamp
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date uapdateTime;
-
+    
     public Assess() {
     }
 

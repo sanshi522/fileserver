@@ -297,7 +297,7 @@ $(function () {
                     }
 
                     $("#choices").append(' <div class="choice" choicecheck="0" choiceid="' + data.choices[i].choice.id + '"  bindId="' + data.choices[i].testPaperBindChoice.id + '" c_index="' + data.choices[i].testPaperBindChoice.indexNum + '">\n' +
-                        '            <div class="choice-title"><div class="choice-index">' + (data.choices[i].testPaperBindChoice.indexNum + 1) + '</div><div class="choice-name" >你所熟练的语言？</div>\n' +
+                        '            <div class="choice-title"><div class="choice-index">' + (data.choices[i].testPaperBindChoice.indexNum + 1) + '</div><div class="choice-name" >' + data.choices[i].choice.topic + '</div>\n' +
                         '<input class="choice-box"  name="checkItem" type="checkbox" />' +
                         '                <div class="choice-oper delete-choice"><i class="my-icon lsm-sidebar-icon icon-shanchu "></i></div>\n' +
                         '<div class="score_div">\n' +

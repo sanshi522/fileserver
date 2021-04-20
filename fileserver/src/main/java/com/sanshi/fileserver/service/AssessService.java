@@ -1,10 +1,7 @@
 package com.sanshi.fileserver.service;
 
 import com.sanshi.fileserver.bean.Assess;
-import com.sanshi.fileserver.vo.AssessMsg;
-import com.sanshi.fileserver.vo.AssessVo;
-import com.sanshi.fileserver.vo.ScreenAssess;
-import com.sanshi.fileserver.vo.TestPaperMsg;
+import com.sanshi.fileserver.vo.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -17,9 +14,9 @@ public interface AssessService {
 
     /**
      * 获取考核
-     * @param assess
-     * @param test
-     * @param request
+     * @param
+     * @param
+     * @param
      * @return
      */
     public Map findAll(ScreenAssess screenAssess);
@@ -33,25 +30,38 @@ public interface AssessService {
     /**
      * 获取未进行考核
      * @param assess
-     * @param request
+     * @param
      * @return
      */
     List<Assess> findAllInvalid(Assess assess, Integer logintype,Integer userId);
     /**
      * 添加修改
-     * @param assess
+     * @param
      * @return
      */
-    Assess save(Assess assess);
+    int save(AssessUserVo assessUserVo);
 
     /**
      * 删除
-     * @param assess
+     * @param
      */
-    void delete(Assess assess);
+    Result delete(Integer id);
 
 
      AssessMsg findMsg(Integer testPaperId);
      String  fullname(Integer testObject ,Integer testObjectId );
+
+    /**
+     * 查询
+     */
+    AssessUerGVo  findbyId(Integer  assessId);
+
+    /**
+     * 学生查询自己的试卷
+     */
+
+    Map  StudentAssess(StudentAssessVo studentAssessVo);
+
+    StudentAssessVo  studentChoice(Integer assessId);
 
 }

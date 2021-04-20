@@ -14,9 +14,9 @@ public class AssessUser {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-    private Integer AssessId;//考核id
+    private Integer assessId;//考核id
     /**
-     * (0表示学年 1 表示学院 2表示班级 3表示小组 4学生)
+     * (1表示学年 2 表示学院 3表示班级 4表示小组 5学生)
      */
     private Integer testObject;//考试级别
     private Integer testObjectId;//考试对象id
@@ -30,7 +30,7 @@ public class AssessUser {
 
     public AssessUser(Integer id, Integer assessId, Integer testObject, Integer testObjectId, Date createTime, Date uapdateTime) {
         this.id = id;
-        AssessId = assessId;
+        this.assessId = assessId;
         this.testObject = testObject;
         this.testObjectId = testObjectId;
         this.createTime = createTime;
@@ -46,11 +46,11 @@ public class AssessUser {
     }
 
     public Integer getAssessId() {
-        return AssessId;
+        return assessId;
     }
 
     public void setAssessId(Integer assessId) {
-        AssessId = assessId;
+        this.assessId = assessId;
     }
 
     public Integer getTestObject() {
@@ -89,7 +89,7 @@ public class AssessUser {
     public String toString() {
         return "AssessUser{" +
                 "id=" + id +
-                ", AssessId=" + AssessId +
+                ", assessId=" + assessId +
                 ", testObject=" + testObject +
                 ", testObjectId=" + testObjectId +
                 ", createTime=" + createTime +

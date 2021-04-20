@@ -31,6 +31,12 @@ public class AssessMsg {
      */
     private  int  redNumber;
 
+    /**
+     * 是否已创建答卷
+     */
+    private  int  submit;
+
+
 
     public AssessMsg() {
     }
@@ -45,6 +51,16 @@ public class AssessMsg {
         this.redNumber = redNumber;
     }
 
+
+    public AssessMsg(String name, Integer choiceNum, Double choiceScoreNum, String subName, int notredNumber, int redNumber, int submit) {
+        this.name = name;
+        this.choiceNum = choiceNum;
+        this.choiceScoreNum = choiceScoreNum;
+        this.subName = subName;
+        this.notredNumber = notredNumber;
+        this.redNumber = redNumber;
+        this.submit = submit;
+    }
 
     public String getName() {
         return name;
@@ -94,6 +110,13 @@ public class AssessMsg {
         this.redNumber = redNumber;
     }
 
+    public int getSubmit() {
+        return submit;
+    }
+
+    public void setSubmit(int submit) {
+        this.submit = submit;
+    }
 
     @Override
     public String toString() {
@@ -104,6 +127,7 @@ public class AssessMsg {
                 ", subName='" + subName + '\'' +
                 ", notredNumber=" + notredNumber +
                 ", redNumber=" + redNumber +
+                ", submit=" + submit +
                 '}';
     }
 }

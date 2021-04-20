@@ -1,9 +1,6 @@
 package com.sanshi.fileserver.service.impl;
 
-import com.sanshi.fileserver.bean.Assess;
-import com.sanshi.fileserver.bean.Grade;
-import com.sanshi.fileserver.bean.Respondents;
-import com.sanshi.fileserver.bean.Student;
+import com.sanshi.fileserver.bean.*;
 import com.sanshi.fileserver.repository.*;
 import com.sanshi.fileserver.service.AssessService;
 import com.sanshi.fileserver.service.RespondentsService;
@@ -11,8 +8,7 @@ import com.sanshi.fileserver.vo.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
@@ -30,9 +26,11 @@ public class AssessServiceImpl implements AssessService {
     private RespondentsService respondentsService;
     private HttpSession session;
     private RespondentsRepository  respondentsRepository;
+   private  AssessUserRepository  assessUserRepository;
+   private ChoiceRepository choiceRepository;
 
 
-    public AssessServiceImpl(StudentRepository studentRepository, TeacherRepository teacherRepository, AssessRepository assessRepository, GroupRepository groupRepository, CclassRepository cclassRepository, GradeRepository gradeRepository, TestPaperRepository testPaperRepository, SubjectRepository subjectRepository, TestPaperBindChoiceRepository testPaperBindChoiceRepository, RespondentsService respondentsService, HttpSession session, RespondentsRepository respondentsRepository) {
+    public AssessServiceImpl(StudentRepository studentRepository, TeacherRepository teacherRepository, AssessRepository assessRepository, GroupRepository groupRepository, CclassRepository cclassRepository, GradeRepository gradeRepository, TestPaperRepository testPaperRepository, SubjectRepository subjectRepository, TestPaperBindChoiceRepository testPaperBindChoiceRepository, RespondentsService respondentsService, HttpSession session, RespondentsRepository respondentsRepository, AssessUserRepository  assessUserRepository,ChoiceRepository choiceRepository) {
         this.studentRepository = studentRepository;
         this.teacherRepository = teacherRepository;
         this.assessRepository = assessRepository;
@@ -45,6 +43,9 @@ public class AssessServiceImpl implements AssessService {
         this.respondentsService = respondentsService;
         this.session = session;
         this.respondentsRepository = respondentsRepository;
+        this.assessUserRepository = assessUserRepository;
+        this.assessRepository=assessRepository;
+        this.choiceRepository=choiceRepository;
     }
 
     @Override
@@ -105,40 +106,7 @@ public class AssessServiceImpl implements AssessService {
         return json ;
     }
 
-//    /**
-//     *获取进行中考核
-//     * @param assess
-//     * @return
-//     */
-//    @Override
-//    public List<Assess> findAllValid(Assess assess, Integer logintype,Integer userId ) {
-//        Date date=new Date();
-//        List<Assess> list =new ArrayList<Assess>();
-//        if (logintype==0){//学生
-//            if (assess.getSubId()!=null){//学科不为空
-//                list.addAll(assessRepository.findAllBySubIdAndTestObjectAndTestObjectIdAndStartTimeLessThanAndEndTimeGreaterThan(assess.getSubId(),0,cclassRepository.getOne(groupRepository.getOne(studentRepository.findOneByStuId(userId).getStuGroup()).getCclassId()).getGradeId(),date,date));
-//                list.addAll(assessRepository.findAllBySubIdAndTestObjectAndTestObjectIdAndStartTimeLessThanAndEndTimeGreaterThan(assess.getSubId(),1,groupRepository.getOne(studentRepository.findOneByStuId(userId).getStuGroup()).getCclassId(),date,date));
-//                list.addAll(assessRepository.findAllBySubIdAndTestObjectAndTestObjectIdAndStartTimeLessThanAndEndTimeGreaterThan(assess.getSubId(),2,studentRepository.findOneByStuId(userId).getStuGroup(),date,date));
-//                list.addAll(assessRepository.findAllBySubIdAndTestObjectAndTestObjectIdAndStartTimeLessThanAndEndTimeGreaterThan(assess.getSubId(),3,userId,date,date));
-//                return list;
-//            }
-//            list.addAll(assessRepository.findAllByTestObjectAndTestObjectIdAndStartTimeLessThanAndEndTimeGreaterThan(0,cclassRepository.getOne(groupRepository.getOne(studentRepository.findOneByStuId(userId).getStuGroup()).getCclassId()).getGradeId(),date,date));
-//            list.addAll(assessRepository.findAllByTestObjectAndTestObjectIdAndStartTimeLessThanAndEndTimeGreaterThan(1,groupRepository.getOne(studentRepository.findOneByStuId(userId).getStuGroup()).getCclassId(),date,date));
-//            list.addAll(assessRepository.findAllByTestObjectAndTestObjectIdAndStartTimeLessThanAndEndTimeGreaterThan(2,studentRepository.findOneByStuId(userId).getStuGroup(),date,date));
-//            list.addAll(assessRepository.findAllByTestObjectAndTestObjectIdAndStartTimeLessThanAndEndTimeGreaterThan(3,userId,date,date));
-//            return list;
-//        }else if(logintype==1){//老师
-//            if (assess.getSubId()!=null){//学科不为空
-//                return assessRepository.findAllBySubIdAndIssueIdAndStartTimeLessThanAndEndTimeGreaterThan(assess.getSubId(),userId,date,date);
-//            }
-//            return assessRepository.findAllByIssueIdAndStartTimeLessThanAndEndTimeGreaterThan(userId,date,date);
-//        }else{
-//            if (assess.getSubId()!=null){//学科不为空
-//                return assessRepository.findAllBySubIdAndStartTimeLessThanAndEndTimeGreaterThan(assess.getSubId(),date,date);
-//            }
-//            return assessRepository.findAllByStartTimeLessThanAndEndTimeGreaterThan(date,date);
-//        }
-//    }
+
 
     @Override
     public List<Assess> findAllInvalid(Assess assess, Integer logintype,Integer userId) {
@@ -157,15 +125,33 @@ public class AssessServiceImpl implements AssessService {
             }
     }
 
-
-    @Override
-    public Assess save(Assess assess) {
-        return assessRepository.save(assess);
+ @Override
+    @Transactional
+    public int save(AssessUserVo assessUserVo) {
+        SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+        assessUserVo.getAssess().setIssueId( sessionUser.getTeacher().getTeaId());
+        //添加试卷
+          Assess   asses= assessRepository.save(assessUserVo.getAssess());
+        //删除该试卷所有绑定的对象
+        assessUserRepository.deleteByAssessId(asses.getId());
+        //添加绑定对象
+        for (int i=0;i<assessUserVo.getListAssessUser().size();i++){
+            assessUserVo.getListAssessUser().get(i).setAssessId(asses.getId());
+            assessUserRepository.save(assessUserVo.getListAssessUser().get(i));
+        }
+        return 1;
     }
 
     @Override
-    public void delete(Assess assess) {
-        assessRepository.deleteById(assess.getId());
+    @Transactional
+    public Result delete(Integer id) {
+        List<Respondents>  list=respondentsRepository.findAllByAssessId(id);
+        if(list.size()<1){
+            assessRepository.deleteById(id);
+           assessUserRepository.deleteByAssessId(id);
+            return  new Result(false,"删除成功") ;
+        }
+        return  new Result(true,"该考核已有学生参加考试您不能删除") ;
     }
 
     @Override
@@ -173,8 +159,9 @@ public class AssessServiceImpl implements AssessService {
         Assess assess = assessRepository.findOneById(id);
         String name = teacherRepository.findOneByTeaId(assess.getIssueId()).getTeaName();
         Double scoreSum = testPaperBindChoiceRepository.findScoreSum(assess.getTestPaperId());
+
         if (scoreSum == null) scoreSum = 0.0;
-        return new AssessMsg(name, testPaperBindChoiceRepository.findAllByTestPaperId(assess.getTestPaperId()).size(), scoreSum, subjectRepository.findOneById(assess.getSubId()).getName(),respondentsRepository.findCountnotred(assess.getId()),respondentsRepository.findCountred(assess.getId()));
+        return new AssessMsg(name, testPaperBindChoiceRepository.findAllByTestPaperIdOrderByIndexNumAsc(assess.getTestPaperId()).size(), scoreSum, subjectRepository.findOneById(assess.getSubId()).getName(),respondentsRepository.findCountnotred(assess.getId()),respondentsRepository.findCountred(assess.getId()));
     }
 
     @Override
@@ -195,4 +182,112 @@ public class AssessServiceImpl implements AssessService {
         }
         return name;
     }
+
+    @Override
+    public AssessUerGVo findbyId(Integer assessId) {
+        Assess assess = assessRepository.findOneById(assessId);
+        List<AssessUser> list = assessUserRepository.findAllByAssessId(assess.getId());
+        TestPaper  testPaper=testPaperRepository.findOneById(assess.getTestPaperId());
+        AssessUerGVo assessUerGVo = new AssessUerGVo();
+        assessUerGVo.setAssess(assess);
+        assessUerGVo.setTestPaper(testPaper);
+        List<AssessUnameVo>  assessUnameVoList=new ArrayList<AssessUnameVo>() ;
+        for (AssessUser assessUser : list) {
+            AssessUnameVo assessUnameVo = new AssessUnameVo();
+            assessUnameVo.setAssessUser(assessUser);
+            String name = "";
+            switch (assessUser.getTestObject()) {
+                case 1:
+                    name = "" + assessUser.getTestObjectId();
+                    break;
+                case 2:
+                    name = gradeRepository.findOneById(assessUser.getTestObjectId()).getName();
+                    break;
+                case 3:
+                    name = cclassRepository.findOneById(assessUser.getTestObjectId()).getName();
+                    break;
+                case 4:
+                    name = groupRepository.findOneById(assessUser.getTestObjectId()).getName();
+                    break;
+                case 5:
+                    name = studentRepository.findOneByStuId(assessUser.getTestObjectId()).getStuName();
+                    break;
+            }
+            assessUnameVo.setName(name);
+            assessUnameVoList.add(assessUnameVo);
+        }
+        assessUerGVo.setListAssessUser(assessUnameVoList);
+
+        return assessUerGVo;
+    }
+
+    @Override
+    public Map StudentAssess(StudentAssessVo studentAssessVo) {
+        Pageable pageable;
+        Date data = new Date();
+        pageable = PageRequest.of(studentAssessVo.getPageIndex(), studentAssessVo.getPageNumber());
+        List<Integer> list = new ArrayList<Integer>();
+        Map json = new HashMap();
+        List<List<AssessUser>> assesslist = new ArrayList<List<AssessUser>>();
+        SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+        //学生对象
+        Student studente = studentRepository.findOneByStuId(sessionUser.getStudent().getStuId());
+        //考试级别为学生的考核
+        List<AssessUser> list1 = assessUserRepository.findAllByTestObjectAndTestObjectId(5, studente.getStuId());
+        if (list1.size() > 0) {
+            assesslist.add(list1);
+        }
+        //小组对象
+        StuGroup stuGroup = groupRepository.findOneById(studente.getStuGroup());
+        List<AssessUser> list2 = assessUserRepository.findAllByTestObjectAndTestObjectId(4, stuGroup.getId());
+        if (list2.size() > 0) {
+            assesslist.add(list2);
+        }
+        //班级对象
+        Cclass cclass = cclassRepository.findOneById(stuGroup.getCclassId());
+        List<AssessUser> list3 = assessUserRepository.findAllByTestObjectAndTestObjectId(3, cclass.getId());
+        if (list3.size() > 0) {
+            assesslist.add(list3);
+        }
+        //学校对象
+        Grade grade = gradeRepository.findOneById(cclass.getGradeId());
+        List<AssessUser> list4 = assessUserRepository.findAllByTestObjectAndTestObjectId(2, grade.getId());
+        if (list4.size() > 0) {
+            assesslist.add(list4);
+        }
+        //学年对象
+        List<AssessUser> list5 = assessUserRepository.findAllByTestObjectAndTestObjectId(1, grade.getYear());
+        if (list5.size() > 0) {
+            assesslist.add(list5);
+        }
+        AssessUerGVo.listAll(list, assesslist);
+        json.put("page", assessRepository.findAllByIdInAndStartTimeLessThanAndEndTimeGreaterThan(list, data, data, pageable));
+        return json;
+    }
+
+//学生进入考核查询试题信息
+    @Override
+    public StudentAssessVo studentChoice(Integer assessId) {
+
+        //获取考核
+       Assess  assess=  assessRepository.findOneById(assessId);
+       //获取考卷
+        TestPaper  testPaper=testPaperRepository.findOneById(assess.getTestPaperId());
+        //获取学科
+        Subject  subject=subjectRepository.findOneById(testPaper.getSubId());
+        //获取试题与试卷绑定
+        List<TestPaperBindChoice>  testPaperBindChoiceList=testPaperBindChoiceRepository.findAllByTestPaperIdOrderByIndexNumAsc(testPaper.getId());
+        List<ChoiceVo>  choiceVoList=new ArrayList<ChoiceVo>();
+        for(TestPaperBindChoice BindChoiceList:testPaperBindChoiceList){
+            ChoiceVo  choiceVo=new ChoiceVo();
+
+             choiceVo.setChoice( choiceRepository.findOneById(BindChoiceList.getChoiceId()));
+             choiceVo.setScore(BindChoiceList.getScore());
+             choiceVo.setIndexNum(BindChoiceList.getIndexNum());
+            choiceVoList.add(choiceVo);
+        }
+        StudentAssessVo  studentAssessVo=new StudentAssessVo(subject,assess,testPaper,choiceVoList);
+        return studentAssessVo;
+    }
+
 }

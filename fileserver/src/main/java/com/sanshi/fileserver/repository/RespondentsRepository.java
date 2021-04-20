@@ -1,6 +1,8 @@
 package com.sanshi.fileserver.repository;
 
 import com.sanshi.fileserver.bean.Respondents;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -71,7 +73,7 @@ public interface RespondentsRepository extends JpaRepository<Respondents,Integer
     void deleteById(Integer id);
     /**
      * 通过考核id删除答卷
-     * @param id
+     * @param
      */
     void deleteByAssessId(Integer assessId);
 
@@ -80,4 +82,13 @@ public interface RespondentsRepository extends JpaRepository<Respondents,Integer
 
     @Query(value="select count(s.id)  from Respondents s where s.assessId = ?1  and  s.correct=1")
     int findCountred(Integer id);
+
+    //通过答题人id、批阅状态获取答卷d
+    Respondents  findByStuIdAndAssessId(Integer stuId,Integer assessId);
+
+    //查询是否完成的试卷
+    Page<Respondents> findAllByStuIdAndCorrectOrderByCreateTimeDesc(Integer stuid, Integer correct, Pageable pa);
+
+
+
 }

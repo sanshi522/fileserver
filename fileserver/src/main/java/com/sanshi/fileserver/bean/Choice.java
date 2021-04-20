@@ -74,7 +74,7 @@ public class Choice {
      */
     private Integer difficultyLevel;
     /**
-     * 评分标准
+     * 评分标准(0:全自动相等;1:少选百分比多选不得分；3：人工)
      */
     private Integer scaleRule;
     @CreationTimestamp

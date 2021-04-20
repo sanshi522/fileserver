@@ -17,10 +17,10 @@ public interface AnswerService {
 
     /**
      * 添加修改
-     * @param answer
+     * @param
      * @return
      */
-    Answer save(Answer answer);
+    int save(List<Answer> answerList);
 
     /**
      * 删除

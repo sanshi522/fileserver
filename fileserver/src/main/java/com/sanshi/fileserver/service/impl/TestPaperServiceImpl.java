@@ -22,8 +22,9 @@ public class TestPaperServiceImpl implements TestPaperService {
     private ChoiceRepository choiceRepository;
     private SubjectRepository subjectRepository;
     private TeacherRepository teacherRepository;
+    private HttpSession   session;
 
-    public TestPaperServiceImpl(TestPaperRepository testPaperRepository, AssessRepository assessRepository, RespondentsRepository respondentsRepository, TestPaperBindChoiceRepository testPaperBindChoiceRepository, AnswerRepository answerRepository, ChoiceRepository choiceRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository) {
+    public TestPaperServiceImpl(TestPaperRepository testPaperRepository, AssessRepository assessRepository, RespondentsRepository respondentsRepository, TestPaperBindChoiceRepository testPaperBindChoiceRepository, AnswerRepository answerRepository, ChoiceRepository choiceRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository,HttpSession   session) {
         this.testPaperRepository = testPaperRepository;
         this.assessRepository = assessRepository;
         this.respondentsRepository = respondentsRepository;
@@ -32,6 +33,7 @@ public class TestPaperServiceImpl implements TestPaperService {
         this.choiceRepository = choiceRepository;
         this.subjectRepository = subjectRepository;
         this.teacherRepository = teacherRepository;
+        this.session=session;
     }
 
     @Override
@@ -48,7 +50,7 @@ public class TestPaperServiceImpl implements TestPaperService {
                 //答卷信息
                 testPaperVo.setRespondents(respondentsRepository.findAllByAssessIdAndStuId(assessId,userId).size()==0?respondentsRepository.save(new Respondents(null,assessId,userId,0,1,0,null,null,null)):respondentsRepository.findAllByAssessIdAndStuId(assessId,userId).get(0));
                 testPaperVo.setTestPaper(testPaperRepository.findOneById(testPaperVo.getAssess().getTestPaperId()));//获取试卷信息
-                List<TestPaperBindChoice> testPaperBindChoicesList=testPaperBindChoiceRepository.findAllByTestPaperId(testPaperVo.getAssess().getTestPaperId());//获取试题集合
+                List<TestPaperBindChoice> testPaperBindChoicesList=testPaperBindChoiceRepository.findAllByTestPaperIdOrderByIndexNumAsc(testPaperVo.getAssess().getTestPaperId());//获取试题集合
                 List<MakeChoice> makeChoicesList = new ArrayList<MakeChoice>();
                 for (int i=0;i<testPaperBindChoicesList.size();i++){
                     makeChoicesList.add(new MakeChoice(testPaperBindChoicesList.get(i).getIndexNum(),testPaperBindChoicesList.get(i).getScore(), choiceRepository.findOneById(testPaperBindChoicesList.get(i).getChoiceId()), answerRepository.findOneByChoiceIdAndRespondentsId(testPaperBindChoicesList.get(i).getChoiceId(),testPaperVo.getRespondents().getId())==null?answerRepository.save(new Answer(null,testPaperBindChoicesList.get(i).getChoiceId(),testPaperVo.getRespondents().getId(),null,null,0.0,0,null,null,null)):answerRepository.findOneByChoiceIdAndRespondentsId(testPaperBindChoicesList.get(i).getChoiceId(),testPaperVo.getRespondents().getId())));
@@ -67,7 +69,7 @@ public class TestPaperServiceImpl implements TestPaperService {
         ReadTestPaper readTestPaper= new ReadTestPaper();
         readTestPaper.setTestPaper(testPaperRepository.findOneById(testPaperId));
         List<ChoiceDetails> choices=new ArrayList<ChoiceDetails>();
-        List<TestPaperBindChoice> testPaperBindChoicesList=testPaperBindChoiceRepository.findAllByTestPaperId(testPaperId);//获取试题bind集合
+        List<TestPaperBindChoice> testPaperBindChoicesList=testPaperBindChoiceRepository.findAllByTestPaperIdOrderByIndexNumAsc(testPaperId);//获取试题bind集合
         for (int i=0;i<testPaperBindChoicesList.size();i++){
             choices.add(new ChoiceDetails(testPaperBindChoicesList.get(i),choiceRepository.findOneById(testPaperBindChoicesList.get(i).getChoiceId())));
         }
@@ -103,17 +105,29 @@ public class TestPaperServiceImpl implements TestPaperService {
     }
 
     @Override
-    public void deleteById(TestPaper testPaper) {
-        testPaperRepository.deleteById(testPaper.getId());
+    public Result deleteById(Integer testPaperId) {
+        SessionUser   sessionUser=(SessionUser) session.getAttribute("user");
+        TestPaper      testPaper=testPaperRepository.findOneById(testPaperId);
+        List<Assess>  list=assessRepository.findAllByTestPaperId(testPaper.getId());
+         if(sessionUser.getTeacher().getTeaIdentity()!=2){
+             if(sessionUser.getTeacher().getTeaId()!=testPaper.getCreationId()){
+                 return  new Result(false,"您不是该试卷的所有者删除失败");
+             }
+         }
+        if (list.size()>0){ return  new Result(false,"该试卷有考核任务您不能删除");}
+        for(Assess  asses:list) {
+            assessRepository.deleteByTestPaperId(asses.getId());
+        }
+        testPaperRepository.deleteById(testPaperId);
+        return   new Result(true,"删除成功");
     }
 
     @Override
     public TestPaperMsg findMsg(Integer id) {
-
        TestPaper testPaper = testPaperRepository.findOneById(id);
        String name = teacherRepository.findOneByTeaId(testPaper.getCreationId()).getTeaName();
        Double scoreSum = testPaperBindChoiceRepository.findScoreSum(id);
        if (scoreSum==null) scoreSum=0.0;
-        return new TestPaperMsg(testPaperBindChoiceRepository.findAllByTestPaperId(id).size(),scoreSum,subjectRepository.findOneById(testPaper.getSubId()).getName(),teacherRepository.findOneByTeaId(testPaper.getCreationId()).getTeaName());
+        return new TestPaperMsg(testPaperBindChoiceRepository.findAllByTestPaperIdOrderByIndexNumAsc(id).size(),scoreSum,subjectRepository.findOneById(testPaper.getSubId()).getName(),teacherRepository.findOneByTeaId(testPaper.getCreationId()).getTeaName());
     }
 }
