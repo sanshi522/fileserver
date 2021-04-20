@@ -203,7 +203,7 @@ $(function () {
                             data: {id: data.page.content[i].id},
                             dataType: "json",
                             success: function (data2) {
-                                $(".allTestPaper").append('<div class="testPaper" style="">\n' +
+                                $(".allTestPaper").append('<div onclick="javascript:parent.open(\'assessment?id=' + data.page.content[i].id + '\')" class="testPaper" style="">\n' +
                                     '        <table width="100%">\n' +
                                     '            <tr >\n' +
                                     '                <th colspan="2" style="text-align:center;">' + data.page.content[i].name + '</th>\n' +
