@@ -32,6 +32,15 @@ public class HelloController {
         modelAndView.addObject("id", id);
         return modelAndView;
     }
+    @GetMapping("/assessment")
+    public ModelAndView assessment(Integer id) {
+        if (id==null) id=0;
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("assessment");
+        modelAndView.addObject("id", id);
+        return modelAndView;
+    }
+
 
     @GetMapping("/answer")
     public ModelAndView answer(Integer id) {

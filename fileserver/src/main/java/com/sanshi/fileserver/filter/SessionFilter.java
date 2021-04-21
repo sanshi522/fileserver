@@ -64,6 +64,7 @@ public class SessionFilter implements Filter {
                 if(requestType!=null && "XMLHttpRequest".equals(requestType)){
                     System.out.println("返回未登录json");
                     response.getWriter().write(NO_LOGIN);
+                    //response.sendRedirect(request.getContextPath()+"/");
                 }else{
                     //重定向到登录页(需要在static文件夹下建立此html文件)
                     System.out.println("重定向到登录页:"+request.getContextPath()+"/");

@@ -4,7 +4,6 @@ $(function () {
     var upident;
     //指定类型的对象id集合
     var userList = [];
-
     function updatelist() {
         userList.splice(0);
         let users = $(".test_suer");
@@ -21,9 +20,7 @@ $(function () {
 
     }
 
-
     //考核所需参数
-
     var issueId = 0;
     //===================================================时间控件
     var startdatatime = "";
@@ -99,13 +96,12 @@ $(function () {
         }
     });
 
-    $.datetimepicker.setLocale('zh');
-
+	$.datetimepicker.setLocale('zh');
 //===================================================时间控件
     /**
      * 获取身份
      */
-    function Identity() {
+    function  Identity() {
         $.ajax({
             url: "login/Islogin",
             type: "post",
@@ -167,11 +163,12 @@ $(function () {
             },
             error: function (data) {
 
-            }
-        });
-    }
+			}
+		});
+	}
 
-    getsubtype();
+
+	getsubtype();
     Identity();
     var pageNumber = 16; // 每页显示多少条记录
     var pageIndex = 0;//页码
@@ -213,7 +210,7 @@ $(function () {
     function Init(index) { // 参数就是点击的那个分页的页数索引值
         pageIndex = index;
         subId = $("#subIdScreen").val();
-        issueId = $("#TeacherSelect").val();
+        issueId=$("#TeacherSelect").val();
         let ScreenAssess = {
             "pageNumber": pageNumber,
             "pageIndex": pageIndex,
@@ -243,7 +240,6 @@ $(function () {
                             data: {id: data.page.content[i].id},
                             dataType: "json",
                             success: function (data2) {
-
                                 $(".allTestPaper").append('<div class="testPaper" style="">\n' +
                                     '        <table width="100%">\n' +
                                     '            <tr >\n' +
@@ -260,7 +256,7 @@ $(function () {
                                     '\n' +
                                     '            <tr>\n' +
                                     '                <td>批阅/未批阅：</td>\n' +
-                                    '                <td>' + data2.redNumber + "/" + data2.notredNumber + '</td>\n' +
+                                    '                <td>' + data2.redNumber +"/"+data2.notredNumber + '</td>\n' +
                                     '            </tr>\n' +
                                     '            <tr>\n' +
                                     '                <td>题目数量：</td>\n' +
@@ -285,7 +281,6 @@ $(function () {
                                     '\n' +
                                     '        </table>\n' +
                                     '    </div>')
-
                             }, error(data2) {
                             }
                         });
@@ -297,12 +292,12 @@ $(function () {
                     $(".totalmsg").html("【共" + total + "条记录，当前显示：" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + 1) + "~" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + data.page.numberOfElements) + "】");
                 }
 
-                console.log(data);
+           	console.log(data);
 
-            }, error: function (data) {
-                console.log("服务器异常");
-            }
-        });
+         	}, error: function(data){
+               console.log("服务器异常");
+         	}
+			});
     }
 
     /**学科筛选 **/
@@ -318,9 +313,9 @@ $(function () {
     });
     /**老师赛选**/
     $("#TeacherSelect").change(function () {
-        issueId = $("#TeacherSelect").val();
-        Init(0);
-    });
+		issueId=$("#TeacherSelect").val();
+		Init(0);
+	});
 
     /**编辑绑定框*/
     function Enint() {
@@ -370,7 +365,7 @@ $(function () {
         });
     }
     //删除考核
-    
+
  function  deltelAssess() {
 $(".icon-shanchu").bind("click",function () {
     var assId = $(this).attr("id");
@@ -401,51 +396,50 @@ $(".icon-shanchu").bind("click",function () {
 
 })
 
- }   
+ }
 
 
 //////////////////////////////////////////////////////////////////////悬浮窗口js
-    //var oBtn = $('#show');
-    var popWindow = $('.popWindow');
-    var oClose = $('.popWindow h3 span');
-    //浏览器可视区域的宽度
-    var browserWidth = $(window).width();
-    //浏览器可视区域的高度
-    var browserHeight = $(window).height();
-    //浏览器纵向滚动条距离上边界的值
-    var browserScrollTop = $(window).scrollTop();
-    //浏览器横向滚动条距离左边界的值
-    var browserScrollLeft = $(window).scrollLeft();
-    //弹出窗口的宽度
-    var popWindowWidth = popWindow.outerWidth(true);
-    //弹出窗口的高度
-    var popWindowHeight = popWindow.outerHeight(true);
-    //left的值＝浏览器可视区域的宽度／2－弹出窗口的宽度／2+浏览器横向滚动条距离左边界的值
-    var positionLeft = browserWidth / 2 - popWindowWidth / 2 + browserScrollLeft;
-    //top的值＝浏览器可视区域的高度／2－弹出窗口的高度／2+浏览器纵向滚动条距离上边界的值
-    var positionTop = browserHeight / 2 - popWindowHeight / 2 + browserScrollTop;
-    var oMask = '<div class="mask"></div>'
-    //遮照层的宽度
-    var maskWidth = $(document).width();
-    //遮照层的高度
-    var maskHeight = $(document).height();
-
-    //刷新
-    function ref() {
-        maskWidth = $(document).width();
-        maskHeight = $(document).height();
-        $(popWindow).css("max-width", maskWidth / 2 + 'px');
-        $(popWindow).css("max-height", maskHeight + 'px');
-        $(".wContent").css("max-height", maskHeight / 3 * 2 + 'px');
-        $(".addcontext").css("height", $(".wContent").height());
+  //var oBtn = $('#show');
+  	var popWindow = $('.popWindow');
+  var oClose = $('.popWindow h3 span');
+  //浏览器可视区域的宽度
+  var browserWidth = $(window).width();
+  //浏览器可视区域的高度
+  var browserHeight = $(window).height();
+  //浏览器纵向滚动条距离上边界的值
+  var browserScrollTop = $(window).scrollTop();
+  //浏览器横向滚动条距离左边界的值
+  var browserScrollLeft = $(window).scrollLeft();
+  //弹出窗口的宽度
+  var popWindowWidth = popWindow.outerWidth(true);
+  //弹出窗口的高度
+  var popWindowHeight = popWindow.outerHeight(true);
+  //left的值＝浏览器可视区域的宽度／2－弹出窗口的宽度／2+浏览器横向滚动条距离左边界的值
+  var positionLeft = browserWidth/2 - popWindowWidth/2+browserScrollLeft;
+  //top的值＝浏览器可视区域的高度／2－弹出窗口的高度／2+浏览器纵向滚动条距离上边界的值
+  var positionTop = browserHeight/2 - popWindowHeight/2+browserScrollTop;
+  var oMask = '<div class="mask"></div>'
+  //遮照层的宽度
+  var maskWidth = $(document).width();
+  //遮照层的高度
+  var maskHeight = $(document).height();
+	//刷新
+function ref(){
+	maskWidth = $(document).width();
+	maskHeight = $(document).height();
+	$(popWindow).css("max-width",maskWidth/2+'px');
+	$(popWindow).css("max-height",maskHeight+'px');
+	$(".wContent").css("max-height",maskHeight/3*2+'px');
+	$(".addcontext").css("height",$(".wContent").height());
 //	popWindowWidth = popWindow.outerWidth(true);
 //	popWindowHeight = popWindow.outerHeight(true);
-        popWindowWidth = $(popWindow).width();
-        popWindowHeight = $(popWindow).height();
-        browserWidth = $(window).width();
-        browserHeight = $(window).height();
-        positionLeft = browserWidth / 2 - popWindowWidth / 2 + browserScrollLeft;
-        positionTop = browserHeight / 2 - popWindowHeight / 2 + browserScrollTop;
+	popWindowWidth = $(popWindow).width();
+	popWindowHeight = $(popWindow).height();
+	browserWidth = $(window).width();
+    browserHeight = $(window).height();
+    positionLeft = browserWidth/2 - popWindowWidth/2+browserScrollLeft;
+	positionTop = browserHeight/2 - popWindowHeight/2+browserScrollTop;
 
 
     }
@@ -511,118 +505,133 @@ $(".icon-shanchu").bind("click",function () {
         $('.mask').remove();
     });
 
-
-    //试卷分页控件部分
-    var pageNumber1 = 10; // 每页显示多少条记录
-    var pageIndex1 = 0;//页码
-    //分页元素
-    var total1 = 0; // 总共多少记录
-    let likeName1 = "";
-    //弹出框学科id
-    let subId1 = 0;
-    //学科选择
-    $("#subIdScreen2").change(function () {
-        subId1 = $(this).val();
-        if ($("#screenTest_div").is(":visible")) findTesTPaper(0);
-        $("#testpaper_id").val("");
-        $("#testpaper_id").attr("data_value", 0);
-
-    })
-    //点击试卷框
-    $("#testpaper_id").click(function () {
-        $(".popWindow").css("width", "auto");
-        $("#addUser_div").hide();
-        $("#screenTest_div").show();
-        if (subId1 == 0) $.alert("请选择考核学科！");
-        findTesTPaper(0);
+	$("#make_time").bind("keyup",function () {
+        this.value = this.value.replace(/[^\d]/g, "");
     });
-    //点击添加考核对象添加按钮
-    $(".add-assessuser").click(function () {
-        $(".popWindow").css("width", "auto");
-        $("#addUser_div").show();
-        $("#screenTest_div").hide();
+
+
+	//试卷分页控件部分
+	var pageNumber1 =10 ; // 每页显示多少条记录
+	var pageIndex1= 0 ;//页码
+	//分页元素
+	var total1=0; // 总共多少记录
+	let likeName1="";
+	//弹出框学科id
+	let subId1=0;
+	//学科选择
+	$("#subIdScreen2").change(function () {
+		subId1=$(this).val();
+		if($("#screenTest_div").is(":visible")) findTesTPaper(0);
+		$("#testpaper_id").val("");
+		$("#testpaper_id").attr("data_value",0);
+	})
+	//点击试卷框
+	$("#testpaper_id").click(function () {
+		$(".popWindow").css("width","auto");
+		$("#addUser_div").hide();
+		$("#screenTest_div").show();
+		if (subId1==0) $.alert("请选择考核学科！");
+		findTesTPaper(0);
+	});
+	//点击添加考核对象添加按钮
+	$(".add-assessuser").click(function () {
+		$(".popWindow").css("width","auto");
+		$("#addUser_div").show();
+		$("#screenTest_div").hide();
         $("#queryLevels").change();
-    })
-    //弹出框试题搜索
-    $(".querybtn1").click(function () {
-        likeName1 = $("#query1").val();
-        findTesTPaper(0);
-    });
-    $("#Pagination1").pagination(total1, {
-        callback: PageCallback1,
-        prev_text: '上一页',
-        next_text: '下一页',
-        items_per_page: pageNumber,
-        num_display_entries: 4, // 连续分页主体部分显示的分页条目数
-        num_edge_entries: 1, // 两侧显示的首尾分页的条目数
-        jump: true,
+	})
+	//弹出框试题搜索
+	$(".querybtn1").click(function(){
+		likeName1=$("#query1").val();
+		findTesTPaper(0);
+	});
+	$("#Pagination1").pagination(total1, {
+				callback : PageCallback1,
+				prev_text : '上一页',
+				next_text : '下一页',
+				items_per_page : pageNumber,
+				num_display_entries : 4, // 连续分页主体部分显示的分页条目数
+				num_edge_entries : 1, // 两侧显示的首尾分页的条目数
+				jump:true,
+	});
+	function PageCallback1(index, jq) { // 前一个参数表示当前点击的那个分页的页数索引值，后一个参数表示装载容器。
+		pageIndex=index;
+		findTesTPaper(pageIndex);
+	}
+	//加载试卷
+	function findTesTPaper(index){
+		pageIndex=index;
+		let val={
+			"pageNumber":pageNumber1,
+			"pageIndex":pageIndex1,
+			"issistId":subId1,
+			"likeName":likeName1==""?null:likeName1
+		}
+		$.ajax({
+			url: "/testPaper/findAll",
+			//contentType:"application/json;charset=UTF-8",
+			type: "post",
+			async: true,
+			data:val,
+			dataType: "json",
+			success: function(data) {
+				if(data.resoult){
+					$("#allTestPaper1").empty();
+					for(let i=0;i<data.page.content.length;i++){
+						$.ajax({
+							url: "/testPaper/findMsg",
+							//contentType:"application/json;charset=UTF-8",
+							type: "post",
+							async: false,
+							data:{id:data.page.content[i].id},
+							dataType: "json",
+							success: function(data2) {
+								$("#allTestPaper1").append(' <tr class="testpa" test_id="'+data.page.content[i].id+'" test_name="'+data.page.content[i].name+'"><td>'+data.page.content[i].name+'</td><td>'+data2.choiceNum+'</td><td>'+data2.choiceScoreNum+'</td><td style="text-align: right;"><i class="my-icon lsm-sidebar-icon icon-tianjia test-change"/></td></tr>');
+							},error(data2){
+							}
+						});
+					}
+					total1=data.page.totalElements;
+					$(".totalmsg1").html("【共"+total1+"条记录，当前显示："+(data.page.pageable.pageNumber*data.page.pageable.pageSize+1)+"~"+(data.page.pageable.pageNumber*data.page.pageable.pageSize+data.page.numberOfElements)+"】");
+					TestPaperBind();
+				}
+				console.log(data);
 
-    });
+			}, error: function(data){
+				console.log("服务器异常");
+			}
+		});
+	}
+	function TestPaperBind(){
+		$('.test-change').bind("click",function () {
+			$("#testpaper_id").val($(this).parent().parent().attr("test_name"));
+			$("#testpaper_id").attr("data_value",$(this).parent().parent().attr("test_id"));
+		})
+	}
 
-    function PageCallback1(index, jq) { // 前一个参数表示当前点击的那个分页的页数索引值，后一个参数表示装载容器。
-        pageIndex = index;
-        findTesTPaper(pageIndex);
-    }
 
-
-    //加载试卷
-    function findTesTPaper(index) {
-        pageIndex = index;
-        let val = {
-            "pageNumber": pageNumber1,
-            "pageIndex": pageIndex1,
-            "issistId": subId1,
-            "likeName": likeName1 == "" ? null : likeName1
-        }
-        $.ajax({
-            url: "/testPaper/findAll",
-            //contentType:"application/json;charset=UTF-8",
-            type: "post",
-            async: true,
-            data: val,
-            dataType: "json",
-            success: function (data) {
-                if (data.resoult) {
-                    $("#allTestPaper1").empty();
-                    for (let i = 0; i < data.page.content.length; i++) {
-                        $.ajax({
-                            url: "/testPaper/findMsg",
-                            //contentType:"application/json;charset=UTF-8",
-                            type: "post",
-                            async: false,
-                            data: {id: data.page.content[i].id},
-                            dataType: "json",
-                            success: function (data2) {
-                                $("#allTestPaper1").append(' <tr class="testpa" test_id="' + data.page.content[i].id + '" test_name="' + data.page.content[i].name + '"><td>' + data.page.content[i].name + '</td><td>' + data2.choiceNum + '</td><td>' + data2.choiceScoreNum + '</td><td style="text-align: right;"><i class="my-icon lsm-sidebar-icon icon-tianjia test-change"/></td></tr>');
-                            }, error(data2) {
-                            }
-                        });
-                    }
-                    total1 = data.page.totalElements;
-                    $(".totalmsg1").html("【共" + total1 + "条记录，当前显示：" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + 1) + "~" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + data.page.numberOfElements) + "】");
-                    TestPaperBind();
-                }
-                console.log(data);
-
-            }, error: function (data) {
-                console.log("服务器异常");
-            }
+//指定类型的对象id集合
+    var userList=[];
+    function updatelist(){
+        userList.splice(0);
+        let users=$(".test_suer");
+        users.each(function (i, user) {
+            if ($(user).attr("data_ident")==upident) userList.push($(user).attr("data_id"));
         });
-    }
-
-    function TestPaperBind() {
-        $('.test-change').bind("click", function () {
-            $("#testpaper_id").val($(this).parent().parent().attr("test_name"));
-            $("#testpaper_id").attr("data_value", $(this).parent().parent().attr("test_id"));
+        let users1=$(".assuser");
+        users1.each(function (i, user) {
+            if ($.inArray($(user).attr("data_id"),userList)>=0)
+                $(user).find(".assessuser-add").hide();
+            else
+                $(user).find(".assessuser-add").show();
         })
+
     }
-
-
     /**
      * 考核对象
      */
-    $("#queryLevels").change(function () {
-        $("#checkAll").prop("checked", false);//全选按钮取消全选
+    $("#queryLevels").change(function() {
+        $("#checkAll").prop("checked",false);//全选按钮取消全选
         upident = $("#queryLevels").val();
         //切换则查询
         //根据权限级别显示二级筛选框
@@ -838,19 +847,18 @@ $(".icon-shanchu").bind("click",function () {
 
 
     //添加考核对象bind方法
-    function assessuser_addbind() {
+    function assessuser_addbind(){
         $(".assessuser-add").bind("click", function () {
-            var id = $(this).parent().parent().attr("data_id");
-            var testObject = $("#queryLevels").val();
-            var testObjectname = $("#queryLevels option:selected").text();
-            var name = $(this).parent().parent().attr("data_name");
-            console.log(id + "-" + testObject + "" + name + "" + testObjectname);
-            $("#testObject").append('<tr class="test_suer" data_ident=' + $("#queryLevels").val() + '  data_id=' + id + ' data_name=' + name + ' ><td>' + testObjectname + '</td><td>' + name + '</td><td style="text-align:right;"><i class="my-icon lsm-sidebar-icon icon-shanchu assessuser-del"></i></td></tr>');
+            var id=  $(this).parent().parent().attr("data_id");
+            var testObject=$("#queryLevels").val();
+            var testObjectname =$("#queryLevels option:selected").text();
+            var  name= $(this).parent().parent().attr("data_name");
+            console.log(id +"-"+testObject+""+name+""+testObjectname);
+            $("#testObject").append('<tr class="test_suer" data_ident='+$("#queryLevels").val()+'  data_id='+id+' data_name='+name+' ><td>'+testObjectname+'</td><td>'+name+'</td><td style="text-align:right;"><i class="my-icon lsm-sidebar-icon icon-shanchu assessuser-del"></i></td></tr>');
             updatelist();
             assessuser_delbind();
         });
     }
-
 //删除考核bind对象
     function assessuser_delbind() {
         $(".assessuser-del").bind("click", function () {
