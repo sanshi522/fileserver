@@ -1,22 +1,18 @@
 package com.sanshi.fileserver.service.impl;
 
-import com.sanshi.fileserver.bean.Respondents;
-import com.sanshi.fileserver.repository.AnswerRepository;
-import com.sanshi.fileserver.repository.AssessRepository;
-import com.sanshi.fileserver.repository.RespondentsRepository;
-import com.sanshi.fileserver.repository.SubjectRepository;
+import com.sanshi.fileserver.bean.*;
+import com.sanshi.fileserver.repository.*;
 import com.sanshi.fileserver.service.RespondentsService;
 import com.sanshi.fileserver.vo.PageGet;
 import com.sanshi.fileserver.vo.RespondentsMsg;
+import com.sanshi.fileserver.vo.RespondentsPage;
 import com.sanshi.fileserver.vo.SessionUser;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service("RespondentsServiceImpl")
 public class RespondentsServiceImpl implements RespondentsService {
@@ -25,13 +21,23 @@ public class RespondentsServiceImpl implements RespondentsService {
     private AssessRepository  assessRepository;
     private SubjectRepository subjectRepository;
     private AnswerRepository answerRepository;
+    private AssessUserRepository assessUserRepository;
+    private StudentRepository  studentRepository;
+    private GroupRepository  groupRepository;
+    private GradeRepository  gradeRepository;
+    private CclassRepository cclassRepository;
 
-    public RespondentsServiceImpl(RespondentsRepository respondentsRepository, HttpSession session, AssessRepository assessRepository, SubjectRepository subjectRepository, AnswerRepository answerRepository) {
+    public RespondentsServiceImpl(RespondentsRepository respondentsRepository, HttpSession session, AssessRepository assessRepository, SubjectRepository subjectRepository, AnswerRepository answerRepository, AssessUserRepository assessUserRepository,StudentRepository  studentRepository, GroupRepository  groupRepository,GradeRepository  gradeRepository,CclassRepository cclassRepository) {
         this.respondentsRepository = respondentsRepository;
         this.session = session;
         this.assessRepository = assessRepository;
         this.subjectRepository = subjectRepository;
         this.answerRepository = answerRepository;
+        this.assessUserRepository=assessUserRepository;
+        this.studentRepository=studentRepository;
+        this.groupRepository=groupRepository;
+        this.gradeRepository=gradeRepository;
+        this.cclassRepository=cclassRepository;
     }
 
     /**
@@ -116,6 +122,81 @@ public class RespondentsServiceImpl implements RespondentsService {
        Respondents  respondents=   respondentsRepository.findOneById(id);
         return new RespondentsMsg(assessRepository.findOneById(respondents.getAssessId()),subjectRepository.findOneById(assessRepository.findOneById(respondents.getAssessId()).getSubId()).getName(),answerRepository.selectScore(respondents.getId()));
     }
+
+    @Override
+    public Map selectRespondents(RespondentsPage respondentsPage) {
+        Pageable  pageable;
+        pageable = PageRequest.of(respondentsPage.getPageIndex(), respondentsPage.getPageNumber());
+        Map json = new HashMap();
+        switch (respondentsPage.getType()){
+            case 1:     //查询出未参加考试的学生
+                //获得应该参加学生的考核
+      List<Integer>  StudentIdList=this.selectStudent(respondentsPage.getAssessId());
+                //查询所有已参加的学生集合
+      List<Integer>  list=respondentsRepository.findStuIdsAndAssessId(respondentsPage.getAssessId());
+      List<Integer> allList=studentRepository.findAllByStuIdAndAssessIdMinus(StudentIdList,list);
+                break;
+            case 2:  //查询未提交的学生
+
+
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+
+        }
+        return null ;
+    }
+
+
+    //获取这个考核的学生ID集合
+    public List<Integer>  selectStudent(Integer id){
+        //获取这个考核
+        Assess  assess =assessRepository.findOneById(id);
+        //获取这个考核的对象
+        List<AssessUser>  assessUserList=assessUserRepository.findAllByAssessId(assess.getId());
+        //返回数组
+        List<Integer> list=new ArrayList<Integer>();
+
+        for(AssessUser  assessUser:assessUserList){
+            switch (assessUser.getTestObject()){
+                case 1:   //学年级别
+                    List<Integer> studentList=studentRepository.findIdsByStuGroupIn( groupRepository.findALLIdByCclassIdIn(cclassRepository.findIdsByGradeIdIn(gradeRepository.findIdsByYear(assessUser.getTestObjectId()))));
+                    for(Integer  studentId:studentList){
+                        list.add(studentId);
+                    }
+                    break;
+                case 2:   //学院级别
+          List<Integer> studentList1=studentRepository.findIdsByStuGroupIn(groupRepository.findALLIdByCclassIdIn(cclassRepository.findIdsByGradeId(assessUser.getTestObjectId())));
+                    for (Integer stuId : studentList1){
+                        list.add(stuId);
+                    }
+                    break;
+                case 3:   //班级级别
+                List<Integer>  stuGroupList=groupRepository.findALLIdByCclassId(assessUser.getTestObjectId());
+                 List<Integer> studentList2=studentRepository.findIdsByStuGroupIn(stuGroupList);
+            for (Integer stuId : studentList2){
+                   list.add(stuId);
+              }
+                    break;
+                case 4:   //小组级别
+                List<Student> studentList3= studentRepository.findAllByStuGroup(assessUser.getTestObjectId());
+                for(Student  student:studentList3){
+                    list.add(student.getStuId());
+                }
+                    break;
+                case 5:   //学生级别
+            list.add(studentRepository.findOneByStuId(assessUser.getTestObjectId()).getStuId());
+                    break;
+
+            }
+
+        }
+
+return  list;
+    }
+
 
 
 }

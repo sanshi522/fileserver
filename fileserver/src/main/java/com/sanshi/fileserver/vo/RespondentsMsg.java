@@ -10,6 +10,8 @@ public class RespondentsMsg {
     private  String  subName;
     //总分数
     private Double  score;
+    //考核人
+    private  String  userName;
 
     public RespondentsMsg() {
     }

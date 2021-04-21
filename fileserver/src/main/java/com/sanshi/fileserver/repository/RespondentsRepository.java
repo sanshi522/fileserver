@@ -89,6 +89,36 @@ public interface RespondentsRepository extends JpaRepository<Respondents,Integer
     //查询是否完成的试卷
     Page<Respondents> findAllByStuIdAndCorrectOrderByCreateTimeDesc(Integer stuid, Integer correct, Pageable pa);
 
+    /**
+     * 查询所有答卷
+     */
+    Page<Respondents>findAllByAssessId(Integer assessId,Pageable pa);
+
+    /**
+     * 根据提交状态查询的答卷
+     */
+
+    Page<Respondents>findAllByAssessIdAndSubmit(Integer assessId,Integer submit,Pageable pa);
+
+    /**
+     * 根据完成状态查询
+     */
+    Page<Respondents>findAllByAssessIdAndCorrect(Integer assessId,Integer correct,Pageable pa);
+
+    /**
+     * 根据试卷查询所有的学生Id集合
+     * @param assessId
+     * @return
+     */
+    @Query(value="select s.stuId from Respondents s where s.assessId = ?1  ")
+    List<Integer> findStuIdsAndAssessId(Integer assessId);
+
+
+
+
+
+
+
 
 
 }

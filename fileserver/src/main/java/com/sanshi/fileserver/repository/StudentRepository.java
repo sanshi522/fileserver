@@ -43,4 +43,7 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
     List<Student> findAllByStuGroupIn(List<Integer> StuGroups);
 
     Page<Student> findAllByStuGroupInAndStuNameLike(List<Integer> StuGroups, String name,Pageable pageable);
+
+    @Query(value="select s.stuId from Student  s where  s.stuId in ? 1  and   s.stuId  not in ? 2")
+    List<Integer> findAllByStuIdAndAssessIdMinus(List<Integer> studentIdList1,List<Integer> studentIdList2);
 }

@@ -4,6 +4,7 @@ import com.sanshi.fileserver.bean.Respondents;
 import com.sanshi.fileserver.service.RespondentsService;
 import com.sanshi.fileserver.vo.PageGet;
 import com.sanshi.fileserver.vo.RespondentsMsg;
+import com.sanshi.fileserver.vo.RespondentsPage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,6 +65,15 @@ public class RespondentsController {
 
         return   respondentsService.selectRespondentsMsg(id);
 
+    }
+
+    @ResponseBody
+    @RequestMapping("/selectRespondents")
+
+    public  Map  selectRespondents(RespondentsPage respondentsPage){
+
+
+return  null;
     }
 
 

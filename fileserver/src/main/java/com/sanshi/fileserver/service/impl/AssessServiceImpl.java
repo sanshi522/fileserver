@@ -221,6 +221,8 @@ public class AssessServiceImpl implements AssessService {
         return assessUerGVo;
     }
 
+
+    //根据学生获取考核
     @Override
     public Map StudentAssess(StudentAssessVo studentAssessVo) {
         Pageable pageable;

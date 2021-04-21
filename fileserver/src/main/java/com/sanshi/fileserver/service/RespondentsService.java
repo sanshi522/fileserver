@@ -3,6 +3,7 @@ package com.sanshi.fileserver.service;
 import com.sanshi.fileserver.bean.Respondents;
 import com.sanshi.fileserver.vo.PageGet;
 import com.sanshi.fileserver.vo.RespondentsMsg;
+import com.sanshi.fileserver.vo.RespondentsPage;
 
 import java.util.List;
 import java.util.Map;
@@ -59,6 +60,8 @@ public interface RespondentsService {
      * @return
      */
     RespondentsMsg selectRespondentsMsg(Integer id);
+
+     Map   selectRespondents(RespondentsPage respondentsPage);
 
 
 
