@@ -64,6 +64,8 @@ public interface ChoiceRepository extends JpaRepository<Choice,Integer>, JpaSpec
 
     Page<Choice> findAllBySubIdAndTypeAndTopicLikeAndAbilityIdsAndDifficultyLevel(Integer subid, Integer type, String name,String AbilityIds,Integer difficultyLevel,Pageable pageable);
 
+    List<Choice> findAllByTopic(String name);
+
     /**
      * 通过id删除试题
      * @param id
@@ -72,5 +74,24 @@ public interface ChoiceRepository extends JpaRepository<Choice,Integer>, JpaSpec
 
 
     List<Choice> findByIdIn(List<Integer>  testPaperIds);
+
+    /**
+     * 筛选出须人工查询的试题
+     * @param choiceId
+     * @param scaleRule
+     * @return
+     */
+    Choice findOneByIdAndScaleRule(Integer choiceId,Integer scaleRule);
+    /**
+     * 根据难度星级,学科，类型获取题
+     */
+    List<Choice> findAllByDifficultyLevelInAndTypeAndSubId(Integer[] arr,Integer type,Integer subId);
+
+    /**
+     * 根据学科，类型获取题
+     */
+
+    List<Choice> findAllByTypeAndSubId(Integer type,Integer subId);
+
 
 }

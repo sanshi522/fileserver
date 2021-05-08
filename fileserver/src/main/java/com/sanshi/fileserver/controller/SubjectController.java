@@ -22,25 +22,30 @@ public class SubjectController {
 
     @RequestMapping(path = "/findAll")
     @ResponseBody
-    public List<Subject> findAll(){
+    public List<Subject> findAll() {
         return subjectService.findAll();
     }
 
     @RequestMapping(path = "/getAll")
     @ResponseBody
-    public Map getAll(PageGet val, HttpServletRequest request){
+    public Map getAll(PageGet val, HttpServletRequest request) {
         return subjectService.getAll(val);
-    };
+    }
+
+
 
     @RequestMapping(path = "/save")
     @ResponseBody
-    public Subject save(Subject subject){
+    public Subject save(Subject subject) {
         return subjectService.save(subject);
-    };
+    }
+
+
+
     @RequestMapping(path = "/deleteById")
     @ResponseBody
-    public Integer deleteById(Integer val, HttpServletRequest request){
-         subjectService.deleteById(val);
+    public Integer deleteById(Integer val, HttpServletRequest request) {
+        subjectService.deleteById(val);
         return 1;
     }
 }

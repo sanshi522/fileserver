@@ -63,6 +63,13 @@ public class AssessUerGVo {
     }
 
 
+    public static void listAdd(List<Integer> a,List<Integer> b){
+        for (Integer  id:b){
+            a.add(id);
+        }
+    }
+
+
     @Override
     public String toString() {
         return "AssessUerGVo{" +

@@ -51,4 +51,8 @@ public interface TestPaperService {
     public Result deleteById(Integer testPaperId);
 
     public TestPaperMsg findMsg(Integer testPaperId);
+    /**
+     * 自动生成试卷
+     */
+    public  Result  generateTestPaper(TestPaperUtils  testPaperUtils);
 }

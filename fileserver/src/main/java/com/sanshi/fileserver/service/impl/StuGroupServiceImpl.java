@@ -28,13 +28,13 @@ public class StuGroupServiceImpl implements StuGroupService {
     @Override
     public Map findGroupByCclassId(PageGet pageGet) {
         Pageable pageable;
-        pageable = PageRequest.of(pageGet.getPageIndex() , pageGet.getPageNumber());
+        pageable = PageRequest.of(pageGet.getPageIndex(), pageGet.getPageNumber());
         Map json = new HashMap();
         json.put("resoult", true);
         if (pageGet.getLikeName().isEmpty())
-            json.put("page",groupRepository.findAllByCclassId(pageGet.getIssistId(),pageable));
+            json.put("page", groupRepository.findAllByCclassId(pageGet.getIssistId(), pageable));
         else
-            json.put("page",groupRepository.findAllByCclassIdAndNameLike(pageGet.getIssistId(),pageGet.getLikeName(),pageable));
+            json.put("page", groupRepository.findAllByCclassIdAndNameLike(pageGet.getIssistId(), pageGet.getLikeName(), pageable));
         return json;
     }
 
@@ -52,5 +52,10 @@ public class StuGroupServiceImpl implements StuGroupService {
     public Integer deleteById(Integer val) {
         groupRepository.deleteById(val);
         return 1;
+    }
+
+    @Override
+    public StuGroup findOneByName(Integer classId, String groupName) {
+        return groupRepository.findOneByCclassIdAndName(classId,groupName);
     }
 }

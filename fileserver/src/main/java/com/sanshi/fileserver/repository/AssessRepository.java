@@ -117,4 +117,17 @@ public interface AssessRepository extends JpaRepository<Assess,Integer>, JpaSpec
    //查询学生的考核
    Page<Assess>findAllByIdInAndStartTimeLessThanAndEndTimeGreaterThan(List<Integer> ids, Date data  ,Date data2, Pageable pa);
 
+   //查询考核信息
+   Page<Assess>findAllByIdInOrderByCreateTimeDesc(List<Integer> ids,Pageable pa);
+
+    /**
+     * 查询考试已结束的考核
+     * @param ids
+     * @param data
+     * @return
+     */
+   List<Assess> findAllByIdInAndEndTimeLessThan(List<Integer> ids, Date data);
+
+
+
 }

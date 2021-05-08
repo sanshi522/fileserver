@@ -22,4 +22,5 @@ public interface StuGroupService {
     StuGroup save(StuGroup student);
 
     Integer deleteById(Integer val);
+    StuGroup findOneByName(Integer classId,String groupName);
 }

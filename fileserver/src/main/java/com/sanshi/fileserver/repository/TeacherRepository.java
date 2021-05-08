@@ -20,4 +20,5 @@ public interface TeacherRepository extends JpaRepository<Teacher, Integer> {
     Page<Teacher> findAllByTeaIdentityIn(List<Integer> i1,Pageable page);
     Page<Teacher> findAllByTeaIdentityInAndTeaNameLike(List<Integer> i1,String name,Pageable page);
     List<Teacher> findAll();
+
 }

@@ -11,7 +11,7 @@ spring:
       ddl-auto: update
   datasource:
     name: text
-    url: jdbc:mysql://localhost:3306/wais?serverTimezone=CTT #url
+    url: jdbc:mysql://192.168.0.100:3306/wais?serverTimezone=CTT #url
     username: root #用户名
     password: 123456
     driverClassName: com.mysql.cj.jdbc.Driver

@@ -1,5 +1,9 @@
 var classid;
 $(function () {
+
+    $("#upload").on("click",function(){
+        $("#myModal").modal("show");
+    });
     //请求条件
     $("#showNumber").val('10').trigger("change");
     var pageNumber = 10; // 每页显示多少条记录
@@ -161,6 +165,37 @@ $(function () {
         Init(0);
     });
 
+    $(".btn-primary").on('click', function(){
+        var formData = new FormData();
+        var name = $("#f_upload").val();
+        let cclassId=$("#classScreen").val();
+        formData.append("file",$("#f_upload")[0].files[0]);
+        formData.append("classId",cclassId);//这个地方可以传递多个参数
+        $.ajax({
+            url :"/exportExcel/importExcel",
+            type : 'POST',
+            async : false,
+            data : formData,
+            // 告诉jQuery不要去处理发送的数据
+            processData : false,
+            // 告诉jQuery不要去设置Content-Type请求头
+            contentType : false,
+            beforeSend:function(){
+                console.log("正在进行，请稍候");
+            },
+            success : function(responseStr) {
+                if(responseStr=="导入成功"){
+                    $.alert("导入成功");
+                }else{
+                    alert("导入失败");
+                }
+            }
+        });
+    });
+
+
+
+
 });
 function tableadd(){
     var index;
@@ -190,3 +225,19 @@ function dealNull(obj){
         }
     }
 };
+
+function exportstudent() {
+    let cclassId=$("#classScreen").val();
+    if(cclassId=="" || cclassId==undefined || cclassId==null){
+        return  ;
+    }
+    window.location.href = "exportExcel/studentexportExcel?cclassId="+cclassId;
+
+
+}
+
+
+
+
+
+

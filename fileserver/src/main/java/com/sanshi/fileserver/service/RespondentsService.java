@@ -4,6 +4,7 @@ import com.sanshi.fileserver.bean.Respondents;
 import com.sanshi.fileserver.vo.PageGet;
 import com.sanshi.fileserver.vo.RespondentsMsg;
 import com.sanshi.fileserver.vo.RespondentsPage;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Map;
@@ -62,6 +63,30 @@ public interface RespondentsService {
     RespondentsMsg selectRespondentsMsg(Integer id);
 
      Map   selectRespondents(RespondentsPage respondentsPage);
+
+    /**
+     * /获取这个考核的学生ID集合
+     * @param id
+     * @return
+     */
+       List<Integer>  selectStudent(Integer id);
+
+    /**
+     * 阅卷
+     * @param respondentsId
+     * @return
+     */
+    int   Read( Integer respondentsId);
+
+    /**
+     * 获取这个学生的所有考核id
+     * @param stuId
+     * @return
+     */
+    List<Integer>  selectAssess(Integer  stuId);
+    RespondentsMsg selectRespondentsMsg2(Integer id);
+
+
 
 
 

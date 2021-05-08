@@ -77,10 +77,10 @@ public interface RespondentsRepository extends JpaRepository<Respondents,Integer
      */
     void deleteByAssessId(Integer assessId);
 
-    @Query(value="select count(s.id) from Respondents s where s.assessId = ?1  and  s.correct=0")
+    @Query(value="select count(s.id) from Respondents s where s.assessId = ?1  and  s.correct=1")
       int findCountnotred(Integer id);
 
-    @Query(value="select count(s.id)  from Respondents s where s.assessId = ?1  and  s.correct=1")
+    @Query(value="select count(s.id)  from Respondents s where s.assessId = ?1  and  s.correct=2")
     int findCountred(Integer id);
 
     //通过答题人id、批阅状态获取答卷d
@@ -101,6 +101,15 @@ public interface RespondentsRepository extends JpaRepository<Respondents,Integer
     Page<Respondents>findAllByAssessIdAndSubmit(Integer assessId,Integer submit,Pageable pa);
 
     /**
+     * 查询已提交未审批的
+     * @param assessId
+     * @param Submit
+     * @param correct
+     * @param pa
+     * @return
+     */
+    Page<Respondents>findAllByAssessIdAndSubmitAndCorrect(Integer assessId,Integer Submit,Integer correct,Pageable pa);
+    /**
      * 根据完成状态查询
      */
     Page<Respondents>findAllByAssessIdAndCorrect(Integer assessId,Integer correct,Pageable pa);
@@ -113,12 +122,15 @@ public interface RespondentsRepository extends JpaRepository<Respondents,Integer
     @Query(value="select s.stuId from Respondents s where s.assessId = ?1  ")
     List<Integer> findStuIdsAndAssessId(Integer assessId);
 
+    Respondents   findOneByAssessIdAndStuId(Integer id,Integer stuId);
 
-
-
-
-
-
+    /**
+     * 查询学生已完成的试卷
+     * @param id
+     * @param stuId
+     * @return
+     */
+    List<Respondents> findAllByAssessIdInAndStuIdAndCorrect(List<Integer> id,Integer stuId,Integer correct);
 
 
 }

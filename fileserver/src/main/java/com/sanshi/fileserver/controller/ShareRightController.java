@@ -21,7 +21,7 @@ public class ShareRightController {
 
     @ResponseBody
     @RequestMapping(path = "/AddIsHaveUpTime")
-    public Map AddIsHaveUpTime(@RequestBody ShareRight shareRight){
+    public Map AddIsHaveUpTime(@RequestBody ShareRight shareRight) {
         shareRightService.AddIsHaveUpTime(shareRight);
         Map json = new HashMap();
         json.put("resoult", 1);

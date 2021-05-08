@@ -22,77 +22,84 @@ import java.util.Map;
 public class TestPaperController {
     private TestPaperService testPaperService;
 
-    private  HttpSession   session;
+    private HttpSession session;
 
-    public TestPaperController(TestPaperService testPaperService,HttpSession   session) {
+    public TestPaperController(TestPaperService testPaperService, HttpSession session) {
         this.testPaperService = testPaperService;
-        this.session=session;
+        this.session = session;
     }
 
     /**
      * 学生考试
+     *
      * @param assessId
      * @param request
      * @return
      */
     @RequestMapping(path = "/exam")
     @ResponseBody
-    public TestPaperVo Exam(Integer assessId, HttpServletRequest request){
-        return  testPaperService.Exam(assessId,request);
+    public TestPaperVo Exam(Integer assessId, HttpServletRequest request) {
+        return testPaperService.Exam(assessId, request);
     }
 
     /**
      * 获取试卷
+     *
      * @param val
      * @return
      */
     @RequestMapping(path = "/findAll")
     @ResponseBody
-    public Map findAll(PageGet val){
+    public Map findAll(PageGet val) {
         return testPaperService.findAll(val);
     }
 
     /**
-     *
      * @param testPaperId
      * @return
      */
     @RequestMapping(path = "/read")
     @ResponseBody
-    public ReadTestPaper read(Integer testPaperId){
+    public ReadTestPaper read(Integer testPaperId) {
         return testPaperService.read(testPaperId);
     }
 
     /**
-     *
      * @param id
      * @return
      */
     @RequestMapping(path = "/findMsg")
     @ResponseBody
-    public TestPaperMsg findMsg(Integer id){
+    public TestPaperMsg findMsg(Integer id) {
         return testPaperService.findMsg(id);
     }
 
     /**
-     * @param  testPaper
+     * @param testPaper
      * @return
      */
     @RequestMapping(path = "/save")
     @ResponseBody
-    public TestPaper save(@RequestBody TestPaper testPaper){
-        SessionUser  sessionUser=(SessionUser) session.getAttribute("user");
+    public TestPaper save(@RequestBody TestPaper testPaper) {
+        SessionUser sessionUser = (SessionUser) session.getAttribute("user");
         testPaper.setCreationId(sessionUser.getTeacher().getTeaId());
         return testPaperService.save(testPaper);
-    };
+    }
 
 
     @RequestMapping(path = "/delete")
     @ResponseBody
-    public Result delete(Integer testPaperId){
+    public Result delete(Integer testPaperId) {
 
         return testPaperService.deleteById(testPaperId);
-    };
+    }
+
+    @RequestMapping(path = "/generateTestPaper")
+    @ResponseBody
+    public  Result  generateTestPaper(@RequestBody TestPaperUtils  testPaperUtils){
+
+        return   testPaperService.generateTestPaper(testPaperUtils);
+    }
 
 
 

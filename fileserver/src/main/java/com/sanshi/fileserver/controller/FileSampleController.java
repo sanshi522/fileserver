@@ -125,4 +125,48 @@ public class FileSampleController {
         }
         return null;
     }
+
+    @RequestMapping("/downloadShareFile2")
+    public String downLoad2(String filename,HttpServletResponse response) throws UnsupportedEncodingException {
+        File file = new File(filename);
+        String name=filename;
+        if(filename.lastIndexOf("_")>=0){
+            String str1=filename.substring(0, filename.indexOf("_"));
+             name=filename.substring(str1.length()+1, filename.length());
+        }
+        if(file.exists()){ //判断文件父目录是否存在
+            //response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/force-download");
+            response.setHeader("Content-Disposition", "attachment;fileName=" +   java.net.URLEncoder.encode(name,"UTF-8"));
+            byte[] buffer = new byte[1024];
+            FileInputStream fis = null; //文件输入流
+            BufferedInputStream bis = null;
+            OutputStream os = null; //输出流
+            try {
+                os = response.getOutputStream();
+                fis = new FileInputStream(file);
+                bis = new BufferedInputStream(fis);
+                int i = bis.read(buffer);
+                while(i != -1){
+                    os.write(buffer);
+                    i = bis.read(buffer);
+                }
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            System.out.println("----------file download---" + filename);
+            try {
+                bis.close();
+                fis.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+
 }

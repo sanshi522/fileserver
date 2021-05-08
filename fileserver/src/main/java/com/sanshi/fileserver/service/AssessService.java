@@ -55,6 +55,10 @@ public interface AssessService {
      * 查询
      */
     AssessUerGVo  findbyId(Integer  assessId);
+    /**
+     * 查询试卷
+     */
+    Assess  findByOneId(Integer  assessId);
 
     /**
      * 学生查询自己的试卷
@@ -63,5 +67,7 @@ public interface AssessService {
     Map  StudentAssess(StudentAssessVo studentAssessVo);
 
     StudentAssessVo  studentChoice(Integer assessId);
+
+    AssessMsg findMsg2(Integer id);
 
 }

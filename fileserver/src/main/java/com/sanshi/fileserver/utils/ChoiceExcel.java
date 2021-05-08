@@ -1,96 +1,93 @@
-package com.sanshi.fileserver.bean;
+package com.sanshi.fileserver.utils;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import cn.afterturn.easypoi.excel.annotation.Excel;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.util.Date;
-@Entity
-public class Choice {
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Integer id;
-    /**
-     * 学科id
-     */
-    private Integer subId;
+
+public class ChoiceExcel {
+    @Excel(name = "学科",orderNum ="0",width = 30)
+    private String subId;
     /**
      *题目
      */
+    @Excel(name = "题目",orderNum ="1",width = 50)
     private String topic;
     /**
      * 类型（单选，多选，判断题，简答题）
      */
+    @Excel(name = "类型",orderNum ="2",width = 20,replace ={"单选题_1","多选题_2","判断题_3","简答题_4"})
     private Integer type;
-    /**
-     *附件id集合
-     */
-    private String fileIds;
+
     /**
      * 选项个数
      */
+    @Excel(name = "选项个数（简答题,判断题无需填写,多选和单选填对应的选项个数）",orderNum ="3",width = 50)
     private Integer optionNum;
     /**
      * 选项A
      */
+    @Excel(name = "选项A",orderNum ="4",width = 20)
     private String optionA;
-   /**
+    /**
      * 选项B
      */
-   private String optionB;
-   /**
+    @Excel(name = "选项B",orderNum ="5",width = 20)
+    private String optionB;
+    /**
      * 选项C
      */
-   private String optionC;
-   /**
+    @Excel(name = "选项c",orderNum ="6",width = 20)
+    private String optionC;
+    /**
      * 选项D
      */
-   private String optionD;
-   /**
+    @Excel(name = "选项D",orderNum ="7",width = 20)
+    private String optionD;
+    /**
      * 选项E
      */
-   private String optionE;
-   /**
+    @Excel(name = "选项E",orderNum ="8",width = 20)
+    private String optionE;
+    /**
      * 选项F
      */
-   private String optionF;
+    @Excel(name = "选项F",orderNum ="9",width = 20)
+    private String optionF;
     /**
      * 正确选项
      */
+    @Excel(name = "答案(多选用逗号隔开,问答题(1表示正确,0表示错误))",orderNum ="10",width = 30)
     private String correct;
     /**
      * 解析
      */
+    @Excel(name = "解析",orderNum ="11",width = 30)
     private String analysis;
-    /**
-     * 知识点id集合
-     */
-    private String abilityIds;
+
     /**
      *难易程度
      */
+    @Excel(name = "难度星级",orderNum ="12",width = 10)
     private Integer difficultyLevel;
     /**
      * 评分标准(0:全自动相等;1:少选百分比多选不得分；2：人工)
      */
+    @Excel(name = "评分标准" ,orderNum ="13",width = 10,replace = {"全自动相等_0","少选百分比多选不得分_1","人工_2"})
     private Integer scaleRule;
-    @CreationTimestamp
-    private Date createTime;
-    @UpdateTimestamp
-    private Date uapdateTime;
+    /**
+     * 知识点id集合
+     */
+    @Excel(name = "知识点",orderNum ="14",width = 60)
+    private String abilityIds;
 
-    public Choice() {
+
+    public ChoiceExcel() {
     }
 
-    public Choice(Integer id, Integer subId, String topic, Integer type, String fileIds, Integer optionNum, String optionA, String optionB, String optionC, String optionD, String optionE, String optionF, String correct, String analysis, String abilityIds, Integer difficultyLevel, Integer scaleRule, Date createTime, Date uapdateTime) {
-        this.id = id;
+    public ChoiceExcel(String subId, String topic, Integer type, Integer optionNum, String optionA, String optionB, String optionC, String optionD, String optionE, String optionF, String correct, String analysis, Integer difficultyLevel, Integer scaleRule, String abilityIds) {
         this.subId = subId;
         this.topic = topic;
         this.type = type;
-        this.fileIds = fileIds;
         this.optionNum = optionNum;
         this.optionA = optionA;
         this.optionB = optionB;
@@ -103,23 +100,13 @@ public class Choice {
         this.abilityIds = abilityIds;
         this.difficultyLevel = difficultyLevel;
         this.scaleRule = scaleRule;
-        this.createTime = createTime;
-        this.uapdateTime = uapdateTime;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getSubId() {
+    public String getSubId() {
         return subId;
     }
 
-    public void setSubId(Integer subId) {
+    public void setSubId(String subId) {
         this.subId = subId;
     }
 
@@ -137,14 +124,6 @@ public class Choice {
 
     public void setType(Integer type) {
         this.type = type;
-    }
-
-    public String getFileIds() {
-        return fileIds;
-    }
-
-    public void setFileIds(String fileIds) {
-        this.fileIds = fileIds;
     }
 
     public Integer getOptionNum() {
@@ -243,30 +222,12 @@ public class Choice {
         this.scaleRule = scaleRule;
     }
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUapdateTime() {
-        return uapdateTime;
-    }
-
-    public void setUapdateTime(Date uapdateTime) {
-        this.uapdateTime = uapdateTime;
-    }
-
     @Override
     public String toString() {
-        return "Choice{" +
-                "id=" + id +
-                ", subId=" + subId +
+        return "ChoiceExcel{" +
+                "subId='" + subId + '\'' +
                 ", topic='" + topic + '\'' +
                 ", type=" + type +
-                ", fileIds='" + fileIds + '\'' +
                 ", optionNum=" + optionNum +
                 ", optionA='" + optionA + '\'' +
                 ", optionB='" + optionB + '\'' +
@@ -279,8 +240,6 @@ public class Choice {
                 ", abilityIds='" + abilityIds + '\'' +
                 ", difficultyLevel=" + difficultyLevel +
                 ", scaleRule=" + scaleRule +
-                ", createTime=" + createTime +
-                ", uapdateTime=" + uapdateTime +
                 '}';
     }
 }

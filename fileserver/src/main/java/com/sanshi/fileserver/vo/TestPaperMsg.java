@@ -8,17 +8,18 @@ public class TestPaperMsg {
     Integer choiceNum;
     Double choiceScoreNum;
     String subName;
-    String CreatUserName;
+    String creatUserName;
+
+    public TestPaperMsg() {
+    }
 
     public TestPaperMsg(Integer choiceNum, Double choiceScoreNum, String subName, String creatUserName) {
         this.choiceNum = choiceNum;
         this.choiceScoreNum = choiceScoreNum;
         this.subName = subName;
-        CreatUserName = creatUserName;
+        this.creatUserName = creatUserName;
     }
 
-    public TestPaperMsg() {
-    }
 
     public Integer getChoiceNum() {
         return choiceNum;
@@ -45,12 +46,13 @@ public class TestPaperMsg {
     }
 
     public String getCreatUserName() {
-        return CreatUserName;
+        return creatUserName;
     }
 
     public void setCreatUserName(String creatUserName) {
-        CreatUserName = creatUserName;
+        this.creatUserName = creatUserName;
     }
+
 
     @Override
     public String toString() {
@@ -58,7 +60,7 @@ public class TestPaperMsg {
                 "choiceNum=" + choiceNum +
                 ", choiceScoreNum=" + choiceScoreNum +
                 ", subName='" + subName + '\'' +
-                ", CreatUserName='" + CreatUserName + '\'' +
+                ", creatUserName='" + creatUserName + '\'' +
                 '}';
     }
 }

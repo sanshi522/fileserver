@@ -16,4 +16,5 @@ public interface SubjectRepository  extends JpaRepository<Subject,Integer>, JpaS
     Subject save(Subject sub);
     void deleteById(Integer id);
     Page<Subject> findAllByNameLike(String name, Pageable p);
+    Subject  findOneByName(String name);
 }

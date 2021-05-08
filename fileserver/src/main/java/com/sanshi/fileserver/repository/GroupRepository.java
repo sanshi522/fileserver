@@ -39,6 +39,11 @@ public interface GroupRepository extends JpaRepository<StuGroup,Integer>, JpaSpe
     Page<StuGroup> findAllByCclassIdAndNameLike(Integer id, String name,Pageable pageable);
 
     /**
+     * 根据班级ID小组名称获取小组
+     */
+    StuGroup findOneByCclassIdAndName(Integer classId,String name);
+
+    /**
      * 根据班级id获取小组id集合
      * @param id
      * @return

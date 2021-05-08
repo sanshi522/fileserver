@@ -1,8 +1,10 @@
 package com.sanshi.fileserver.service.impl;
 
 import com.sanshi.fileserver.bean.Choice;
+import com.sanshi.fileserver.bean.Subject;
 import com.sanshi.fileserver.bean.TestPaperBindChoice;
 import com.sanshi.fileserver.repository.ChoiceRepository;
+import com.sanshi.fileserver.repository.SubjectRepository;
 import com.sanshi.fileserver.repository.TestPaperBindChoiceRepository;
 import com.sanshi.fileserver.repository.TestPaperRepository;
 import com.sanshi.fileserver.service.ChoiceService;
@@ -19,11 +21,13 @@ public class ChoiceServiceImpl implements ChoiceService {
     private ChoiceRepository choiceRepository;
     private TestPaperBindChoiceRepository testPaperBindChoiceRepository;
     private TestPaperRepository testPaperRepository;
+    private SubjectRepository subjectRepository;
 
-    public ChoiceServiceImpl(ChoiceRepository choiceRepository, TestPaperBindChoiceRepository testPaperBindChoiceRepository, TestPaperRepository testPaperRepository) {
+    public ChoiceServiceImpl(ChoiceRepository choiceRepository, TestPaperBindChoiceRepository testPaperBindChoiceRepository, TestPaperRepository testPaperRepository,SubjectRepository subjectRepository) {
         this.choiceRepository = choiceRepository;
         this.testPaperBindChoiceRepository = testPaperBindChoiceRepository;
         this.testPaperRepository = testPaperRepository;
+        this.subjectRepository=subjectRepository;
     }
 
     @Override
@@ -53,28 +57,28 @@ public class ChoiceServiceImpl implements ChoiceService {
         if (choice.getName().isEmpty()) choice.setName("");
         if (choice.getSubId() == 0) {
             if (choice.getType() == 0) {
-                if (choice.getAbilityIds()!=null && !choice.getAbilityIds().equals("0")) {
-                    if (choice.getDifficultyLevel()!=null && choice.getDifficultyLevel() != 0) {
+                if (choice.getAbilityIds() != null && !choice.getAbilityIds().equals("0")) {
+                    if (choice.getDifficultyLevel() != null && choice.getDifficultyLevel() != 0) {
                         json.put("page", choiceRepository.findAllByAbilityIdsAndTopicLikeAndDifficultyLevel(choice.getAbilityIds(), choice.getName(), choice.getDifficultyLevel(), pageable));
                     } else {
                         json.put("page", choiceRepository.findAllByAbilityIdsAndTopicLike(choice.getAbilityIds(), choice.getName(), pageable));
                     }
                 } else {
-                    if (choice.getDifficultyLevel()!=null && choice.getDifficultyLevel() != 0) {
+                    if (choice.getDifficultyLevel() != null && choice.getDifficultyLevel() != 0) {
                         json.put("page", choiceRepository.findAllByTopicLikeAndDifficultyLevel("%" + choice.getName() + "%", choice.getDifficultyLevel(), pageable));
                     } else {
                         json.put("page", choiceRepository.findAllByTopicLike("%" + choice.getName() + "%", pageable));
                     }
                 }
             } else {
-                if (choice.getAbilityIds()!=null && !choice.getAbilityIds().equals("0")) {
-                    if (choice.getDifficultyLevel()!=null && choice.getDifficultyLevel() != 0) {
+                if (choice.getAbilityIds() != null && !choice.getAbilityIds().equals("0")) {
+                    if (choice.getDifficultyLevel() != null && choice.getDifficultyLevel() != 0) {
                         json.put("page", choiceRepository.findAllByTypeAndTopicLikeAndAbilityIdsAndDifficultyLevel(choice.getType(), choice.getName(), choice.getAbilityIds(), choice.getDifficultyLevel(), pageable));
                     } else {
                         json.put("page", choiceRepository.findAllByTypeAndTopicLikeAndAbilityIds(choice.getType(), choice.getName(), choice.getAbilityIds(), pageable));
                     }
                 } else {
-                    if (choice.getDifficultyLevel()!=null && choice.getDifficultyLevel() != 0) {
+                    if (choice.getDifficultyLevel() != null && choice.getDifficultyLevel() != 0) {
                         json.put("page", choiceRepository.findAllByTypeAndTopicLikeAndDifficultyLevel(choice.getType(), "%" + choice.getName() + "%", choice.getDifficultyLevel(), pageable));
                     } else {
                         json.put("page", choiceRepository.findAllByTypeAndTopicLike(choice.getType(), "%" + choice.getName() + "%", pageable));
@@ -83,28 +87,28 @@ public class ChoiceServiceImpl implements ChoiceService {
             }
         } else {
             if (choice.getType() == 0) {
-                if (choice.getAbilityIds()!=null && !choice.getAbilityIds().equals("0")) {
-                    if (choice.getDifficultyLevel()!=null && choice.getDifficultyLevel() != 0) {
+                if (choice.getAbilityIds() != null && !choice.getAbilityIds().equals("0")) {
+                    if (choice.getDifficultyLevel() != null && choice.getDifficultyLevel() != 0) {
                         json.put("page", choiceRepository.findAllBySubIdAndTopicLikeAndAbilityIdsAndDifficultyLevel(choice.getSubId(), "%" + choice.getName() + "%", choice.getAbilityIds(), choice.getDifficultyLevel(), pageable));
                     } else {
                         json.put("page", choiceRepository.findAllBySubIdAndTopicLikeAndAbilityIds(choice.getSubId(), "%" + choice.getName() + "%", choice.getAbilityIds(), pageable));
                     }
                 } else {
-                    if (choice.getDifficultyLevel()!=null && choice.getDifficultyLevel() != 0) {
+                    if (choice.getDifficultyLevel() != null && choice.getDifficultyLevel() != 0) {
                         json.put("page", choiceRepository.findAllBySubIdAndTopicLikeAndDifficultyLevel(choice.getSubId(), "%" + choice.getName() + "%", choice.getDifficultyLevel(), pageable));
                     } else {
                         json.put("page", choiceRepository.findAllBySubIdAndTopicLike(choice.getSubId(), "%" + choice.getName() + "%", pageable));
                     }
                 }
             } else {
-                if (choice.getAbilityIds()!=null && !choice.getAbilityIds().equals("0")) {
-                    if (choice.getDifficultyLevel()!=null && choice.getDifficultyLevel() != 0) {
+                if (choice.getAbilityIds() != null && !choice.getAbilityIds().equals("0")) {
+                    if (choice.getDifficultyLevel() != null && choice.getDifficultyLevel() != 0) {
                         json.put("page", choiceRepository.findAllBySubIdAndTypeAndTopicLikeAndAbilityIdsAndDifficultyLevel(choice.getSubId(), choice.getType(), "%" + choice.getName() + "%", choice.getAbilityIds(), choice.getDifficultyLevel(), pageable));
                     } else {
                         json.put("page", choiceRepository.findAllBySubIdAndTypeAndTopicLikeAndAbilityIds(choice.getSubId(), choice.getType(), "%" + choice.getName() + "%", choice.getAbilityIds(), pageable));
                     }
                 } else {
-                    if (choice.getDifficultyLevel()!=null && choice.getDifficultyLevel() != 0) {
+                    if (choice.getDifficultyLevel() != null && choice.getDifficultyLevel() != 0) {
                         json.put("page", choiceRepository.findAllBySubIdAndTypeAndTopicLikeAndDifficultyLevel(choice.getSubId(), choice.getType(), "%" + choice.getName() + "%", choice.getDifficultyLevel(), pageable));
                     } else {
                         json.put("page", choiceRepository.findAllBySubIdAndTypeAndTopicLike(choice.getSubId(), choice.getType(), "%" + choice.getName() + "%", pageable));
@@ -138,5 +142,26 @@ public class ChoiceServiceImpl implements ChoiceService {
     @Override
     public List<Choice> selectChoiceByTestPaperId(Integer id) {
         return choiceRepository.findByIdIn(testPaperBindChoiceRepository.findChoicesIdByTestPaperId(id));
+    }
+
+    @Override
+    public Subject findOneByName(String name) {
+        return subjectRepository.findOneByName(name);
+    }
+
+    @Override
+    public int saves(List<Choice> choiceList) {
+     for(Choice  choice:choiceList){
+         if(choiceRepository.findAllByTopic(choice.getTopic()).size()>0){
+             continue;
+         }
+         choiceRepository.save(choice);
+     }
+        return 1;
+    }
+
+    @Override
+    public List<Choice> findAllByTopic(String topic) {
+        return choiceRepository.findAllByTopic(topic);
     }
 }

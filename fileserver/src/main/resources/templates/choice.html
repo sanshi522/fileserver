@@ -40,6 +40,10 @@
             <option  value="4">简答题</option>
         </select>
     </div>
+		<div class="blue ui buttons" style="float: right;">
+			<button class="ui button green" id="upload">批量导入</button>
+			<button class="ui button green" onclick="exportchoice()">导出</button>
+		</div>
 	<div class="blue ui buttons" style="float: right;margin-left: 10px;">
         <button id="addchoice" class="ui button" >添加试题</button>                            
     </div>
@@ -218,7 +222,7 @@
 					<td class="knowledges">
 					</td>
 				</tr>
-				<tr class="accessory_tr">
+				<tr class="accessory_tr"  hidden>
 					<td id="accessory_open">附件 <i class="my-icon lsm-sidebar-icon icon-tianjia" ></i></td>
 					<td class="accessorys">
 
@@ -266,13 +270,54 @@
 				</div>
 				<div class="ui query">
 					<input class="query" type="text" onkeypress="query1(event)" id="query1"><i class="my-icon lsm-sidebar-icon icon-chazhao querybtn" id="query101"></i>
+
 				</div>
 			</div>
 			<div class="addcontext" >
 
 			</div>
+			<div class="paginationParent">
+				<div id="showNumberdiv2" style="float: right;margin-top: 20px;width:60px">
+					<select name="channels" id="showNumber2" data-style="btn-info" class="selectpicker" >
+						<option  value="5">5条</option>
+						<option  value="10">10条</option>
+						<option  value="20">20条</option>
+						<option  value="30">30条</option>
+						<option  value="40">40条</option>
+						<option  value="50">50条</option>
+						<option  value="60">60条</option>
+						<option  value="70">70条</option>
+						<option  value="80">80条</option>
+						<option  value="90">90条</option>
+						<option  value="100">100条</option>
+					</select>
+				</div>
+				<div style="float: right;margin-top: 20px;">单页显示：</div>
+				<label class="totalmsg2" style="float: right;margin-top: 20px;"></label>
+				<div id="Pagination2"></div>
+			</div>
 		</div>
 	</div>
 	</div>
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">文件上传</h4>
+				</div>
+				<div class="modal-body">
+					<input id="f_upload" type="file"  name="file"/>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" id="Submitfile" class="btn btn-primary">提交更改</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+	</div>
+
+
+
 </body>
 </html>

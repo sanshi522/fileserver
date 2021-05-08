@@ -12,7 +12,7 @@
     padding: 20px;
     background-color: #eceeee;
     width: 250px;
-    height: 180px;
+    height: 220px;
     float: left;
     margin: 10px
 }
@@ -112,6 +112,7 @@
 .star-box label:hover {
     color: #E5E422;
 }
+
 
 /*难度级别*/
 

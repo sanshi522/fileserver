@@ -27,14 +27,16 @@ public class TeacherController {
         this.teacherService = teacherService;
         this.stuGroupService = stuGroupService;
     }
+
     @RequestMapping(path = "/save")
     @ResponseBody
-    public Teacher save(Teacher teacher){
+    public Teacher save(Teacher teacher) {
         return teacherService.save(teacher);
     }
+
     @RequestMapping(path = "/GetTeacher")
     @ResponseBody
-    public Map GetTeacher(Integer classId,HttpServletRequest request){
+    public Map GetTeacher(Integer classId, HttpServletRequest request) {
         Map json = new HashMap();
         HttpSession session = request.getSession();
         if (session != null && session.getAttribute("user") != null) {
@@ -43,80 +45,85 @@ public class TeacherController {
             Integer ident = (sessionUser.getLogintype() == 0 ? 0 : sessionUser.getTeacher().getTeaIdentity());
             Integer id = (sessionUser.getLogintype() == 0 ? sessionUser.getStudent().getStuId() : sessionUser.getTeacher().getTeaId());
             json.put("resoult", true);
-            if (ident==0)
-                json.put("teachers",teacherService.findTeacherByClassId(stuGroupService.findOneById(sessionUser.getStudent().getStuGroup()).getCclassId()));
+            if (ident == 0)
+                json.put("teachers", teacherService.findTeacherByClassId(stuGroupService.findOneById(sessionUser.getStudent().getStuGroup()).getCclassId()));
             else
-                json.put("teachers",teacherService.findTeacherByClassId(classId));
-        }else
+                json.put("teachers", teacherService.findTeacherByClassId(classId));
+        } else
             json.put("resoult", false);
         return json;
     }
+
     @RequestMapping(path = "/GetAdmin")
     @ResponseBody
-    public Map findAdmin(){
+    public Map findAdmin() {
         Map json = new HashMap();
         json.put("resoult", true);
-        json.put("teachers",teacherService.findAdmin());
+        json.put("teachers", teacherService.findAdmin());
         return json;
     }
+
     @RequestMapping(path = "/findTeachers")
     @ResponseBody
-    public Map findTeachers(PageGet val,HttpServletRequest request){
+    public Map findTeachers(PageGet val, HttpServletRequest request) {
         val.setIssistId(2);
-        return teacherService.finTeachers(val,request);
+        return teacherService.finTeachers(val, request);
     }
 
     @RequestMapping(path = "/GetteaIdentity")
     @ResponseBody
-    public List<Map> GetteaIdentity(Integer val,HttpServletRequest request){
-        List<Map> listdata=new ArrayList<Map>();
+    public List<Map> GetteaIdentity(Integer val, HttpServletRequest request) {
+        List<Map> listdata = new ArrayList<Map>();
         Map json;
         json = new HashMap();
-        json.put("key",1);
-        json.put("val","老师");
+        json.put("key", 1);
+        json.put("val", "老师");
         listdata.add(json);
         json = new HashMap();
-        json.put("key",2);
-        json.put("val","老师兼管理员");
+        json.put("key", 2);
+        json.put("val", "老师兼管理员");
         listdata.add(json);
         return listdata;
     }
+
     @RequestMapping(path = "/GetIdentName")
     @ResponseBody
-    public Map GetIdentName(Integer val,HttpServletRequest request) {
-        Map json= new HashMap();
-        if (val==1)
-            json.put("name","老师");
-        else if(val==2)
-            json.put("name","老师兼管理员");
-        else if(val==3)
-            json.put("name","管理员");
-        return  json;
+    public Map GetIdentName(Integer val, HttpServletRequest request) {
+        Map json = new HashMap();
+        if (val == 1)
+            json.put("name", "老师");
+        else if (val == 2)
+            json.put("name", "老师兼管理员");
+        else if (val == 3)
+            json.put("name", "管理员");
+        return json;
     }
+
     @RequestMapping(path = "/deleteById")
     @ResponseBody
-    public Integer deleteById(Integer val, HttpServletRequest request){
+    public Integer deleteById(Integer val, HttpServletRequest request) {
         teacherService.deleteByTeaId(val);
         return 1;
     }
+
     @RequestMapping(path = "/GetNameById")
     @ResponseBody
-    public Map GetNameById(Integer val){
-        Map json= new HashMap();
-        json.put("name",teacherService.findOneByTeaId(val).getTeaName());
-        return  json;
+    public Map GetNameById(Integer val) {
+        Map json = new HashMap();
+        json.put("name", teacherService.findOneByTeaId(val).getTeaName());
+        return json;
     }
 
     @RequestMapping(path = "/findAllNoInClass")
     @ResponseBody
-    public List<Map> findAllNoInClass(Integer val){
+    public List<Map> findAllNoInClass(Integer val) {
         List<Teacher> Tealist = teacherService.findAllNoInClass(val);
-        List<Map> listdata=new ArrayList<Map>();
+        List<Map> listdata = new ArrayList<Map>();
         Map json;
-        for (int i=0;i<Tealist.size();i++){
+        for (int i = 0; i < Tealist.size(); i++) {
             json = new HashMap();
-            json.put("key",Tealist.get(i).getTeaId());
-            json.put("val",Tealist.get(i).getTeaName());
+            json.put("key", Tealist.get(i).getTeaId());
+            json.put("val", Tealist.get(i).getTeaName());
             listdata.add(json);
         }
         return listdata;
@@ -124,7 +131,9 @@ public class TeacherController {
 
     @RequestMapping(path = "/findAll")
     @ResponseBody
-    public List<Teacher> findAll(){ return  teacherService.findAll(); }
+    public List<Teacher> findAll() {
+        return teacherService.findAll();
+    }
 
 
 }

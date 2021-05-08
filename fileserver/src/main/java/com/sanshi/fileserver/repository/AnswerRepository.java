@@ -1,6 +1,10 @@
 package com.sanshi.fileserver.repository;
 
 import com.sanshi.fileserver.bean.Answer;
+import com.sanshi.fileserver.bean.Assess;
+import com.sanshi.fileserver.bean.Respondents;
+import com.sanshi.fileserver.vo.RespondentsMsg;
+import com.sanshi.fileserver.vo.SessionUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -38,5 +42,10 @@ public interface AnswerRepository extends JpaRepository<Answer,Integer>, JpaSpec
   @Query(value="select SUM(a.score) from Answer a where a.respondentsId=?1 ")
     Double selectScore(Integer respondentsId );
 
+   Answer findOneById(Integer id);
+
 
 }
+
+
+

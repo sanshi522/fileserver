@@ -16,4 +16,5 @@ public interface StudentService {
     Map findAllByClassId(PageGet pageGet);
     Student save(Student student);
     Integer deleteById(Integer val);
+    int  saveStudents(List<Student> studentList);
 }

@@ -47,5 +47,7 @@ public interface TestPaperRepository extends JpaRepository<TestPaper,Integer>, J
 
     List<TestPaper> findAll();
 
+    TestPaper  findOneByName(String name);
+
 
 }

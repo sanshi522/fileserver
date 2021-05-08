@@ -13,27 +13,31 @@ import java.util.List;
 @Controller
 @RequestMapping("/TestPaperBindChoice")
 public class TestPaperBindChoiceController {
-    private TestPaperBindChoiceService  TestPaperBindChoiceService;
+    private TestPaperBindChoiceService TestPaperBindChoiceService;
 
     public TestPaperBindChoiceController(com.sanshi.fileserver.service.TestPaperBindChoiceService testPaperBindChoiceService) {
         TestPaperBindChoiceService = testPaperBindChoiceService;
     }
 
 
-
     @PostMapping("/save")
     @ResponseBody
-    public int  save(@RequestBody List<TestPaperBindChoice> testPaperList){TestPaperBindChoiceService.save(testPaperList); return 1;}
+    public int save(@RequestBody List<TestPaperBindChoice> testPaperList) {
+        TestPaperBindChoiceService.save(testPaperList);
+        return 1;
+    }
 
 
     @PostMapping("/delete")
     @ResponseBody
-    public Integer  deleteById(Integer id){
-        TestPaperBindChoice  testPaperBindChoice=new  TestPaperBindChoice();
+    public Integer deleteById(Integer id) {
+        TestPaperBindChoice testPaperBindChoice = new TestPaperBindChoice();
         testPaperBindChoice.setId(id);
         TestPaperBindChoiceService.deleteById(testPaperBindChoice);
         return 1;
-    };
+    }
+
+
 
 
 }

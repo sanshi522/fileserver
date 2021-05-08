@@ -44,12 +44,12 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public Map getAll(PageGet pageGet) {
         Pageable pageable;
-        pageable = PageRequest.of(pageGet.getPageIndex() , pageGet.getPageNumber());
+        pageable = PageRequest.of(pageGet.getPageIndex(), pageGet.getPageNumber());
         Map json = new HashMap();
         json.put("resoult", true);
         if (pageGet.getLikeName().isEmpty())
             pageGet.setLikeName("");
-        json.put("page",subjectRepository.findAllByNameLike("%"+pageGet.getLikeName()+"%",pageable));
+        json.put("page", subjectRepository.findAllByNameLike("%" + pageGet.getLikeName() + "%", pageable));
         return json;
     }
 }

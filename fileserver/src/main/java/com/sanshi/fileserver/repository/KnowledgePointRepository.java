@@ -24,7 +24,7 @@ public interface KnowledgePointRepository extends JpaRepository<KnowledgePoint,I
 
     Page<KnowledgePoint> findAllByNameLike(String name, Pageable pageable);
 
-
+    KnowledgePoint findOneBySubIdAndName(Integer subId,String name);
 
     /**
      *

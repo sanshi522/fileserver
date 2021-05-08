@@ -240,7 +240,7 @@ $(function () {
                             data: {id: data.page.content[i].id},
                             dataType: "json",
                             success: function (data2) {
-                                $(".allTestPaper").append('<div class="testPaper" style="">\n' +
+                                $(".allTestPaper").append('<div  onclick="javascript:parent.open(\'assessment?id=' + data.page.content[i].id + '\')" class="testPaper" style="">\n' +
                                     '        <table width="100%">\n' +
                                     '            <tr >\n' +
                                     '                <th colspan="2" style="text-align:center;">' + data.page.content[i].name + '</th>\n' +
@@ -320,6 +320,7 @@ $(function () {
     /**编辑绑定框*/
     function Enint() {
         $(".icon-bianji").bind("click", function (e) {
+            e.stopPropagation();
             var assId = $(this).attr("id");
             $.ajax({
                 url: "/Assess/findById",
@@ -367,7 +368,8 @@ $(function () {
     //删除考核
 
  function  deltelAssess() {
-$(".icon-shanchu").bind("click",function () {
+$(".icon-shanchu").bind("click",function (e) {
+    e.stopPropagation();
     var assId = $(this).attr("id");
     $.confirm({
         confirmButtonClass: 'btn-info',
@@ -445,16 +447,7 @@ function ref(){
     }
 
     $("#addAssess").click(function (e) {
-        $("#AssessId").val(null);
-        $("#assname").val("");
-        $("#make_time").val(null);
-        $("#search-from-date").val(new Date().Format('yyyy-MM-dd hh:mm:ss'));
-        $("#search-to-date").val(new Date().Format('yyyy-MM-dd hh:mm:ss'));
-        $("#testpaper_id").attr("data_value", "");
-        $("#testpaper_id").val("");
-        $("#testObject").empty();
-        $("#addUser_div").hide();
-        $("#screenTest_div").hide();
+
         updatelist();
         openWindw(e.pageX, e.pageY);
     });
@@ -943,7 +936,6 @@ function ref(){
                 popWindow.hide();
                 $('.mask').remove();
                 Init(0);
-
             },
             error: function (data) {
                 console.log("服务器异常");

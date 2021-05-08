@@ -17,6 +17,7 @@ import java.util.Map;
 public class CclassServiceImpl implements CclassService {
     private CclassRepository cclassRepository;
     private TeacherBindCclassRepository teacherBindCclassRepository;
+
     public CclassServiceImpl(CclassRepository cclassRepository, TeacherBindCclassRepository teacherBindCclassRepository) {
         this.cclassRepository = cclassRepository;
         this.teacherBindCclassRepository = teacherBindCclassRepository;
@@ -24,10 +25,10 @@ public class CclassServiceImpl implements CclassService {
 
 
     @Override
-    public List<Cclass> findCclasesByGradeId(Integer ident, Integer id,Integer GradeId) {
-        if (ident==1){//单重身份：老师
-            return cclassRepository.findByGradeIdAndIdIn(GradeId,teacherBindCclassRepository.findCclasesIdByTeaid(id));
-        }else{
+    public List<Cclass> findCclasesByGradeId(Integer ident, Integer id, Integer GradeId) {
+        if (ident == 1) {//单重身份：老师
+            return cclassRepository.findByGradeIdAndIdIn(GradeId, teacherBindCclassRepository.findCclasesIdByTeaid(id));
+        } else {
             return cclassRepository.findByGradeId(GradeId);
         }
     }
@@ -35,13 +36,13 @@ public class CclassServiceImpl implements CclassService {
     @Override
     public Map GetClasesByClassId(PageGet pageGet) {
         Pageable pageable;
-        pageable = PageRequest.of(pageGet.getPageIndex() , pageGet.getPageNumber());
+        pageable = PageRequest.of(pageGet.getPageIndex(), pageGet.getPageNumber());
         Map json = new HashMap();
         json.put("resoult", true);
         if (pageGet.getLikeName().isEmpty())
-            json.put("page",cclassRepository.findAllByGradeId(pageGet.getIssistId(),pageable));
+            json.put("page", cclassRepository.findAllByGradeId(pageGet.getIssistId(), pageable));
         else
-            json.put("page",cclassRepository.findAllByGradeIdAndNameLike(pageGet.getIssistId(),pageGet.getLikeName(),pageable));
+            json.put("page", cclassRepository.findAllByGradeIdAndNameLike(pageGet.getIssistId(), pageGet.getLikeName(), pageable));
         return json;
     }
 

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,8 +31,8 @@ public class KnowledgePointServiceImpl implements KnowledgePointService {
     }
 
     @Override
-    public List<KnowledgePoint> findAllBySubIdAndNameLike(Integer subId,String name) {
-        return knowledgePointRepository.findAllBySubIdAndNameLike(subId,"%"+name+"%");
+    public List<KnowledgePoint> findAllBySubIdAndNameLike(Integer subId, String name) {
+        return knowledgePointRepository.findAllBySubIdAndNameLike(subId, "%" + name + "%");
     }
 
     @Override
@@ -65,28 +66,33 @@ public class KnowledgePointServiceImpl implements KnowledgePointService {
     @Override
     public Map getAll(PageGet pageGet) {
         Pageable pageable;
-        pageable = PageRequest.of(pageGet.getPageIndex() , pageGet.getPageNumber());
+        pageable = PageRequest.of(pageGet.getPageIndex(), pageGet.getPageNumber());
         Map json = new HashMap();
         json.put("resoult", true);
         if (pageGet.getLikeName().isEmpty()) pageGet.setLikeName("");
-        if (pageGet.getIssistId()==0)
-            json.put("page", knowledgePointRepository.findAllByNameLike("%"+pageGet.getLikeName()+"%",pageable));
+        if (pageGet.getIssistId() == 0)
+            json.put("page", knowledgePointRepository.findAllByNameLike("%" + pageGet.getLikeName() + "%", pageable));
         else
-            json.put("page", knowledgePointRepository.findAllBySubIdAndNameLike(pageGet.getIssistId(),"%"+pageGet.getLikeName()+"%",pageable));
+            json.put("page", knowledgePointRepository.findAllBySubIdAndNameLike(pageGet.getIssistId(), "%" + pageGet.getLikeName() + "%", pageable));
         return json;
     }
 
 
     @RequestMapping(path = "/deleteById")
     @ResponseBody
-    public Integer deleteById(Integer val, HttpServletRequest request){
-         knowledgePointRepository.deleteById(val);
+    public Integer deleteById(Integer val, HttpServletRequest request) {
+        knowledgePointRepository.deleteById(val);
         return 1;
     }
 
     @Override
     public List<KnowledgePoint> selectBySubId(Integer id) {
         return knowledgePointRepository.findAllBySubId(id);
+    }
+
+    @Override
+    public KnowledgePoint findOneBySubIdAndName(Integer subId, String name) {
+        return knowledgePointRepository.findOneBySubIdAndName(subId,name);
     }
 
 }

@@ -22,13 +22,14 @@ public class SchoolingServiceImpl implements SchoolingService {
     @Override
     public Map finAlltByClassId(PageGet pageGet) {
         Pageable pageable;
-        pageable = PageRequest.of(pageGet.getPageIndex() , pageGet.getPageNumber());
+        pageable = PageRequest.of(pageGet.getPageIndex(), pageGet.getPageNumber());
         Map json = new HashMap();
         json.put("resoult", true);
         if (pageGet.getLikeName().isEmpty()) pageGet.setLikeName("");
-        json.put("page",teacherBindCclassRepository.findAllByCclassId(pageGet.getIssistId(),pageable));
+        json.put("page", teacherBindCclassRepository.findAllByCclassId(pageGet.getIssistId(), pageable));
         return json;
     }
+
     @Override
     public TeacherBindCclass save(TeacherBindCclass teacherBindCclass) {
         return teacherBindCclassRepository.save(teacherBindCclass);

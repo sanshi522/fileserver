@@ -9,6 +9,7 @@ import com.sanshi.fileserver.service.StudentService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -47,7 +48,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Integer Login(String slumber, String pass, Integer identity,HttpServletRequest request) {
+    public Integer Login(String slumber, String pass, Integer identity, HttpServletRequest request) {
         HttpSession session = request.getSession();
         List<Student> students = studentRepository.findByStuNumber(slumber);
         if (students == null || students.size() == 0) {
@@ -75,16 +76,17 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Map findAllByClassId(PageGet pageGet) {
         Pageable pageable;
-        pageable = PageRequest.of(pageGet.getPageIndex() , pageGet.getPageNumber());
+        pageable = PageRequest.of(pageGet.getPageIndex(), pageGet.getPageNumber());
         Map json = new HashMap();
         json.put("resoult", true);
         if (pageGet.getLikeName().isEmpty()) pageGet.setLikeName("");
 //            json.put("page", studentRepository.findAllByStuGroupIn(groupRepository.findALLIdByCclassId(pageGet.getIssistId()),pageable));
 //        else
-        json.put("page", studentRepository.findAllByStuGroupInAndStuNameLike(groupRepository.findALLIdByCclassId(pageGet.getIssistId()),"%"+pageGet.getLikeName()+"%",pageable));
+        json.put("page", studentRepository.findAllByStuGroupInAndStuNameLike(groupRepository.findALLIdByCclassId(pageGet.getIssistId()), "%" + pageGet.getLikeName() + "%", pageable));
 
         return json;
     }
+
     @Override
     public Student save(Student student) {
         return studentRepository.save(student);
@@ -93,6 +95,18 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Integer deleteById(Integer val) {
         studentRepository.deleteById(val);
+        return 1;
+    }
+
+    @Override
+    @Transactional
+    public int saveStudents(List<Student> studentList) {
+        for(Student student:studentList){
+            if(studentRepository.findOneByStuNumber(student.getStuNumber())!=null){
+                continue;
+            }
+            studentRepository.save(student);
+        }
         return 1;
     }
 }

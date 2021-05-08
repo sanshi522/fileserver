@@ -1,10 +1,12 @@
 package com.sanshi.fileserver.controller;
 
+import com.sanshi.fileserver.bean.Assess;
 import com.sanshi.fileserver.service.*;
 import com.sanshi.fileserver.vo.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +51,16 @@ public class AssessController {
     }
 
 
-
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(path = "/findMsg2")
+    @ResponseBody
+    public AssessMsg findMsg2(Integer id){
+        return assessService.findMsg2(id);
+    }
 
     @RequestMapping(path = "/save")
     @ResponseBody
@@ -94,7 +105,12 @@ public class AssessController {
 
         return  assessService.studentChoice(assessId);
     }
-
+   //查询考核
+    @RequestMapping(path = "/findByOneId")
+    @ResponseBody
+    public Assess findByOneId( Integer assessId){
+      return  assessService.findByOneId(assessId);
+    }
 
 
 

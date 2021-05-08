@@ -34,6 +34,13 @@ public class KnowledgePoint {
         this.uapdateTime = uapdateTime;
     }
 
+    public KnowledgePoint(Integer id, Integer subId, String name, String analysis) {
+        this.id = id;
+        this.subId = subId;
+        this.name = name;
+        this.analysis = analysis;
+    }
+
     public Integer getId() {
         return id;
     }

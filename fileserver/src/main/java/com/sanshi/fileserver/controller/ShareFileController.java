@@ -28,22 +28,22 @@ public class ShareFileController {
     public Map login(@RequestBody ShareFile shareFile, HttpServletRequest request) {
         HttpSession session = request.getSession();
         Map json = new HashMap();
-        if(session!=null&&session.getAttribute("user") != null){
-            SessionUser sessionUser=new SessionUser();
+        if (session != null && session.getAttribute("user") != null) {
+            SessionUser sessionUser = new SessionUser();
             sessionUser = (SessionUser) session.getAttribute("user");
-            if (sessionUser.getLogintype()==0){
+            if (sessionUser.getLogintype() == 0) {
                 shareFile.setOwnerIdent(0);
                 shareFile.setOwnerId(sessionUser.getStudent().getStuId());
-            }else{
+            } else {
                 shareFile.setOwnerIdent(sessionUser.getTeacher().getTeaIdentity());
                 shareFile.setOwnerId(sessionUser.getTeacher().getTeaId());
             }
-            Integer id=shareFileService.getIdIsNoAdd(shareFile);
+            Integer id = shareFileService.getIdIsNoAdd(shareFile);
             json.put("resoult", id);
-           // json.put("ident", sessionUser.getIdent());
-        }else{
-            json.put("resoult",-1);//返回登陆页面
+            // json.put("ident", sessionUser.getIdent());
+        } else {
+            json.put("resoult", -1);//返回登陆页面
         }
-        return  json;
+        return json;
     }
 }

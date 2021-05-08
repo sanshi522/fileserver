@@ -16,11 +16,11 @@ public class ShareRightServiceImpl implements ShareRightService {
     @Override
     public Integer AddIsHaveUpTime(ShareRight shareRight) {
         ShareRight shareRight1;
-        shareRight1=shareRightRepository.findShareRightByShareIdentAndShareIdAndShareFileId(shareRight.getShareIdent(),shareRight.getShareId(),shareRight.getShareFileId());
-        if (shareRight1!=null){//修改共享时间
+        shareRight1 = shareRightRepository.findShareRightByShareIdentAndShareIdAndShareFileId(shareRight.getShareIdent(), shareRight.getShareId(), shareRight.getShareFileId());
+        if (shareRight1 != null) {//修改共享时间
             shareRight1.setAllottedTime(shareRight.getAllottedTime());
             shareRightRepository.save(shareRight1);
-        }else{//直接插入
+        } else {//直接插入
             shareRightRepository.save(shareRight);
         }
         return 1;

@@ -6,6 +6,7 @@ import com.sanshi.fileserver.service.TestPaperBindChoiceService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service("TestPaperBindChoiceServiceImpl")
 public class TestPaperBindChoiceServiceImpl implements TestPaperBindChoiceService {
     private TestPaperBindChoiceRepository testPaperBindChoiceRepository;
@@ -16,15 +17,15 @@ public class TestPaperBindChoiceServiceImpl implements TestPaperBindChoiceServic
 
     @Override
     public List<TestPaperBindChoice> findAll(TestPaperBindChoice testPaperBindChoice) {
-        if(testPaperBindChoice.getTestPaperId()!=null){
-            return  testPaperBindChoiceRepository.findAllByTestPaperIdOrderByIndexNumAsc(testPaperBindChoice.getTestPaperId());
+        if (testPaperBindChoice.getTestPaperId() != null) {
+            return testPaperBindChoiceRepository.findAllByTestPaperIdOrderByIndexNumAsc(testPaperBindChoice.getTestPaperId());
         }
         return null;
     }
 
     @Override
     public void save(List<TestPaperBindChoice> testPaperBindChoices) {
-        for (int i=0;i<testPaperBindChoices.size();i++)
+        for (int i = 0; i < testPaperBindChoices.size(); i++)
             testPaperBindChoiceRepository.save(testPaperBindChoices.get(i));
     }
 
@@ -36,12 +37,12 @@ public class TestPaperBindChoiceServiceImpl implements TestPaperBindChoiceServic
 
     @Override
     public void deleteById(TestPaperBindChoice testPaperBindChoice) {
-        if (testPaperBindChoice.getId()!=null)
-         testPaperBindChoiceRepository.deleteById(testPaperBindChoice.getId());
-        else{
-            if(testPaperBindChoice.getTestPaperId()!=null){
+        if (testPaperBindChoice.getId() != null)
+            testPaperBindChoiceRepository.deleteById(testPaperBindChoice.getId());
+        else {
+            if (testPaperBindChoice.getTestPaperId() != null) {
                 testPaperBindChoiceRepository.deleteByTestPaperId(testPaperBindChoice.getTestPaperId());
-            }else
+            } else
                 return;
         }
     }

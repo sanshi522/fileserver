@@ -32,10 +32,9 @@ public class AssessMsg {
     private  int  redNumber;
 
     /**
-     * 是否已创建答卷
+     * 是否已提交答卷
      */
     private  int  submit;
-
 
 
     public AssessMsg() {

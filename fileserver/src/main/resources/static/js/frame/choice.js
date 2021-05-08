@@ -1,6 +1,11 @@
 // JavaScript Document
-
+var checkAll=[];
 $(function(){
+
+	$("#upload").on("click",function(){
+		$("#myModal").modal("show");
+	});
+
 	//获取学科
 	function getsubtype(){
 		$.ajax({
@@ -30,6 +35,9 @@ $(function(){
 	getsubtype();
 	var pageNumber = 10; // 每页显示多少条记录
     var pageIndex= 0 ;//页码
+	var total2=10;
+	var pageNumber2 = 5; // 每页显示多少条记录
+	var pageIndex2= 0 ;//页码
 	var subId=0;
 	var choicetype=0;
 	var likeName = "";
@@ -54,10 +62,36 @@ $(function(){
 			Init(0);
 		}
 	});
+
+
+	$("#showNumber2").val('5').trigger("change")
+	   $("#showNumber2").change(function () {
+		if(pageNumber2!=$("#showNumber2").val()){
+			pageNumber2=$("#showNumber2").val();
+			$("#Pagination2").pagination(total2, {
+				callback : PageCallback2,
+				prev_text : '上一页',
+				next_text : '下一页',
+				items_per_page : pageNumber2,
+				num_display_entries : 4, // 连续分页主体部分显示的分页条目数
+				num_edge_entries : 1, // 两侧显示的首尾分页的条目数
+				jump:true,
+			});
+			getaccessory(0);
+		}
+	});
+
+
+
+
     function PageCallback(index, jq) { // 前一个参数表示当前点击的那个分页的页数索引值，后一个参数表示装载容器。
         pageIndex=index;
         Init(pageIndex);
     }
+	function PageCallback2(index, jq) { // 前一个参数表示当前点击的那个分页的页数索引值，后一个参数表示装载容器。
+		pageIndex2=index;
+		getaccessory(pageIndex);
+	}
 
 	$("#subIdScreen").change(function(){
 		subId=$("#subIdScreen").val();
@@ -301,6 +335,7 @@ function openWindw(x,y,id){
 			$(".choice_option").attr("type","radio");
 			$(".awser_tr1").show();
 			$(".awser_tr2").hide();
+			$(".accessory_tr").hide();
 		}else if($("#choicetype").val()==2){
 			$(".choice_judje_tr").hide();
 			$(".choice_option_tr").show();
@@ -308,16 +343,19 @@ function openWindw(x,y,id){
 			$(".choice_option").attr("type","checkbox");
 			$(".awser_tr1").show();
 			$(".awser_tr2").hide();
+			$(".accessory_tr").hide();
 		}else if($("#choicetype").val()==3){
 			$(".choice_option_tr").hide();
 			$(".choice_judje_tr").show();
 			$(".awser_tr1").show();
 			$(".awser_tr2").hide();
+			$(".accessory_tr").hide();
 		}else{
 			$(".choice_option_tr").hide();
 			$(".choice_judje_tr").hide();
 			$(".awser_tr2").show();
 			$(".awser_tr1").hide();
+			$(".accessory_tr").show();
 		}
 		checkedno();
 	});
@@ -377,7 +415,7 @@ function openWindw(x,y,id){
 		if (querident==1)
 			getknowleged();
 		else
-			getaccessory();
+			getaccessory(0);
 	});
 	//点击知识点
 	$("#knowledge_open").click(function(){
@@ -403,7 +441,7 @@ function openWindw(x,y,id){
 		$(".popWindow").css("min-width",'710px');
 		$(".addtitel").html("附件");
 		$(".addcontext").empty();
-		getaccessory();
+		getaccessory(0);
 	});
 
 	//初始化数据
@@ -510,14 +548,100 @@ function openWindw(x,y,id){
 			}
 		});
 	}
-	//获取附件
-	function getaccessory(){
-		if($("#library").val()==0){
-			//查询文件库
+//获取勾选附件
 
-		}else{
-			//查询样本库
+
+	
+//单位转换
+	function getKbMbGb(limit){
+		var size = "";
+		if(limit < 0.1 * 1024){                            //小于0.1KB，则转化成B
+			size = limit.toFixed(2) + "B"
+		}else if(limit < 0.1 * 1024 * 1024){            //小于0.1MB，则转化成KB
+			size = (limit/1024).toFixed(2) + "KB"
+		}else if(limit < 0.1 * 1024 * 1024 * 1024){        //小于0.1GB，则转化成MB
+			size = (limit/(1024 * 1024)).toFixed(2) + "MB"
+		}else{                                            //其他转化成GB
+			size = (limit/(1024 * 1024 * 1024)).toFixed(2) + "GB"
 		}
+
+		var sizeStr = size + "";                        //转成字符串
+		var index = sizeStr.indexOf(".");                    //获取小数点处的索引
+		var dou = sizeStr.substr(index + 1 ,2)            //获取小数点后两位的值
+		if(dou == "00"){                                //判断后两位是否为00，如果是则删除00
+			return sizeStr.substring(0, index) + sizeStr.substr(index + 3, 2)
+		}
+		return size;
+	}
+	//获取附件
+	function getaccessory(index){
+	//	if($("#library").val()==0){
+		pageIndex2=index;
+		let ScreenShareFile={
+			"pageNumber":pageNumber2,
+			"pageIndex":pageIndex2,
+			"queryLevel":0,
+			"screenLevel":0,
+			"issistId":0,
+			"likeName":$("#query1").val(),
+			"sort":sort,
+			"sortName":sortName
+		}
+			$.ajax({
+				url: "/file/getAllShareFile",
+				contentType:"application/json;charset=UTF-8",
+				type: "post",
+				async: false,
+				data:JSON.stringify(ScreenShareFile),
+				dataType: "json",
+				success: function(data) {
+					//attachmentCheck2();
+					let me = 0;
+					$(".addcontext").empty();
+					 for(let i=0;i<data.page.content.length;i++){
+					 	if (me==0){
+					 		let check="";
+					 		for (let j=0;j<checkAll.length;j++){
+					 			if(checkAll[j]==data.page.content[i].id){
+					 				check="checked=checked";
+								}
+							}
+							$(".addcontext").append('<div class="filtr-item chunk1" fileid='+data.page.content[i].id+'>\n' +
+								'<img src="../../images/file_logo_png/1140224.png"/>\n' +
+								'<input type="checkbox" name="ch" class="checkbox" '+check+' onchange="attachmentCheck(this)"/> \n'+
+								'<div class="sharefilename">'+data.page.content[i].name+'</div>\n' +
+								'<div class="sharefilesize">'+getKbMbGb(data.page.content[i].size)+'</div>\n' +
+								'</div>');
+						}else{
+							$(".addcontext").append('' +
+								'<div class="filtr-item line1" fileid='+data.page.content[i].id+'>\n' +
+								'<img src="../../images/file_logo_png/1140224.png"/>\n' +
+								'<div class="sharefilename">'+data.page.content[i].name+'</div>\n' +
+								'<div class="sharefilesize">'+getKbMbGb(data.page.content[i].size)+'</div>\n' +
+								'<div class="susdiv">\n' +
+								'<div class="operation download"><i class="my-icon lsm-sidebar-icon  ">选择</i></div>\n' +
+								'<div class="operation compile"><i class="my-icon lsm-sidebar-icon icon-chazhao "></i></div>\n' +
+								'<div class="operation delete"><i class="my-icon lsm-sidebar-icon icon-chazhao "></i></div>\n' +
+								'</div>\n' +
+								'</div>');
+						}
+					}
+					$(".download").bind("click",function () {
+						win.location.href="/file/downloadShareFile?fileId="+$(this).parent().parent().attr("fileid");
+					});
+					// total=21;
+					total2=data.page.totalElements;
+					$(".totalmsg2").html("【共"+total2+"条记录，当前显示："+(data.page.pageable.pageNumber*data.page.pageable.pageSize+1)+"~"+(data.page.pageable.pageNumber*data.page.pageable.pageSize+data.page.numberOfElements)+"】");
+
+				},
+				error: function(data){
+					console.log("服务器异常");
+				}
+			});
+
+	//	}else{
+			//查询样本库
+	//	}
 	}
 	//重置
 	$("#resetchoice").click(function(){
@@ -535,7 +659,12 @@ function openWindw(x,y,id){
 		let subId;//学科id
 		let topic;//题目
 		let type;//类型（单选，多选，判断题，简答题）
+
 		let fileIds="";//附件id集合
+		for (let  i=0;i<checkAll.length;i++){
+			  fileIds+=checkAll[i]+","
+		}
+		fileIds=fileIds.slice(0,fileIds.length-1);
 		let optionNum=null;//选项个数
 		let optionA=null;//选项A
 		let optionB=null;
@@ -649,6 +778,10 @@ function openWindw(x,y,id){
 		});
 	})
 //////////////////////////////////////////////////////////////////////悬浮窗口js
+
+
+
+
 	function choicebind(){
 		$(".edit-choice").bind("click",function(e){
 			openWindw(e.pageX,e.pageY,$(this).parent().parent().attr("choiceid"));
@@ -707,6 +840,39 @@ function openWindw(x,y,id){
 			}
 		});
 	}
+
+
+
+	$(".btn-primary").on('click', function(){
+		var formData = new FormData();
+		formData.append("file",$("#f_upload")[0].files[0]);
+		$.ajax({
+			url :"/exportExcel/importExcels",
+			type : 'POST',
+			async : false,
+			data : formData,
+			// 告诉jQuery不要去处理发送的数据
+			processData : false,
+			// 告诉jQuery不要去设置Content-Type请求头
+			contentType : false,
+			beforeSend:function(){
+				console.log("正在进行，请稍候");
+			},
+			success : function(responseStr) {
+				if(responseStr=="导入成功"){
+					$.alert("导入成功");
+				}else{
+					alert("导入失败");
+				}
+			}
+		});
+	});
+
+	function choiceFile() {
+
+
+	}
+
 });
 //搜索框回车
 function query1(e){
@@ -719,5 +885,27 @@ function query1(e){
 		$("#query101").click();
 }
 
+function exportchoice(){
+	window.location.href = "exportExcel/choiceexportExcel";
+}
 
+function  attachmentCheck(checker) {
+	let fileId=$(checker).parent().attr("fileid");
+	if($(checker).prop("checked")){
+		checkAll.push(fileId);
+	}else{
+		let index = checkAll.indexOf(fileId);
+		checkAll.splice(index, 1)
+
+	}
+
+}
+
+function  attachmentCheck2() {
+	$(":checkbox[name='ch']:checked").each(function(){
+		let fileId=$(this).parent().attr("fileid");
+		checkAll.push(fileId);
+	});
+
+}
 

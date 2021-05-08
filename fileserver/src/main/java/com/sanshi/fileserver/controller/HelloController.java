@@ -13,6 +13,23 @@ import java.io.*;
 
 @Controller
 public class HelloController {
+    @GetMapping("/particulars")
+    public ModelAndView particulars(Integer id) {
+        if (id==null) id=0;
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("particulars");
+        modelAndView.addObject("id", id);
+        return modelAndView;
+    }
+
+    @GetMapping("/approval")
+    public ModelAndView approval(Integer id) {
+        if (id==null) id=0;
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("approval");
+        modelAndView.addObject("id", id);
+        return modelAndView;
+    }
 
     @GetMapping("/studentScore")
     public String studentScore(Integer id) {

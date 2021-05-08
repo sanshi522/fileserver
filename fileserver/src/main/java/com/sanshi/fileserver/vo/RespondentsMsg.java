@@ -1,6 +1,7 @@
 package com.sanshi.fileserver.vo;
 
 import com.sanshi.fileserver.bean.Assess;
+import com.sanshi.fileserver.bean.Student;
 
 public class RespondentsMsg {
 
@@ -11,16 +12,27 @@ public class RespondentsMsg {
     //总分数
     private Double  score;
     //考核人
-    private  String  userName;
+    private Student student;
+    //状态
+    private int  type;
 
     public RespondentsMsg() {
     }
 
-
-    public RespondentsMsg(Assess assess, String subName, Double score) {
+    public RespondentsMsg(Assess assess, String subName, Double score, Student student, int type) {
         this.assess = assess;
         this.subName = subName;
         this.score = score;
+        this.student = student;
+        this.type = type;
+    }
+
+    public RespondentsMsg(Assess assess, String subName, Double score, Student student) {
+        this.assess = assess;
+        this.subName = subName;
+        this.score = score;
+        this.student = student;
+
     }
 
     public Assess getAssess() {
@@ -47,6 +59,21 @@ public class RespondentsMsg {
         this.score = score;
     }
 
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     @Override
     public String toString() {

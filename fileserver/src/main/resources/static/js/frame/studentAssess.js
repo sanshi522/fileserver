@@ -8,8 +8,6 @@ var total = 50; // 总共多少记录
 let opent = "";
 $(function () {
     Init(0);
-
-
     //初始化单页显示条数
     $("#showNumber").val('10').trigger("change")
     $("#showNumber").change(function () {
@@ -53,13 +51,23 @@ $(function () {
                 for(var i=0;i<data.page.content.length;i++){
 
                     $.ajax({
-                        url: "Assess/findMsg",
+                        url: "Assess/findMsg2",
                         //contentType:"application/json;charset=UTF-8",
                         type: "post",
                         async: false,
                         data: {id: data.page.content[i].id},
                         dataType: "json",
                         success: function (data2) {
+                            var  po ="";
+                            let  tite="进入考试";
+                            if(data2.submit !=2){
+
+                            }else {
+                                tite="已参加";
+                                po+="disabled=disabled"
+                            }
+
+                            console.log(data2);
                                      $(".allTestPaper").append('<div class="testPaper" style="">\n' +
                                          '        <table width="100%">\n' +
                                          '            <tr >\n' +
@@ -92,7 +100,7 @@ $(function () {
                                          '            <tr>\n' +
                                          '                <td>编辑操作：</td>\n' +
                                          '                <td style="font-size: 20px;">\n' +
-                                         '  <button class="btn btn-info" onclick="javascript:parent.open(\'answer?id=' + data.page.content[i].id + '\')">进入考试</button> \n ' +
+                                         '  <button class="btn btn-info"  '+po+' onclick="javascript:parent.open(\'answer?id=' + data.page.content[i].id + '\')">'+tite+'</button> \n ' +
                                          // '                    <label style="margin-right: 10px;cursor: pointer;"><i onclick="javascript:parent.open(\'addTestPaper?id=' + data.page.content[i].id + '\')" class="my-icon lsm-sidebar-icon icon-bianji del"></i></label>\n' +
                                          // '                    <label><i class="my-icon lsm-sidebar-icon icon-shanchu " data_id=' + data.page.content[i].id + '  style="cursor: pointer;"></i></label>\n' +
                                          '                </td>\n' +

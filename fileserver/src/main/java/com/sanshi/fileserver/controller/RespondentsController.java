@@ -15,7 +15,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/Respondents")
 public class RespondentsController {
-    private RespondentsService  respondentsService;
+    private RespondentsService respondentsService;
 
     public RespondentsController(RespondentsService respondentsService) {
         this.respondentsService = respondentsService;
@@ -23,9 +23,9 @@ public class RespondentsController {
 
     @ResponseBody
     @RequestMapping("/save")
-    public  Respondents   save(@RequestBody  Respondents  respondents){
+    public Respondents save(@RequestBody Respondents respondents) {
 
-        return  respondentsService.save(respondents);
+        return respondentsService.save(respondents);
     }
 
 
@@ -33,52 +33,60 @@ public class RespondentsController {
     @RequestMapping("/findById")
     public Respondents findById(Integer id) {
 
-   return  respondentsService.findById(id);
+        return respondentsService.findById(id);
     }
-
 
 
     @ResponseBody
     @RequestMapping("/selectSubmit")
     public int selectSubmit(Integer assessId) {
-       Respondents  respondents=   respondentsService.selectSubmit(assessId);
-       if(respondents==null){
-           return  1;
-       }else{
-           return respondents.getSubmit();
-       }
+        Respondents respondents = respondentsService.selectSubmit(assessId);
+        if (respondents == null) {
+            return 1;
+        } else {
+            return respondents.getSubmit();
+        }
 
     }
 
     @ResponseBody
     @RequestMapping("/selectScore")
-    public Map selectScore(@RequestBody PageGet pageGet){
+    public Map selectScore(@RequestBody PageGet pageGet) {
 
-        return  respondentsService.selectScore(pageGet);
+        return respondentsService.selectScore(pageGet);
 
     }
 
 
     @ResponseBody
     @RequestMapping("/selectRespondentsMsg")
-    public RespondentsMsg  selectRespondentsMsg(Integer id){
+    public RespondentsMsg selectRespondentsMsg(Integer id) {
 
-        return   respondentsService.selectRespondentsMsg(id);
+        return respondentsService.selectRespondentsMsg(id);
+
+    }
+
+    @ResponseBody
+    @RequestMapping("/selectRespondentsMsg2")
+    public RespondentsMsg selectRespondentsMsg2(Integer id) {
+
+        return respondentsService.selectRespondentsMsg2(id);
 
     }
 
     @ResponseBody
     @RequestMapping("/selectRespondents")
+    public Map selectRespondents(@RequestBody RespondentsPage respondentsPage) {
 
-    public  Map  selectRespondents(RespondentsPage respondentsPage){
 
-
-return  null;
+        return respondentsService.selectRespondents(respondentsPage);
     }
 
-
-
-
+    @ResponseBody
+    @RequestMapping("/Read")
+    public int Read(Integer respondentsId) {
+        return respondentsService.Read(respondentsId);
+    }
 
 
 }

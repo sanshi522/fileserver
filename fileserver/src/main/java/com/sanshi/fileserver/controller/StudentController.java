@@ -31,7 +31,7 @@ public class StudentController {
 
     @RequestMapping(path = "/GetStudent")
     @ResponseBody
-    public Map GetStudent(Integer StuGroup,HttpServletRequest request){
+    public Map GetStudent(Integer StuGroup, HttpServletRequest request) {
         Map json = new HashMap();
         HttpSession session = request.getSession();
         if (session != null && session.getAttribute("user") != null) {
@@ -40,20 +40,21 @@ public class StudentController {
             Integer ident = (sessionUser.getLogintype() == 0 ? 0 : sessionUser.getTeacher().getTeaIdentity());
             Integer id = (sessionUser.getLogintype() == 0 ? sessionUser.getStudent().getStuId() : sessionUser.getTeacher().getTeaId());
             json.put("resoult", true);
-            if (ident==0)
-                json.put("students",studentService.findAllByStuGroup(sessionUser.getStudent().getStuGroup()));
-            else{
-                json.put("students",studentService.findAllByStuGroup(StuGroup));
+            if (ident == 0)
+                json.put("students", studentService.findAllByStuGroup(sessionUser.getStudent().getStuGroup()));
+            else {
+                json.put("students", studentService.findAllByStuGroup(StuGroup));
             }
-        }else
+        } else
             json.put("resoult", false);
         return json;
     }
+
     @RequestMapping(path = "/GetStudentByClassId")
     @ResponseBody
-    public Map GetStudentByClassId(PageGet val){
+    public Map GetStudentByClassId(PageGet val) {
         System.out.println(val.toString());
-        return  studentService.findAllByClassId(val);
+        return studentService.findAllByClassId(val);
 //        List<Student> Studentlist = studentService.findAllByClassId(val);
 //        List<Map> listdata=new ArrayList<Map>();
 //        Map json;
@@ -73,14 +74,16 @@ public class StudentController {
 //        }
 //        return listdata;
     }
+
     @RequestMapping(path = "/save")
     @ResponseBody
-    public Student AddStudent(Student val, HttpServletRequest request){
+    public Student AddStudent(Student val, HttpServletRequest request) {
         return studentService.save(val);
     }
+
     @RequestMapping(path = "/deleteById")
     @ResponseBody
-    public Integer deleteById(Integer val, HttpServletRequest request){
+    public Integer deleteById(Integer val, HttpServletRequest request) {
         return studentService.deleteById(val);
     }
 

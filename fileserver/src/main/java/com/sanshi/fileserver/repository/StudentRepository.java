@@ -23,6 +23,14 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
     Student findOneByStuId(Integer stuId);
 
     /**
+     * 根据学号查询学生
+     * @param stuNumber
+     * @return
+     */
+
+    Student  findOneByStuNumber(String stuNumber);
+
+    /**
      * 根据小组id组查询学生id集合
      * @return
      */
@@ -44,6 +52,6 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
 
     Page<Student> findAllByStuGroupInAndStuNameLike(List<Integer> StuGroups, String name,Pageable pageable);
 
-    @Query(value="select s.stuId from Student  s where  s.stuId in ? 1  and   s.stuId  not in ? 2")
-    List<Integer> findAllByStuIdAndAssessIdMinus(List<Integer> studentIdList1,List<Integer> studentIdList2);
+//    @Query(value="select s.stuId from Student  s where  s.stuId in ? 1  and   s.stuId  not in ? 2")
+//    List<Integer> findAllByStuIdAndAssessIdMinus(List<Integer> studentIdList1,List<Integer> studentIdList2);
 }

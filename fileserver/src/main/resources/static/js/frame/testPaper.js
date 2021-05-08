@@ -11,15 +11,21 @@ $(function () {
             success: function (data) {
                 $("#subjectId").empty();
                 $("#subIdScreen").empty();
+                $("#subIdScreen2").empty();
+
+
                 $("#subIdScreen").append('<option value="0">全部学科</option>');
                 for (let i = 0; i < data.length; i++) {
                     $("#subjectId").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
                     $("#subIdScreen").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                    $("#subIdScreen2").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
                 }
                 $('#subjectId').selectpicker('refresh');
                 $('#subIdScreen').selectpicker('refresh');
                 $('#subjectId').val(data[0].id).trigger("change");
                 $('#subIdScreen').val(0).trigger("change");
+                $('#subIdScreen2').val(data[0].id).trigger("change");
+                $('#subIdScreen2').val(0).trigger("change");
             },
             error: function (data) {
 
@@ -110,7 +116,7 @@ $(function () {
                                     '            </tr>\n' +
                                     '            <tr>\n' +
                                     '                <td>创建人：</td>\n' +
-                                    '                <td>' + data2.name + '</td>\n' +
+                                    '                <td>' + data2.creatUserName + '</td>\n' +
                                     '            </tr>\n' +
                                     '            <tr>\n' +
                                     '                <td>编辑操作：</td>\n' +
@@ -189,7 +195,6 @@ $(function () {
 
 
 //////////////////////////////////////////////////////////////////////悬浮窗口js
-    //var oBtn = $('#show');
     var popWindow = $('.popWindow');
     var oClose = $('.popWindow h3 span');
     //浏览器可视区域的宽度
@@ -205,34 +210,39 @@ $(function () {
     //弹出窗口的高度
     var popWindowHeight = popWindow.outerHeight(true);
     //left的值＝浏览器可视区域的宽度／2－弹出窗口的宽度／2+浏览器横向滚动条距离左边界的值
-    var positionLeft = browserWidth / 2 - popWindowWidth / 2 + browserScrollLeft;
+    var positionLeft = browserWidth/2 - popWindowWidth/2+browserScrollLeft;
     //top的值＝浏览器可视区域的高度／2－弹出窗口的高度／2+浏览器纵向滚动条距离上边界的值
-    var positionTop = browserHeight / 2 - popWindowHeight / 2 + browserScrollTop;
+    var positionTop = browserHeight/2 - popWindowHeight/2+browserScrollTop;
     var oMask = '<div class="mask"></div>'
     //遮照层的宽度
     var maskWidth = $(document).width();
     //遮照层的高度
     var maskHeight = $(document).height();
-
     //刷新
-    function ref() {
+    function ref(){
         maskWidth = $(document).width();
         maskHeight = $(document).height();
-        $(popWindow).css("max-width", maskWidth / 2 + 'px');
-        $(popWindow).css("max-height", maskHeight + 'px');
-        $(".wContent").css("max-height", maskHeight / 3 * 2 + 'px');
-        $(".addcontext").css("height", $(".wContent").height());
+        $(popWindow).css("max-width",maskWidth/2+'px');
+        $(popWindow).css("max-height",maskHeight+'px');
+        $(".wContent").css("max-height",maskHeight/3*2+'px');
+        $(".addcontext").css("height",$(".wContent").height());
 //	popWindowWidth = popWindow.outerWidth(true);
 //	popWindowHeight = popWindow.outerHeight(true);
         popWindowWidth = $(popWindow).width();
         popWindowHeight = $(popWindow).height();
         browserWidth = $(window).width();
         browserHeight = $(window).height();
-        positionLeft = browserWidth / 2 - popWindowWidth / 2 + browserScrollLeft;
-        positionTop = browserHeight / 2 - popWindowHeight / 2 + browserScrollTop;
+        positionLeft = browserWidth/2 - popWindowWidth/2+browserScrollLeft;
+        positionTop = browserHeight/2 - popWindowHeight/2+browserScrollTop;
+
+
     }
 
+    /** 弹出框**/
     function openWindw(x, y) {
+        $(".popWindow").css("width", "320px");
+        $("#addUser_div").hide();
+        $("#screenTest_div").hide();
         ref();
         $(popWindow).css("left", x - popWindowWidth + 'px');
         $(popWindow).css("top", y + 'px');
@@ -243,7 +253,6 @@ $(function () {
         $('body').append(oMask);
         $('.mask').width(maskWidth).height(maskHeight);
         popWindow.removeClass("hide");
-        popinit();
     };
     $(window).resize(function () {
         ref();
@@ -376,6 +385,10 @@ $(function () {
         });
     }
 
+    $("#addAssess").click(function (e) {
+        openWindw(e.pageX, e.pageY);
+    });
+
     //获取附件
     function getaccessory() {
         $.ajax({
@@ -392,23 +405,64 @@ $(function () {
         });
     }
 
-//////////////////////////////////////////////////////////////////////悬浮窗口js
+    $("#save_ok").bind("click", function () {
+
+    if( $("#TestPaperName").val()=="" ||  $("#TestPaperName").val()==null){
+        $.alert("试卷名称不能为空");
+    }
+
+        if( $("#TestPaperName").val()=="" ||  $("#TestPaperName").val()==null){
+            $.alert("试卷名称不能为空");
+        }
+        var re = /^[0-9]+.?[0-9]*/;
+        if (!re.test($("#rodSum").val())) {
+            $.alert("单选题数量只能为数字");
+            return;
+        }
+        if (!re.test($("#checkSum").val())) {
+            $.alert("多选题数量只能为数字");
+            return;
+        }
+        if (!re.test($("#judgeSum").val())) {
+            $.alert("判断题只能为数字");
+            return;
+        }
+        if (!re.test($("#answerSum").val())) {
+            $.alert("简答题只能为数字");
+            return;
+        }
+
+        let  TestPaperUtils={
+            "testPaperName": $("#TestPaperName").val(),
+            "subId":  $("#subIdScreen2").val(),
+            "difficulty":$("#difficultyLevel").val(),
+            "rodSum":$("#rodSum").val(),
+            "checkSum":$("#checkSum").val(),
+            "judgeSum":$("#judgeSum").val(),
+            "answerSum":$("#answerSum").val(),
+            "rodScore":$("#rodScore").val(),
+            "checkScore":$("#checkScore").val(),
+            "judgeScore":$("#judgeScore").val(),
+            "answerScore":$("#answerScore").val(),
+        }
+        $.ajax({
+            url:"testPaper/generateTestPaper",
+            contentType: "application/json;charset=UTF-8",
+            type: "post",
+            data: JSON.stringify(TestPaperUtils),
+            dataType: "json",
+            success:function (data) {
+                $.alert(data.data);
+            },
+            error:function (dta) {
+                $.alert("服务器异常");
+            }
+        })
+
+
+
+    })
+
 });
 
-function choicebind() {
-    $(".input-cho").bind("click", function () {
-        $(this).children('input')[0].click();
-    });
-    $(".pack-up").bind("click", function () {
-        var bi = $(this).parent().parent().children(".choice-details").css("display") == "none" ? "none" : "block";
-        $(".choice-details").css("display", "none");
-        $(this).parent().parent().children(".choice-details").css("display", bi == "none" ? "block" : "none");
-        $(".pack-up").children("i").removeClass("icon-jiantoushang");
-        $(".pack-up").children("i").addClass("icon-jiantouxia");
-        if ($(this).parent().parent().children(".choice-details").css("display") == "block") {
-            $(this).children("i").removeClass("icon-jiantouxia");
-            $(this).children("i").addClass("icon-jiantoushang");
-        }
-    });
-}
 

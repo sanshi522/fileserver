@@ -46,4 +46,6 @@ public interface KnowledgePointService {
     Map getAll(PageGet val);
 
     List<KnowledgePoint>  selectBySubId(Integer id);
+
+    KnowledgePoint   findOneBySubIdAndName(Integer subId,String name);
 }
