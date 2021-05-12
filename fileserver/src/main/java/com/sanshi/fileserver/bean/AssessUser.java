@@ -12,7 +12,7 @@ import java.util.Date;
 @Entity
 public class AssessUser {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer assessId;//考核id
     /**

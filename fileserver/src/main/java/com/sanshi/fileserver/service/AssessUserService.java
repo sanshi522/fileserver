@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface AssessUserService {
 
-    public   int  save(List<AssessUser> list);
+    public int save(List<AssessUser> list);
 }

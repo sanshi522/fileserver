@@ -14,6 +14,7 @@ public interface AssessService {
 
     /**
      * 获取考核
+     *
      * @param
      * @param
      * @param
@@ -29,13 +30,16 @@ public interface AssessService {
 
     /**
      * 获取未进行考核
+     *
      * @param assess
      * @param
      * @return
      */
-    List<Assess> findAllInvalid(Assess assess, Integer logintype,Integer userId);
+    List<Assess> findAllInvalid(Assess assess, Integer logintype, Integer userId);
+
     /**
      * 添加修改
+     *
      * @param
      * @return
      */
@@ -43,30 +47,33 @@ public interface AssessService {
 
     /**
      * 删除
+     *
      * @param
      */
     Result delete(Integer id);
 
 
-     AssessMsg findMsg(Integer testPaperId);
-     String  fullname(Integer testObject ,Integer testObjectId );
+    AssessMsg findMsg(Integer testPaperId);
+
+    String fullname(Integer testObject, Integer testObjectId);
 
     /**
      * 查询
      */
-    AssessUerGVo  findbyId(Integer  assessId);
+    AssessUerGVo findbyId(Integer assessId);
+
     /**
      * 查询试卷
      */
-    Assess  findByOneId(Integer  assessId);
+    Assess findByOneId(Integer assessId);
 
     /**
      * 学生查询自己的试卷
      */
 
-    Map  StudentAssess(StudentAssessVo studentAssessVo);
+    Map StudentAssess(StudentAssessVo studentAssessVo);
 
-    StudentAssessVo  studentChoice(Integer assessId);
+    StudentAssessVo studentChoice(Integer assessId);
 
     AssessMsg findMsg2(Integer id);
 

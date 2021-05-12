@@ -15,7 +15,7 @@ import java.util.Date;
 @Entity
 public class TeacherBindCclass {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer teeaId;
     private Integer cclassId;

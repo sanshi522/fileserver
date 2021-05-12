@@ -56,6 +56,6 @@ public class StuGroupServiceImpl implements StuGroupService {
 
     @Override
     public StuGroup findOneByName(Integer classId, String groupName) {
-        return groupRepository.findOneByCclassIdAndName(classId,groupName);
+        return groupRepository.findOneByCclassIdAndName(classId, groupName);
     }
 }

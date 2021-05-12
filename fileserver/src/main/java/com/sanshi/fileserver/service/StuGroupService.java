@@ -10,6 +10,7 @@ import java.util.Map;
 public interface StuGroupService {
     /**
      * 通过班级id获取小组集合
+     *
      * @param Id
      * @return
      */
@@ -22,5 +23,6 @@ public interface StuGroupService {
     StuGroup save(StuGroup student);
 
     Integer deleteById(Integer val);
-    StuGroup findOneByName(Integer classId,String groupName);
+
+    StuGroup findOneByName(Integer classId, String groupName);
 }

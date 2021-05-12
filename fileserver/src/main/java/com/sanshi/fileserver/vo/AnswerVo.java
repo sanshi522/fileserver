@@ -8,7 +8,7 @@ public class AnswerVo {
     /**
      * 题目
      */
-    private Choice  choice;
+    private Choice choice;
 
     /**
      * 答题
@@ -18,7 +18,7 @@ public class AnswerVo {
     /**
      * 分数
      */
-    private Double   score;
+    private Double score;
 
 
     public AnswerVo() {

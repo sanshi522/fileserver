@@ -9,7 +9,7 @@ import java.util.List;
 
 public class StudentAssessVo {
     //学生Id
-    private  Integer  stuId;
+    private Integer stuId;
 
     /**
      * 单页显示数目
@@ -23,7 +23,7 @@ public class StudentAssessVo {
     /**
      * 考核ID
      */
-    private  Integer assessId;
+    private Integer assessId;
     /**
      * 学科对象
      */
@@ -32,24 +32,24 @@ public class StudentAssessVo {
     /**
      * 考核对象
      */
-    private Assess   assess;
+    private Assess assess;
 
     /**
      * 试卷对象
      */
-    private TestPaper  testPaper;
+    private TestPaper testPaper;
 
     /**
      * 试题集合
      */
 
-    private List<ChoiceVo>choiceList;
+    private List<ChoiceVo> choiceList;
 
 
     public StudentAssessVo() {
     }
 
-    public StudentAssessVo(Integer stuId, Integer pageNumber, Integer pageIndex, Integer assessId, Assess assess, TestPaper testPaper,List<ChoiceVo>choiceList,Subject subject) {
+    public StudentAssessVo(Integer stuId, Integer pageNumber, Integer pageIndex, Integer assessId, Assess assess, TestPaper testPaper, List<ChoiceVo> choiceList, Subject subject) {
         this.stuId = stuId;
         this.pageNumber = pageNumber;
         this.pageIndex = pageIndex;
@@ -57,7 +57,7 @@ public class StudentAssessVo {
         this.assess = assess;
         this.testPaper = testPaper;
         this.choiceList = choiceList;
-        this.subject=subject;
+        this.subject = subject;
     }
 
     public StudentAssessVo(Subject subject, Assess assess, TestPaper testPaper, List<ChoiceVo> choiceList) {

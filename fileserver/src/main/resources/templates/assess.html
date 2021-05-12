@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>知识点</title>
-    <link rel="stylesheet" type="text/css" href="/css/frame/share.css" />
+    <link rel="stylesheet" type="text/css" href="/css/frame/share.css"/>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/fonts/iconfont1.css">
-    <link rel="stylesheet" type="text/css" href="/css/frame/student.css" />
+    <link rel="stylesheet" type="text/css" href="/css/frame/student.css"/>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap/bootstrap-select/bootstrap-select.min.css">
     <link rel="stylesheet" type="text/css" href="/css/jquery-confirm/jquery-confirm.css">
     <link rel="stylesheet" type="text/css" href="/css/jquery-pagination/pagination.css">
@@ -22,53 +22,54 @@
     <script src="/js/jquery/jquery-confirm.js"></script>
 </head>
 <style>
-    body{
+    body {
         margin: 5px;
     }
 </style>
 <body>
 <div style="width:100%;height:40px;">
-    <div  class="subIdDiv"  >
+    <div class="subIdDiv">
 
-        <select name="channels" id="subIdScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" placeholder="请选择学科">
+        <select name="channels" id="subIdScreen" data-style="btn-info" class="selectpicker" data-live-search="true"
+                placeholder="请选择学科">
             <option value="0">全部学科</option>
         </select>
         <input type="hidden" id="AssessId">
     </div>
-    <div class="subIdDiv" id="TeacherDiv" >
-        <select name="channels"  id="TeacherSelect" data-style="btn-info" class="selectpicker" data-live-search="true" >
+    <div class="subIdDiv" id="TeacherDiv">
+        <select name="channels" id="TeacherSelect" data-style="btn-info" class="selectpicker" data-live-search="true">
             <option value="0">全部老师</option>
         </select>
     </div>
 
     <div class="blue ui buttons" style="float: right;margin-left: 10px;">
-        <button class="ui button green"  id="addAssess">发布考核</button>
+        <button class="ui button green" id="addAssess">发布考核</button>
     </div>
 
     <div class="ui query subIdDiv">
-        <input class="query"  type="text" id="query">
+        <input class="query" type="text" id="query">
         <i class="my-icon lsm-sidebar-icon icon-chazhao querybtn"></i>
     </div>
 </div>
 <hr>
-<div class="allTestPaper" >
+<div class="allTestPaper">
 
 </div>
 
 <div class="paginationParent">
     <div id="showNumberdiv" style="float: right;width:60px;margin-right: 20px;">
-        <select name="channels" id="showNumber" data-style="btn-info" class="selectpicker" >
-            <option  value="5">5条</option>
-            <option  value="10">10条</option>
-            <option  value="20">20条</option>
-            <option  value="30">30条</option>
-            <option  value="40">40条</option>
-            <option  value="50">50条</option>
-            <option  value="60">60条</option>
-            <option  value="70">70条</option>
-            <option  value="80">80条</option>
-            <option  value="90">90条</option>
-            <option  value="100">100条</option>
+        <select name="channels" id="showNumber" data-style="btn-info" class="selectpicker">
+            <option value="5">5条</option>
+            <option value="10">10条</option>
+            <option value="20">20条</option>
+            <option value="30">30条</option>
+            <option value="40">40条</option>
+            <option value="50">50条</option>
+            <option value="60">60条</option>
+            <option value="70">70条</option>
+            <option value="80">80条</option>
+            <option value="90">90条</option>
+            <option value="100">100条</option>
         </select>
     </div>
     <div style="float: right;">单页显示：</div>
@@ -80,55 +81,60 @@
     <div class="pop-title" style="width:100%;height:40px;font-size: 20px;line-height: 40px;font-weight: 700;">考核信息</div>
     <div class="pop-left" style="min-width: 300px;width: 300px;height: auto;float: left;margin: 5px;">
         <div class="input-group input-1">
-            <span class="input-group-addon" >考核名称</span>
-            <input type="text" class="form-control"  aria-describedby="basic-addon1" id="assname">
+            <span class="input-group-addon">考核名称</span>
+            <input type="text" class="form-control" aria-describedby="basic-addon1" id="assname">
         </div>
         <div class="input-group input-1">
-            <span class="input-group-addon" >学科</span>
-            <select name="channels" id="subIdScreen2" data-style="btn-info" aria-describedby="basic-addon1" class="form-control" placeholder="请输入学科">
+            <span class="input-group-addon">学科</span>
+            <select name="channels" id="subIdScreen2" data-style="btn-info" aria-describedby="basic-addon1"
+                    class="form-control" placeholder="请输入学科">
                 <option value="0">全部学科</option>
             </select>
         </div>
         <div class="input-group input-1">
-            <span class="input-group-addon" >试卷</span>
+            <span class="input-group-addon">试卷</span>
             <input type="text" class="form-control" name="" id="testpaper_id" data_value="" readonly/>
         </div>
         <div class="input-group input-1">
-            <span class="input-group-addon" >答题时长</span>
+            <span class="input-group-addon">答题时长</span>
             <input type="number" class="form-control" name="" id="make_time" data_value="" min="1" value="1"/>
             <span class="input-group-addon">分钟</span>
         </div>
         <div class="input-group input-1">
-            <span class="input-group-addon" >开始时间</span>
+            <span class="input-group-addon">开始时间</span>
             <input type="text" class="form-control" name="search-from-date" id="search-from-date" readonly/>
         </div>
 
-            <div class="input-group input-1">
-            <span class="input-group-addon" >结束时间</span>
+        <div class="input-group input-1">
+            <span class="input-group-addon">结束时间</span>
             <input type="text" class="form-control" name="search-to-date" id="search-to-date" readonly/>
         </div>
 
-            <table class="table" style="width:100%;border: 1px solid rgba(34, 36, 38, .15);margin-top: 10px ">
-                    <thead>
-                    <tr><th colspan="2">考核对象</th><th style="text-align: right;"><i class=" my-icon lsm-sidebar-icon icon-tianjia  add-assessuser"></i></th></tr>
-                    </thead>
-                    <tbody id="testObject">
+        <table class="table" style="width:100%;border: 1px solid rgba(34, 36, 38, .15);margin-top: 10px ">
+            <thead>
+            <tr>
+                <th colspan="2">考核对象</th>
+                <th style="text-align: right;"><i class=" my-icon lsm-sidebar-icon icon-tianjia  add-assessuser"></i>
+                </th>
+            </tr>
+            </thead>
+            <tbody id="testObject">
 
-                    </tbody>
-                </table>
+            </tbody>
+        </table>
 
     </div>
-    <div class="pop-right" style="min-width: 500px;width: 500px; height: auto;float: left;margin: 5px;" >
+    <div class="pop-right" style="min-width: 500px;width: 500px; height: auto;float: left;margin: 5px;">
         <div id="addUser_div" hidden>
             <div class="user-title" style="width:100%;height:45px;">
                 <div class="input-group asses-inputs">
-                    <span class="input-group-addon" >考核对象</span>
+                    <span class="input-group-addon">考核对象</span>
                     <select name="channels" id="queryLevels" aria-describedby="basic-addon1" class="form-control">
-                        <option value=1 >学年</option>
-                        <option value=2 >学院</option>
-                        <option value=3 >班级</option>
-                        <option value=4 >小组</option>
-                        <option value=5 >学生</option>
+                        <option value=1>学年</option>
+                        <option value=2>学院</option>
+                        <option value=3>班级</option>
+                        <option value=4>小组</option>
+                        <option value=5>学生</option>
                     </select>
                 </div>
             </div>
@@ -136,26 +142,30 @@
                 <thead>
                 <tr>
                     <th colspan="2">
-                        <div  id="yearScreenDiv" >
-                            <select name="channels" id="yearScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
+                        <div id="yearScreenDiv">
+                            <select name="channels" id="yearScreen" data-style="btn-info" class="selectpicker"
+                                    data-live-search="true">
                                 <option value="0">全部学年</option>
 
                             </select>
                         </div>
-                        <div  id="gradeScreenDiv" >
-                            <select name="channels" id="gradeScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
-                                <option  value="0">全部院系</option>
+                        <div id="gradeScreenDiv">
+                            <select name="channels" id="gradeScreen" data-style="btn-info" class="selectpicker"
+                                    data-live-search="true">
+                                <option value="0">全部院系</option>
 
                             </select>
                         </div>
-                        <div  id="classScreenDiv" >
-                            <select name="channels" id="classScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
-                                <option  value="0">全部班级</option>
+                        <div id="classScreenDiv">
+                            <select name="channels" id="classScreen" data-style="btn-info" class="selectpicker"
+                                    data-live-search="true">
+                                <option value="0">全部班级</option>
                             </select>
                         </div>
-                        <div  id="groupScreenDiv" >
-                            <select name="channels" id="groupScreen" data-style="btn-info" class="selectpicker"  data-live-search="true" >
-                                <option  value="0">全部小组</option>
+                        <div id="groupScreenDiv">
+                            <select name="channels" id="groupScreen" data-style="btn-info" class="selectpicker"
+                                    data-live-search="true">
+                                <option value="0">全部小组</option>
                             </select>
                         </div>
                     </th>
@@ -170,28 +180,51 @@
             <div class="user-title" style="width:100%;height:45px;">
                 <div class="input-group" style="margin-top: 10px;">
                     <input type="text" class="form-control" name="" id="query1" data_value=""/>
-                    <span class="input-group-addon" ><i class="my-icon lsm-sidebar-icon icon-chazhao querybtn1"></i></span>
+                    <span class="input-group-addon"><i
+                            class="my-icon lsm-sidebar-icon icon-chazhao querybtn1"></i></span>
                 </div>
             </div>
             <table class="table" style="width:100%;border: 1px solid rgba(34, 36, 38, .15); ">
                 <thead>
-                    <tr><th>试卷名字</th><th>题目数量</th><th>总分</th></tr>
+                <tr>
+                    <th>试卷名字</th>
+                    <th>题目数量</th>
+                    <th>总分</th>
+                </tr>
                 </thead>
                 <tbody id="allTestPaper1">
                 </tbody>
             </table>
+
             <div class="paginationParent">
-                <label class="totalmsg1" style="float: right;"></label>
-                <div id="Pagination1"></div>
+                <div id="showNumberdiv2" style="float: right;width:60px;margin-right: 20px;">
+                    <select name="channels" id="showNumber2" data-style="btn-info" class="selectpicker">
+                        <option value="5">5条</option>
+                        <option value="10">10条</option>
+                        <option value="20">20条</option>
+                        <option value="30">30条</option>
+                        <option value="40">40条</option>
+                        <option value="50">50条</option>
+                        <option value="60">60条</option>
+                        <option value="70">70条</option>
+                        <option value="80">80条</option>
+                        <option value="90">90条</option>
+                        <option value="100">100条</option>
+                    </select>
+                </div>
+                <div style="float: right;">单页显示：</div>
+                <label class="totalmsg2" style="float: right;"></label>
+                <div id="Pagination2"></div>
             </div>
+
         </div>
     </div>
     <div class="pop-bootm" style="float: left; width:100%;height: 40px;text-align: center;">
         <div class="blue ui buttons" style="float: none;margin-left: 10px;">
-            <button class="ui button green"  id="save_ok" >保存</button>
+            <button class="ui button green" id="save_ok">保存</button>
         </div>
         <div class="blue ui buttons" style="float: none;margin-left: 10px;">
-            <button class="ui button green"  id="cancel">取消</button>
+            <button class="ui button green" id="cancel">取消</button>
         </div>
     </div>
 

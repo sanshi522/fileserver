@@ -10,14 +10,15 @@ public class AssessUserVo {
     /**
      * 考核
      */
-  private   Assess assess ;
+    private Assess assess;
     /**
      * 考核对象
      */
-  private List<AssessUser>  listAssessUser;
+    private List<AssessUser> listAssessUser;
 
 
-    public AssessUserVo(){}
+    public AssessUserVo() {
+    }
 
     public AssessUserVo(Assess assess, List<AssessUser> listAssessUser) {
         this.assess = assess;

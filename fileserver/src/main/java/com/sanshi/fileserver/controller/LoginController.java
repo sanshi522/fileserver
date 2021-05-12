@@ -32,11 +32,11 @@ public class LoginController {
 
     @RequestMapping(path = "/login")
     @ResponseBody
-    public Map login(@RequestParam String slumber, @RequestParam String pass,@RequestParam Integer identity, HttpServletRequest request) {
+    public Map login(@RequestParam String slumber, @RequestParam String pass, @RequestParam Integer identity, HttpServletRequest request) {
         HttpSession session = request.getSession();
         Map json = new HashMap();
-        if(identity==0) { //学生登录
-            switch (studentService.Login(slumber,pass,identity,request)){
+        if (identity == 0) { //学生登录
+            switch (studentService.Login(slumber, pass, identity, request)) {
                 case -1:
                     log.warn("未找到当前用户");
                     json.put("code", -1);
@@ -47,11 +47,11 @@ public class LoginController {
                     json.put("msg", "密码错误!");
                     break;
                 case 1:
-                     json.put("code", 1);
-                     break;
+                    json.put("code", 1);
+                    break;
             }
-        }else{//教师或者管理员登录
-            switch (teacherService.Login(slumber,pass,identity,request)){
+        } else {//教师或者管理员登录
+            switch (teacherService.Login(slumber, pass, identity, request)) {
                 case -1:
                     log.warn("未找到当前用户");
                     json.put("code", -1);
@@ -74,29 +74,30 @@ public class LoginController {
     public Map Islogin(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Map json = new HashMap();
-        if(session!=null&&session.getAttribute("user") != null){
-            SessionUser sessionUser=new SessionUser();
+        if (session != null && session.getAttribute("user") != null) {
+            SessionUser sessionUser = new SessionUser();
             sessionUser = (SessionUser) session.getAttribute("user");
             json.put("resoult", true);
             json.put("logintype", sessionUser.getLogintype());
-            if(sessionUser.getLogintype()==0){
-                Student student=sessionUser.getStudent();
+            if (sessionUser.getLogintype() == 0) {
+                Student student = sessionUser.getStudent();
                 student.setStuPass("禁止非法获取");
-                json.put("user",student);
-            }else{
-                Teacher teacher=sessionUser.getTeacher();
+                json.put("user", student);
+            } else {
+                Teacher teacher = sessionUser.getTeacher();
                 teacher.setTeaPass("禁止非法获取");
-                json.put("user",teacher);
+                json.put("user", teacher);
             }
-        }else{
+        } else {
             json.put("resoult", false);
         }
-        return  json;
+        return json;
     }
+
     @GetMapping(path = "/exit")
-    public String Exit(HttpServletRequest request){
+    public String Exit(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(session!=null&&session.getAttribute("user") != null){
+        if (session != null && session.getAttribute("user") != null) {
             session.removeAttribute("user");
         }
         return "login";

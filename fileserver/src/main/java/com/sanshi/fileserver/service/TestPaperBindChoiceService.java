@@ -14,6 +14,7 @@ import java.util.List;
 public interface TestPaperBindChoiceService {
     /**
      * 通过试卷id获取绑定集合
+     *
      * @param testPaperBindChoice
      * @return
      */
@@ -21,6 +22,7 @@ public interface TestPaperBindChoiceService {
 
     /**
      * 添加修改
+     *
      * @param testPaperBindChoice
      * @return
      */
@@ -28,12 +30,15 @@ public interface TestPaperBindChoiceService {
 
     /**
      * 获取试卷总分
+     *
      * @param id 试卷id
      * @return
      */
     Double findScoreSum(Integer id);
+
     /**
      * 删除
+     *
      * @param Id
      * @return
      */

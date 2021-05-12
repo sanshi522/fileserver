@@ -7,11 +7,11 @@ public class AssessMsg {
     /**
      * 发布人
      */
-    private  String  name;
+    private String name;
     /**
      * 试题数量
      */
-  private  Integer choiceNum;
+    private Integer choiceNum;
     /**
      * 试卷总分
      */
@@ -24,17 +24,17 @@ public class AssessMsg {
     /**
      * 未批阅数量
      */
-    private int  notredNumber;
+    private int notredNumber;
 
     /***
      * 已批阅数量
      */
-    private  int  redNumber;
+    private int redNumber;
 
     /**
      * 是否已提交答卷
      */
-    private  int  submit;
+    private int submit;
 
 
     public AssessMsg() {

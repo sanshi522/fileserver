@@ -12,7 +12,7 @@ import java.util.Date;
 @Entity
 public class Cclass {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private Integer gradeId;
@@ -20,6 +20,7 @@ public class Cclass {
     private Date createTime;
     @UpdateTimestamp
     private Date uapdateTime;
+
     public Cclass() {
     }
 

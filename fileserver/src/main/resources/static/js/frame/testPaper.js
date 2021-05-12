@@ -13,7 +13,6 @@ $(function () {
                 $("#subIdScreen").empty();
                 $("#subIdScreen2").empty();
 
-
                 $("#subIdScreen").append('<option value="0">全部学科</option>');
                 for (let i = 0; i < data.length; i++) {
                     $("#subjectId").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
@@ -33,30 +32,28 @@ $(function () {
         });
     }
 
-    getsubtype();
-    var pageNumber = 16; // 每页显示多少条记录
+
+
+
+
+    var pageNumber = 10; // 每页显示多少条记录
     var pageIndex = 0;//页码
     var subId = 0;
     var likeName = "";
-
-    //分页元素
     var total = 50; // 总共多少记录
+    getsubtype();
+    //分页元素
+
     //初始化单页显示条数
-    $("#showNumber").val('10').trigger("change")
-    $("#showNumber").change(function () {
-        if (pageNumber != $("#showNumber").val()) {
-            pageNumber = $("#showNumber").val();
-            $("#Pagination").pagination(total, {
-                callback: PageCallback,
-                prev_text: '上一页',
-                next_text: '下一页',
-                items_per_page: pageNumber,
-                num_display_entries: 4, // 连续分页主体部分显示的分页条目数
-                num_edge_entries: 1, // 两侧显示的首尾分页的条目数
-                jump: true,
-            });
-            Init(0);
-        }
+
+    $("#Pagination").pagination(total, {
+        callback: PageCallback,
+        prev_text: '上一页',
+        next_text: '下一页',
+        items_per_page: pageNumber,
+        num_display_entries: 4, // 连续分页主体部分显示的分页条目数
+        num_edge_entries: 1, // 两侧显示的首尾分页的条目数
+        jump: true,
     });
 
     function PageCallback(index, jq) { // 前一个参数表示当前点击的那个分页的页数索引值，后一个参数表示装载容器。
@@ -88,7 +85,7 @@ $(function () {
                             url: "/testPaper/findMsg",
                             //contentType:"application/json;charset=UTF-8",
                             type: "post",
-                            async: false,
+
                             data: {id: data.page.content[i].id},
                             dataType: "json",
                             success: function (data2) {
@@ -146,6 +143,9 @@ $(function () {
         });
     }
 
+
+
+
     $("#subIdScreen").change(function () {
         subId = $("#subIdScreen").val();
         Init(0);
@@ -167,16 +167,16 @@ $(function () {
                 content: '确定要删除该试卷吗？',
                 confirm: function () {
                     $.ajax({
-                        url:"testPaper/delete",
+                        url: "testPaper/delete",
                         type: "post",
-                        data: {"testPaperId":testPaperId},
-                        async:false,
+                        data: {"testPaperId": testPaperId},
+                        async: false,
                         dataType: "json",
-                        success:function (data) {
+                        success: function (data) {
                             $.alert(data.data);
-
+                            Init(pageIndex);
                         },
-                        error:function (data) {
+                        error: function (data) {
 
                         }
 
@@ -186,7 +186,6 @@ $(function () {
 
                 }
             });
-
 
 
         });
@@ -210,30 +209,31 @@ $(function () {
     //弹出窗口的高度
     var popWindowHeight = popWindow.outerHeight(true);
     //left的值＝浏览器可视区域的宽度／2－弹出窗口的宽度／2+浏览器横向滚动条距离左边界的值
-    var positionLeft = browserWidth/2 - popWindowWidth/2+browserScrollLeft;
+    var positionLeft = browserWidth / 2 - popWindowWidth / 2 + browserScrollLeft;
     //top的值＝浏览器可视区域的高度／2－弹出窗口的高度／2+浏览器纵向滚动条距离上边界的值
-    var positionTop = browserHeight/2 - popWindowHeight/2+browserScrollTop;
+    var positionTop = browserHeight / 2 - popWindowHeight / 2 + browserScrollTop;
     var oMask = '<div class="mask"></div>'
     //遮照层的宽度
     var maskWidth = $(document).width();
     //遮照层的高度
     var maskHeight = $(document).height();
+
     //刷新
-    function ref(){
+    function ref() {
         maskWidth = $(document).width();
         maskHeight = $(document).height();
-        $(popWindow).css("max-width",maskWidth/2+'px');
-        $(popWindow).css("max-height",maskHeight+'px');
-        $(".wContent").css("max-height",maskHeight/3*2+'px');
-        $(".addcontext").css("height",$(".wContent").height());
+        $(popWindow).css("max-width", maskWidth / 2 + 'px');
+        $(popWindow).css("max-height", maskHeight + 'px');
+        $(".wContent").css("max-height", maskHeight / 3 * 2 + 'px');
+        $(".addcontext").css("height", $(".wContent").height());
 //	popWindowWidth = popWindow.outerWidth(true);
 //	popWindowHeight = popWindow.outerHeight(true);
         popWindowWidth = $(popWindow).width();
         popWindowHeight = $(popWindow).height();
         browserWidth = $(window).width();
         browserHeight = $(window).height();
-        positionLeft = browserWidth/2 - popWindowWidth/2+browserScrollLeft;
-        positionTop = browserHeight/2 - popWindowHeight/2+browserScrollTop;
+        positionLeft = browserWidth / 2 - popWindowWidth / 2 + browserScrollLeft;
+        positionTop = browserHeight / 2 - popWindowHeight / 2 + browserScrollTop;
 
 
     }
@@ -407,11 +407,11 @@ $(function () {
 
     $("#save_ok").bind("click", function () {
 
-    if( $("#TestPaperName").val()=="" ||  $("#TestPaperName").val()==null){
-        $.alert("试卷名称不能为空");
-    }
+        if ($("#TestPaperName").val() == "" || $("#TestPaperName").val() == null) {
+            $.alert("试卷名称不能为空");
+        }
 
-        if( $("#TestPaperName").val()=="" ||  $("#TestPaperName").val()==null){
+        if ($("#TestPaperName").val() == "" || $("#TestPaperName").val() == null) {
             $.alert("试卷名称不能为空");
         }
         var re = /^[0-9]+.?[0-9]*/;
@@ -432,33 +432,32 @@ $(function () {
             return;
         }
 
-        let  TestPaperUtils={
+        let TestPaperUtils = {
             "testPaperName": $("#TestPaperName").val(),
-            "subId":  $("#subIdScreen2").val(),
-            "difficulty":$("#difficultyLevel").val(),
-            "rodSum":$("#rodSum").val(),
-            "checkSum":$("#checkSum").val(),
-            "judgeSum":$("#judgeSum").val(),
-            "answerSum":$("#answerSum").val(),
-            "rodScore":$("#rodScore").val(),
-            "checkScore":$("#checkScore").val(),
-            "judgeScore":$("#judgeScore").val(),
-            "answerScore":$("#answerScore").val(),
+            "subId": $("#subIdScreen2").val(),
+            "difficulty": $("#difficultyLevel").val(),
+            "rodSum": $("#rodSum").val(),
+            "checkSum": $("#checkSum").val(),
+            "judgeSum": $("#judgeSum").val(),
+            "answerSum": $("#answerSum").val(),
+            "rodScore": $("#rodScore").val(),
+            "checkScore": $("#checkScore").val(),
+            "judgeScore": $("#judgeScore").val(),
+            "answerScore": $("#answerScore").val(),
         }
         $.ajax({
-            url:"testPaper/generateTestPaper",
+            url: "testPaper/generateTestPaper",
             contentType: "application/json;charset=UTF-8",
             type: "post",
             data: JSON.stringify(TestPaperUtils),
             dataType: "json",
-            success:function (data) {
+            success: function (data) {
                 $.alert(data.data);
             },
-            error:function (dta) {
+            error: function (dta) {
                 $.alert("服务器异常");
             }
         })
-
 
 
     })

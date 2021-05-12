@@ -2,6 +2,7 @@ package com.sanshi.fileserver.controller;
 
 import com.sanshi.fileserver.bean.Choice;
 import com.sanshi.fileserver.service.ChoiceService;
+import com.sanshi.fileserver.utils.ChoiceUtil;
 import com.sanshi.fileserver.vo.ScreenChoice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,27 +25,34 @@ public class ChoiceController {
 
     @PostMapping("/findAll")
     @ResponseBody
-    public Map findAll(@RequestBody ScreenChoice screenChoice){
+    public Map findAll(@RequestBody ScreenChoice screenChoice) {
         return choiceService.findAll(screenChoice);
     }
+
     @PostMapping("/save")
     @ResponseBody
-    public Choice save(@RequestBody Choice choice){
-        return  choiceService.save(choice);
+    public Choice save(@RequestBody ChoiceUtil choiceUtil) {
+        return choiceService.save(choiceUtil);
     }
+
     @PostMapping("/findOneById")
     @ResponseBody
-    public Choice findOneById(Integer id){
+    public Choice findOneById(Integer id) {
         return choiceService.findOneById(id);
     }
+
     @PostMapping("/deleteById")
     @ResponseBody
-    public Map deleteById(Integer id){
+    public Map deleteById(Integer id) {
         return choiceService.deleteById(id);
     }
+
     @PostMapping("/selectChoiceByTestPaperId")
     @ResponseBody
-    public List<Choice> selectChoiceByTestPaperId(Integer  id){
-        return choiceService.selectChoiceByTestPaperId(id);};
+    public List<Choice> selectChoiceByTestPaperId(Integer id) {
+        return choiceService.selectChoiceByTestPaperId(id);
+    }
+
+
 
 }

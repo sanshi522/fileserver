@@ -3,19 +3,19 @@ package com.sanshi.fileserver.utils;
 import cn.afterturn.easypoi.excel.annotation.Excel;
 
 public class StudentExcel {
-    @Excel(name = "学号",width = 20,orderNum="1")
+    @Excel(name = "学号", width = 20, orderNum = "1")
     private String stuNumber;
-    @Excel(name = "姓名",width = 10,orderNum="2")
+    @Excel(name = "姓名", width = 10, orderNum = "2")
     private String stuName;
-    @Excel(name = "性别",width = 10,orderNum="3")
+    @Excel(name = "性别", width = 10, orderNum = "3")
     private String stuGender;
-    @Excel(name = "密码",width = 10,orderNum="4")
+    @Excel(name = "密码", width = 10, orderNum = "4")
     private String stuPass;
-    @Excel(name = "小组",width = 10,orderNum="5")
+    @Excel(name = "小组", width = 10, orderNum = "5")
     private String stuGroup;
-    @Excel(name = "状态",width = 10,orderNum="6",replace={"在读_1","毕业_0"})
+    @Excel(name = "状态", width = 10, orderNum = "6", replace = {"在读_1", "毕业_0"})
     private Integer stuState;
-    @Excel(name = "备注",width = 10,orderNum="7")
+    @Excel(name = "备注", width = 10, orderNum = "7")
     private String stuRemake;
 
 

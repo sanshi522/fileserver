@@ -10,11 +10,16 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SubjectRepository  extends JpaRepository<Subject,Integer>, JpaSpecificationExecutor {
+public interface SubjectRepository extends JpaRepository<Subject, Integer>, JpaSpecificationExecutor {
     List<Subject> findAll();
+
     Subject findOneById(Integer id);
+
     Subject save(Subject sub);
+
     void deleteById(Integer id);
+
     Page<Subject> findAllByNameLike(String name, Pageable p);
-    Subject  findOneByName(String name);
+
+    Subject findOneByName(String name);
 }

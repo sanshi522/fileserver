@@ -12,7 +12,7 @@ import java.util.Date;
 @Entity
 public class KnowledgePoint {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer subId;//学科id
     private String name;//知识点名字

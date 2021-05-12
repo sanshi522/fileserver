@@ -57,12 +57,12 @@ $(function () {
             return;
         } else {
             $(".navigation_title").empty();
-            $(".navigation_title").append('  <h5>考核名称：'+data.assess.name+'</h5>');
+            $(".navigation_title").append('  <h5>考核名称：' + data.assess.name + '</h5>');
             let difficul = "";
             $("#choices").empty();
-            let  score=0;
+            let score = 0;
             for (let i = 0; i < data.choiceList.length; i++) {
-                score+=data.choiceList[i].score;
+                score += data.choiceList[i].score;
                 if (data.choiceList[i].choice.type == 1 || data.choiceList[i].choice.type == 2) {//单选题和多选
                     let opent = "";
                     for (let o = 0; o < data.choiceList[i].choice.optionNum; o++) {
@@ -93,7 +93,7 @@ $(function () {
                             opent += '<div class="input-cho"><input class="single" type="checkbox" name="' + data.choiceList[i].choice.id + '" value="' + o + '" />' + op + '</div>\n';
                     }
                     $("#choices").append('  <div class="choice" choicecheck="0" choice_type="' + data.choiceList[i].choice.type + '" choiceid="' + data.choiceList[i].choice.id + '"> <div class="choice-title"> <div class="choice-index"> ' + (i + 1) + ' \n' +
-                        '</div><div class="choice-name" >' + data.choiceList[i].choice.topic + ' ('+data.choiceList[i].score+'分) </div>\n' +
+                        '</div><div class="choice-name" >' + data.choiceList[i].choice.topic + ' (' + data.choiceList[i].score + '分) </div>\n' +
                         ' <div class="choice-oper delete-choice"> </div>\n' +
                         '<div class="score_div"> </div><div class="choice-oper delete-choice"></div></div> <div class="choice-details1">  <div class="make-choice"> ' +
                         opent +
@@ -104,7 +104,7 @@ $(function () {
                     let correct = ""
                     if (data.choiceList[i].choice.correct == 1) correct = "正确"; else correct = "错误";
                     $("#choices").append('<div class="choice" choicecheck="0" choice_type="' + data.choiceList[i].choice.type + '"  choiceid="' + data.choiceList[i].choice.id + '" >\n' +
-                        ' <div class="choice-title"><div class="choice-index">' + (i + 1) + '</div><div class="choice-name" >' + data.choiceList[i].choice.topic + ' ('+data.choiceList[i].score+'分)</div>\n' +
+                        ' <div class="choice-title"><div class="choice-index">' + (i + 1) + '</div><div class="choice-name" >' + data.choiceList[i].choice.topic + ' (' + data.choiceList[i].score + '分)</div>\n' +
                         ' <div class="choice-oper delete-choice"></div>\n' +
                         '<div class="score_div">\n' +
                         '</div>' +
@@ -120,7 +120,7 @@ $(function () {
                         '\t\t</div>');
                 } else if (data.choiceList[i].choice.type == 4) {//简答题
                     $("#choices").append('<div class="choice" choicecheck="0" fileUrl=""  choice_type="' + data.choiceList[i].choice.type + '" choiceid="' + data.choiceList[i].choice.id + '">\n' +
-                        ' <div class="choice-title"><div class="choice-index">' + (i + 1) + '</div><div class="choice-name" >' + data.choiceList[i].choice.topic + '('+data.choiceList[i].score+'分)</div>\n' +
+                        ' <div class="choice-title"><div class="choice-index">' + (i + 1) + '</div><div class="choice-name" >' + data.choiceList[i].choice.topic + '(' + data.choiceList[i].score + '分)</div>\n' +
                         ' <div class="choice-oper delete-choice"> </div>\n' +
                         '<div class="score_div">\n' +
                         '</div>' +
@@ -138,7 +138,7 @@ $(function () {
             }
             sortRef();
             addRespondents();
-            $(".navigation_title").append('  <h5>总分：'+score+'</h5>');
+            $(".navigation_title").append('  <h5>总分：' + score + '</h5>');
 
         }
     }
@@ -169,18 +169,18 @@ function binds() {
     let choices = $(".choice");
     var assessId = $("#assessId").attr("assessId");
     var respondentsId = $("#respondentsId").val();
-    let flag=true;
+    let flag = true;
     choices.each(function (i, choice) {
-        if(!flag) return;
+        if (!flag) return;
         var type = $(choice).attr("choice_type")
         var id = $(choice).attr("choiceid");
         var value = "";
         var num = $(choice).attr("c_index");
         var fileIds = $(choice).attr("fileUrl");
-        if(fileIds!="" && fileIds!=undefined){
-            fileIds=fileIds.substring(0,fileIds.length-1);
-        }else{
-            fileIds="";
+        if (fileIds != "" && fileIds != undefined) {
+            fileIds = fileIds.substring(0, fileIds.length - 1);
+        } else {
+            fileIds = "";
         }
         switch (type) {
             case "1":
@@ -217,11 +217,11 @@ function binds() {
                 break;
         }
         if (value == "") {
-            flag=false;
-            if (confirm("还有题目未作答确定要提交吗")==true){
-                flag=true;
+            flag = false;
+            if (confirm("还有题目未作答确定要提交吗") == true) {
+                flag = true;
                 return true;
-            }else{
+            } else {
                 return false;
             }
             // $.confirm({
@@ -245,29 +245,29 @@ function binds() {
             "choiceId": id,
             "respondentsId": respondentsId,
             "answer": value,
-            "fileIds":fileIds
+            "fileIds": fileIds
         }
         answerList.push(Answer);
     });
-    if(!flag){
+    if (!flag) {
         return;
     }
 
-     $.ajax({
-        url:"Answer/save",
-        type:"Post",
-        contentType:"application/json;charset=UTF-8",
-         sync:false,
-       data:JSON.stringify(answerList),
-         dataType: "json",
-        success:function (data) {
-             console.log(data);
-            window.location.href="javascript:history.go(-1)";
-         },
-         error:function (data) {
+    $.ajax({
+        url: "Answer/save",
+        type: "Post",
+        contentType: "application/json;charset=UTF-8",
+        sync: false,
+        data: JSON.stringify(answerList),
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            window.location.href = "javascript:history.go(-1)";
+        },
+        error: function (data) {
             console.log("服务器异常");
-         }
-     })
+        }
+    })
 }
 
 function toString(a) {
@@ -306,19 +306,27 @@ function substrings(str) {
 
 function DownloadAttachment(id) {
     $.ajax({
-        url: "choice/findOneById",
+        url: "ChoiceFile/findFileName",
         type: "post",
-        data: {"id": id},
+        data: {"choiceId": id},
         success: function (data) {
-            let str = data.fileIds.split(",");
-            for (let i = 0; i < str.length; i++) {
-                if(str[i]!="" && str[i]!=null){
-                    win.location.href = "/file/downloadShareFile?fileId=" + str[i];
-                }else {
-                    $.alert("没有附件");
-                }
+            const  SPEED=500;
+            if(data.length>0){
+                console.log(data);
+                  for (let i = 0; i < data.length; i++) {
 
+                    setTimeout(()=>{
+                        win.location.href = "Sample/downloadShareFile?filename="+data[i];
+                      },SPEED*i)
+                  }
+
+
+
+            }else {
+                $.alert("没有附件");
             }
+
+
         },
         error: function () {
             console.log("服务器异常");
@@ -385,9 +393,10 @@ var upBtnIndex = 0;
 $('.selected-btn').change(function () {
 
 });
+
 function removeFile(th) {
     let str1 = $(th).parent().parent().parent().parent().parent().parent().attr("fileUrl")
-    str1=str1.substring(0,str1.length-1)
+    str1 = str1.substring(0, str1.length - 1)
     let arr = str1.split(",");
     let str = $(th).parent().parent().attr("fileUrl");
     if (arr.indexOf(str) >= 0) {

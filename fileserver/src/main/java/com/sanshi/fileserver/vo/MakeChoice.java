@@ -5,7 +5,7 @@ import com.sanshi.fileserver.bean.Choice;
 import lombok.Data;
 
 @Data
-public class MakeChoice implements Comparable<MakeChoice>{
+public class MakeChoice implements Comparable<MakeChoice> {
     private Integer index;
     private Double score;
     private Choice choice;
@@ -52,9 +52,10 @@ public class MakeChoice implements Comparable<MakeChoice>{
     public void setAnswer(Answer answer) {
         this.answer = answer;
     }
+
     @Override
     public int compareTo(MakeChoice o) {
-        return this.getIndex()-o.getIndex();
+        return this.getIndex() - o.getIndex();
     }
 
     @Override

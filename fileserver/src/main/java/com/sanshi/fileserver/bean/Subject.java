@@ -12,7 +12,7 @@ import java.util.Date;
 @Entity
 public class Subject {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
     String name;//学科名称
     @CreationTimestamp

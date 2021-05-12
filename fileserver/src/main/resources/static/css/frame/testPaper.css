@@ -16,8 +16,9 @@
     float: left;
     margin: 10px
 }
-.testPaper:hover{
-    box-shadow:0px 0px 10px #000;
+
+.testPaper:hover {
+    box-shadow: 0px 0px 10px #000;
 }
 
 

@@ -16,8 +16,9 @@
     float: left;
     margin: 10px
 }
-.testPaper:hover{
-    box-shadow:0px 0px 10px #000;
+
+.testPaper:hover {
+    box-shadow: 0px 0px 10px #000;
 }
 
 
@@ -41,7 +42,7 @@
     background: #fff;
 }
 
-.testpa:hover{
+.testpa:hover {
     background-color: #8ef9ef;
 }
 
@@ -53,35 +54,40 @@
     top: 0;
     z-index: 1;
 }
-.input-1{
-	margin-top:10px;
+
+.input-1 {
+    margin-top: 10px;
 }
 
-.buttons.commit-1{
-    float:right;
-    margin-right:45%;
+.buttons.commit-1 {
+    float: right;
+    margin-right: 45%;
     margin-bottom: 10px;
 }
-.buttons.reset-1{
-    float:right;
-    margin-right:1rem;
+
+.buttons.reset-1 {
+    float: right;
+    margin-right: 1rem;
 }
-.smailtitel{
+
+.smailtitel {
     font-weight: 900;
     font-size: 16px;
     width: 500px;
     margin-left: 10px;
 
 }
-.ui.blue.buttons .ui.button.red{
+
+.ui.blue.buttons .ui.button.red {
     background-color: #DF4B4E;
 }
-.ui.blue.buttons .ui.button.red:hover{
-    background-color:#AC0F12;
+
+.ui.blue.buttons .ui.button.red:hover {
+    background-color: #AC0F12;
 }
 
 /*//=============*/
-#yearScreenDiv, #gradeScreenDiv, #classScreenDiv, #groupScreenDiv, #studentScreenDiv{
+#yearScreenDiv, #gradeScreenDiv, #classScreenDiv, #groupScreenDiv, #studentScreenDiv {
     float: left;
     margin-left: 5px;
     width: auto;
@@ -96,6 +102,6 @@
     display: none;
 }
 
-#TeacherDiv{
+#TeacherDiv {
     display: none;
 }

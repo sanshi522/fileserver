@@ -4,7 +4,6 @@ importScripts('/js/jquery/jquery-nodom/jquery.nodom.js');
 //importScripts('/js/jquery/nodom.js');
 
 
-
 importScripts('/js/jquery/jquery-3.5.1.min.js');
 importScripts('/js/spark-md5.min.js');
 
@@ -13,37 +12,39 @@ importScripts('/js/spark-md5.min.js');
 let threadid;
 let divid;
 let upfile;
-onmessage=function (event) {
-    let msg=event.data;
-    if(msg.msgid==0){
-        threadid=msg.threadid;
-    }else if(msg.msgid==1){
-        divid= msg.talk.divid;
-        upfile=msg.talk.upfile;
-        patchUpload.init(divid,upfile);
+onmessage = function (event) {
+    let msg = event.data;
+    if (msg.msgid == 0) {
+        threadid = msg.threadid;
+    } else if (msg.msgid == 1) {
+        divid = msg.talk.divid;
+        upfile = msg.talk.upfile;
+        patchUpload.init(divid, upfile);
         patchUpload.start();
     }
 }
-function getKbMbGb(limit){
+
+function getKbMbGb(limit) {
     var size = "";
-    if(limit < 0.1 * 1024){                            //小于0.1KB，则转化成B
+    if (limit < 0.1 * 1024) {                            //小于0.1KB，则转化成B
         size = limit.toFixed(2) + "B"
-    }else if(limit < 0.1 * 1024 * 1024){            //小于0.1MB，则转化成KB
-        size = (limit/1024).toFixed(2) + "KB"
-    }else if(limit < 0.1 * 1024 * 1024 * 1024){        //小于0.1GB，则转化成MB
-        size = (limit/(1024 * 1024)).toFixed(2) + "MB"
-    }else{                                            //其他转化成GB
-        size = (limit/(1024 * 1024 * 1024)).toFixed(2) + "GB"
+    } else if (limit < 0.1 * 1024 * 1024) {            //小于0.1MB，则转化成KB
+        size = (limit / 1024).toFixed(2) + "KB"
+    } else if (limit < 0.1 * 1024 * 1024 * 1024) {        //小于0.1GB，则转化成MB
+        size = (limit / (1024 * 1024)).toFixed(2) + "MB"
+    } else {                                            //其他转化成GB
+        size = (limit / (1024 * 1024 * 1024)).toFixed(2) + "GB"
     }
 
     var sizeStr = size + "";                        //转成字符串
     var index = sizeStr.indexOf(".");                    //获取小数点处的索引
-    var dou = sizeStr.substr(index + 1 ,2)            //获取小数点后两位的值
-    if(dou == "00"){                                //判断后两位是否为00，如果是则删除00
+    var dou = sizeStr.substr(index + 1, 2)            //获取小数点后两位的值
+    if (dou == "00") {                                //判断后两位是否为00，如果是则删除00
         return sizeStr.substring(0, index) + sizeStr.substr(index + 3, 2)
     }
     return size;
 }
+
 var patchUpload = {
     /**
      * 分片上传成功索引
@@ -68,20 +69,20 @@ var patchUpload = {
     /**
      * 显示dom
      */
-    div:null,
+    div: null,
     /**
      * 文件对象
      */
-    file:null,
+    file: null,
     /**
      * 初始化
      */
-    init: function (di,fil) {
+    init: function (di, fil) {
         //this.setEvent();
         this.file = fil;
-        this.div =di;
+        this.div = di;
     },
-    start:function(){
+    start: function () {
         this.succeed = [];
         this.failed = [];
         this.try = 3;
@@ -129,27 +130,27 @@ var patchUpload = {
             type: "get",
             data: {md5: md5, size: file.size},
             dataType: "json",
-            success: function(data) {
+            success: function (data) {
                 //文件已经完全存在
                 if (data.status === 1) {
                     // me.loadProcess(100);
                     //$("#"+me.div).find(".talkstate").html("已完成 - "+getKbMbGb(file.size));
-                   // $("#"+me.div).find(".progress").remove();
+                    // $("#"+me.div).find(".progress").remove();
                     // alert("急速秒传！");
                     me.end();
-                    return ;
+                    return;
                 }
                 //文件传输了一部分
-                if(data.id && data.status === 0) {
+                if (data.id && data.status === 0) {
                     me.succeed = data.patchIndex;
                     me.upload(data.id, file);
                     me.end();
-                    return ;
+                    return;
                 }
                 //上传文件
                 me.upload(me.prepareUpload(md5, file), file);
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("服务器错误！");
             }
         });
@@ -171,17 +172,17 @@ var patchUpload = {
             data: JSON.stringify({name: file.name, md5: md5, size: 0}),
             contentType: "application/json;charset=utf-8",
             dataType: "json",
-            success: function(data) {
-                if(data && data.id) {
+            success: function (data) {
+                if (data && data.id) {
                     id = data.id;
                     return;
                 }
-               // $("#"+me.div).find(".talkstate").html("上传文件失败！ - "+getKbMbGb(file.size));
+                // $("#"+me.div).find(".talkstate").html("上传文件失败！ - "+getKbMbGb(file.size));
                 //this.div.children(".progress").remove();
                 // alert("上传文件失败！");
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-               // $("#"+me.div).find(".talkstate").html("服务器错误！ - "+getKbMbGb(file.size));
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                // $("#"+me.div).find(".talkstate").html("服务器错误！ - "+getKbMbGb(file.size));
                 //alert("服务器错误！");
             }
         });
@@ -195,13 +196,13 @@ var patchUpload = {
      */
     upload: function (id, file) {
         var me = this;
-        if(!id) {
+        if (!id) {
             me.end();
             return;
         }
         var shardCount = Math.ceil(file.size / this.shardSize);//文件片数
         for (var i = 0; i < shardCount; i++) {
-            if(me.succeed.length !== 0 && me.succeed.indexOf(i) > -1 && me.failed.indexOf(i) === -1) {
+            if (me.succeed.length !== 0 && me.succeed.indexOf(i) > -1 && me.failed.indexOf(i) === -1) {
                 continue;
             }
             this.uploadPatch(id, file, i, shardCount);
@@ -223,10 +224,10 @@ var patchUpload = {
         var spark = new SparkMD5();
         var reader = new FileReader();
         reader.readAsBinaryString(patch);
-        reader.onload(function(e){
+        reader.onload(function (e) {
 
-        // })
-        // $(reader).on('load',function (e) {
+            // })
+            // $(reader).on('load',function (e) {
             spark.appendBinary(e.target.result);
             var md5 = spark.end();
             var form = new FormData();
@@ -243,18 +244,18 @@ var patchUpload = {
                 processData: false,
                 contentType: false,
                 dataType: "json",
-                success: function(data) {
-                    if(!data || !data.ok) {
+                success: function (data) {
+                    if (!data || !data.ok) {
                         me.failed.push(index);
                         console.log("上传分片" + index + "失败！");
-                        return ;
+                        return;
                     }
                     me.succeed.push(index);
                     console.log("上传分片" + index + "成功！");
-                   // me.loadProcess(((me.succeed.length - 1) * me.shardSize + patch.size) / file.size * 100);
+                    // me.loadProcess(((me.succeed.length - 1) * me.shardSize + patch.size) / file.size * 100);
                     me.mergePatch(parent, file, shardCount);
                 },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
                     me.failed.push(index);
                     console.log("服务器错误，上传分片" + index + "失败！");
                     me.tryAgain(parent, file, shardCount);
@@ -271,35 +272,35 @@ var patchUpload = {
      */
     mergePatch: function (parent, file, shardCount) {
         var me = this;
-        if(me.succeed.length + me.failed.length !== shardCount) return;
-        if(me.failed.length !== 0) {
+        if (me.succeed.length + me.failed.length !== shardCount) return;
+        if (me.failed.length !== 0) {
             me.tryAgain(parent, file, shardCount);
-            return ;
+            return;
         }
         $.ajax({
             url: "/file/patch/merge",
             type: "post",
             data: {parent: parent, size: file.size},
             dataType: "json",
-            success: function(data) {
+            success: function (data) {
                 if (data && data.ok) {
                     //me.loadProcess(100);
-                   // $("#"+me.div).find(".talkstate").html("已完成 - "+getKbMbGb(file.size));
-                   // $("#"+me.div).find(".progress").remove();
-                   // $("#"+me.div).removeClass("nowtalk");
-                   // $("#"+me.div).addClass("finishtalk")
+                    // $("#"+me.div).find(".talkstate").html("已完成 - "+getKbMbGb(file.size));
+                    // $("#"+me.div).find(".progress").remove();
+                    // $("#"+me.div).removeClass("nowtalk");
+                    // $("#"+me.div).addClass("finishtalk")
                     // alert("上传文件成功！");
                     me.end();
-                    return ;
+                    return;
                 }
-               // $("#"+me.div).find(".talkstate").html("上传文件失败！ - "+getKbMbGb(file.size));
-               // $("#"+me.div).find(".progress").remove();
+                // $("#"+me.div).find(".talkstate").html("上传文件失败！ - "+getKbMbGb(file.size));
+                // $("#"+me.div).find(".progress").remove();
                 //alert("上传文件失败！");
                 me.end();
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-               // $("#"+me.div).find(".talkstate").html("服务器错误！ - "+getKbMbGb(file.size));
-              //  $("#"+me.div).find(".progress").remove();
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                // $("#"+me.div).find(".talkstate").html("服务器错误！ - "+getKbMbGb(file.size));
+                //  $("#"+me.div).find(".progress").remove();
                 me.end();
                 //alert("服务器错误！");
             }
@@ -311,18 +312,18 @@ var patchUpload = {
      */
     tryAgain: function (parent, file, shardCount) {
         var me = this;
-        if(me.succeed.length + me.failed.length !== shardCount) return;
-        if(me.failed.length === 0) {
+        if (me.succeed.length + me.failed.length !== shardCount) return;
+        if (me.failed.length === 0) {
             me.mergePatch(parent, file, shardCount);
-            return ;
+            return;
         }
-        if(me.try === 0) {
+        if (me.try === 0) {
             $("#try").css("display", "block");
-            return ;
+            return;
         }
         me.try--;
         console.log("重试...");
-        while(me.failed.length !== 0) {
+        while (me.failed.length !== 0) {
             me.uploadPatch(parent, file, me.failed.pop(), shardCount);
         }
     },
@@ -332,8 +333,8 @@ var patchUpload = {
      * @param process
      */
     loadProcess: function (process) {
-        $("#"+this.div).find(".progress-bar").css("width", process+"%");
-        $("#"+this.div).find(".progress-bar").html(process+"%");
+        $("#" + this.div).find(".progress-bar").css("width", process + "%");
+        $("#" + this.div).find(".progress-bar").html(process + "%");
         // process = Math.min(100, process);
         // if(process === 100) {
         //     $("#try").css("display", "none");
@@ -357,7 +358,7 @@ var patchUpload = {
         fileReader.onload = function (e) {
             index++;
             spark.append(e.target.result);
-            if(index < shardCount) {
+            if (index < shardCount) {
                 loadNext();
                 return;
             }
@@ -372,9 +373,9 @@ var patchUpload = {
 
         loadNext();
     },
-    end:function(){
-        let mythread={};
-        mythread['threadstate']=0;
+    end: function () {
+        let mythread = {};
+        mythread['threadstate'] = 0;
         postMessage(mythread);
     }
 };

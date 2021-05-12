@@ -13,9 +13,10 @@ import java.util.List;
  * 试题试卷绑定dao
  */
 @Repository
-public interface TestPaperBindChoiceRepository extends JpaRepository<TestPaperBindChoice,Integer>, JpaSpecificationExecutor {
+public interface TestPaperBindChoiceRepository extends JpaRepository<TestPaperBindChoice, Integer>, JpaSpecificationExecutor {
     /**
      * 通过试卷id获取绑定集合
+     *
      * @param id
      * @return
      */
@@ -23,13 +24,16 @@ public interface TestPaperBindChoiceRepository extends JpaRepository<TestPaperBi
 
     /**
      * 查询试卷总分
+     *
      * @param id
      * @return
      */
-    @Query(value="select sum(t.score) from TestPaperBindChoice t where t.testPaperId = ?1")
+    @Query(value = "select sum(t.score) from TestPaperBindChoice t where t.testPaperId = ?1")
     Double findScoreSum(Integer id);
+
     /**
      * 添加修改试题试卷绑定
+     *
      * @param t
      * @return
      */
@@ -37,24 +41,25 @@ public interface TestPaperBindChoiceRepository extends JpaRepository<TestPaperBi
 
     /**
      * 通过id删除试题试卷绑定
+     *
      * @param id
      */
-    void  deleteById(Integer id);
+    void deleteById(Integer id);
 
     /**
      * 通过试卷id删除绑定信息
+     *
      * @param id
      */
     void deleteByTestPaperId(Integer id);
 
     List<TestPaperBindChoice> findAllByChoiceId(Integer id);
 
-    @Query(value="select t.choiceId from TestPaperBindChoice t where t.testPaperId = ?1")
+    @Query(value = "select t.choiceId from TestPaperBindChoice t where t.testPaperId = ?1")
     List<Integer> findChoicesIdByTestPaperId(Integer id);
 
 
-    TestPaperBindChoice  findAllByChoiceIdAndTestPaperId(Integer choiceId,Integer testPaperId);
-
+    TestPaperBindChoice findAllByChoiceIdAndTestPaperId(Integer choiceId, Integer testPaperId);
 
 
 }

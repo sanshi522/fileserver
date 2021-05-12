@@ -15,7 +15,7 @@ import java.io.*;
 public class HelloController {
     @GetMapping("/particulars")
     public ModelAndView particulars(Integer id) {
-        if (id==null) id=0;
+        if (id == null) id = 0;
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("particulars");
         modelAndView.addObject("id", id);
@@ -24,7 +24,7 @@ public class HelloController {
 
     @GetMapping("/approval")
     public ModelAndView approval(Integer id) {
-        if (id==null) id=0;
+        if (id == null) id = 0;
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("approval");
         modelAndView.addObject("id", id);
@@ -43,15 +43,16 @@ public class HelloController {
 
     @GetMapping("/addTestPaper")
     public ModelAndView addTestPaper(Integer id) {
-        if (id==null) id=0;
+        if (id == null) id = 0;
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("addTestPaper");
         modelAndView.addObject("id", id);
         return modelAndView;
     }
+
     @GetMapping("/assessment")
     public ModelAndView assessment(Integer id) {
-        if (id==null) id=0;
+        if (id == null) id = 0;
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("assessment");
         modelAndView.addObject("id", id);
@@ -61,12 +62,13 @@ public class HelloController {
 
     @GetMapping("/answer")
     public ModelAndView answer(Integer id) {
-        if (id==null) id=0;
+        if (id == null) id = 0;
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("answer");
         modelAndView.addObject("id", id);
         return modelAndView;
     }
+
     @GetMapping("/studentAssess")
     public String studentAssess() {
         return "studentAssess";

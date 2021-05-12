@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class TestPaperVo{
+public class TestPaperVo {
     private Assess assess;//考核信息
     private TestPaper testPaper;//试卷信息
     private Respondents respondents;//答卷

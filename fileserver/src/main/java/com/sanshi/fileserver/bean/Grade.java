@@ -15,7 +15,7 @@ import java.util.Date;
 @Entity
 public class Grade {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private Integer year;

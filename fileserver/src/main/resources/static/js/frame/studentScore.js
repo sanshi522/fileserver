@@ -1,4 +1,3 @@
-
 $(function () {
 
     var pageNumber = 16; // 每页显示多少条记录
@@ -29,63 +28,64 @@ $(function () {
     }
 
     init(0);
+
     function init(index) {
         pageIndex = index;
-          let PageGet = {
+        let PageGet = {
             "pageNumber": pageNumber,
             "pageIndex": pageIndex,
         }
         $.ajax({
-            url:"Respondents/selectScore",
-            type:"Post",
+            url: "Respondents/selectScore",
+            type: "Post",
             contentType: "application/json;charset=UTF-8",
             data: JSON.stringify(PageGet),
-            sync:true,
-            sync:true,
+            sync: true,
+            sync: true,
             dataType: "json",
-            success:function (data) {
+            success: function (data) {
                 console.log(data);
                 $("#teacher").children("tbody").empty();
-                for(var i=0;i<data.page.content.length;i++){
-                   let createTime=data.page.content[i].createTime;
-                    let id=data.page.content[i].id;
-                    let name=data.page.content[i].name;
-                 $.ajax({
-                    url: "Respondents/selectRespondentsMsg2",
-                     type: "Post",
-                     sync: true,
-                     data: {"id":data.page.content[i].id},
-                     dataType: "json",
-                    success:function (data2) {
-                        console.log(data2);
-                        var  op  ="";
-                        if(data2.type==1){
-                            op +="<td>已参加</td>";
-                        }else {
-                           op+="<td>缺考</td>";
+                for (var i = 0; i < data.page.content.length; i++) {
+                    let createTime = data.page.content[i].createTime;
+                    let id = data.page.content[i].id;
+                    let name = data.page.content[i].name;
+                    $.ajax({
+                        url: "Respondents/selectRespondentsMsg2",
+                        type: "Post",
+                        sync: true,
+                        data: {"id": data.page.content[i].id},
+                        dataType: "json",
+                        success: function (data2) {
+                            console.log(data2);
+                            var op = "";
+                            if (data2.type == 1) {
+                                op += "<td>已参加</td>";
+                            } else {
+                                op += "<td>缺考</td>";
+                            }
+                            $("#teacher").children("tbody").append('<tr>\n' +
+                                '        <td>' + id + '</td>\n' +
+                                '        <td>' + name + '</td>\n' +
+                                '        <td>' + data2.subName + '</td>\n' +
+                                '        <td>' + data2.score + '</td>\n' + '        ' +
+                                ' <td>' + createTime + '</td>\n' +
+                                '  ' + op + '\n ' +
+                                '        <td><button class="btn btn-info" onclick="javascript:parent.open(\'particulars?id=' + id + '\')">查看详情</button></td>\n' +
+                                '    </tr>');
+                        },
+                        error: function (data2) {
                         }
-                         $("#teacher").children("tbody").append('<tr>\n' +
-                            '        <td>'+id+'</td>\n' +
-                            '        <td>'+name+'</td>\n' +
-                             '        <td>'+data2.subName+'</td>\n' +
-                             '        <td>'+data2.score+'</td>\n' + '        ' +
-                             ' <td>'+createTime+'</td>\n' +
-                             '  ' + op + '\n ' +
-                             '        <td><button class="btn btn-info" onclick="javascript:parent.open(\'particulars?id=' + id + '\')">查看详情</button></td>\n' +
-                             '    </tr>');
-                     },
-                     error:function (data2) {
-                    }
-                });
+                    });
                 }
                 total = data.page.totalElements;
                 $(".totalmsg").html("【共" + total + "条记录，当前显示：" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + 1) + "~" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + data.page.numberOfElements) + "】");
             },
-            error:function (data) {
+            error: function (data) {
             }
         });
     }
-    
+
 });
 
 

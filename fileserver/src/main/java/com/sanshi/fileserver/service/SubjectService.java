@@ -8,8 +8,11 @@ import java.util.Map;
 
 public interface SubjectService {
     List<Subject> findAll();
+
     Subject findById(Integer id);
+
     Subject save(Subject subject);
+
     void deleteById(Integer id);
 
     Map getAll(PageGet val);

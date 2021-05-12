@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UploadTalkRepository  extends JpaRepository<UploadTalk, Integer> {
+public interface UploadTalkRepository extends JpaRepository<UploadTalk, Integer> {
     UploadTalk save(UploadTalk uploadTalk);
 }

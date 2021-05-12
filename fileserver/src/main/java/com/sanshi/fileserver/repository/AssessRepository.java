@@ -14,9 +14,10 @@ import java.util.List;
  * 考核dao
  */
 @Repository
-public interface AssessRepository extends JpaRepository<Assess,Integer>, JpaSpecificationExecutor {
+public interface AssessRepository extends JpaRepository<Assess, Integer>, JpaSpecificationExecutor {
     /**
      * 通过id获取考核信息
+     *
      * @param id
      * @return
      */
@@ -34,39 +35,46 @@ public interface AssessRepository extends JpaRepository<Assess,Integer>, JpaSpec
     /**
      * 老师获取指定学科本人发布的进行中考核
      */
-    List<Assess> findAllBySubIdAndIssueIdAndStartTimeLessThanAndEndTimeGreaterThan(Integer subid, Integer issueId, Date start,Date end);
+    List<Assess> findAllBySubIdAndIssueIdAndStartTimeLessThanAndEndTimeGreaterThan(Integer subid, Integer issueId, Date start, Date end);
+
     /**
      * 老师获取本人发布进行中考核
      */
-    List<Assess> findAllByIssueIdAndStartTimeLessThanAndEndTimeGreaterThan( Integer issueId, Date start,Date end);
+    List<Assess> findAllByIssueIdAndStartTimeLessThanAndEndTimeGreaterThan(Integer issueId, Date start, Date end);
 
     /**
      * 老师获取指定学科本人发布的进行中考核
      */
-    List<Assess> findAllBySubIdAndIssueIdAndStartTimeGreaterThanAndEndTimeLessThan(Integer subid, Integer issueId, Date start,Date end);
+    List<Assess> findAllBySubIdAndIssueIdAndStartTimeGreaterThanAndEndTimeLessThan(Integer subid, Integer issueId, Date start, Date end);
+
     /**
      * 老师获取本人发布进行中考核
      */
-    List<Assess> findAllByIssueIdAndStartTimeGreaterThanAndEndTimeLessThan( Integer issueId, Date start,Date end);
+    List<Assess> findAllByIssueIdAndStartTimeGreaterThanAndEndTimeLessThan(Integer issueId, Date start, Date end);
+
     /**
      * 管理员获取指定学科的进行中考核
      */
-    List<Assess> findAllBySubIdAndStartTimeLessThanAndEndTimeGreaterThan(Integer subid, Date start,Date end);
+    List<Assess> findAllBySubIdAndStartTimeLessThanAndEndTimeGreaterThan(Integer subid, Date start, Date end);
+
     /**
      * 管理员获取未指定进行中考核
      */
-    List<Assess> findAllByStartTimeLessThanAndEndTimeGreaterThan( Date start,Date end);
+    List<Assess> findAllByStartTimeLessThanAndEndTimeGreaterThan(Date start, Date end);
+
     /**
      * 管理员获取指定学科的未进行的考核
      */
-    List<Assess> findAllBySubIdAndStartTimeGreaterThanAndEndTimeLessThan(Integer subid, Date start,Date end);
+    List<Assess> findAllBySubIdAndStartTimeGreaterThanAndEndTimeLessThan(Integer subid, Date start, Date end);
+
     /**
      * 管理员获取未指定未进行的考核
      */
-    List<Assess> findAllByStartTimeGreaterThanAndEndTimeLessThan( Date start,Date end);
+    List<Assess> findAllByStartTimeGreaterThanAndEndTimeLessThan(Date start, Date end);
 
     /**
      * 添加修改考核信息
+     *
      * @param assess
      * @return
      */
@@ -78,56 +86,59 @@ public interface AssessRepository extends JpaRepository<Assess,Integer>, JpaSpec
     void deleteById(Integer id);
 
 
-
     /**
      * 老师获取所有的考核
      */
 
     Page<Assess> findAll(Pageable pa);
+
     /**
      * 筛选学科选项
      */
-    Page <Assess> findAllBySubId(Integer subId,Pageable pa);
+    Page<Assess> findAllBySubId(Integer subId, Pageable pa);
 
 
     /**
      * 根据发布人查询考核信息
+     *
      * @param issUserId
      * @return
      */
-    Page<Assess>findAllByIssueId(Integer issUserId,Pageable pa);
+    Page<Assess> findAllByIssueId(Integer issUserId, Pageable pa);
 
 
     /**
      * 根据发布人和学科查询考核信息
      */
-    Page<Assess>findAllByIssueIdAndSubId(Integer issUserId,Integer subId,Pageable pa);
+    Page<Assess> findAllByIssueIdAndSubId(Integer issUserId, Integer subId, Pageable pa);
 
 
-    Page<Assess>findAllByNameLike(String name,Pageable pa);
+    Page<Assess> findAllByNameLike(String name, Pageable pa);
 
-    Page<Assess>findAllByNameLikeAndSubId(String name,Integer subId,Pageable pa);
+    Page<Assess> findAllByNameLikeAndSubId(String name, Integer subId, Pageable pa);
 
-    Page<Assess>findAllByNameLikeAndIssueId(String name,Integer issUserId,Pageable pa);
+    Page<Assess> findAllByNameLikeAndIssueId(String name, Integer issUserId, Pageable pa);
 
-    Page<Assess>findAllByNameLikeAndIssueIdAndSubId(String name,Integer issUserId,Integer subId,Pageable pa);
+    Page<Assess> findAllByNameLikeAndIssueIdAndSubId(String name, Integer issUserId, Integer subId, Pageable pa);
 
-    List  findAllByTestPaperId(Integer testPaperId);
-    void  deleteByTestPaperId(Integer testPaperId);
-   //查询学生的考核
-   Page<Assess>findAllByIdInAndStartTimeLessThanAndEndTimeGreaterThan(List<Integer> ids, Date data  ,Date data2, Pageable pa);
+    List findAllByTestPaperId(Integer testPaperId);
 
-   //查询考核信息
-   Page<Assess>findAllByIdInOrderByCreateTimeDesc(List<Integer> ids,Pageable pa);
+    void deleteByTestPaperId(Integer testPaperId);
+
+    //查询学生的考核
+    Page<Assess> findAllByIdInAndStartTimeLessThanAndEndTimeGreaterThan(List<Integer> ids, Date data, Date data2, Pageable pa);
+
+    //查询考核信息
+    Page<Assess> findAllByIdInOrderByCreateTimeDesc(List<Integer> ids, Pageable pa);
 
     /**
      * 查询考试已结束的考核
+     *
      * @param ids
      * @param data
      * @return
      */
-   List<Assess> findAllByIdInAndEndTimeLessThan(List<Integer> ids, Date data);
-
+    List<Assess> findAllByIdInAndEndTimeLessThan(List<Integer> ids, Date data);
 
 
 }

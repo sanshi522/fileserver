@@ -6,8 +6,8 @@ import com.sanshi.fileserver.bean.Respondents;
 import java.util.List;
 
 public class RespondentsVo {
-    private Respondents  respondents;
-    private List<Answer>  answerList;
+    private Respondents respondents;
+    private List<Answer> answerList;
 
     public RespondentsVo(Respondents respondents, List<Answer> answerList) {
         this.respondents = respondents;

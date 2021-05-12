@@ -8,17 +8,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
+
 @Entity
 public class Choice {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     /**
      * 学科id
      */
     private Integer subId;
     /**
-     *题目
+     * 题目
      */
     private String topic;
     /**
@@ -26,7 +27,7 @@ public class Choice {
      */
     private Integer type;
     /**
-     *附件id集合
+     * 附件id集合
      */
     private String fileIds;
     /**
@@ -37,26 +38,26 @@ public class Choice {
      * 选项A
      */
     private String optionA;
-   /**
+    /**
      * 选项B
      */
-   private String optionB;
-   /**
+    private String optionB;
+    /**
      * 选项C
      */
-   private String optionC;
-   /**
+    private String optionC;
+    /**
      * 选项D
      */
-   private String optionD;
-   /**
+    private String optionD;
+    /**
      * 选项E
      */
-   private String optionE;
-   /**
+    private String optionE;
+    /**
      * 选项F
      */
-   private String optionF;
+    private String optionF;
     /**
      * 正确选项
      */
@@ -70,7 +71,7 @@ public class Choice {
      */
     private String abilityIds;
     /**
-     *难易程度
+     * 难易程度
      */
     private Integer difficultyLevel;
     /**

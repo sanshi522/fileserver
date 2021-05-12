@@ -1,21 +1,21 @@
 // JavaScript Document
 /* exported addfile */
-$(function(){
+$(function () {
     //获取用户身份
     var logintype;
     //上传共享级别
     var upident;
     //根据登录身份初始化页面元素--------------------------------------
     $.ajax({
-        url:"login/Islogin",
-        type:"post",
-        dataType:"json",
-        success:function(data) {
-            if (data.resoult){
+        url: "login/Islogin",
+        type: "post",
+        dataType: "json",
+        success: function (data) {
+            if (data.resoult) {
                 //根据登陆账户的类型上传文件权限级别
                 $("#queryLevels").empty();
                 if (data.logintype == 0) {//学生
-                    logintype=data.logintype;
+                    logintype = data.logintype;
                     $("#queryLevels").append(' ' +
                         '<option value=1 >学年</option>\n' +
                         '<option value=2 >学院</option>\n' +
@@ -24,7 +24,7 @@ $(function(){
                         '<option value=5 >同学</option>\n' +
                         '<option value=6 >老师</option>');
                 } else if (data.user.teaIdentity == 1) {//老师
-                    logintype=data.user.teaIdentity;
+                    logintype = data.user.teaIdentity;
                     $("#queryLevels").append('  ' +
                         '<option value=1 >学年</option>\n' +
                         '<option value=2 >学院</option>\n' +
@@ -34,7 +34,7 @@ $(function(){
                         '<option value=6 >老师</option>\n' +
                         '<option value=7 >管理员</option>')
                 } else if (data.user.teaIdentity == 2 || data.user.teaIdentity == 3) {//管理员老师 及 管理员
-                    logintype=data.user.teaIdentity;
+                    logintype = data.user.teaIdentity;
                     $("#queryLevels").append('  ' +
                         '<option value=1 >学年</option>\n' +
                         '<option value=2 >学院</option>\n' +
@@ -46,16 +46,16 @@ $(function(){
                 }
                 $('#queryLevels').selectpicker('refresh');
                 $('#queryLevels').val(1).trigger("change");
-            }else {
+            } else {
                 parent.location.href = "/";
             }
         },
-        error:function(jqXHR){
-            alert("发生错误："+ jqXHR.status);
+        error: function (jqXHR) {
+            alert("发生错误：" + jqXHR.status);
         }
     });
-    $("#queryLevels").change(function() {
-        $("#checkAll").prop("checked",false);//全选按钮取消全选
+    $("#queryLevels").change(function () {
+        $("#checkAll").prop("checked", false);//全选按钮取消全选
         upident = $("#queryLevels").val();
         //切换则查询
         //根据权限级别显示二级筛选框
@@ -100,11 +100,11 @@ $(function(){
                         } else {
                             $("#selecttarget").empty();
                             if (logintype == 0) {
-                                $("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.year.year +' name="checkItem" type="checkbox" /></td><td>' + data.year.year + '</td></tr>');
+                                $("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.year.year + ' name="checkItem" type="checkbox" /></td><td>' + data.year.year + '</td></tr>');
                             } else {
                                 $("#selecttarget").empty();
                                 for (let i = 0; i < data.years.length; i++) {
-                                    $("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.years[i] +' name="checkItem" type="checkbox" /></td><td>' + data.years[i] + '</td></tr>');
+                                    $("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.years[i] + ' name="checkItem" type="checkbox" /></td><td>' + data.years[i] + '</td></tr>');
                                 }
                             }
                             checkItemAddBindClick();
@@ -125,7 +125,7 @@ $(function(){
                     if (data.resoult) {
                         $("#selecttarget").empty();
                         for (let i = 0; i < data.teachers.length; i++) {
-                            $("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.teachers[i].teaId +' name="checkItem" type="checkbox" /></td><td>' + data.teachers[i].teaName + '</td></tr>');
+                            $("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.teachers[i].teaId + ' name="checkItem" type="checkbox" /></td><td>' + data.teachers[i].teaName + '</td></tr>');
                         }
                         checkItemAddBindClick();
                     }
@@ -139,109 +139,109 @@ $(function(){
     //根据上传授权条件展示筛选框
     var paretid;
     $("#yearScreen").change(function () {
-        paretid=$("#yearScreen").val();
-        $("#gradeScreenDiv").css("display","none")
-        $("#classScreenDiv").css("display","none");
-        $("#groupScreenDiv").css("display","none");
-        if (upident!=2)
-            $("#gradeScreenDiv").css("display","block")
+        paretid = $("#yearScreen").val();
+        $("#gradeScreenDiv").css("display", "none")
+        $("#classScreenDiv").css("display", "none");
+        $("#groupScreenDiv").css("display", "none");
+        if (upident != 2)
+            $("#gradeScreenDiv").css("display", "block")
         //查询学年下的学院
         $.ajax({
-            url:"Grade/GetGrade",
-            type:"post",
+            url: "Grade/GetGrade",
+            type: "post",
             data: {yearNumber: paretid},
-            dataType:"json",
-            success:function(data) {
-                if (data.resoult){
-                    if (upident!=2){
+            dataType: "json",
+            success: function (data) {
+                if (data.resoult) {
+                    if (upident != 2) {
                         $("#gradeScreen").empty();
-                        if (logintype==0){
-                            $("#gradeScreen").append('<option value="'+data.grade.id+'">'+data.grade.name+'</option>');
+                        if (logintype == 0) {
+                            $("#gradeScreen").append('<option value="' + data.grade.id + '">' + data.grade.name + '</option>');
                             $('#gradeScreen').selectpicker('refresh');
                             $('#gradeScreen').val(data.grade.id).trigger("change");
-                        }else{
-                            for (let i=0;i<data.grades.length;i++){
-                                $("#gradeScreen").append('<option value="'+data.grades[i].id+'">'+data.grades[i].name+'</option>');
+                        } else {
+                            for (let i = 0; i < data.grades.length; i++) {
+                                $("#gradeScreen").append('<option value="' + data.grades[i].id + '">' + data.grades[i].name + '</option>');
                             }
                             $('#gradeScreen').selectpicker('refresh');
                             $('#gradeScreen').val(data.grades[0].id).trigger("change");
                         }
-                    }else{
+                    } else {
                         $("#selecttarget").empty();
-                        if (logintype==0){
-                            $("#selecttarget").append('<tr class="target" ><td><input data_id='+ data.grade.id+' name="checkItem" type="checkbox" /></td><td>'+data.grade.name+'</td></tr>');
-                        }else{
+                        if (logintype == 0) {
+                            $("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.grade.id + ' name="checkItem" type="checkbox" /></td><td>' + data.grade.name + '</td></tr>');
+                        } else {
                             $("#selecttarget").empty();
-                            for (let i=0;i<data.grades.length;i++){
-                                $("#selecttarget").append('<tr class="target" ><td><input data_id='+data.grades[i].id+' name="checkItem" type="checkbox" /></td><td>'+data.grades[i].name+'</td></tr>');
+                            for (let i = 0; i < data.grades.length; i++) {
+                                $("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.grades[i].id + ' name="checkItem" type="checkbox" /></td><td>' + data.grades[i].name + '</td></tr>');
                             }
                         }
                         checkItemAddBindClick();
                     }
                 }
             },
-            error:function(data){
+            error: function (data) {
                 console.log("获取院系服务器错误")
             }
         });
     });
     $("#gradeScreen").change(function () {
-        paretid=$("#gradeScreen").val();
-        $("#classScreenDiv").css("display","none");
-        $("#groupScreenDiv").css("display","none");
-        if (upident!=3)
-            $("#classScreenDiv").css("display","block");
+        paretid = $("#gradeScreen").val();
+        $("#classScreenDiv").css("display", "none");
+        $("#groupScreenDiv").css("display", "none");
+        if (upident != 3)
+            $("#classScreenDiv").css("display", "block");
         $.ajax({
-            url:"Class/GetClass",
-            type:"post",
+            url: "Class/GetClass",
+            type: "post",
             data: {GradeId: paretid},
-            dataType:"json",
-            success:function(data) {
-                if (data.resoult){
-                    if (upident!=3){
+            dataType: "json",
+            success: function (data) {
+                if (data.resoult) {
+                    if (upident != 3) {
                         $("#classScreen").empty();
-                        if (logintype==0){
-                            $("#classScreen").append('<option value="'+data.cclass.id+'">'+data.cclass.name+'</option>');
+                        if (logintype == 0) {
+                            $("#classScreen").append('<option value="' + data.cclass.id + '">' + data.cclass.name + '</option>');
                             $('#classScreen').selectpicker('refresh');
                             $('#classScreen').val(data.cclass.id).trigger("change");
-                        }else{
-                            for (let i=0;i<data.clases.length;i++){
-                                $("#classScreen").append('<option value="'+data.clases[i].id+'">'+data.clases[i].name+'</option>');
+                        } else {
+                            for (let i = 0; i < data.clases.length; i++) {
+                                $("#classScreen").append('<option value="' + data.clases[i].id + '">' + data.clases[i].name + '</option>');
                             }
                             $('#classScreen').selectpicker('refresh');
                             $('#classScreen').val(data.clases[0].id).trigger("change");
                         }
-                    }else{
+                    } else {
                         $("#selecttarget").empty();
-                        if (logintype==0){
-                            $("#selecttarget").append('<tr class="target" ><td><input data_id='+ data.cclass.id+' name="checkItem" type="checkbox" /></td><td>'+data.cclass.name+'</td></tr>');
-                        }else{
-                            for (let i=0;i<data.clases.length;i++){
-                                $("#selecttarget").append('<tr class="target" ><td><input data_id='+data.clases[i].id+' name="checkItem" type="checkbox" /></td><td>'+data.clases[i].name+'</td></tr>');
+                        if (logintype == 0) {
+                            $("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.cclass.id + ' name="checkItem" type="checkbox" /></td><td>' + data.cclass.name + '</td></tr>');
+                        } else {
+                            for (let i = 0; i < data.clases.length; i++) {
+                                $("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.clases[i].id + ' name="checkItem" type="checkbox" /></td><td>' + data.clases[i].name + '</td></tr>');
                             }
                         }
                         checkItemAddBindClick();
                     }
                 }
             },
-            error:function(data){
+            error: function (data) {
                 console.log("获取班级服务器错误")
             }
         });
     });
     $("#classScreen").change(function () {
-        paretid=$("#classScreen").val();
-        $("#groupScreenDiv").css("display","none");
-        if (upident!=4 && upident!=6)
-            $("#groupScreenDiv").css("display","block");
-        if (upident!=6){
+        paretid = $("#classScreen").val();
+        $("#groupScreenDiv").css("display", "none");
+        if (upident != 4 && upident != 6)
+            $("#groupScreenDiv").css("display", "block");
+        if (upident != 6) {
             //查询班级下的小组
             $.ajax({
-                url:"Group/GetGroup",
-                type:"post",
+                url: "Group/GetGroup",
+                type: "post",
                 data: {CclassId: paretid},
-                dataType:"json",
-                success:function(data) {
+                dataType: "json",
+                success: function (data) {
                     if (data.resoult) {
                         if (upident != 4) {
                             $("#groupScreen").empty();
@@ -259,52 +259,52 @@ $(function(){
                         } else {
                             $("#selecttarget").empty();
                             if (logintype == 0) {
-                                $("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.Group.id +' name="checkItem" type="checkbox" /></td><td>' + data.Group.name + '</td></tr>');
+                                $("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.Group.id + ' name="checkItem" type="checkbox" /></td><td>' + data.Group.name + '</td></tr>');
                             } else {
                                 for (let i = 0; i < data.Groups.length; i++) {
-                                    $("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.Groups[i].id +' name="checkItem" type="checkbox" /></td><td>' + data.Groups[i].name + '</td></tr>');
+                                    $("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.Groups[i].id + ' name="checkItem" type="checkbox" /></td><td>' + data.Groups[i].name + '</td></tr>');
                                 }
                             }
                             checkItemAddBindClick();
                         }
                     }
                 },
-                error:function(data){
+                error: function (data) {
                     console.log("获取小组服务器错误")
                 }
             });
         }
-        if (upident==6){
+        if (upident == 6) {
             $.ajax({
-                url:"Teacher/GetTeacher",
-                type:"post",
+                url: "Teacher/GetTeacher",
+                type: "post",
                 data: {classId: paretid},
-                dataType:"json",
-                success:function(data) {
-                    if (data.resoult){
+                dataType: "json",
+                success: function (data) {
+                    if (data.resoult) {
                         $("#selecttarget").empty();
                         for (let i = 0; i < data.teachers.length; i++) {
-                            $("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.teachers[i].teaId +' name="checkItem" type="checkbox" /></td><td>' + data.teachers[i].teaName + '</td></tr>');
+                            $("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.teachers[i].teaId + ' name="checkItem" type="checkbox" /></td><td>' + data.teachers[i].teaName + '</td></tr>');
                         }
                         checkItemAddBindClick();
                     }
                 },
-                error:function(data){
+                error: function (data) {
                     console.log("获取老师服务器错误")
                 }
             });
         }
     });
     $("#groupScreen").change(function () {
-        paretid=$("#groupScreen").val();
+        paretid = $("#groupScreen").val();
         //查询小组下的学生
         $.ajax({
-            url:"Student/GetStudent",
-            type:"post",
+            url: "Student/GetStudent",
+            type: "post",
             data: {StuGroup: paretid},
-            dataType:"json",
-            success:function(data) {
-                if (data.resoult){
+            dataType: "json",
+            success: function (data) {
+                if (data.resoult) {
                     $("#selecttarget").empty();
                     for (let i = 0; i < data.students.length; i++) {
                         $("#selecttarget").append('<tr class="target" ><td><input data_id=' + data.students[i].stuId + ' name="checkItem" type="checkbox" /></td><td>' + data.students[i].stuName + '</td></tr>');
@@ -312,7 +312,7 @@ $(function(){
                     checkItemAddBindClick();
                 }
             },
-            error:function(data){
+            error: function (data) {
                 console.log("获取学生服务器错误")
             }
         });
@@ -321,19 +321,17 @@ $(function(){
     $("#checkAll").bind("click", function () {
         var checkbox = document.getElementsByName("checkItem");
         if ($("#checkAll").is(':checked')) {//全选
-            if(checkbox.length != 0)  //判断条件是当选择的个数不为0时
+            if (checkbox.length != 0)  //判断条件是当选择的个数不为0时
             {
-                for(var i = 0; i < checkbox.length; i ++){
-                    checkbox[i].checked=true;
+                for (var i = 0; i < checkbox.length; i++) {
+                    checkbox[i].checked = true;
                 }
             }
-        }
-        else
-        {//全不选
-            if(checkbox.length != 0)  //判断条件是当选择的个数不为0时
+        } else {//全不选
+            if (checkbox.length != 0)  //判断条件是当选择的个数不为0时
             {
-                for( i = 0; i < checkbox.length; i ++){
-                    checkbox[i].checked=false;
+                for (i = 0; i < checkbox.length; i++) {
+                    checkbox[i].checked = false;
                 }
             }
         }
@@ -342,30 +340,30 @@ $(function(){
     checkItemAddBindClick();
     //上传按钮
     $('#submit').bind("click", function () {
-        if($(".file").length==0){
+        if ($(".file").length == 0) {
             alert("请添加文件");
             return;
         }
-        let checknum=0;
-        $('input:checkbox[name="checkItem"]').each(function(){
-            if (this.checked){
+        let checknum = 0;
+        $('input:checkbox[name="checkItem"]').each(function () {
+            if (this.checked) {
                 checknum++;
             }
         });
-        if(checknum==0){
+        if (checknum == 0) {
             alert("请选择共享目标");
             return;
         }
-        $(".file").each(function(){
-            var file=$(this).children(".inp_file")[0].files[0];
-           // alert($(this).html());
-            let talk={};
-            talk["type"]=0;
-            talk["upfile"]=file;
-            talk["ident"]=upident;
-            talk["id"]=[];
-            $('input:checkbox[name="checkItem"]').each(function(){
-                if (this.checked){
+        $(".file").each(function () {
+            var file = $(this).children(".inp_file")[0].files[0];
+            // alert($(this).html());
+            let talk = {};
+            talk["type"] = 0;
+            talk["upfile"] = file;
+            talk["ident"] = upident;
+            talk["id"] = [];
+            $('input:checkbox[name="checkItem"]').each(function () {
+                if (this.checked) {
                     talk.id.push($(this).attr("data_id"));
                 }
             });
@@ -374,49 +372,50 @@ $(function(){
         });
     });
 });
-function checkItemAddBindClick(){
+
+function checkItemAddBindClick() {
     $('input:checkbox[name="checkItem"]').bind("click", function () {
         var checkbox = document.getElementsByName("checkItem");
-        var exist=true;
-        for(var i = 0; i < checkbox.length; i ++){
-            if(checkbox[i].checked==false){
-                exist=false;
+        var exist = true;
+        for (var i = 0; i < checkbox.length; i++) {
+            if (checkbox[i].checked == false) {
+                exist = false;
             }
         }
-        if(exist){
-            $("#checkAll").prop("checked",true);
-        }
-        else{
-            $("#checkAll").prop("checked",false);
+        if (exist) {
+            $("#checkAll").prop("checked", true);
+        } else {
+            $("#checkAll").prop("checked", false);
         }
     });
 };
+
 //初始化绑定事件按钮
-function initadd(){
-    $(".ui.filelist").append("<div  class='addfile'>"+
-        "<input type='file' class='inp_file' class='inp_file' style='display: none;'>"+
-        "<i id='addfilebtn' class='my-icon lsm-sidebar-icon icon-tianjia'></i>"+
+function initadd() {
+    $(".ui.filelist").append("<div  class='addfile'>" +
+        "<input type='file' class='inp_file' class='inp_file' style='display: none;'>" +
+        "<i id='addfilebtn' class='my-icon lsm-sidebar-icon icon-tianjia'></i>" +
         "</div>");
     //添加文件
-    $("#addfilebtn").bind("click",function(){
+    $("#addfilebtn").bind("click", function () {
         $("#addfilebtn").parent().children("input").trigger("click");
         //var sum=$("#inp_file").files.length;
     });
-    $(".inp_file").bind("change",function(){
-        if(this.files.length < 1) {
+    $(".inp_file").bind("change", function () {
+        if (this.files.length < 1) {
             return;
-        }else{
+        } else {
             //新文件
             $(this).parent().children("i").remove();
             $(this).parent().removeClass("addfile");
             $(this).parent().addClass("file");
-            $(this).parent().append("<img class='filetypeimg' src='images/file_logo_png/1140192.png'/>"+
-                "<div class='sharefilename'>"+this.files[0].name+"</div>"+
-                "<div class='delfile' >"+
-                "<i class='my-icon lsm-sidebar-icon icon-shanchu' style='font-size: 20px;color:#B4DD33;''></i>"+
+            $(this).parent().append("<img class='filetypeimg' src='images/file_logo_png/1140192.png'/>" +
+                "<div class='sharefilename'>" + this.files[0].name + "</div>" +
+                "<div class='delfile' >" +
+                "<i class='my-icon lsm-sidebar-icon icon-shanchu' style='font-size: 20px;color:#B4DD33;''></i>" +
                 "</div>");
 
-            $(".delfile").bind("click",function(){
+            $(".delfile").bind("click", function () {
                 $(this).parent().remove();
                 //var sum=$("#inp_file").files.length;
             });

@@ -1,18 +1,18 @@
 package com.sanshi.fileserver.service.impl;
 
 import com.sanshi.fileserver.bean.Choice;
+import com.sanshi.fileserver.bean.ChoiceFile;
 import com.sanshi.fileserver.bean.Subject;
 import com.sanshi.fileserver.bean.TestPaperBindChoice;
-import com.sanshi.fileserver.repository.ChoiceRepository;
-import com.sanshi.fileserver.repository.SubjectRepository;
-import com.sanshi.fileserver.repository.TestPaperBindChoiceRepository;
-import com.sanshi.fileserver.repository.TestPaperRepository;
+import com.sanshi.fileserver.repository.*;
 import com.sanshi.fileserver.service.ChoiceService;
+import com.sanshi.fileserver.utils.ChoiceUtil;
 import com.sanshi.fileserver.vo.ScreenChoice;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -22,12 +22,14 @@ public class ChoiceServiceImpl implements ChoiceService {
     private TestPaperBindChoiceRepository testPaperBindChoiceRepository;
     private TestPaperRepository testPaperRepository;
     private SubjectRepository subjectRepository;
+    private ChoiceFileRepository choiceFileRepository;
 
-    public ChoiceServiceImpl(ChoiceRepository choiceRepository, TestPaperBindChoiceRepository testPaperBindChoiceRepository, TestPaperRepository testPaperRepository,SubjectRepository subjectRepository) {
+    public ChoiceServiceImpl(ChoiceRepository choiceRepository, TestPaperBindChoiceRepository testPaperBindChoiceRepository, TestPaperRepository testPaperRepository, SubjectRepository subjectRepository,ChoiceFileRepository choiceFileRepository) {
         this.choiceRepository = choiceRepository;
         this.testPaperBindChoiceRepository = testPaperBindChoiceRepository;
         this.testPaperRepository = testPaperRepository;
-        this.subjectRepository=subjectRepository;
+        this.subjectRepository = subjectRepository;
+        this.choiceFileRepository=choiceFileRepository;
     }
 
     @Override
@@ -36,8 +38,15 @@ public class ChoiceServiceImpl implements ChoiceService {
     }
 
     @Override
-    public Choice save(Choice choice) {
-        return choiceRepository.save(choice);
+    @Transactional
+    public Choice save(ChoiceUtil choiceUtil) {
+        Choice  choice=choiceRepository.save(choiceUtil.getChoice());
+       choiceFileRepository.deleteByChoiceId(choice.getId());
+        for (ChoiceFile  choiceFile :choiceUtil.getChoiceFileList() ){
+            choiceFile.setChoiceId(choice.getId());
+           choiceFileRepository.save(choiceFile);
+        }
+        return choice ;
     }
 
     @Override
@@ -151,12 +160,12 @@ public class ChoiceServiceImpl implements ChoiceService {
 
     @Override
     public int saves(List<Choice> choiceList) {
-     for(Choice  choice:choiceList){
-         if(choiceRepository.findAllByTopic(choice.getTopic()).size()>0){
-             continue;
-         }
-         choiceRepository.save(choice);
-     }
+        for (Choice choice : choiceList) {
+            if (choiceRepository.findAllByTopic(choice.getTopic()).size() > 0) {
+                continue;
+            }
+            choiceRepository.save(choice);
+        }
         return 1;
     }
 

@@ -7,34 +7,34 @@ public class ScreenAssess {
     /**
      * 考核名称
      */
-    private  String  name;
+    private String name;
 
     /**
      * 发布人ID
      */
 
-    private  Integer  issueId;
+    private Integer issueId;
 
     /**
      * 状态
      */
 
-    private  Integer state;
+    private Integer state;
 
     /**
      * 考核学年
      */
-    private  String  year;
+    private String year;
 
     /**
      * 考核学科
      */
-    private  Integer subId;
+    private Integer subId;
 
     /**
      * 考核学院
      */
-  private  Integer  gradeId;
+    private Integer gradeId;
 
     /**
      * 考核班级

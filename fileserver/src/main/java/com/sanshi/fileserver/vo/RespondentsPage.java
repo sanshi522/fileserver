@@ -12,7 +12,7 @@ public class RespondentsPage {
     /***
      * 状态
      */
-   private   Integer   type;
+    private Integer type;
 
     /**
      * 考核Id

@@ -30,7 +30,7 @@ public class AnswerController {
 
     @RequestMapping("/save")
     @ResponseBody
-    public int save(@RequestBody List<Answer> answerList   ) {
+    public int save(@RequestBody List<Answer> answerList) {
         return answerService.save(answerList);
     }
 
@@ -38,9 +38,9 @@ public class AnswerController {
     @ResponseBody
     public String upload(@RequestParam("file") MultipartFile file, HttpServletRequest req) {
 
-        if(file.isEmpty()){
+        if (file.isEmpty()) {
             return "";
-        }else {
+        } else {
             //日期目录
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
             String path = "E:/fileUpload/";
@@ -51,7 +51,7 @@ public class AnswerController {
             }
             String oldName = file.getOriginalFilename();
 
-            String newName = UUID.randomUUID().toString() +"_"+oldName.substring(0, oldName.indexOf("."))+ oldName.substring(oldName.lastIndexOf("."), oldName.length());
+            String newName = UUID.randomUUID().toString() + "_" + oldName.substring(0, oldName.indexOf(".")) + oldName.substring(oldName.lastIndexOf("."), oldName.length());
             try {
                 // 文件保存
                 file.transferTo(new File(folder, newName));

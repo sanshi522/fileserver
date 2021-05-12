@@ -33,7 +33,7 @@ var patchUpload = {
         var me = this;
         $("#upload").click(function (e) {
             var files = $("#file")[0].files;
-            if(files.length < 1) {
+            if (files.length < 1) {
                 alert("请选择文件！");
                 return;
             }
@@ -63,23 +63,23 @@ var patchUpload = {
             type: "get",
             data: {md5: md5, size: file.size},
             dataType: "json",
-            success: function(data) {
+            success: function (data) {
                 //文件已经完全存在
                 if (data.status === 1) {
                     me.loadProcess(100);
                     alert("急速秒传！");
-                    return ;
+                    return;
                 }
                 //文件传输了一部分
-                if(data.id && data.status === 0) {
+                if (data.id && data.status === 0) {
                     me.succeed = data.patchIndex;
                     me.upload(data.id, file);
-                    return ;
+                    return;
                 }
                 //上传文件
                 me.upload(me.prepareUpload(md5, file), file);
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("服务器错误！");
             }
         });
@@ -100,14 +100,14 @@ var patchUpload = {
             data: JSON.stringify({name: file.name, md5: md5, size: 0}),
             contentType: "application/json;charset=utf-8",
             dataType: "json",
-            success: function(data) {
-                if(data && data.id) {
+            success: function (data) {
+                if (data && data.id) {
                     id = data.id;
                     return;
                 }
                 alert("上传文件失败！");
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("服务器错误！");
             }
         });
@@ -121,10 +121,10 @@ var patchUpload = {
      */
     upload: function (id, file) {
         var me = this;
-        if(!id) return;
+        if (!id) return;
         var shardCount = Math.ceil(file.size / this.shardSize);//文件片数
         for (var i = 0; i < shardCount; i++) {
-            if(me.succeed.length !== 0 && me.succeed.indexOf(i) > -1 && me.failed.indexOf(i) === -1) {
+            if (me.succeed.length !== 0 && me.succeed.indexOf(i) > -1 && me.failed.indexOf(i) === -1) {
                 continue;
             }
             this.uploadPatch(id, file, i, shardCount);
@@ -146,7 +146,7 @@ var patchUpload = {
         var spark = new SparkMD5();
         var reader = new FileReader();
         reader.readAsBinaryString(patch);
-        $(reader).on('load',function (e) {
+        $(reader).on('load', function (e) {
             spark.appendBinary(e.target.result);
             var md5 = spark.end();
             var form = new FormData();
@@ -163,18 +163,18 @@ var patchUpload = {
                 processData: false,
                 contentType: false,
                 dataType: "json",
-                success: function(data) {
-                    if(!data || !data.ok) {
+                success: function (data) {
+                    if (!data || !data.ok) {
                         me.failed.push(index);
                         console.log("上传分片" + index + "失败！");
-                        return ;
+                        return;
                     }
                     me.succeed.push(index);
                     console.log("上传分片" + index + "成功！");
                     me.loadProcess(((me.succeed.length - 1) * me.shardSize + patch.size) / file.size * 100);
                     me.mergePatch(parent, file, shardCount);
                 },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
                     me.failed.push(index);
                     console.log("服务器错误，上传分片" + index + "失败！");
                     me.tryAgain(parent, file, shardCount);
@@ -191,25 +191,25 @@ var patchUpload = {
      */
     mergePatch: function (parent, file, shardCount) {
         var me = this;
-        if(me.succeed.length + me.failed.length !== shardCount) return;
-        if(me.failed.length !== 0) {
+        if (me.succeed.length + me.failed.length !== shardCount) return;
+        if (me.failed.length !== 0) {
             me.tryAgain(parent, file, shardCount);
-            return ;
+            return;
         }
         $.ajax({
             url: "/file/patch/merge",
             type: "post",
             data: {parent: parent, size: file.size},
             dataType: "json",
-            success: function(data) {
+            success: function (data) {
                 if (data && data.ok) {
                     me.loadProcess(100);
                     alert("上传文件成功！");
-                    return ;
+                    return;
                 }
                 alert("上传文件失败！");
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("服务器错误！");
             }
         });
@@ -220,18 +220,18 @@ var patchUpload = {
      */
     tryAgain: function (parent, file, shardCount) {
         var me = this;
-        if(me.succeed.length + me.failed.length !== shardCount) return;
-        if(me.failed.length === 0) {
+        if (me.succeed.length + me.failed.length !== shardCount) return;
+        if (me.failed.length === 0) {
             me.mergePatch(parent, file, shardCount);
-            return ;
+            return;
         }
-        if(me.try === 0) {
+        if (me.try === 0) {
             $("#try").css("display", "block");
-            return ;
+            return;
         }
         me.try--;
         console.log("重试...");
-        while(me.failed.length !== 0) {
+        while (me.failed.length !== 0) {
             me.uploadPatch(parent, file, me.failed.pop(), shardCount);
         }
     },
@@ -242,7 +242,7 @@ var patchUpload = {
      */
     loadProcess: function (process) {
         process = Math.min(100, process);
-        if(process === 100) {
+        if (process === 100) {
             $("#try").css("display", "none");
         }
         $("#process").html(process.toFixed(2) + '<span>%</span>');
@@ -264,7 +264,7 @@ var patchUpload = {
         fileReader.onload = function (e) {
             index++;
             spark.append(e.target.result);
-            if(index < shardCount) {
+            if (index < shardCount) {
                 loadNext();
                 return;
             }

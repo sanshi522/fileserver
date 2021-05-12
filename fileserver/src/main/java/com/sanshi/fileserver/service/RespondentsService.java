@@ -18,6 +18,7 @@ import java.util.Map;
 public interface RespondentsService {
     /**
      * 获取答卷
+     *
      * @param respondents
      * @return
      */
@@ -25,6 +26,7 @@ public interface RespondentsService {
 
     /**
      * 添加修改答卷
+     *
      * @param respondents
      * @return
      */
@@ -43,12 +45,13 @@ public interface RespondentsService {
     /**
      *
      */
-    Respondents  findById(Integer id);
+    Respondents findById(Integer id);
 
-    Respondents  selectSubmit(Integer assessId);
+    Respondents selectSubmit(Integer assessId);
 
     /**
      * 获取学生已完成的考核信息
+     *
      * @param pageGet
      * @return
      */
@@ -56,38 +59,38 @@ public interface RespondentsService {
 
 
     /**
-     *
      * @param id
      * @return
      */
     RespondentsMsg selectRespondentsMsg(Integer id);
 
-     Map   selectRespondents(RespondentsPage respondentsPage);
+    Map selectRespondents(RespondentsPage respondentsPage);
 
     /**
      * /获取这个考核的学生ID集合
+     *
      * @param id
      * @return
      */
-       List<Integer>  selectStudent(Integer id);
+    List<Integer> selectStudent(Integer id);
 
     /**
      * 阅卷
+     *
      * @param respondentsId
      * @return
      */
-    int   Read( Integer respondentsId);
+    int Read(Integer respondentsId);
 
     /**
      * 获取这个学生的所有考核id
+     *
      * @param stuId
      * @return
      */
-    List<Integer>  selectAssess(Integer  stuId);
+    List<Integer> selectAssess(Integer stuId);
+
     RespondentsMsg selectRespondentsMsg2(Integer id);
-
-
-
 
 
 }

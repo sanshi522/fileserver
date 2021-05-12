@@ -1,9 +1,9 @@
-$(function(){
+$(function () {
     $.ajax({
-        url:"login/Islogin",
-        type:"post",
-        dataType:"json",
-        success:function(data) {
+        url: "login/Islogin",
+        type: "post",
+        dataType: "json",
+        success: function (data) {
             if (data.resoult)
                 document.getElementById("frameId").src = "/home";
             //根据登陆账户的类型初始化导航栏
@@ -24,49 +24,52 @@ $(function(){
                 }
             }
         },
-        error:function(jqXHR){
-            alert("发生错误："+ jqXHR.status);
+        error: function (jqXHR) {
+            alert("发生错误：" + jqXHR.status);
         }
     })
 
-    $(".close_div").click(function(){
-        if (confirm("退出账号!")==true)
-        {
+    $(".close_div").click(function () {
+        if (confirm("退出账号!") == true) {
             location.href = "exit";
-        }else
+        } else
             return;
     });
 });
-function open(lrc){
+
+function open(lrc) {
     $.ajax({
-        url:"login/Islogin",
-        type:"post",
-        dataType:"json",
-        success:function(data){
-            if(data.resoult){
-                document.getElementById("frameId").src="/"+lrc;
-            } else{
+        url: "login/Islogin",
+        type: "post",
+        dataType: "json",
+        success: function (data) {
+            if (data.resoult) {
+                document.getElementById("frameId").src = "/" + lrc;
+            } else {
                 location.href = "/";
             }
         },
-        error:function(jqXHR){
-            alert("发生错误："+ jqXHR.status);
+        error: function (jqXHR) {
+            alert("发生错误：" + jqXHR.status);
         }
     })
 }
+
 //最小化上传窗口
-function upload_minview(){
+function upload_minview() {
     $('.frame2').addClass("min-upload-frame");
     $('.frame2').removeClass("max-upload-frame");
 }
+
 //展开上传窗口
 function upload_maxview() {
     $('.frame2').addClass("max-upload-frame");
     $('.frame2').removeClass("min-upload-frame");
 }
+
 //初始化导航栏
 
-function say(){
+function say() {
     alert("parent.html");
 }
 

@@ -25,36 +25,37 @@ public class KnowledgePointController {
 
     @RequestMapping(path = "/findAllByNameLike")
     @ResponseBody
-    public List<KnowledgePoint> findAllByNameLike(@RequestParam Integer subid,@RequestParam String name){
-        return knowledgePointService.findAllBySubIdAndNameLike(subid,name);
+    public List<KnowledgePoint> findAllByNameLike(@RequestParam Integer subid, @RequestParam String name) {
+        return knowledgePointService.findAllBySubIdAndNameLike(subid, name);
     }
 
     @RequestMapping(path = "/getAll")
     @ResponseBody
-    public Map getAll(PageGet val){
+    public Map getAll(PageGet val) {
         return knowledgePointService.getAll(val);
     }
 
     @RequestMapping(path = "/save")
     @ResponseBody
-    public KnowledgePoint save(KnowledgePoint knowledgePoint){
+    public KnowledgePoint save(KnowledgePoint knowledgePoint) {
         return knowledgePointService.save(knowledgePoint);
-    };
+    }
+
+    ;
 
     @RequestMapping(path = "/deleteById")
     @ResponseBody
-    public Integer deleteById(Integer val, HttpServletRequest request){
+    public Integer deleteById(Integer val, HttpServletRequest request) {
         knowledgePointService.deleteById(val);
         return 1;
     }
 
     @RequestMapping(path = "/selectBySubId")
     @ResponseBody
-    public  List<KnowledgePoint> selectBySubId(Integer  id){
-        return  knowledgePointService.selectBySubId(id);
+    public List<KnowledgePoint> selectBySubId(Integer id) {
+        return knowledgePointService.selectBySubId(id);
 
     }
-
 
 
 }

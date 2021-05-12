@@ -15,7 +15,7 @@ import java.util.Date;
 @Entity
 public class Accessory {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer library;
     private Integer fileId;

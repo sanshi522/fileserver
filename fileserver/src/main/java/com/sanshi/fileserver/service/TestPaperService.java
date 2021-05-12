@@ -17,6 +17,7 @@ import java.util.Map;
 public interface TestPaperService {
     /**
      * 进行考试
+     *
      * @param assessId
      * @return
      */
@@ -24,14 +25,17 @@ public interface TestPaperService {
 
     /**
      * 读取试卷
+     *
      * @param testPaperId
      * @return
      */
     ReadTestPaper read(Integer testPaperId);
 
     TestPaper findOneById(Integer id);
+
     /**
      * 获取试卷集合
+     *
      * @param val
      * @return
      */
@@ -39,6 +43,7 @@ public interface TestPaperService {
 
     /**
      * 添加修改试卷
+     *
      * @param testPaper
      * @return
      */
@@ -46,13 +51,15 @@ public interface TestPaperService {
 
     /**
      * 删除试卷
+     *
      * @return
      */
     public Result deleteById(Integer testPaperId);
 
     public TestPaperMsg findMsg(Integer testPaperId);
+
     /**
      * 自动生成试卷
      */
-    public  Result  generateTestPaper(TestPaperUtils  testPaperUtils);
+    public Result generateTestPaper(TestPaperUtils testPaperUtils);
 }

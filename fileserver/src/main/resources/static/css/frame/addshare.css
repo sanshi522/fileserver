@@ -1,6 +1,6 @@
 /* CSS Document */
-.ui.filelist{
-    overflow:auto;
+.ui.filelist {
+    overflow: auto;
     margin-top: 5px;
     border: 1px solid rgba(34, 36, 38, .15);
     min-width: 200px;
@@ -8,9 +8,10 @@
     height: 150px;
     float: left;
     border-radius: 1rem;
-    margin-bottom:1em;
+    margin-bottom: 1em;
 }
-.ui.filemesg{
+
+.ui.filemesg {
     margin-top: 5px;
     margin-bottom: 10px;
     border: 1px solid rgba(34, 36, 38, .15);
@@ -20,82 +21,96 @@
     border-radius: 1rem;
     float: left;
 }
-.buttons.commit-1{
-    float:right;
-    margin-right:45%;
+
+.buttons.commit-1 {
+    float: right;
+    margin-right: 45%;
     margin-bottom: 10px;
 }
-.buttons.reset-1{
-    float:right;
-    margin-right:1rem;
+
+.buttons.reset-1 {
+    float: right;
+    margin-right: 1rem;
 }
-.smailtitel{
+
+.smailtitel {
     font-weight: 900;
     font-size: 16px;
     width: 500px;
     margin-left: 10px;
 
 }
-.ui.blue.buttons .ui.button.red{
+
+.ui.blue.buttons .ui.button.red {
     background-color: #DF4B4E;
 }
-.ui.blue.buttons .ui.button.red:hover{
-    background-color:#AC0F12;
+
+.ui.blue.buttons .ui.button.red:hover {
+    background-color: #AC0F12;
 }
 
 /**======================*/
-.delfile{
+.delfile {
     display: none;
 }
-.file:hover .delfile{
-    display:block;
+
+.file:hover .delfile {
+    display: block;
 }
-#addfilebtn{
+
+#addfilebtn {
     font-size: 60px;
-    color:#57CCDF;
+    color: #57CCDF;
 }
-#addfilebtn:hover{
+
+#addfilebtn:hover {
     font-size: 60px;
-    color:#1F568A;
+    color: #1F568A;
 }
-.addfile{
+
+.addfile {
     width: 80px;
-    height:80px;
+    height: 80px;
     float: left;
     margin: 10px;
-    position:relative;
-    text-align:center;
+    position: relative;
+    text-align: center;
     line-height: 80px;
 }
-.file{
+
+.file {
     width: 80px;
-    height:80px;
+    height: 80px;
     border: #B4AFAF 1px dotted;
     float: left;
     margin: 10px;
-    position:relative;
+    position: relative;
 }
-.filetypeimg{
+
+.filetypeimg {
     width: 50px;
-    height:50px;
+    height: 50px;
     margin: 10px 15px;
 }
-.sharefilename{
-    font-size:8px;
-    width:80px;
+
+.sharefilename {
+    font-size: 8px;
+    width: 80px;
     height: 20px;
     overflow: hidden;
 }
-.delfile{
-    width:80px;
+
+.delfile {
+    width: 80px;
     height: 30px;
-    position:absolute;
+    position: absolute;
     z-index: 10;
     bottom: 0px;
-    background: rgba(150,28,32,0.60);
+    background: rgba(150, 28, 32, 0.60);
     text-align: center;
-    color:#B4DD33
+    color: #B4DD33
 }
+
 /*//=============*/
 #yearScreenDiv, #gradeScreenDiv, #classScreenDiv, #groupScreenDiv, #studentScreenDiv, #teacherScreenDiv {
     float: left;

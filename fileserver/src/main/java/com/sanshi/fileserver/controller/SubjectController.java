@@ -33,13 +33,11 @@ public class SubjectController {
     }
 
 
-
     @RequestMapping(path = "/save")
     @ResponseBody
     public Subject save(Subject subject) {
         return subjectService.save(subject);
     }
-
 
 
     @RequestMapping(path = "/deleteById")

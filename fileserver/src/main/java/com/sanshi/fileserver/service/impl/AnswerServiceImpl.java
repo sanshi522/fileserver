@@ -171,7 +171,7 @@ public class AnswerServiceImpl implements AnswerService {
         Assess assess = assessRepository.findOneById(assessId);
         SessionUser sessionUser = (SessionUser) session.getAttribute("user");
         //获取答卷
-        Respondents  respondents=  respondentsRepository.findByStuIdAndAssessId(sessionUser.getStudent().getStuId(), assess.getId());
+        Respondents respondents = respondentsRepository.findByStuIdAndAssessId(sessionUser.getStudent().getStuId(), assess.getId());
         //获取试卷
         TestPaper testPaper = testPaperRepository.findOneById(assess.getTestPaperId());
         //获取试卷的所有试题
@@ -181,9 +181,9 @@ public class AnswerServiceImpl implements AnswerService {
             AnswerVo answerVo = new AnswerVo();
             Choice choice = choiceRepository.findOneById(testPaperBindChoice.getChoiceId());
             answerVo.setChoice(choice);
-            if(respondents==null){
+            if (respondents == null) {
                 answerVo.setAnswer(null);
-            }else{
+            } else {
                 answerVo.setAnswer(answerRepository.findOneByChoiceIdAndRespondentsId(testPaperBindChoice.getChoiceId(), respondents.getId()));
             }
             answerVo.setScore(testPaperBindChoice.getScore());

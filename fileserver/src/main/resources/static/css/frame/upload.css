@@ -1,43 +1,49 @@
-body{
-    background-color:transparent;
+body {
+    background-color: transparent;
 }
-.uptitle{
-    width:100%;
-    height:20px;
+
+.uptitle {
+    width: 100%;
+    height: 20px;
     border: 1px dashed #216AAF;
     background: #216AAF;
-    color:#C2E3E8;
-    position:fixed;
-    top:0px;
+    color: #C2E3E8;
+    position: fixed;
+    top: 0px;
     z-index: 10;
     display: none;
     padding-left: 20px;
 }
-.minbtn{
-    width:20px;
-    height:20px;
+
+.minbtn {
+    width: 20px;
+    height: 20px;
     float: right;
-    margin-right:10px;
-    border-radius:10px;
+    margin-right: 10px;
+    border-radius: 10px;
     line-height: 20px;
     text-align: center;
 }
-.minbtn:hover{
+
+.minbtn:hover {
     background-color: #72cfff;
 }
-.viewimg{
-    width:50px;
-    height:50px;
-    position:relative;
+
+.viewimg {
+    width: 50px;
+    height: 50px;
+    position: relative;
 }
-.uploadimg{
-    width:50px;
-    height:50px;
+
+.uploadimg {
+    width: 50px;
+    height: 50px;
 }
-.talknum{
-    width:50px;
-    height:27px;
-    position:absolute;
+
+.talknum {
+    width: 50px;
+    height: 27px;
+    position: absolute;
     bottom: 0px;
     z-index: 10;
     text-align: center;
@@ -45,60 +51,70 @@ body{
     font-weight: 900;
     color: #faffff;
 }
-.talks{
-    width:400px;
-    height:500px;
+
+.talks {
+    width: 400px;
+    height: 500px;
     border: 1px solid rgba(34, 36, 38, .15);
-    overflow-x:hidden;
-    overflow-y:auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     margin-top: 20px;
     display: none;
 }
-.talk{
-    width:400px;
-    height:auto;
+
+.talk {
+    width: 400px;
+    height: auto;
     border-bottom: 1px solid rgba(34, 36, 38, .15);
     position: relative;
     padding-left: 10px;
     float: left;
 }
-.talk:hover .deltalkdiv,.talk:hover .pausetalkdiv{
+
+.talk:hover .deltalkdiv, .talk:hover .pausetalkdiv {
     display: block;
 }
-.finishtalk{
-    color:#929292;
+
+.finishtalk {
+    color: #929292;
 }
-.nowtalk{
-    color:black;
+
+.nowtalk {
+    color: black;
 }
-.filename{
+
+.filename {
     float: left;
-    width:400px;
-    height:auto;
+    width: 400px;
+    height: auto;
     padding-top: 5px;
     padding-bottom: 5px;
 }
-.talkstate{
-    width:150px;
-    height:30px;
+
+.talkstate {
+    width: 150px;
+    height: 30px;
     float: left;
 }
-.deltalkdiv,.pausetalkdiv{
+
+.deltalkdiv, .pausetalkdiv {
     display: none;
-    width:25px;
-    height:25px;
-    border-radius:12.5px;
-    position:absolute;
-    right:20px;
+    width: 25px;
+    height: 25px;
+    border-radius: 12.5px;
+    position: absolute;
+    right: 20px;
     top: 20px;
     text-align: center;
     line-height: 25px;
-    color:#929292;
+    color: #929292;
 }
-.deltalkdiv:hover,.pausetalkdiv:hover{
-    background:#DCDCDC;
+
+.deltalkdiv:hover, .pausetalkdiv:hover {
+    background: #DCDCDC;
 }
-.talking{
+
+.talking {
     width: 100%;
-   text-align: center;
+    text-align: center;
 }

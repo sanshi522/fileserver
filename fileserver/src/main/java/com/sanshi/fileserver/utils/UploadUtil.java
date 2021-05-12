@@ -19,34 +19,36 @@ public abstract class UploadUtil {
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         return SAVE_PATH + date + "/";
     }
+
     //获取文件类型1
     public static String parseFileType(String fileName) {
         return !fileName.contains(".") ? "" : fileName.substring(fileName.lastIndexOf("."));
     }
 
     public static String saveFile(MultipartFile source, Long size) throws IOException {
-        if(source.getSize() != size) {
+        if (source.getSize() != size) {
             throw new RuntimeException("上传字节数与接收字节数不符！");
         }
         File file = new File(initPath());
-        if(!file.exists() && !file.mkdirs()) {
+        if (!file.exists() && !file.mkdirs()) {
             throw new RuntimeException("创建文件夹失败！");
         }
         String fileType = parseFileType(source.getOriginalFilename());
-        while(true) {
+        while (true) {
             String saveFileName = UUID.randomUUID() + fileType.toLowerCase();
             File saveFilePath = new File(file.getPath(), saveFileName);
-            if(saveFilePath.exists()) {
+            if (saveFilePath.exists()) {
                 continue;
             }
             source.transferTo(saveFilePath);
             return saveFilePath.getAbsolutePath();
         }
     }
+
     /*合并文件碎片*/
     public static String mergeFile(String fileType, List<String> fileNames) throws IOException {
         File file = new File(initPath());
-        if(!file.exists() && !file.mkdirs()) {
+        if (!file.exists() && !file.mkdirs()) {
             throw new RuntimeException("创建文件夹失败！");
         }
         File saveFilePath = null;

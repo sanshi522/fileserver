@@ -12,18 +12,28 @@ import java.util.Map;
 
 public interface FileSampleService {
     FileExists fileExists(String md5, Long size);
+
     FileSample insertFileSample(FileSample fileSample);
+
     FileSample findById(Integer Id);
+
     int deleteById(Integer id);
+
     int updateById(FileSample file);
+
     FileSample findByParentAndMd5(Integer parent, String md5);
+
     int deleteByParent(Integer parent);
+
     List<FileSample> findByParentOrderByPatchIndexAsc(Integer id);
-    int updateByIdSetPathAndSize(Integer parent,String path,Long total);
+
+    int updateByIdSetPathAndSize(Integer parent, String path, Long total);
+
     FileSample findByMd5(String md5);
 
     /**
      * 获取共享文件
+     *
      * @param screenShareFile
      * @return
      */
@@ -31,8 +41,9 @@ public interface FileSampleService {
 
     /**
      * 获取共享出去的文件
+     *
      * @param screenShareFile
      * @return
      */
-    Map ScreenMyALL(ScreenShareFile screenShareFile,HttpServletRequest request);
+    Map ScreenMyALL(ScreenShareFile screenShareFile, HttpServletRequest request);
 }

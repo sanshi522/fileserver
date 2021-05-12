@@ -66,8 +66,8 @@ public class ScreenChoice {
         this.name = name;
         this.sort = sort;
         this.sortName = sortName;
-        this.abilityIds=abilityIds;
-        this.difficultyLevel=difficultyLevel;
+        this.abilityIds = abilityIds;
+        this.difficultyLevel = difficultyLevel;
     }
 
     public Integer getPageNumber() {
@@ -85,6 +85,7 @@ public class ScreenChoice {
     public void setPageIndex(Integer pageIndex) {
         this.pageIndex = pageIndex;
     }
+
     public String getAbilityIds() {
         return abilityIds;
     }

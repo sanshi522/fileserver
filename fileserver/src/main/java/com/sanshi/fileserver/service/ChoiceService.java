@@ -2,6 +2,7 @@ package com.sanshi.fileserver.service;
 
 import com.sanshi.fileserver.bean.Choice;
 import com.sanshi.fileserver.bean.Subject;
+import com.sanshi.fileserver.utils.ChoiceUtil;
 import com.sanshi.fileserver.vo.ScreenChoice;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Map;
 public interface ChoiceService {
     /**
      * 获取单个试题
+     *
      * @param id
      * @return
      */
@@ -20,12 +22,15 @@ public interface ChoiceService {
 
     /**
      * save试题
+     *
      * @param choice
      * @return
      */
-    Choice save(Choice choice);
+    Choice save(ChoiceUtil choice);
+
     /**
      * 获取
+     *
      * @param choice
      * @return
      */
@@ -33,6 +38,7 @@ public interface ChoiceService {
 
     /**
      * 删除
+     *
      * @param id
      */
     Map deleteById(Integer id);
@@ -44,6 +50,7 @@ public interface ChoiceService {
 
     /**
      * 根据学科查询
+     *
      * @param name
      * @return
      */
@@ -52,11 +59,11 @@ public interface ChoiceService {
     /**
      * 批量导入
      */
-    int  saves(List<Choice> choiceList);
+    int saves(List<Choice> choiceList);
 
     /**
      * 根据试题名字查询某个试题
      */
-     List<Choice> findAllByTopic(String topic);
+    List<Choice> findAllByTopic(String topic);
 
 }

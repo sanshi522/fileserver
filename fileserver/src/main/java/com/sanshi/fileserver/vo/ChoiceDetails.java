@@ -8,7 +8,7 @@ import lombok.Data;
  * 试卷vo
  */
 @Data
-public class ChoiceDetails implements Comparable<ChoiceDetails>{
+public class ChoiceDetails implements Comparable<ChoiceDetails> {
     TestPaperBindChoice testPaperBindChoice;
     Choice choice;
 
@@ -43,8 +43,9 @@ public class ChoiceDetails implements Comparable<ChoiceDetails>{
                 ", choice=" + choice +
                 '}';
     }
-        @Override
+
+    @Override
     public int compareTo(ChoiceDetails o) {
-        return this.getTestPaperBindChoice().getIndexNum()-o.getTestPaperBindChoice().getIndexNum();
+        return this.getTestPaperBindChoice().getIndexNum() - o.getTestPaperBindChoice().getIndexNum();
     }
 }

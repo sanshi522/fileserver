@@ -6,15 +6,15 @@ import com.sanshi.fileserver.bean.Student;
 public class RespondentsMsg {
 
     //考核对象
-    private Assess  assess;
-     //学科名字
-    private  String  subName;
+    private Assess assess;
+    //学科名字
+    private String subName;
     //总分数
-    private Double  score;
+    private Double score;
     //考核人
     private Student student;
     //状态
-    private int  type;
+    private int type;
 
     public RespondentsMsg() {
     }

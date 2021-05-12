@@ -10,7 +10,7 @@ public class TestPaperUtils {
     /**
      * 试卷名称
      */
-    private String  testPaperName;
+    private String testPaperName;
 
     /**
      * 学科
@@ -20,54 +20,54 @@ public class TestPaperUtils {
     /**
      * 难度
      */
-    private  Integer  difficulty;
+    private Integer difficulty;
     /**
      * 单选题数量
      */
-    private int  rodSum;
+    private int rodSum;
 
     /**
      * 单选题分
      */
-    private  double  rodScore;
+    private double rodScore;
 
     /**
      * 多选题数量
      */
-    private  int checkSum;
+    private int checkSum;
 
     /**
      * 多选题分
-      */
-  private  double checkScore;
+     */
+    private double checkScore;
 
     /**
      * 判断题数量
      */
-    private  int judgeSum;
+    private int judgeSum;
 
     /**
      * 判断题分
      */
 
-   private  double  judgeScore;
+    private double judgeScore;
 
     /**
      * 简答题数量
      */
-    private  int  answerSum;
+    private int answerSum;
 
 
     /**
      * 简答题分
      */
-    private  double  answerScore;
+    private double answerScore;
 
 
     /**
      * 总分
      */
-    private  double  TotalScore;
+    private double TotalScore;
 
 
     public TestPaperUtils() {
@@ -199,40 +199,41 @@ public class TestPaperUtils {
 
     /**
      * 获取随机试题
-     * @param choiceList   试题集合
-     * @param sum         数量
+     *
+     * @param choiceList 试题集合
+     * @param sum        数量
      * @return
      */
-    public  static List<Choice> red(List<Choice> choiceList,int sum) {
+    public static List<Choice> red(List<Choice> choiceList, int sum) {
         List<Choice> list = new ArrayList<Choice>();
         Random rand = new Random();
-        int r=0;
-        boolean  s=false;
-        while (list.size()<sum){
-            s=false;
-          r=rand.nextInt(choiceList.size());
-          for(int i=0;i<list.size();i++){
-              if(list.get(i).getId()==r){
-                  s=true;
-                  break;
-              }
-          }
-          if (s){
-              continue;
-          }
-              list.add(choiceList.get(r));
+        int r = 0;
+        boolean s = false;
+        while (list.size() < sum) {
+            s = false;
+            r = rand.nextInt(choiceList.size());
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getId() == r) {
+                    s = true;
+                    break;
+                }
+            }
+            if (s) {
+                continue;
+            }
+            list.add(choiceList.get(r));
         }
-         return  list;
+        return list;
     }
 
-    public  static   List<Choice>  conversion(List<List<Choice>>  arr){
-        List<Choice>  a=new ArrayList<Choice>();
-  for(List<Choice> list:arr){
-      for (Choice l:list ){
-          a.add(l);
-      }
-  }
-return   a;
+    public static List<Choice> conversion(List<List<Choice>> arr) {
+        List<Choice> a = new ArrayList<Choice>();
+        for (List<Choice> list : arr) {
+            for (Choice l : list) {
+                a.add(l);
+            }
+        }
+        return a;
     }
 
 

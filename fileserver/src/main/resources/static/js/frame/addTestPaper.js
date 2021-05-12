@@ -5,18 +5,18 @@ var choicetype = 0;
 var likeName = "";
 var sort1 = "";
 var sortName = "";
-var abilityId=0;  //知识点
-var  difficultyLevel=0; //难度
+var abilityId = 0;  //知识点
+var difficultyLevel = 0; //难度
 //分页元素
 var total = 50; // 总共多少记录
 
-let quan=0;//是否批量操作标识符
+let quan = 0;//是否批量操作标识符
 //界面存在试题集合
-choiceids=[];
+choiceids = [];
 
 $(function () {
     //比对现有试题与添加试题弹出框试题
-    function refaddbtn(){
+    function refaddbtn() {
         choiceids.splice(0);
         var choices = $(".choice");
         choices.each(function (i, choice) {
@@ -24,7 +24,7 @@ $(function () {
         });
         var choices1 = $(".choice1");
         choices1.each(function (i, choice) {
-            if ($.inArray($(choice).attr("choiceid"),choiceids)>=0)
+            if ($.inArray($(choice).attr("choiceid"), choiceids) >= 0)
                 $(choice).children(".choice-title").children(".addthis").hide();
             else
                 $(choice).children(".choice-title").children(".addthis").show();
@@ -32,10 +32,10 @@ $(function () {
         if (choiceids.length < 1. && $("#testPaper").attr("testPaperId") == 0) {
             $("#subIdScreen").prop("disabled", false);
             $('#subIdScreen').selectpicker('refresh')
-        } else if (choiceids.length > 0){
+        } else if (choiceids.length > 0) {
             $("#subIdScreen").prop("disabled", true);
-        $('#subIdScreen').selectpicker('refresh');
-    }
+            $('#subIdScreen').selectpicker('refresh');
+        }
 
     }
 
@@ -149,11 +149,12 @@ $(function () {
         choices.each(function (i, choice) {
             $(choice).attr("c_index", i);
             $(choice).children(".choice-title").children(".choice-index").html(i + 1);
-            $("#navigation").append(' <lable class="anchor">'+(parseInt(i)+1)+'</lable>');
+            $("#navigation").append(' <lable class="anchor">' + (parseInt(i) + 1) + '</lable>');
             //alert(i);
             anchorBind();
         });
     }
+
 //快速锚点定位
     function anchorBind() {
         $(".anchor").bind("click", function () {
@@ -167,13 +168,11 @@ $(function () {
     }
 
     var testPaperid = $("#testPaper").attr("testPaperId");
-    if (testPaperid!=0 && testPaperid!=null){
-    init();
-    }else{
+    if (testPaperid != 0 && testPaperid != null) {
+        init();
+    } else {
         getsubtype();
     }
-
-
 
 
     $(".pack-up").bind("click", function () {
@@ -234,12 +233,12 @@ $(function () {
 
     //获取知识点
 
-    function  Knowledge() {
+    function Knowledge() {
         subId = $("#subIdScreen").val();
         $.ajax({
             url: "/knowledgePoint/selectBySubId",
             type: "post",
-            data: {id:subId},
+            data: {id: subId},
             dataType: "json",
             success: function (data) {
                 $("#abilityId").empty();
@@ -250,7 +249,7 @@ $(function () {
                 $('#abilityId').selectpicker('refresh');
                 $('#abilityId').val(0).trigger("change");
             },
-            error:function (data) {
+            error: function (data) {
                 console.log("服务器异常");
             }
 
@@ -258,6 +257,7 @@ $(function () {
 
 
     }
+
 //遍历试卷信息及试题
     function information(data) {
         if (data == null) {
@@ -301,7 +301,7 @@ $(function () {
                         '<input class="choice-box"  name="checkItem" type="checkbox" />' +
                         '                <div class="choice-oper delete-choice"><i class="my-icon lsm-sidebar-icon icon-shanchu "></i></div>\n' +
                         '<div class="score_div">\n' +
-                        '<input class="form-control score1" type="text" placeholder="分值" value="'+data.choices[i].testPaperBindChoice.score+'" >\n' +
+                        '<input class="form-control score1" type="text" placeholder="分值" value="' + data.choices[i].testPaperBindChoice.score + '" >\n' +
                         '</div>' +
                         // '                <div class="choice-oper delete-choice"><input type="checkbox" name="TestPaper"/></div>\n' +
                         '            </div>\n' +
@@ -319,7 +319,7 @@ $(function () {
                         '<input class="choice-box"  name="checkItem" type="checkbox" />' +
                         ' <div class="choice-oper delete-choice"><i class="my-icon lsm-sidebar-icon icon-shanchu " ></i></div>\n' +
                         '<div class="score_div">\n' +
-                        '<input class="form-control score1" type="text" placeholder="分值" value="'+data.choices[i].testPaperBindChoice.score+'">\n' +
+                        '<input class="form-control score1" type="text" placeholder="分值" value="' + data.choices[i].testPaperBindChoice.score + '">\n' +
                         '</div>' +
                         // ' <div class="choice-oper "><input type="checkbox" name="TestPaper"/></div>\n' +
                         '\t\t\t</div>\n' +
@@ -332,12 +332,12 @@ $(function () {
                         '\t\t\t</div>\n' +
                         '\t\t</div>');
                 } else if (data.choices[i].choice.type == 4) {//简答题
-                    $("#choices").append('<div class="choice" choicecheck="0"  choiceid="' + data.choices[i].choice.id +  '" bindId="' + data.choices[i].testPaperBindChoice.id + '" c_index="' + data.choices[i].testPaperBindChoice.indexNum + '">\n' +
+                    $("#choices").append('<div class="choice" choicecheck="0"  choiceid="' + data.choices[i].choice.id + '" bindId="' + data.choices[i].testPaperBindChoice.id + '" c_index="' + data.choices[i].testPaperBindChoice.indexNum + '">\n' +
                         ' <div class="choice-title"><div class="choice-index">' + (data.choices[i].testPaperBindChoice.indexNum + 1) + '</div><div class="choice-name" >' + data.choices[i].choice.topic + '</div>\n' +
                         '<input class="choice-box"  name="checkItem" type="checkbox" />' +
                         ' <div class="choice-oper delete-choice"><i class="my-icon lsm-sidebar-icon icon-shanchu " ></i></div>\n' +
                         '<div class="score_div">\n' +
-                        '<input class="form-control score1" type="text" placeholder="分值" value="'+data.choices[i].testPaperBindChoice.score+'">\n' +
+                        '<input class="form-control score1" type="text" placeholder="分值" value="' + data.choices[i].testPaperBindChoice.score + '">\n' +
                         '</div>' +
                         // ' <div class="choice-oper delete-choice"><input type="checkbox" name="TestPaper"/></i></div>\n' +
                         '\t\t\t</div>\n' +
@@ -422,8 +422,8 @@ $(function () {
             "name": likeName,
             "sort": sort1,
             "sortName": sortName,
-            "abilityIds":abilityId,
-            "difficultyLevel":difficultyLevel
+            "abilityIds": abilityId,
+            "difficultyLevel": difficultyLevel
         }
 
         $.ajax({
@@ -543,7 +543,7 @@ $(function () {
 
     $("#choices").empty();
     $("#addchoice").click(function (e) {
-        if($("#subIdScreen option:selected").val()==0) {
+        if ($("#subIdScreen option:selected").val() == 0) {
             $.alert("请选择科目");
             return;
         }
@@ -555,13 +555,13 @@ $(function () {
     function choicebind() {
         //添加试题到试卷
         $(".addthis").bind("click", function (e) {
-            let choicename=$(this).parent().children(".choice-name").html();
-            let choiceid=$(this).parent().parent().attr("choiceid");
-            let choicetype=$(this).parent().children(".choice-type").attr("data");
-            var htmlss=$(this).parent().parent().children(".choice-details").children(".make-choice").html();
+            let choicename = $(this).parent().children(".choice-name").html();
+            let choiceid = $(this).parent().parent().attr("choiceid");
+            let choicetype = $(this).parent().children(".choice-type").attr("data");
+            var htmlss = $(this).parent().parent().children(".choice-details").children(".make-choice").html();
 
             $("#choices").append('<div class="choice" choicecheck="0"  choiceid="' + choiceid + '"  c_index=""  bindId="">\n' +
-                ' <div class="choice-title"><div class="choice-index"></div><div class="choice-name" >' + choicename+ '</div>\n' +
+                ' <div class="choice-title"><div class="choice-index"></div><div class="choice-name" >' + choicename + '</div>\n' +
                 '<input class="choice-box"  name="checkItem" type="checkbox" />' +
                 ' <div class="choice-oper delete-choice"><i class="my-icon lsm-sidebar-icon icon-shanchu "></i></div>\n' +
                 '<div class="score_div">\n' +
@@ -570,7 +570,7 @@ $(function () {
                 '\t\t\t</div>\n' +
                 '\t\t\t<div class="choice-details1">\n' +
                 '\t\t\t\t<div class="make-choice">\n' +
-                '\t\t\t\t\t<div class="text-cho">'+htmlss+'</div>\n' +
+                '\t\t\t\t\t<div class="text-cho">' + htmlss + '</div>\n' +
                 '\t\t\t\t</div>\n' +
 
                 '\t\t\t</div>\n' +
@@ -595,21 +595,22 @@ $(function () {
             }
         });
     }
+
     //多选操作
-    $("#batchop").click(function(){
-        if(quan==0){
-            quan=1;
+    $("#batchop").click(function () {
+        if (quan == 0) {
+            quan = 1;
             $(this).text("完成");
-            $(this).css("background","#924343");
-            $(".choice-box").css("display","block");
+            $(this).css("background", "#924343");
+            $(".choice-box").css("display", "block");
             $("#addchoice").parent().hide();
-        }else{
-            quan=0;
+        } else {
+            quan = 0;
             $(".choice").removeClass("choice-check");
             $(this).text("多选");
-            $(this).css("background","#848484");
-            $(".choice-box").css("display","none");
-            $(".choice-box").prop("checked",false);
+            $(this).css("background", "#848484");
+            $(".choice-box").css("display", "none");
+            $(".choice-box").prop("checked", false);
             $("#addchoice").parent().show();
         }
     })
@@ -617,27 +618,26 @@ $(function () {
     $("#checkAll").bind("click", function () {
         var checkbox = document.getElementsByName("checkItem");
         if ($("#checkAll").is(':checked')) {//全选
-            if(checkbox.length != 0)  //判断条件是当选择的个数不为0时
+            if (checkbox.length != 0)  //判断条件是当选择的个数不为0时
             {
-                for(var i = 0; i < checkbox.length; i ++){
+                for (var i = 0; i < checkbox.length; i++) {
                     $(checkbox[i]).parent().parent().addClass("choice-check");
-                    $(checkbox[i]).parent().parent().attr("choicecheck",1);
-                    checkbox[i].checked=true;
+                    $(checkbox[i]).parent().parent().attr("choicecheck", 1);
+                    checkbox[i].checked = true;
                 }
             }
-        }
-        else
-        {//全不选
-            if(checkbox.length != 0)  //判断条件是当选择的个数不为0时
+        } else {//全不选
+            if (checkbox.length != 0)  //判断条件是当选择的个数不为0时
             {
-                for( i = 0; i < checkbox.length; i ++){
+                for (i = 0; i < checkbox.length; i++) {
                     $(checkbox[i]).parent().parent().removeClass("choice-check");
-                    $(checkbox[i]).parent().parent().attr("choicecheck",0);
-                    checkbox[i].checked=false;
+                    $(checkbox[i]).parent().parent().attr("choicecheck", 0);
+                    checkbox[i].checked = false;
                 }
             }
         }
     });
+
 //试卷内题目绑定事件
     function deleteChoiceBind() {
         //勾选试题
@@ -820,29 +820,34 @@ $(function () {
             score_Num();
         });
     }
+
 //计算总分
-    function score_Num(){
+    function score_Num() {
         let choices = $(".choice");
-        let scoreNums=0;
+        let scoreNums = 0;
         choices.each(function (i, choice) {
-            scoreNums+=parseFloat($(choice).children(".choice-title").children(".score_div").children(".score1").val());
+            scoreNums += parseFloat($(choice).children(".choice-title").children(".score_div").children(".score1").val());
         });
-        $(".scoreNum").text("总分:("+scoreNums+"分)")
+        $(".scoreNum").text("总分:(" + scoreNums + "分)")
     }
 
-    $("#saveTestPaper").click(function() {
+    $("#saveTestPaper").click(function () {
         let name = $("#testPaperName").val();
         let subId = $("#subIdScreen option:selected").val();
         let testPaperid = $("#testPaper").attr("testPaperId");
-        if(name==null || name==""){
+        if (name == null || name == "") {
             $.alert("试卷名称不能为空");
             return false;
         }
+       if(subId==0){
+           $.alert("学科不能为空");
+           return false;
+       }
 
         let TestPaper = {
             "name": name,
             "subId": subId,
-            "id":testPaperid
+            "id": testPaperid
         }
 
         console.log(name);
@@ -854,8 +859,8 @@ $(function () {
             dataType: "json",
             success: function (data) {
                 console.log(data);
-                if(data!=undefined && data !=null){
-                    $("#testPaper").attr("testPaperId",data.id);
+                if (data != undefined && data != null) {
+                    $("#testPaper").attr("testPaperId", data.id);
                     saveTestPaperBindChoice();
                 }
             },
@@ -867,14 +872,14 @@ $(function () {
 
     function saveTestPaperBindChoice() {
         var choices = $(".choice");
-        let testPaperList=[];
+        let testPaperList = [];
         choices.each(function (i, choice) {
-            let TestPaperBindChoice={
-                "id":$(choice).attr("bindId"),
-                "indexNum":$(choice).attr("c_index"),
-                "choiceId":$(choice).attr("choiceid"),
-                "testPaperId":$("#testPaper").attr("testPaperId"),
-                "score":$(choice).children(".choice-title").children(".score_div").children(".score1").val()
+            let TestPaperBindChoice = {
+                "id": $(choice).attr("bindId"),
+                "indexNum": $(choice).attr("c_index"),
+                "choiceId": $(choice).attr("choiceid"),
+                "testPaperId": $("#testPaper").attr("testPaperId"),
+                "score": $(choice).children(".choice-title").children(".score_div").children(".score1").val()
             }
             testPaperList.push(TestPaperBindChoice);
         });
@@ -888,15 +893,13 @@ $(function () {
             success: function (data) {
                 console.log(data);
                 $.alert("试题保存成功");
+                window.location.href = "javascript:history.go(-1)";
             },
             error: function (data) {
                 console.log("服务器异常");
             }
         })
     }
-
-
-
 
 
 });

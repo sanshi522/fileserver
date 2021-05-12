@@ -15,7 +15,7 @@ import java.util.Date;
 @Entity
 public class ShareFile {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer ownerIdent;//所属人身份
     private Integer ownerId;//所属人id

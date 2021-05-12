@@ -115,13 +115,13 @@ public class RespondentsServiceImpl implements RespondentsService {
         //获取所有考核
         List<Integer> assessList = this.selectAssess(sessionUser.getStudent().getStuId());
         //获取已提交的考核
-        List<Respondents>  respondentsList=respondentsRepository.findAllByAssessIdInAndStuIdAndCorrect(assessList,sessionUser.getStudent().getStuId(),2);
-        List<Assess>  assessList2=  assessRepository.findAllByIdInAndEndTimeLessThan(assessList,new Date());
-        List<Integer>  list=new ArrayList<Integer>();
-        for(Respondents respondents:respondentsList){
+        List<Respondents> respondentsList = respondentsRepository.findAllByAssessIdInAndStuIdAndCorrect(assessList, sessionUser.getStudent().getStuId(), 2);
+        List<Assess> assessList2 = assessRepository.findAllByIdInAndEndTimeLessThan(assessList, new Date());
+        List<Integer> list = new ArrayList<Integer>();
+        for (Respondents respondents : respondentsList) {
             list.add(respondents.getAssessId());
         }
-        for(Assess assess:assessList2){
+        for (Assess assess : assessList2) {
             list.add(assess.getId());
         }
         json.put("page", assessRepository.findAllByIdInOrderByCreateTimeDesc(list, pageable));
@@ -253,9 +253,9 @@ public class RespondentsServiceImpl implements RespondentsService {
         SessionUser sessionUser = (SessionUser) session.getAttribute("user");
         Respondents respondents = respondentsRepository.findOneByAssessIdAndStuId(assess.getId(), sessionUser.getStudent().getStuId());
         if (respondents == null) {
-            return new RespondentsMsg(assess, subjectRepository.findOneById(assess.getSubId()).getName(), 0d, null,0);
+            return new RespondentsMsg(assess, subjectRepository.findOneById(assess.getSubId()).getName(), 0d, null, 0);
         }
-        return new RespondentsMsg(assess, subjectRepository.findOneById(assess.getSubId()).getName(), answerRepository.selectScore(respondents.getId()), null,1);
+        return new RespondentsMsg(assess, subjectRepository.findOneById(assess.getSubId()).getName(), answerRepository.selectScore(respondents.getId()), null, 1);
     }
 
 

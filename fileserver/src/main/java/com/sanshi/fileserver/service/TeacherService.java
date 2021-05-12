@@ -11,12 +11,20 @@ import java.util.Map;
 public interface TeacherService {
 
     List<Teacher> findAllNoInClass(Integer clasId);
+
     Teacher findOneByTeaId(Integer id);
-    Integer Login(String name, String pass,Integer identity, HttpServletRequest request);
+
+    Integer Login(String name, String pass, Integer identity, HttpServletRequest request);
+
     List<Teacher> findTeacherByClassId(Integer classId);
+
     List<Teacher> findAdmin();
-    Map finTeachers(PageGet val,HttpServletRequest request);
+
+    Map finTeachers(PageGet val, HttpServletRequest request);
+
     void deleteByTeaId(Integer id);
+
     Teacher save(Teacher teacher);
+
     List<Teacher> findAll();
 }

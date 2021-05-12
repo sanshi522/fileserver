@@ -17,13 +17,13 @@ import java.util.Date;
 @Entity
 public class ShareRight {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer shareIdent;//权限人身份
     private Integer shareId;//权限人id
     private Integer shareFileId;//共享文件id
-    @DateTimeFormat(pattern ="yyyy-MM-dd")
-    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date allottedTime;//到期时间
     @CreationTimestamp
     private Date createTime;

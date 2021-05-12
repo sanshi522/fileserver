@@ -1,8 +1,16 @@
-var document = self.document = {parentNode: null, nodeType: 9, toString: function() {return "FakeDocument"}};var window = self.window = self;var fakeElement = Object.create(document);
+var document = self.document = {
+    parentNode: null, nodeType: 9, toString: function () {
+        return "FakeDocument"
+    }
+};
+var window = self.window = self;
+var fakeElement = Object.create(document);
 
 fakeElement.nodeType = 1;
 
-fakeElement.toString=function() {return "FakeElement"};
+fakeElement.toString = function () {
+    return "FakeElement"
+};
 
 fakeElement.parentNode = fakeElement.firstChild = fakeElement.lastChild = fakeElement;
 
@@ -12,18 +20,30 @@ document.head = document.body = fakeElement;
 
 document.ownerDocument = document.documentElement = document;
 
-document.getElementById = document.createElement = function() {return fakeElement;};
+document.getElementById = document.createElement = function () {
+    return fakeElement;
+};
 
-document.createDocumentFragment = function() {return this;};
+document.createDocumentFragment = function () {
+    return this;
+};
 
-document.getElementsByTagName = document.getElementsByClassName = function() {return [fakeElement];};
+document.getElementsByTagName = document.getElementsByClassName = function () {
+    return [fakeElement];
+};
 
 document.getAttribute = document.setAttribute = document.removeChild =
 
     document.addEventListener = document.removeEventListener =
 
-        function() {return null;};
+        function () {
+            return null;
+        };
 
-document.cloneNode = document.appendChild = function() {return this;};
+document.cloneNode = document.appendChild = function () {
+    return this;
+};
 
-document.appendChild = function(child) {return child;};
+document.appendChild = function (child) {
+    return child;
+};

@@ -1,4 +1,5 @@
 package com.sanshi.fileserver.controller;
+
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
@@ -16,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 @Controller
 @RequestMapping("/exportExcel")
 public class ExportExcelController {
@@ -31,12 +34,12 @@ public class ExportExcelController {
     private KnowledgePointService knowledgePointService;
 
 
-    public ExportExcelController(StudentService studentService, ChoiceService choiceService, StuGroupService stuGroupService, SubjectService subjectService,KnowledgePointService knowledgePointService) {
+    public ExportExcelController(StudentService studentService, ChoiceService choiceService, StuGroupService stuGroupService, SubjectService subjectService, KnowledgePointService knowledgePointService) {
         this.studentService = studentService;
         this.choiceService = choiceService;
         this.stuGroupService = stuGroupService;
         this.subjectService = subjectService;
-        this.knowledgePointService=knowledgePointService;
+        this.knowledgePointService = knowledgePointService;
     }
 
     //导出模板
@@ -102,6 +105,7 @@ public class ExportExcelController {
         }
         return "导入成功";
     }
+
     //导出模板
     @RequestMapping("/choiceexportExcel")
     public void choiceexportExcel(HttpServletResponse response, HttpServletRequest request) throws IOException {
@@ -127,6 +131,7 @@ public class ExportExcelController {
         ExcelUtils.selectList(workbook, 13, 13, new String[]{"全自动相等", "少选百分比多选不得分", "人工"});
         ExcelUtils.downLoadExcel("试题信息模板", workbook, request, response);
     }
+
     @ResponseBody
     @PostMapping("/importExcels")
     public String importExcels(@RequestParam("file") MultipartFile file) throws Exception {
@@ -143,55 +148,55 @@ public class ExportExcelController {
             ExcelImportResult<ChoiceExcel> result = ExcelImportUtil.importExcelMore(file.getInputStream(), ChoiceExcel.class, importParams);
             List<ChoiceExcel> choiceExcelList = result.getList();
             List<Choice> choicesList = new ArrayList<Choice>();
-          for(ChoiceExcel choiceExcel:choiceExcelList){
-              Choice   choice=new Choice();
-           Subject  subject=choiceService.findOneByName( choiceExcel.getSubId());
-              if(subject!=null){
-                  choice.setSubId(subject.getId());
-              }
-              if(choiceExcel.getType().equals("") || choiceExcel.getType()==null ||subject==null){
-                  continue;
-              }
-              choice.setType(choiceExcel.getType());
-              choice.setOptionA(choiceExcel.getOptionA());
-              choice.setOptionB(choiceExcel.getOptionB());
-              choice.setOptionC(choiceExcel.getOptionC());
-              choice.setOptionD(choiceExcel.getOptionD());
-              choice.setOptionE(choiceExcel.getOptionE());
-              choice.setOptionF(choiceExcel.getOptionF());
-              choice.setTopic(choiceExcel.getTopic());
-              choice.setOptionNum(choiceExcel.getOptionNum());
+            for (ChoiceExcel choiceExcel : choiceExcelList) {
+                Choice choice = new Choice();
+                Subject subject = choiceService.findOneByName(choiceExcel.getSubId());
+                if (subject != null) {
+                    choice.setSubId(subject.getId());
+                }
+                if (choiceExcel.getType().equals("") || choiceExcel.getType() == null || subject == null) {
+                    continue;
+                }
+                choice.setType(choiceExcel.getType());
+                choice.setOptionA(choiceExcel.getOptionA());
+                choice.setOptionB(choiceExcel.getOptionB());
+                choice.setOptionC(choiceExcel.getOptionC());
+                choice.setOptionD(choiceExcel.getOptionD());
+                choice.setOptionE(choiceExcel.getOptionE());
+                choice.setOptionF(choiceExcel.getOptionF());
+                choice.setTopic(choiceExcel.getTopic());
+                choice.setOptionNum(choiceExcel.getOptionNum());
 
-             if(choiceExcel.getType()==1 || choiceExcel.getType()==2){
+                if (choiceExcel.getType() == 1 || choiceExcel.getType() == 2) {
 
-                 choice.setCorrect(choiceExcel.getCorrect().toUpperCase());
-             }else{
-                 choice.setCorrect(choiceExcel.getCorrect());
-             }
-              choice.setDifficultyLevel(choiceExcel.getDifficultyLevel());
-              choice.setScaleRule(choiceExcel.getScaleRule());
-              choice.setAnalysis(choiceExcel.getAnalysis());
-              //知识点
-              if(choiceExcel.getAbilityIds()!=null && !choiceExcel.getAbilityIds().equals("")){
-               String [] strArray = choiceExcel.getAbilityIds().split(",");
-             String values="";
-                  for (int i=0;i< strArray.length;i++){
-                      if(!strArray[i].equals("")){
-                          KnowledgePoint  knowledgePoint=knowledgePointService.findOneBySubIdAndName(subject.getId(),strArray[i]);
-                          if(knowledgePoint!=null){
-                              values+=knowledgePoint.getId()+",";
-                          }else{
-                           KnowledgePoint ko=knowledgePointService.save(new KnowledgePoint(null,subject.getId(),strArray[i],strArray[i]));
-                           values+=ko.getId()+",";
-                          }
-                      }
-                  }
-                 values= values.substring(0,values.length()-1);
-                  choice.setAbilityIds(values);
-              }
-              choicesList.add(choice);
-          }
-  choiceService.saves(choicesList);
+                    choice.setCorrect(choiceExcel.getCorrect().toUpperCase());
+                } else {
+                    choice.setCorrect(choiceExcel.getCorrect());
+                }
+                choice.setDifficultyLevel(choiceExcel.getDifficultyLevel());
+                choice.setScaleRule(choiceExcel.getScaleRule());
+                choice.setAnalysis(choiceExcel.getAnalysis());
+                //知识点
+                if (choiceExcel.getAbilityIds() != null && !choiceExcel.getAbilityIds().equals("")) {
+                    String[] strArray = choiceExcel.getAbilityIds().split(",");
+                    String values = "";
+                    for (int i = 0; i < strArray.length; i++) {
+                        if (!strArray[i].equals("")) {
+                            KnowledgePoint knowledgePoint = knowledgePointService.findOneBySubIdAndName(subject.getId(), strArray[i]);
+                            if (knowledgePoint != null) {
+                                values += knowledgePoint.getId() + ",";
+                            } else {
+                                KnowledgePoint ko = knowledgePointService.save(new KnowledgePoint(null, subject.getId(), strArray[i], strArray[i]));
+                                values += ko.getId() + ",";
+                            }
+                        }
+                    }
+                    values = values.substring(0, values.length() - 1);
+                    choice.setAbilityIds(values);
+                }
+                choicesList.add(choice);
+            }
+            choiceService.saves(choicesList);
         } catch (IOException e) {
             // log.error("导入失败：{}", e.getMessage());
         } catch (Exception e1) {

@@ -8,15 +8,20 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Integer> {
     Student save(Student stu);
+
     List<Student> findAll();
+
     List<Student> findByStuNumber(String stuNumber);
+
     void deleteById(Integer stuId);
 
     /**
      * 根据id获取学生
+     *
      * @param stuId
      * @return
      */
@@ -24,25 +29,28 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
 
     /**
      * 根据学号查询学生
+     *
      * @param stuNumber
      * @return
      */
 
-    Student  findOneByStuNumber(String stuNumber);
+    Student findOneByStuNumber(String stuNumber);
 
     /**
      * 根据小组id组查询学生id集合
+     *
      * @return
      */
-    @Query(value="select s.stuId from Student s where  s.stuGroup = ?1")
-    List<Integer>  findIdsByStuGroup(Integer ids);
+    @Query(value = "select s.stuId from Student s where  s.stuGroup = ?1")
+    List<Integer> findIdsByStuGroup(Integer ids);
 
     /**
      * 根据小组id组查询学生id集合
+     *
      * @return
      */
-    @Query(value="select s.stuId from Student s where  s.stuGroup in ?1")
-    List<Integer>  findIdsByStuGroupIn(List<Integer> ids);
+    @Query(value = "select s.stuId from Student s where  s.stuGroup in ?1")
+    List<Integer> findIdsByStuGroupIn(List<Integer> ids);
 
     List<Student> findAllByStuGroup(Integer StuGroup);
 
@@ -50,7 +58,7 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
 
     List<Student> findAllByStuGroupIn(List<Integer> StuGroups);
 
-    Page<Student> findAllByStuGroupInAndStuNameLike(List<Integer> StuGroups, String name,Pageable pageable);
+    Page<Student> findAllByStuGroupInAndStuNameLike(List<Integer> StuGroups, String name, Pageable pageable);
 
 //    @Query(value="select s.stuId from Student  s where  s.stuId in ? 1  and   s.stuId  not in ? 2")
 //    List<Integer> findAllByStuIdAndAssessIdMinus(List<Integer> studentIdList1,List<Integer> studentIdList2);

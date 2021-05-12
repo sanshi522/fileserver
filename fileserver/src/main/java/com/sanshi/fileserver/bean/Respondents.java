@@ -16,7 +16,7 @@ import java.util.Date;
 @Entity
 public class Respondents {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer assessId; //答卷ID
     private Integer stuId;//学生id
@@ -29,9 +29,9 @@ public class Respondents {
     private Date createTime;
     @UpdateTimestamp
     private Date uapdateTime;
+
     public Respondents() {
     }
-
 
 
     public Respondents(Integer id, Integer assessId, Integer stuId, Integer makeTime, Integer submit, Integer correct, Integer correctId, Date createTime, Date uapdateTime) {

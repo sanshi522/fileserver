@@ -15,9 +15,10 @@ import java.util.Map;
 @RequestMapping("/accessory")
 public class AccessoryController {
     AccessoryService accessoryService;
+
     @RequestMapping(path = "/save")
     @ResponseBody
-    public Map save(Integer library, Integer fileid){
-        return accessoryService.save(library,fileid);
+    public Map save(Integer library, Integer fileid) {
+        return accessoryService.save(library, fileid);
     }
 }

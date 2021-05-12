@@ -5,12 +5,14 @@ import lombok.Data;
 import java.util.function.Predicate;
 
 @Data
-public class Result <T>{
+public class Result<T> {
     private boolean ok;
     private T data;
+
     public Result() {
 
     }
+
     public Result(boolean ok, T data) {
         this.ok = ok;
         this.data = data;

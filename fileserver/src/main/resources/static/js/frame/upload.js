@@ -1,57 +1,60 @@
-function minview(){
+function minview() {
     parent.upload_minview();
-    $(".uptitle").css("display","none");
-    $(".talks").css("display","none");
-    $(".viewimg").css("display","block");
-    $("body").css("overflow-y","hidden");
-    $("body").css("overflow-x","hidden");
-    $("body").css("background-color","transparent");
+    $(".uptitle").css("display", "none");
+    $(".talks").css("display", "none");
+    $(".viewimg").css("display", "block");
+    $("body").css("overflow-y", "hidden");
+    $("body").css("overflow-x", "hidden");
+    $("body").css("background-color", "transparent");
 }
-function maxview(){
+
+function maxview() {
     parent.upload_maxview();
-    $(".uptitle").css("display","block");
-    $(".talks").css("display","block");
-    $(".viewimg").css("display","none");
-    $("body").css("overflow-y","auto");
-    $("body").css("-ms-overflow-style","none");
-    $("body").css("background-color","#FFF");
+    $(".uptitle").css("display", "block");
+    $(".talks").css("display", "block");
+    $(".viewimg").css("display", "none");
+    $("body").css("overflow-y", "auto");
+    $("body").css("-ms-overflow-style", "none");
+    $("body").css("background-color", "#FFF");
 }
-function getKbMbGb(limit){
+
+function getKbMbGb(limit) {
     var size = "";
-    if(limit < 0.1 * 1024){                            //小于0.1KB，则转化成B
+    if (limit < 0.1 * 1024) {                            //小于0.1KB，则转化成B
         size = limit.toFixed(2) + "B"
-    }else if(limit < 0.1 * 1024 * 1024){            //小于0.1MB，则转化成KB
-        size = (limit/1024).toFixed(2) + "KB"
-    }else if(limit < 0.1 * 1024 * 1024 * 1024){        //小于0.1GB，则转化成MB
-        size = (limit/(1024 * 1024)).toFixed(2) + "MB"
-    }else{                                            //其他转化成GB
-        size = (limit/(1024 * 1024 * 1024)).toFixed(2) + "GB"
+    } else if (limit < 0.1 * 1024 * 1024) {            //小于0.1MB，则转化成KB
+        size = (limit / 1024).toFixed(2) + "KB"
+    } else if (limit < 0.1 * 1024 * 1024 * 1024) {        //小于0.1GB，则转化成MB
+        size = (limit / (1024 * 1024)).toFixed(2) + "MB"
+    } else {                                            //其他转化成GB
+        size = (limit / (1024 * 1024 * 1024)).toFixed(2) + "GB"
     }
 
     var sizeStr = size + "";                        //转成字符串
     var index = sizeStr.indexOf(".");                    //获取小数点处的索引
-    var dou = sizeStr.substr(index + 1 ,2)            //获取小数点后两位的值
-    if(dou == "00"){                                //判断后两位是否为00，如果是则删除00
+    var dou = sizeStr.substr(index + 1, 2)            //获取小数点后两位的值
+    if (dou == "00") {                                //判断后两位是否为00，如果是则删除00
         return sizeStr.substring(0, index) + sizeStr.substr(index + 3, 2)
     }
     return size;
 }
-function addtalk(talk){
+
+function addtalk(talk) {
     const timestamp = parseInt((new Date()).valueOf()); //唯一的标识
-    $(".talks").append('<div id='+timestamp+' class="talk nowtalk">\n' +
+    $(".talks").append('<div id=' + timestamp + ' class="talk nowtalk">\n' +
         '        <div class="filename"></div>\n' +
         '        <div  class="progress progress-striped active" style="width:240px;float: left;">\n' +
         '            <div  class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">' +
         '            </div>\n' +
         '        </div>\n' +
-        '        <div class="talkstate"> - '+getKbMbGb(talk.upfile.size)+'</div>\n' +
+        '        <div class="talkstate"> - ' + getKbMbGb(talk.upfile.size) + '</div>\n' +
         '        <div class="pausetalkdiv">\n' +
         '            <i class="my-icon lsm-sidebar-icon icon-shezhi pausetalkbth"></i>\n' +
         '        </div>\n' +
         '    </div>');
     $("#" + timestamp).children(".filename").html(talk.upfile.name);
 
-    talk['divid']=timestamp;
+    talk['divid'] = timestamp;
 
     //talk['state']=0;//等待
     talks.push(talk);
@@ -61,39 +64,42 @@ function addtalk(talk){
     // this.upload.start();
     //alert(file.name+"||"+file.size);
 }
-let talks=[];//任务集合
-let upstate=0;
-let nowtalk={};
+
+let talks = [];//任务集合
+let upstate = 0;
+let nowtalk = {};
+
 function startnewtalk() {
-    if(talks.length==0) {
+    if (talks.length == 0) {
         $(".uploadimg").attr("src", "./images/upload/uploadnotalk.png")
         $(".talknum").html("");
-    }else{
+    } else {
         $(".uploadimg").attr("src", "./images/upload/upload.gif")
         $(".talknum").html(talks.length);
     }
 
-    for (let i=0;i<talks.length;i++){
+    for (let i = 0; i < talks.length; i++) {
         //for (let j=0;j<workers.length;j++){
-            if (upstate==0){
-                // let msg={};
-                // msg["msgid"]=1;//设置id
-                // msg["talk"]=talks[i];
-                // workers[j].postMessage(msg)
-                nowtalk=talks[i];
-                patchUpload.init(talks[i].divid,talks[i].upfile);
-                talks.splice(i, 1); // 将使后面的元素依次前移，数组长度减1
-                i--;
-                upstate=1;
-                break;
-            }else{
-                break;
-            }
+        if (upstate == 0) {
+            // let msg={};
+            // msg["msgid"]=1;//设置id
+            // msg["talk"]=talks[i];
+            // workers[j].postMessage(msg)
+            nowtalk = talks[i];
+            patchUpload.init(talks[i].divid, talks[i].upfile);
+            talks.splice(i, 1); // 将使后面的元素依次前移，数组长度减1
+            i--;
+            upstate = 1;
+            break;
+        } else {
+            break;
         }
+    }
     //}
 }
-function talkend(){
-    upstate=0;
+
+function talkend() {
+    upstate = 0;
     startnewtalk();
 }
 
@@ -101,54 +107,54 @@ function talkend(){
  * 添加共享文件数据及授权数据
  * @param id
  */
-function addShareFileAndRight(id){
+function addShareFileAndRight(id) {
     //添加共享文件数据（返回共享文件id）并添加授权信息
     let sharefileid;
-    let ShareFile={
-        "id":null,
-        "ownerIdent":null,
-        "ownerId":null,
-        "fileId":id
+    let ShareFile = {
+        "id": null,
+        "ownerIdent": null,
+        "ownerId": null,
+        "fileId": id
     }
-    if(nowtalk.type==0){
+    if (nowtalk.type == 0) {
         $.ajax({
             url: "/ShareFile/getIdIsNoAdd",
-            contentType:"application/json;charset=UTF-8",
+            contentType: "application/json;charset=UTF-8",
             type: "post",
-            data:JSON.stringify(ShareFile),
+            data: JSON.stringify(ShareFile),
             dataType: "json",
-            success: function(data) {
-                sharefileid=data.resoult;
-                if(sharefileid!=-1){
-                    for(let g=0;g<nowtalk.id.length;g++){
-                        let ShareRight={
-                            "id":null,
+            success: function (data) {
+                sharefileid = data.resoult;
+                if (sharefileid != -1) {
+                    for (let g = 0; g < nowtalk.id.length; g++) {
+                        let ShareRight = {
+                            "id": null,
                             "shareIdent": nowtalk.ident,
-                            "shareId":nowtalk.id[g],
-                            "shareFileId":sharefileid,
-                            "allottedTime":null
+                            "shareId": nowtalk.id[g],
+                            "shareFileId": sharefileid,
+                            "allottedTime": null
                         }
                         //添加授权信息
                         $.ajax({
                             url: "/ShareRight/AddIsHaveUpTime",
-                            contentType:"application/json;charset=UTF-8",
+                            contentType: "application/json;charset=UTF-8",
                             type: "post",
-                            data:JSON.stringify(ShareRight),
+                            data: JSON.stringify(ShareRight),
                             dataType: "json",
-                            success: function(data) {
+                            success: function (data) {
                                 console.log("添加授权信息成功");
                             },
-                            error: function(data){
+                            error: function (data) {
                                 console.log("添加授权信息服务器异常");
                             }
                         });
                     }
 
-                }else{
+                } else {
                     console.log("添加共享文件失败");
                 }
             },
-            error: function(data){
+            error: function (data) {
                 console.log("添加共享文件服务器异常");
             }
         });
@@ -156,6 +162,7 @@ function addShareFileAndRight(id){
         // for()
     }
 }
+
 //
 // let talks=[];//任务集合
 // let workers=[];//线程集合
@@ -217,25 +224,25 @@ var patchUpload = {
     /**
      * 显示dom
      */
-     div:null,
+    div: null,
     /**
      * 文件对象
      */
-    file:null,
+    file: null,
     /**
      * 初始化
      */
-    init: function (di,fil) {
+    init: function (di, fil) {
         //this.setEvent();
         this.succeed = [];
         this.failed = [];
         this.try = 3;
         this.file = fil;
-        this.div =di;
+        this.div = di;
         this.loadProcess(0);
         this.start();
     },
-    start:function(){
+    start: function () {
         this.md5checkUpload(this.file);
     },
     /**
@@ -275,27 +282,27 @@ var patchUpload = {
             type: "get",
             data: {md5: md5, size: file.size},
             dataType: "json",
-            success: function(data) {
+            success: function (data) {
                 //文件已经完全存在
                 if (data.status === 1) {
-                   // me.loadProcess(100);
-                    $("#"+me.div).find(".talkstate").html("已完成 - "+getKbMbGb(file.size));
-                    $("#"+me.div).find(".progress").remove();
-                   // alert("急速秒传！");
+                    // me.loadProcess(100);
+                    $("#" + me.div).find(".talkstate").html("已完成 - " + getKbMbGb(file.size));
+                    $("#" + me.div).find(".progress").remove();
+                    // alert("急速秒传！");
                     addShareFileAndRight(data.id);
                     talkend();
-                    return ;
+                    return;
                 }
                 //文件传输了一部分
-                if(data.id && data.status === 0) {
+                if (data.id && data.status === 0) {
                     me.succeed = data.patchIndex;
                     me.upload(data.id, file);
-                    return ;
+                    return;
                 }
                 //上传文件
                 me.upload(me.prepareUpload(md5, file), file);
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 talkend();
                 alert("服务器错误！");
             }
@@ -318,17 +325,17 @@ var patchUpload = {
             data: JSON.stringify({name: file.name, md5: md5, size: 0}),
             contentType: "application/json;charset=utf-8",
             dataType: "json",
-            success: function(data) {
-                if(data && data.id) {
+            success: function (data) {
+                if (data && data.id) {
                     id = data.id;
                     return;
                 }
-                $("#"+me.div).find(".talkstate").html("上传文件失败！ - "+getKbMbGb(file.size));
+                $("#" + me.div).find(".talkstate").html("上传文件失败！ - " + getKbMbGb(file.size));
                 //this.div.children(".progress").remove();
-               // alert("上传文件失败！");
+                // alert("上传文件失败！");
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                $("#"+me.div).find(".talkstate").html("服务器错误！ - "+getKbMbGb(file.size));
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $("#" + me.div).find(".talkstate").html("服务器错误！ - " + getKbMbGb(file.size));
                 //alert("服务器错误！");
             }
         });
@@ -343,10 +350,10 @@ var patchUpload = {
     upload: function (id, file) {
         addShareFileAndRight(id);
         var me = this;
-        if(!id) return;
+        if (!id) return;
         var shardCount = Math.ceil(file.size / this.shardSize);//文件片数
         for (var i = 0; i < shardCount; i++) {
-            if(me.succeed.length !== 0 && me.succeed.indexOf(i) > -1 && me.failed.indexOf(i) === -1) {
+            if (me.succeed.length !== 0 && me.succeed.indexOf(i) > -1 && me.failed.indexOf(i) === -1) {
                 continue;
             }
             this.uploadPatch(id, file, i, shardCount);
@@ -368,7 +375,7 @@ var patchUpload = {
         var spark = new SparkMD5();
         var reader = new FileReader();
         reader.readAsBinaryString(patch);
-        $(reader).on('load',function (e) {
+        $(reader).on('load', function (e) {
             spark.appendBinary(e.target.result);
             var md5 = spark.end();
             var form = new FormData();
@@ -385,19 +392,19 @@ var patchUpload = {
                 processData: false,
                 contentType: false,
                 dataType: "json",
-                success: function(data) {
-                    if(!data || !data.ok) {
+                success: function (data) {
+                    if (!data || !data.ok) {
                         me.failed.push(index);
                         console.log("上传分片" + index + "失败！");
                         talkend();
-                        return ;
+                        return;
                     }
                     me.succeed.push(index);
                     console.log("上传分片" + index + "成功！");
                     me.loadProcess(((me.succeed.length - 1) * me.shardSize + patch.size) / file.size * 100);
                     me.mergePatch(parent, file, shardCount);
                 },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
                     me.failed.push(index);
                     console.log("服务器错误，上传分片" + index + "失败！");
                     me.tryAgain(parent, file, shardCount);
@@ -414,35 +421,35 @@ var patchUpload = {
      */
     mergePatch: function (parent, file, shardCount) {
         var me = this;
-        if(me.succeed.length + me.failed.length !== shardCount) return;
-        if(me.failed.length !== 0) {
+        if (me.succeed.length + me.failed.length !== shardCount) return;
+        if (me.failed.length !== 0) {
             me.tryAgain(parent, file, shardCount);
-            return ;
+            return;
         }
         $.ajax({
             url: "/file/patch/merge",
             type: "post",
             data: {parent: parent, size: file.size},
             dataType: "json",
-            success: function(data) {
+            success: function (data) {
                 if (data && data.ok) {
                     //me.loadProcess(100);
-                    $("#"+me.div).find(".talkstate").html("已完成 - "+getKbMbGb(file.size));
-                    $("#"+me.div).find(".progress").remove();
-                    $("#"+me.div).removeClass("nowtalk");
-                    $("#"+me.div).addClass("finishtalk")
+                    $("#" + me.div).find(".talkstate").html("已完成 - " + getKbMbGb(file.size));
+                    $("#" + me.div).find(".progress").remove();
+                    $("#" + me.div).removeClass("nowtalk");
+                    $("#" + me.div).addClass("finishtalk")
                     talkend();
-                   // alert("上传文件成功！");
-                    return ;
+                    // alert("上传文件成功！");
+                    return;
                 }
-                $("#"+me.div).find(".talkstate").html("上传文件失败！ - "+getKbMbGb(file.size));
-                $("#"+me.div).find(".progress").remove();
+                $("#" + me.div).find(".talkstate").html("上传文件失败！ - " + getKbMbGb(file.size));
+                $("#" + me.div).find(".progress").remove();
                 talkend();
                 //alert("上传文件失败！");
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                $("#"+me.div).find(".talkstate").html("服务器错误！ - "+getKbMbGb(file.size));
-                $("#"+me.div).find(".progress").remove();
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $("#" + me.div).find(".talkstate").html("服务器错误！ - " + getKbMbGb(file.size));
+                $("#" + me.div).find(".progress").remove();
                 talkend();
                 //alert("服务器错误！");
             }
@@ -454,18 +461,18 @@ var patchUpload = {
      */
     tryAgain: function (parent, file, shardCount) {
         var me = this;
-        if(me.succeed.length + me.failed.length !== shardCount) return;
-        if(me.failed.length === 0) {
+        if (me.succeed.length + me.failed.length !== shardCount) return;
+        if (me.failed.length === 0) {
             me.mergePatch(parent, file, shardCount);
-            return ;
+            return;
         }
-        if(me.try === 0) {
-           // $("#try").css("display", "block");
-            return ;
+        if (me.try === 0) {
+            // $("#try").css("display", "block");
+            return;
         }
         me.try--;
         console.log("重试...");
-        while(me.failed.length !== 0) {
+        while (me.failed.length !== 0) {
             me.uploadPatch(parent, file, me.failed.pop(), shardCount);
         }
     },
@@ -475,8 +482,8 @@ var patchUpload = {
      * @param process
      */
     loadProcess: function (process) {
-        $("#"+this.div).find(".progress-bar").css("width", process+"%");
-        $("#"+this.div).find(".progress-bar").html(process+"%");
+        $("#" + this.div).find(".progress-bar").css("width", process + "%");
+        $("#" + this.div).find(".progress-bar").html(process + "%");
         // process = Math.min(100, process);
         // if(process === 100) {
         //     $("#try").css("display", "none");
@@ -500,7 +507,7 @@ var patchUpload = {
         fileReader.onload = function (e) {
             index++;
             spark.append(e.target.result);
-            if(index < shardCount) {
+            if (index < shardCount) {
                 loadNext();
                 return;
             }

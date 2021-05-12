@@ -19,6 +19,11 @@ public class PageGet {
         this.likeName = likeName;
     }
 
+    public PageGet( Integer pageIndex,Integer pageNumber) {
+        this.pageNumber = pageNumber;
+        this.pageIndex = pageIndex;
+    }
+
     public Integer getPageNumber() {
         return pageNumber;
     }

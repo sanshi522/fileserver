@@ -16,9 +16,9 @@ public class FileExists {
 
     /**
      * 文件状态
-     *      -1: 不存在
-     *       1: 已存在
-     *       0: 部分存在
+     * -1: 不存在
+     * 1: 已存在
+     * 0: 部分存在
      */
     private Integer status;
 
@@ -34,7 +34,8 @@ public class FileExists {
     }
 
     /**
-     *  -1: 不存在
+     * -1: 不存在
+     *
      * @return
      */
     public static FileExists nonExistent() {
@@ -43,6 +44,7 @@ public class FileExists {
 
     /**
      * 已存在
+     *
      * @param id
      * @return
      */
@@ -52,6 +54,7 @@ public class FileExists {
 
     /**
      * 部分存在
+     *
      * @param id
      * @param patchIndex
      * @return

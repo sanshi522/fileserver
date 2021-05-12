@@ -36,24 +36,27 @@ public class FileSampleController {
     @GetMapping("/exists")
     @ResponseBody
     public FileExists fileExists(String md5, Long size) {
-        return fileSampleService.fileExists(md5,size);
+        return fileSampleService.fileExists(md5, size);
     }
+
     @PostMapping("/new")
     @ResponseBody
     public FileSample fileExists(@RequestBody FileSample file) {
         return fileSampleService.insertFileSample(file);
     }
+
     @PostMapping("/patch/upload")
     @ResponseBody
     public Result filePatchExists(String name, Integer index, Integer parent, String md5, Long size, MultipartFile patch, HttpServletRequest request) throws IOException {
         FileSample file = fileSampleService.findByParentAndMd5(parent, md5);
-        if(file == null || !file.getSize().equals(size)) {
+        if (file == null || !file.getSize().equals(size)) {
             Optional.ofNullable(file).ifPresent(e -> fileSampleService.deleteById(e.getId()));
-            fileSampleService.insertFileSample(new FileSample(index, parent, name, UploadUtil.saveFile(patch, size), md5, size,null,null));
+            fileSampleService.insertFileSample(new FileSample(index, parent, name, UploadUtil.saveFile(patch, size), md5, size, null, null));
             return Result.OK();
         }
         return file.getSize().equals(size) ? Result.OK() : Result.FAIL();
     }
+
     @Transactional
     @PostMapping("/patch/merge")
     @ResponseBody
@@ -61,7 +64,7 @@ public class FileSampleController {
         FileSample fileInfo = fileSampleService.findById(parent);
         List<FileSample> patchs = fileSampleService.findByParentOrderByPatchIndexAsc(parent);
         Long total = patchs.stream().mapToLong(FileSample::getSize).sum();
-        if(fileInfo == null || CollectionUtils.isEmpty(patchs) || !total.equals(size)) {
+        if (fileInfo == null || CollectionUtils.isEmpty(patchs) || !total.equals(size)) {
             fileSampleService.deleteByParent(parent);
             //log.warn("total: {}, require size: {}, and delete file to retry !", total, size);
             return Result.FAIL();
@@ -72,29 +75,32 @@ public class FileSampleController {
         fileSampleService.deleteByParent(parent);
         return Result.OK();
     }
+
     @PostMapping("/getAllShareFile")
     @ResponseBody
-    public  Map getAllShareFile(@RequestBody ScreenShareFile screenShareFile,HttpServletRequest request){
-        return fileSampleService.ScreenALL(screenShareFile,request);
+    public Map getAllShareFile(@RequestBody ScreenShareFile screenShareFile, HttpServletRequest request) {
+        return fileSampleService.ScreenALL(screenShareFile, request);
     }
+
     @PostMapping("/getAllMyShareFile")
     @ResponseBody
-    public  Map getAllMyShareFile(@RequestBody ScreenShareFile screenShareFile,HttpServletRequest request){
-        return fileSampleService.ScreenMyALL(screenShareFile,request);
+    public Map getAllMyShareFile(@RequestBody ScreenShareFile screenShareFile, HttpServletRequest request) {
+        return fileSampleService.ScreenMyALL(screenShareFile, request);
     }
+
     @RequestMapping("/downloadShareFile")
-    public String downLoad(Integer fileId,HttpServletResponse response) throws UnsupportedEncodingException {
-        FileSample fileSample=fileSampleService.findById(fileId);
-       // String filename="navicatformysql.zip";
-        String filename=fileSample.getName();
+    public String downLoad(Integer fileId, HttpServletResponse response) throws UnsupportedEncodingException {
+        FileSample fileSample = fileSampleService.findById(fileId);
+        // String filename="navicatformysql.zip";
+        String filename = fileSample.getName();
         File file = new File(fileSample.getPath());
         //String filePath = "D:/软件安装包/数据库管理工具" ;
         //File file = new File(filePath + "/" + filename);
-        if(file.exists()){ //判断文件父目录是否存在
+        if (file.exists()) { //判断文件父目录是否存在
             //response.setContentType("application/vnd.ms-excel;charset=UTF-8");
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/force-download");
-            response.setHeader("Content-Disposition", "attachment;fileName=" +   java.net.URLEncoder.encode(filename,"UTF-8"));
+            response.setHeader("Content-Disposition", "attachment;fileName=" + java.net.URLEncoder.encode(filename, "UTF-8"));
             byte[] buffer = new byte[1024];
             FileInputStream fis = null; //文件输入流
             BufferedInputStream bis = null;
@@ -105,7 +111,7 @@ public class FileSampleController {
                 fis = new FileInputStream(file);
                 bis = new BufferedInputStream(fis);
                 int i = bis.read(buffer);
-                while(i != -1){
+                while (i != -1) {
                     os.write(buffer);
                     i = bis.read(buffer);
                 }
@@ -127,18 +133,18 @@ public class FileSampleController {
     }
 
     @RequestMapping("/downloadShareFile2")
-    public String downLoad2(String filename,HttpServletResponse response) throws UnsupportedEncodingException {
+    public String downLoad2(String filename, HttpServletResponse response) throws UnsupportedEncodingException {
         File file = new File(filename);
-        String name=filename;
-        if(filename.lastIndexOf("_")>=0){
-            String str1=filename.substring(0, filename.indexOf("_"));
-             name=filename.substring(str1.length()+1, filename.length());
+        String name = filename;
+        if (filename.lastIndexOf("_") >= 0) {
+            String str1 = filename.substring(0, filename.indexOf("_"));
+            name = filename.substring(str1.length() + 1, filename.length());
         }
-        if(file.exists()){ //判断文件父目录是否存在
+        if (file.exists()) { //判断文件父目录是否存在
             //response.setContentType("application/vnd.ms-excel;charset=UTF-8");
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/force-download");
-            response.setHeader("Content-Disposition", "attachment;fileName=" +   java.net.URLEncoder.encode(name,"UTF-8"));
+            response.setHeader("Content-Disposition", "attachment;fileName=" + java.net.URLEncoder.encode(name, "UTF-8"));
             byte[] buffer = new byte[1024];
             FileInputStream fis = null; //文件输入流
             BufferedInputStream bis = null;
@@ -148,7 +154,7 @@ public class FileSampleController {
                 fis = new FileInputStream(file);
                 bis = new BufferedInputStream(fis);
                 int i = bis.read(buffer);
-                while(i != -1){
+                while (i != -1) {
                     os.write(buffer);
                     i = bis.read(buffer);
                 }

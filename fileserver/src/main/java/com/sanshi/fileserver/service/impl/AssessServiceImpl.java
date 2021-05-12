@@ -163,19 +163,20 @@ public class AssessServiceImpl implements AssessService {
         if (scoreSum == null) scoreSum = 0.0;
         return new AssessMsg(name, testPaperBindChoiceRepository.findAllByTestPaperIdOrderByIndexNumAsc(assess.getTestPaperId()).size(), scoreSum, subjectRepository.findOneById(assess.getSubId()).getName(), respondentsRepository.findCountnotred(assess.getId()), respondentsRepository.findCountred(assess.getId()));
     }
+
     @Override
     public AssessMsg findMsg2(Integer id) {
         Assess assess = assessRepository.findOneById(id);
-        SessionUser sessionUser=(SessionUser) session.getAttribute("user");
+        SessionUser sessionUser = (SessionUser) session.getAttribute("user");
         String name = teacherRepository.findOneByTeaId(assess.getIssueId()).getTeaName();
         Double scoreSum = testPaperBindChoiceRepository.findScoreSum(assess.getTestPaperId());
         if (scoreSum == null) scoreSum = 0.0;
-        int submit=0;
-        Respondents  respondents=respondentsRepository.findOneByAssessIdAndStuId(id,sessionUser.getStudent().getStuId());
-        if(respondents!=null){
-            submit= respondents.getSubmit();
+        int submit = 0;
+        Respondents respondents = respondentsRepository.findOneByAssessIdAndStuId(id, sessionUser.getStudent().getStuId());
+        if (respondents != null) {
+            submit = respondents.getSubmit();
         }
-        return new AssessMsg(name, testPaperBindChoiceRepository.findAllByTestPaperIdOrderByIndexNumAsc(assess.getTestPaperId()).size(), scoreSum, subjectRepository.findOneById(assess.getSubId()).getName(), respondentsRepository.findCountnotred(assess.getId()), respondentsRepository.findCountred(assess.getId()),submit);
+        return new AssessMsg(name, testPaperBindChoiceRepository.findAllByTestPaperIdOrderByIndexNumAsc(assess.getTestPaperId()).size(), scoreSum, subjectRepository.findOneById(assess.getSubId()).getName(), respondentsRepository.findCountnotred(assess.getId()), respondentsRepository.findCountred(assess.getId()), submit);
     }
 
     @Override

@@ -15,6 +15,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.springframework.http.HttpRequest;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
@@ -32,8 +33,8 @@ import java.util.NoSuchElementException;
 public class ExcelUtils {
     public static void exportExcel(List<?> list, String title, String sheetName, Class<?> pojoClass, String fileName,
                                    boolean isCreateHeader, HttpServletResponse response) {
-         ExportParams exportParams = new ExportParams(title, sheetName);
-       exportParams.setCreateHeadRows(isCreateHeader);
+        ExportParams exportParams = new ExportParams(title, sheetName);
+        exportParams.setCreateHeadRows(isCreateHeader);
         defaultExport(list, pojoClass, fileName, response, exportParams);
     }
 
@@ -113,7 +114,7 @@ public class ExcelUtils {
     }
 
 
-    public static void selectList(Workbook workbook,int firstCol,int lastCol,String[] strings ){
+    public static void selectList(Workbook workbook, int firstCol, int lastCol, String[] strings) {
 
         Sheet sheet = workbook.getSheetAt(0);
         //  生成下拉列表
@@ -126,6 +127,7 @@ public class ExcelUtils {
         sheet.addValidationData(dataValidation);
 
     }
+
     public static void downLoadExcel(String fileName, Workbook workbook, HttpServletRequest request,
                                      HttpServletResponse response) throws IOException {
 
@@ -143,11 +145,11 @@ public class ExcelUtils {
             // 指定下载的文件名--设置响应头
             if (UserAgent.indexOf("firefox") >= 0) {
 
-                response.setHeader("content-disposition", "attachment;filename=\"" + new String(dateStr.getBytes("UTF-8"), "iso-8859-1") +".xls\"");
+                response.setHeader("content-disposition", "attachment;filename=\"" + new String(dateStr.getBytes("UTF-8"), "iso-8859-1") + ".xls\"");
 
-            }else {
+            } else {
                 response.setHeader("Content-Disposition",
-                        "attachment;filename=" + URLEncoder.encode(dateStr, "UTF-8")+".xls");
+                        "attachment;filename=" + URLEncoder.encode(dateStr, "UTF-8") + ".xls");
             }
 
 
@@ -170,10 +172,6 @@ public class ExcelUtils {
             }
         }
     }
-
-
-
-
 
 
 }

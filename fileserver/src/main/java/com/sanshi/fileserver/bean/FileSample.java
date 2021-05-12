@@ -16,7 +16,7 @@ import java.util.Date;
 @Entity
 public class FileSample {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(length = 50)
     private Integer id;
     @Column(length = 10)
@@ -27,7 +27,7 @@ public class FileSample {
     private String name;
     @Column(length = 500)
     private String path;
-    @Column(length = 50,nullable = false)
+    @Column(length = 50, nullable = false)
     private String md5;
     private Long size;
     @CreationTimestamp

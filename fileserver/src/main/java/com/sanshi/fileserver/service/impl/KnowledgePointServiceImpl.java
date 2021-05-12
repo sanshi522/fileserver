@@ -92,7 +92,7 @@ public class KnowledgePointServiceImpl implements KnowledgePointService {
 
     @Override
     public KnowledgePoint findOneBySubIdAndName(Integer subId, String name) {
-        return knowledgePointRepository.findOneBySubIdAndName(subId,name);
+        return knowledgePointRepository.findOneBySubIdAndName(subId, name);
     }
 
 }

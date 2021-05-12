@@ -104,7 +104,8 @@ public class TestPaperServiceImpl implements TestPaperService {
     public TestPaper save(TestPaper testPaper) {
         return testPaperRepository.save(testPaper);
     }
-  @Transactional
+
+    @Transactional
     @Override
     public Result deleteById(Integer testPaperId) {
         SessionUser sessionUser = (SessionUser) session.getAttribute("user");
@@ -138,250 +139,250 @@ public class TestPaperServiceImpl implements TestPaperService {
     public Result generateTestPaper(TestPaperUtils testPaperUtils) {
         //获取试卷生成难度
 
-        SessionUser  sessionUser=(SessionUser) session.getAttribute("user");
+        SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 
-         TestPaper  testPaper= testPaperRepository.findOneByName(testPaperUtils.getTestPaperName());
-         if(testPaper!=null){
-             return   new Result(false,"试卷名称重复请更改");
-         }
+        TestPaper testPaper = testPaperRepository.findOneByName(testPaperUtils.getTestPaperName());
+        if (testPaper != null) {
+            return new Result(false, "试卷名称重复请更改");
+        }
 
-        List<List<Choice>>  list=new ArrayList<List<Choice>>();
-      switch (testPaperUtils.getDifficulty()){
-          case 1:     //简单  %90的 一至二星 的题  10%的 三星四星题
-             //单选题
-              if(testPaperUtils.getRodSum()>0) {
-                  Double a = Math.floor(testPaperUtils.getRodSum() * 0.9);
-                  List<Choice> choiceList = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{1, 2}, 1, testPaperUtils.getSubId());
-                  if (choiceList.size() < a) {
-                      return   new Result(false, "单选题一星二星难度数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList, a.intValue()));
-                  int a1 = testPaperUtils.getRodSum() - a.intValue();
-                  List<Choice> choiceList2 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{3, 4}, 1, testPaperUtils.getSubId());
-                  if (choiceList2.size() < a1) {
-                      return   new Result(false, "单选题三星四星难度数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList2, a1));
-              }
-              //多选题
-              if(testPaperUtils.getCheckSum()>0) {
-                  Double b = Math.floor(testPaperUtils.getCheckSum() * 0.9);
-                  int b1 = testPaperUtils.getCheckSum() - b.intValue();
-                  List<Choice> choiceList3 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{1, 2}, 2, testPaperUtils.getSubId());
-                  if (choiceList3.size() < b) {
-                      return   new Result(false, "多选题一星二星难度数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList3, b.intValue()));
+        List<List<Choice>> list = new ArrayList<List<Choice>>();
+        switch (testPaperUtils.getDifficulty()) {
+            case 1:     //简单  %90的 一至二星 的题  10%的 三星四星题
+                //单选题
+                if (testPaperUtils.getRodSum() > 0) {
+                    Double a = Math.floor(testPaperUtils.getRodSum() * 0.9);
+                    List<Choice> choiceList = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{1, 2}, 1, testPaperUtils.getSubId());
+                    if (choiceList.size() < a) {
+                        return new Result(false, "单选题一星二星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList, a.intValue()));
+                    int a1 = testPaperUtils.getRodSum() - a.intValue();
+                    List<Choice> choiceList2 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{3, 4}, 1, testPaperUtils.getSubId());
+                    if (choiceList2.size() < a1) {
+                        return new Result(false, "单选题三星四星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList2, a1));
+                }
+                //多选题
+                if (testPaperUtils.getCheckSum() > 0) {
+                    Double b = Math.floor(testPaperUtils.getCheckSum() * 0.9);
+                    int b1 = testPaperUtils.getCheckSum() - b.intValue();
+                    List<Choice> choiceList3 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{1, 2}, 2, testPaperUtils.getSubId());
+                    if (choiceList3.size() < b) {
+                        return new Result(false, "多选题一星二星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList3, b.intValue()));
 
-                  List<Choice> choiceList4 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{3, 4}, 2, testPaperUtils.getSubId());
-                  if (choiceList4.size() < b1) {
-                      return   new Result(false, "多选题三星四星难度数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList4, b1));
-              }
-              if(testPaperUtils.getJudgeSum()>0) {
-                  //判断题
-                  Double c = Math.floor(testPaperUtils.getJudgeSum() * 0.9);
-                  int c1 = testPaperUtils.getJudgeSum() - c.intValue();
-                  List<Choice> choiceList5 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{1, 2}, 3, testPaperUtils.getSubId());
-                  if (choiceList5.size() < c) {
-                      return   new Result(false, "判断题一星二星难度数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList5, c.intValue()));
+                    List<Choice> choiceList4 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{3, 4}, 2, testPaperUtils.getSubId());
+                    if (choiceList4.size() < b1) {
+                        return new Result(false, "多选题三星四星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList4, b1));
+                }
+                if (testPaperUtils.getJudgeSum() > 0) {
+                    //判断题
+                    Double c = Math.floor(testPaperUtils.getJudgeSum() * 0.9);
+                    int c1 = testPaperUtils.getJudgeSum() - c.intValue();
+                    List<Choice> choiceList5 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{1, 2}, 3, testPaperUtils.getSubId());
+                    if (choiceList5.size() < c) {
+                        return new Result(false, "判断题一星二星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList5, c.intValue()));
 
-                  List<Choice> choiceList6 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{3, 4}, 3, testPaperUtils.getSubId());
-                  if (choiceList6.size() < c1) {
-                      return  new Result(false, "判断题三星四星难度数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList6, c1));
-              }
-              //简答题
-              if(testPaperUtils.getAnswerSum()>0) {
-                  Double d = Math.floor(testPaperUtils.getAnswerSum() * 0.9);
-                  int d1 = testPaperUtils.getAnswerSum() - d.intValue();
-                  List<Choice> choiceList7 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{1, 2}, 4, testPaperUtils.getSubId());
-                  if (choiceList7.size() < d) {
-                      return  new Result(false, "简答题一星二星难度数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList7, d.intValue()));
+                    List<Choice> choiceList6 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{3, 4}, 3, testPaperUtils.getSubId());
+                    if (choiceList6.size() < c1) {
+                        return new Result(false, "判断题三星四星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList6, c1));
+                }
+                //简答题
+                if (testPaperUtils.getAnswerSum() > 0) {
+                    Double d = Math.floor(testPaperUtils.getAnswerSum() * 0.9);
+                    int d1 = testPaperUtils.getAnswerSum() - d.intValue();
+                    List<Choice> choiceList7 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{1, 2}, 4, testPaperUtils.getSubId());
+                    if (choiceList7.size() < d) {
+                        return new Result(false, "简答题一星二星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList7, d.intValue()));
 
-                  List<Choice> choiceList8 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{3, 4}, 4, testPaperUtils.getSubId());
-                  if (choiceList8.size() < d1) {
-                      return     new Result(false, "简答题三星四星难度数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList8, d1));
-              }
-              break;
-          case 2:     //一般  %70的 一至三星题   30%的 四星五星题
-              //单选题
-              if(testPaperUtils.getRodSum()>0) {
-                  Double e = Math.floor(testPaperUtils.getRodSum() * 0.7);
-                  List<Choice> choiceList9 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{1, 2, 3}, 1, testPaperUtils.getSubId());
-                  if (choiceList9.size() < e) {
-                      return    new Result(false, "单选题一星二星三星难度数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList9, e.intValue()));
+                    List<Choice> choiceList8 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{3, 4}, 4, testPaperUtils.getSubId());
+                    if (choiceList8.size() < d1) {
+                        return new Result(false, "简答题三星四星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList8, d1));
+                }
+                break;
+            case 2:     //一般  %70的 一至三星题   30%的 四星五星题
+                //单选题
+                if (testPaperUtils.getRodSum() > 0) {
+                    Double e = Math.floor(testPaperUtils.getRodSum() * 0.7);
+                    List<Choice> choiceList9 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{1, 2, 3}, 1, testPaperUtils.getSubId());
+                    if (choiceList9.size() < e) {
+                        return new Result(false, "单选题一星二星三星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList9, e.intValue()));
 
-                  int e1 = testPaperUtils.getRodSum() - e.intValue();
-                  List<Choice> choiceList10 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{4, 5}, 1, testPaperUtils.getSubId());
-                  if (choiceList10.size() < e1) {
-                      return   new Result(false, "单选题四星五星难度数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList10, e1));
-              }
+                    int e1 = testPaperUtils.getRodSum() - e.intValue();
+                    List<Choice> choiceList10 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{4, 5}, 1, testPaperUtils.getSubId());
+                    if (choiceList10.size() < e1) {
+                        return new Result(false, "单选题四星五星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList10, e1));
+                }
 
 
-              //多选题
-              if(testPaperUtils.getCheckSum()>0) {
-                  Double f = Math.floor(testPaperUtils.getCheckSum() * 0.7);
-                  int f1 = testPaperUtils.getCheckSum() - f.intValue();
-                  List<Choice> choiceList11 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{1, 2, 3}, 2, testPaperUtils.getSubId());
-                  if (choiceList11.size() < f) {
-                      return    new Result(false, "多选题一星二星三星难度数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList11, f.intValue()));
+                //多选题
+                if (testPaperUtils.getCheckSum() > 0) {
+                    Double f = Math.floor(testPaperUtils.getCheckSum() * 0.7);
+                    int f1 = testPaperUtils.getCheckSum() - f.intValue();
+                    List<Choice> choiceList11 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{1, 2, 3}, 2, testPaperUtils.getSubId());
+                    if (choiceList11.size() < f) {
+                        return new Result(false, "多选题一星二星三星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList11, f.intValue()));
 
-                  List<Choice> choiceList12 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{4, 5}, 2, testPaperUtils.getSubId());
-                  if (choiceList12.size() < f1) {
-                      return   new Result(false, "多选题四星五星难度数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList12, f1));
-              }
-              if(testPaperUtils.getJudgeSum()>0) {
-                  //判断题
-                  Double g = Math.floor(testPaperUtils.getJudgeSum() * 0.7);
-                  int g1 = testPaperUtils.getJudgeSum() - g.intValue();
-                  List<Choice> choiceList13 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{1, 2, 3}, 3, testPaperUtils.getSubId());
-                  if (choiceList13.size() < g) {
-                      return   new Result(false, "判断题一星二星三星难度数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList13, g.intValue()));
+                    List<Choice> choiceList12 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{4, 5}, 2, testPaperUtils.getSubId());
+                    if (choiceList12.size() < f1) {
+                        return new Result(false, "多选题四星五星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList12, f1));
+                }
+                if (testPaperUtils.getJudgeSum() > 0) {
+                    //判断题
+                    Double g = Math.floor(testPaperUtils.getJudgeSum() * 0.7);
+                    int g1 = testPaperUtils.getJudgeSum() - g.intValue();
+                    List<Choice> choiceList13 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{1, 2, 3}, 3, testPaperUtils.getSubId());
+                    if (choiceList13.size() < g) {
+                        return new Result(false, "判断题一星二星三星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList13, g.intValue()));
 
-                  List<Choice> choiceList14 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{4, 5}, 3, testPaperUtils.getSubId());
-                  if (choiceList14.size() < g1) {
-                      return  new Result(false, "判断题四星五星难度数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList14, g1));
-              }
-              //简答题
-           if(testPaperUtils.getAnswerSum()>0) {
-               Double h = Math.floor(testPaperUtils.getAnswerSum() * 0.9);
-               int h1 = testPaperUtils.getAnswerSum() - h.intValue();
-               List<Choice> choiceList15 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{1, 2, 3}, 4, testPaperUtils.getSubId());
-               if (choiceList15.size() < h) {
-                   return new Result(false, "简答题一星二星三星难度数量不足");
-               }
-               list.add(TestPaperUtils.red(choiceList15, h.intValue()));
+                    List<Choice> choiceList14 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{4, 5}, 3, testPaperUtils.getSubId());
+                    if (choiceList14.size() < g1) {
+                        return new Result(false, "判断题四星五星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList14, g1));
+                }
+                //简答题
+                if (testPaperUtils.getAnswerSum() > 0) {
+                    Double h = Math.floor(testPaperUtils.getAnswerSum() * 0.9);
+                    int h1 = testPaperUtils.getAnswerSum() - h.intValue();
+                    List<Choice> choiceList15 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{1, 2, 3}, 4, testPaperUtils.getSubId());
+                    if (choiceList15.size() < h) {
+                        return new Result(false, "简答题一星二星三星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList15, h.intValue()));
 
-               List<Choice> choiceList16 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{4, 5}, 4, testPaperUtils.getSubId());
-               if (choiceList16.size() < h1) {
-                   return  new Result(false, "简答题四星五星难度数量不足");
-               }
-               list.add(TestPaperUtils.red(choiceList16, h1));
-           }
-              break;
-          case 3:     //困难  %70的 三至四星题    %30的 五星题
-              if(testPaperUtils.getRodSum()>0) {
-                  Double i1 = Math.floor(testPaperUtils.getRodSum() * 0.7);
-                  List<Choice> choiceList18 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{3, 4}, 1, testPaperUtils.getSubId());
-                  if (choiceList18.size() < i1) {
-                      return   new Result(false, "单选题三星四星难度数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList18, i1.intValue()));
+                    List<Choice> choiceList16 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{4, 5}, 4, testPaperUtils.getSubId());
+                    if (choiceList16.size() < h1) {
+                        return new Result(false, "简答题四星五星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList16, h1));
+                }
+                break;
+            case 3:     //困难  %70的 三至四星题    %30的 五星题
+                if (testPaperUtils.getRodSum() > 0) {
+                    Double i1 = Math.floor(testPaperUtils.getRodSum() * 0.7);
+                    List<Choice> choiceList18 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{3, 4}, 1, testPaperUtils.getSubId());
+                    if (choiceList18.size() < i1) {
+                        return new Result(false, "单选题三星四星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList18, i1.intValue()));
 
-                  int i2 = testPaperUtils.getRodSum() - i1.intValue();
-                  List<Choice> choiceList19 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{5}, 1, testPaperUtils.getSubId());
-                  if (choiceList19.size() < i2) {
-                      return  new Result(false, "单选题五星难度数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList19, i2));
-              }
-         //多选题
-              if(testPaperUtils.getCheckSum()>0) {
-                  Double l1 = Math.floor(testPaperUtils.getCheckSum() * 0.7);
-                  List<Choice> choiceList21 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{3, 4}, 2, testPaperUtils.getSubId());
-                  if (choiceList21.size() < l1) {
-                      return   new Result(false, "多选题三星四星难度数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList21, l1.intValue()));
+                    int i2 = testPaperUtils.getRodSum() - i1.intValue();
+                    List<Choice> choiceList19 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{5}, 1, testPaperUtils.getSubId());
+                    if (choiceList19.size() < i2) {
+                        return new Result(false, "单选题五星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList19, i2));
+                }
+                //多选题
+                if (testPaperUtils.getCheckSum() > 0) {
+                    Double l1 = Math.floor(testPaperUtils.getCheckSum() * 0.7);
+                    List<Choice> choiceList21 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{3, 4}, 2, testPaperUtils.getSubId());
+                    if (choiceList21.size() < l1) {
+                        return new Result(false, "多选题三星四星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList21, l1.intValue()));
 
-                  int l2 = testPaperUtils.getCheckSum() - l1.intValue();
-                  List<Choice> choiceList22 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{5}, 2, testPaperUtils.getSubId());
-                  if (choiceList22.size() < l2) {
-                      return  new Result(false, "多选题五星难度数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList22, l2));
-              }
-          //判断题
-              if(testPaperUtils.getJudgeSum()>0) {
-                  Double m1 = Math.floor(testPaperUtils.getJudgeSum() * 0.7);
-                  List<Choice> choiceList24 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{3, 4}, 3, testPaperUtils.getSubId());
-                  if (choiceList24.size() < m1) {
-                      return   new Result(false, "判断题三星四星难度数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList24, m1.intValue()));
+                    int l2 = testPaperUtils.getCheckSum() - l1.intValue();
+                    List<Choice> choiceList22 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{5}, 2, testPaperUtils.getSubId());
+                    if (choiceList22.size() < l2) {
+                        return new Result(false, "多选题五星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList22, l2));
+                }
+                //判断题
+                if (testPaperUtils.getJudgeSum() > 0) {
+                    Double m1 = Math.floor(testPaperUtils.getJudgeSum() * 0.7);
+                    List<Choice> choiceList24 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{3, 4}, 3, testPaperUtils.getSubId());
+                    if (choiceList24.size() < m1) {
+                        return new Result(false, "判断题三星四星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList24, m1.intValue()));
 
-                  int m2 = testPaperUtils.getJudgeSum() - m1.intValue();
-                  List<Choice> choiceList25 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{5}, 3, testPaperUtils.getSubId());
-                  if (choiceList25.size() < m2) {
-                      return   new Result(false, "判断题五星难度数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList25, m2));
-              }
-         //简答题
- if(testPaperUtils.getAnswerSum()>0) {
-     Double s1 = Math.floor(testPaperUtils.getAnswerSum() * 0.7);
-     List<Choice> choiceList27 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{3, 4}, 4, testPaperUtils.getSubId());
-     if (choiceList27.size() < s1) {
-         return  new Result(false, "简答题三星四星难度数量不足");
-     }
-     list.add(TestPaperUtils.red(choiceList27, s1.intValue()));
+                    int m2 = testPaperUtils.getJudgeSum() - m1.intValue();
+                    List<Choice> choiceList25 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{5}, 3, testPaperUtils.getSubId());
+                    if (choiceList25.size() < m2) {
+                        return new Result(false, "判断题五星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList25, m2));
+                }
+                //简答题
+                if (testPaperUtils.getAnswerSum() > 0) {
+                    Double s1 = Math.floor(testPaperUtils.getAnswerSum() * 0.7);
+                    List<Choice> choiceList27 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{3, 4}, 4, testPaperUtils.getSubId());
+                    if (choiceList27.size() < s1) {
+                        return new Result(false, "简答题三星四星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList27, s1.intValue()));
 
-     int s2 = testPaperUtils.getAnswerSum() - s1.intValue();
-     List<Choice> choiceList28 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{5}, 4, testPaperUtils.getSubId());
-     if (choiceList28.size() < s2) {
-         return   new Result(false, "简答题五星难度数量不足");
-     }
-     list.add(TestPaperUtils.red(choiceList28, s2));
- }
-              break;
-          default:
-              //单选题
-              if(testPaperUtils.getRodSum()>0) {
-                  List<Choice> choiceList1 = choiceRepository.findAllByTypeAndSubId(1, testPaperUtils.getSubId());
-                  if (choiceList1.size() < testPaperUtils.getRodSum()) {
-                      return new Result(false, "单选题数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList1, testPaperUtils.getRodSum()));
-              }
-              if(testPaperUtils.getCheckSum()>0) {
-                  //多选题
-                  List<Choice> choiceList30 = choiceRepository.findAllByTypeAndSubId(2, testPaperUtils.getSubId());
-                  if (choiceList30.size() < testPaperUtils.getCheckSum()) {
-                      return new Result(false, "多选题数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList30, testPaperUtils.getCheckSum()));
-              }
-              if(testPaperUtils.getJudgeSum()>0) {
-                  //判断题
-                  List<Choice> choiceList31 = choiceRepository.findAllByTypeAndSubId(3, testPaperUtils.getSubId());
-                  if (choiceList31.size() < testPaperUtils.getJudgeSum()) {
-                      return new Result(false, "判断题数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList31, testPaperUtils.getJudgeSum()));
-              }
+                    int s2 = testPaperUtils.getAnswerSum() - s1.intValue();
+                    List<Choice> choiceList28 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{5}, 4, testPaperUtils.getSubId());
+                    if (choiceList28.size() < s2) {
+                        return new Result(false, "简答题五星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList28, s2));
+                }
+                break;
+            default:
+                //单选题
+                if (testPaperUtils.getRodSum() > 0) {
+                    List<Choice> choiceList1 = choiceRepository.findAllByTypeAndSubId(1, testPaperUtils.getSubId());
+                    if (choiceList1.size() < testPaperUtils.getRodSum()) {
+                        return new Result(false, "单选题数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList1, testPaperUtils.getRodSum()));
+                }
+                if (testPaperUtils.getCheckSum() > 0) {
+                    //多选题
+                    List<Choice> choiceList30 = choiceRepository.findAllByTypeAndSubId(2, testPaperUtils.getSubId());
+                    if (choiceList30.size() < testPaperUtils.getCheckSum()) {
+                        return new Result(false, "多选题数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList30, testPaperUtils.getCheckSum()));
+                }
+                if (testPaperUtils.getJudgeSum() > 0) {
+                    //判断题
+                    List<Choice> choiceList31 = choiceRepository.findAllByTypeAndSubId(3, testPaperUtils.getSubId());
+                    if (choiceList31.size() < testPaperUtils.getJudgeSum()) {
+                        return new Result(false, "判断题数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList31, testPaperUtils.getJudgeSum()));
+                }
 
-              if(testPaperUtils.getAnswerSum()>0) {
-                  //简答题
-                  List<Choice> choiceList32 = choiceRepository.findAllByTypeAndSubId(4, testPaperUtils.getSubId());
-                  if (choiceList32.size() < testPaperUtils.getAnswerSum()) {
-                      return new Result(false, "判断题数量不足");
-                  }
-                  list.add(TestPaperUtils.red(choiceList32, testPaperUtils.getAnswerSum()));
-              }
-              break;
-      }
-       List<Choice> list1=testPaperUtils.conversion(list);
+                if (testPaperUtils.getAnswerSum() > 0) {
+                    //简答题
+                    List<Choice> choiceList32 = choiceRepository.findAllByTypeAndSubId(4, testPaperUtils.getSubId());
+                    if (choiceList32.size() < testPaperUtils.getAnswerSum()) {
+                        return new Result(false, "判断题数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList32, testPaperUtils.getAnswerSum()));
+                }
+                break;
+        }
+        List<Choice> list1 = testPaperUtils.conversion(list);
         Collections.sort(list1, new Comparator<Choice>() {
             @Override
             public int compare(Choice o1, Choice o2) {
@@ -389,33 +390,33 @@ public class TestPaperServiceImpl implements TestPaperService {
                 return o1.getType().compareTo(o2.getType());
             }
         });
-        TestPaper  testPaper1=new TestPaper();
+        TestPaper testPaper1 = new TestPaper();
         testPaper1.setName(testPaperUtils.getTestPaperName());
         testPaper1.setSubId(testPaperUtils.getSubId());
         testPaper1.setCreationId(sessionUser.getTeacher().getTeaId());
-      TestPaper  testPaper2=testPaperRepository.save(testPaper1);
-      for (int i=0;i<list1.size();i++) {
-          TestPaperBindChoice  testPaperBindChoice=new  TestPaperBindChoice();
-        switch (list1.get(i).getType()){
-            case 1:
-                testPaperBindChoice.setScore(testPaperUtils.getRodScore());
-                break;
+        TestPaper testPaper2 = testPaperRepository.save(testPaper1);
+        for (int i = 0; i < list1.size(); i++) {
+            TestPaperBindChoice testPaperBindChoice = new TestPaperBindChoice();
+            switch (list1.get(i).getType()) {
+                case 1:
+                    testPaperBindChoice.setScore(testPaperUtils.getRodScore());
+                    break;
 
-            case 2:
-                testPaperBindChoice.setScore(testPaperUtils.getCheckScore());
-                break;
-            case 3:
-                testPaperBindChoice.setScore(testPaperUtils.getJudgeScore());
-                break;
-            case 4:
-                testPaperBindChoice.setScore(testPaperUtils.getAnswerScore());
-                break;
+                case 2:
+                    testPaperBindChoice.setScore(testPaperUtils.getCheckScore());
+                    break;
+                case 3:
+                    testPaperBindChoice.setScore(testPaperUtils.getJudgeScore());
+                    break;
+                case 4:
+                    testPaperBindChoice.setScore(testPaperUtils.getAnswerScore());
+                    break;
+            }
+            testPaperBindChoice.setIndexNum(i);
+            testPaperBindChoice.setChoiceId(list1.get(i).getId());
+            testPaperBindChoice.setTestPaperId(testPaper2.getId());
+            testPaperBindChoiceRepository.save(testPaperBindChoice);
         }
-          testPaperBindChoice.setIndexNum(i);
-          testPaperBindChoice.setChoiceId(list1.get(i).getId());
-          testPaperBindChoice.setTestPaperId(testPaper2.getId());
-          testPaperBindChoiceRepository.save(testPaperBindChoice);
-      }
-        return new Result(true,"试卷生成成功");
+        return new Result(true, "试卷生成成功");
     }
 }

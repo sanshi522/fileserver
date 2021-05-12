@@ -101,8 +101,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public int saveStudents(List<Student> studentList) {
-        for(Student student:studentList){
-            if(studentRepository.findOneByStuNumber(student.getStuNumber())!=null){
+        for (Student student : studentList) {
+            if (studentRepository.findOneByStuNumber(student.getStuNumber()) != null) {
                 continue;
             }
             studentRepository.save(student);

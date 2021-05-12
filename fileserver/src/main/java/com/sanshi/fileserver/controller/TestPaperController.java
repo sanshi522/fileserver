@@ -96,11 +96,10 @@ public class TestPaperController {
 
     @RequestMapping(path = "/generateTestPaper")
     @ResponseBody
-    public  Result  generateTestPaper(@RequestBody TestPaperUtils  testPaperUtils){
+    public Result generateTestPaper(@RequestBody TestPaperUtils testPaperUtils) {
 
-        return   testPaperService.generateTestPaper(testPaperUtils);
+        return testPaperService.generateTestPaper(testPaperUtils);
     }
-
 
 
 }

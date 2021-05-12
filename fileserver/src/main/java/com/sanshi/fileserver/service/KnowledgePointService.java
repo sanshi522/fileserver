@@ -15,12 +15,13 @@ import java.util.Map;
 public interface KnowledgePointService {
     /**
      * 获取
+     *
      * @param ids
      * @return
      */
     List<KnowledgePoint> findAllByIds(List<Integer> ids);
 
-    List<KnowledgePoint> findAllBySubIdAndNameLike(Integer subId,String name);
+    List<KnowledgePoint> findAllBySubIdAndNameLike(Integer subId, String name);
 
     KnowledgePoint findOneById(Integer id);
     /**
@@ -32,6 +33,7 @@ public interface KnowledgePointService {
 
     /**
      * 添加修改
+     *
      * @param knowledgePoint
      * @return
      */
@@ -39,13 +41,14 @@ public interface KnowledgePointService {
 
     /**
      * 删除
+     *
      * @param id
      */
     void deleteById(Integer id);
 
     Map getAll(PageGet val);
 
-    List<KnowledgePoint>  selectBySubId(Integer id);
+    List<KnowledgePoint> selectBySubId(Integer id);
 
-    KnowledgePoint   findOneBySubIdAndName(Integer subId,String name);
+    KnowledgePoint findOneBySubIdAndName(Integer subId, String name);
 }

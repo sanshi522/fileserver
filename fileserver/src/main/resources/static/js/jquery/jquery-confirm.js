@@ -15,14 +15,14 @@ if (typeof jQuery === 'undefined') {
 var jconfirm, Jconfirm;
 (function ($) {
     "use strict";
-        
-    $.fn.confirm = function (options, option2) {        
+
+    $.fn.confirm = function (options, option2) {
         if (typeof options === 'undefined') options = {};
         if (typeof options === 'string')
             options = {
                 content: options,
                 title: (option2) ? option2 : false
-                
+
             };
         /*
          *  Alias of $.confirm to emulate native confirm()
@@ -524,7 +524,7 @@ var jconfirm, Jconfirm;
             if (this.isClosed())
                 return false;
 
-            that.$el.find('.jconfirm-bg').addClass('seen');           
+            that.$el.find('.jconfirm-bg').addClass('seen');
             this.$b.removeClass(this.animation);
             this.$b.find('input[autofocus]:visible:first').focus();
             jconfirm.record.opened += 1;
@@ -558,7 +558,7 @@ var jconfirm, Jconfirm;
         content: 'Are you sure to continue?',
         contentLoaded: function () {
         },
-        icon: '',    
+        icon: '',
         opacity: 0.2,
         confirmButton: '确定',
         cancelButton: '取消',

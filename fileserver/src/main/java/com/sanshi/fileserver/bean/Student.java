@@ -7,33 +7,34 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+
 //@Table(name = "student")//用来命名当前实体类对应数据库的名字
 @Entity
 public class Student implements java.io.Serializable {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer stuId;
-    @Excel(name = "学号",width = 20,orderNum="1")
+    @Excel(name = "学号", width = 20, orderNum = "1")
     private String stuNumber;
-    @Excel(name = "姓名",width = 10,orderNum="2")
+    @Excel(name = "姓名", width = 10, orderNum = "2")
     private String stuName;
-    @Excel(name = "性别",width = 10,orderNum="3")
+    @Excel(name = "性别", width = 10, orderNum = "3")
     private String stuGender;
-    @Excel(name = "密码",width = 10,orderNum="4")
+    @Excel(name = "密码", width = 10, orderNum = "4")
     private String stuPass;
-    @Excel(name = "头部",width = 10,orderNum="5")
+    @Excel(name = "头部", width = 10, orderNum = "5")
     private String stuHead;
-    @Excel(name = "小组",width = 10,orderNum="6")
+    @Excel(name = "小组", width = 10, orderNum = "6")
     private Integer stuGroup;
-    @Excel(name = "。。",width = 10,orderNum="7")
+    @Excel(name = "。。", width = 10, orderNum = "7")
     private Integer stuState;
-    @Excel(name = "备注",width = 10,orderNum="8")
+    @Excel(name = "备注", width = 10, orderNum = "8")
     private String stuRemake;
     @CreationTimestamp
-    @Excel(name = "创建时间",width = 10,exportFormat = "yyyy-MM-dd",orderNum="9")
+    @Excel(name = "创建时间", width = 10, exportFormat = "yyyy-MM-dd", orderNum = "9")
     private Date createTime;
     @UpdateTimestamp
-    @Excel(name = "修改时间",width = 10,exportFormat = "yyyy-MM-dd",orderNum="10")
+    @Excel(name = "修改时间", width = 10, exportFormat = "yyyy-MM-dd", orderNum = "10")
     private Date uapdateTime;
 
     public Student() {

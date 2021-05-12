@@ -15,7 +15,7 @@ import java.util.Date;
 @Entity
 public class Answer {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer choiceId;//试题id
     private Integer respondentsId;//答卷id

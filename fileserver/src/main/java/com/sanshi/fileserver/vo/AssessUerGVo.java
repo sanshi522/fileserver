@@ -10,7 +10,7 @@ public class AssessUerGVo {
     /**
      * 考核
      */
-    private Assess assess ;
+    private Assess assess;
     /**
      * 考核对象
      */
@@ -54,17 +54,17 @@ public class AssessUerGVo {
     }
 
 
-    public  static  void  listAll(List a,List<List<AssessUser>> b){
-        for(int i=0;i<b.size();i++){
-         for (int j=0;j<b.get(i).size();j++){
-             a.add(b.get(i).get(j).getAssessId());
-         }
+    public static void listAll(List a, List<List<AssessUser>> b) {
+        for (int i = 0; i < b.size(); i++) {
+            for (int j = 0; j < b.get(i).size(); j++) {
+                a.add(b.get(i).get(j).getAssessId());
+            }
         }
     }
 
 
-    public static void listAdd(List<Integer> a,List<Integer> b){
-        for (Integer  id:b){
+    public static void listAdd(List<Integer> a, List<Integer> b) {
+        for (Integer id : b) {
             a.add(id);
         }
     }

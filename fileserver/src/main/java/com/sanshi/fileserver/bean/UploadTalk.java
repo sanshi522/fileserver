@@ -5,11 +5,13 @@ import javax.persistence.*;
 @Entity
 public class UploadTalk {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer talkId;
     private Integer talkUserIdent;
     private Integer talkUserId;
-    /**设备id*/
+    /**
+     * 设备id
+     */
     private String deviceId;
     @Column(length = 500)
     private String devicePath;
