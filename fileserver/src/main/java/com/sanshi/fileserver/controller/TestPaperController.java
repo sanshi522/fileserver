@@ -81,8 +81,14 @@ public class TestPaperController {
     @RequestMapping(path = "/save")
     @ResponseBody
     public TestPaper save(@RequestBody TestPaper testPaper) {
-        SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-        testPaper.setCreationId(sessionUser.getTeacher().getTeaId());
+        if(testPaper.getId()!=null){
+          TestPaper  testPaper1=    testPaperService.findOneById(testPaper.getId());
+            testPaper.setCreateTime(testPaper1.getCreateTime());
+            testPaper.setCreationId(testPaper1.getCreationId());
+        }else {
+            SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+            testPaper.setCreationId(sessionUser.getTeacher().getTeaId());
+        }
         return testPaperService.save(testPaper);
     }
 

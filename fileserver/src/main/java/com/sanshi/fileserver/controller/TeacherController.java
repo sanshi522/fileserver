@@ -31,6 +31,7 @@ public class TeacherController {
     @RequestMapping(path = "/save")
     @ResponseBody
     public Teacher save(Teacher teacher) {
+
         return teacherService.save(teacher);
     }
 

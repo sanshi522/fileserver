@@ -1,5 +1,6 @@
 var classid;
 $(function () {
+    let nu=0;
     $("#upload").on("click", function () {
         $("#myModal").modal("show");
     });
@@ -84,6 +85,7 @@ $(function () {
         $("#query").val("");
         $(".stugroup").attr("getval", $("#classScreen").val());
         classid = $("#classScreen").val();
+        nu=0;
         Init(0);
     });
     function Init(Index) { // 参数就是点击的那个分页的页数索引值
@@ -129,7 +131,11 @@ $(function () {
                         '</tr>')
                 }
                 total = data.page.totalElements;
+                $(".totalmsg").html("【共" + total + "条记录，当前显示：" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + 1) + "~" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + data.page.numberOfElements) + "】");
                 tablebind();
+                if(nu==0){
+                    refresh()
+                }
             },
             error: function (data) {
                 console.log("服务器异常");
@@ -137,15 +143,20 @@ $(function () {
         });
     };
     //分页请求
-    $("#Pagination").pagination(total, {
-        callback: PageCallback,
-        prev_text: '上一页',
-        next_text: '下一页',
-        items_per_page: pageNumber,
-        num_display_entries: 4, // 连续分页主体部分显示的分页条目数
-        num_edge_entries: 1, // 两侧显示的首尾分页的条目数
-        jump: true,
-    });
+    //分页请求
+    function refresh() {
+        pageNumber = $("#showNumber").val();
+        nu=1;
+        $("#Pagination").pagination(total, {
+            callback: PageCallback,
+            prev_text: '上一页',
+            next_text: '下一页',
+            items_per_page: pageNumber,
+            num_display_entries: 4, // 连续分页主体部分显示的分页条目数
+            num_edge_entries: 1, // 两侧显示的首尾分页的条目数
+            jump: true,
+        });
+    }
     //初始化单页显示条数
     $("#showNumber").change(function () {
         if (pageNumber != $("#showNumber").val()) {
@@ -168,10 +179,10 @@ $(function () {
     function PageCallback(index, jq) { // 前一个参数表示当前点击的那个分页的页数索引值，后一个参数表示装载容器。
         pageIndex = index;
         Init(pageIndex);
-        return true;
     }
     $(".querybtn").click(function () {
         likeName = "%" + $("#query").val() + "%";
+        nu=0;
         Init(0);
     });
 
@@ -196,6 +207,8 @@ $(function () {
             success: function (responseStr) {
                 if (responseStr == "导入成功") {
                     $.alert("导入成功");
+                    nu=0;
+                    Init(pageIndex);
                 } else {
                     alert("导入失败");
                 }

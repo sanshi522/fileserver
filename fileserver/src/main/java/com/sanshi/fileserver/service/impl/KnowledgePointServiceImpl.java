@@ -95,4 +95,16 @@ public class KnowledgePointServiceImpl implements KnowledgePointService {
         return knowledgePointRepository.findOneBySubIdAndName(subId, name);
     }
 
+    @Override
+    public List<KnowledgePoint> selectByNam(int[] arr) {
+        List<KnowledgePoint> list =new ArrayList<>();
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]==0){
+               continue;
+            }
+         list.add( knowledgePointRepository.findOneById(arr[i]));
+        }
+        return list;
+    }
+
 }

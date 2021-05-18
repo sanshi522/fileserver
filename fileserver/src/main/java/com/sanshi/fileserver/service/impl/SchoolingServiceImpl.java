@@ -25,7 +25,7 @@ public class SchoolingServiceImpl implements SchoolingService {
         pageable = PageRequest.of(pageGet.getPageIndex(), pageGet.getPageNumber());
         Map json = new HashMap();
         json.put("resoult", true);
-        if (pageGet.getLikeName().isEmpty()) pageGet.setLikeName("");
+        if (pageGet.getLikeName()==null) pageGet.setLikeName("");
         json.put("page", teacherBindCclassRepository.findAllByCclassId(pageGet.getIssistId(), pageable));
         return json;
     }

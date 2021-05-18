@@ -16,6 +16,8 @@ public class RestTemplateUtil {
     private static String ip= PropertiesUtil.getProperty("application.properties", "ip");
     //SpringBoot项目访问别的SpringBoot项目的接口
     private static String sampleIp= PropertiesUtil.getProperty("application.properties", "sampleIp");
+    //学生文件上传保存地址
+    private static String path= PropertiesUtil.getProperty("application.properties", "path");
 
 
     public static PageInfo executePost(String url, Page page){
@@ -51,10 +53,30 @@ public class RestTemplateUtil {
 
     }
 
+    public static Sample findFile(String url, String fileName){
+        String URL=ip+url;
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+
+        HttpEntity<String> request = new HttpEntity<>(fileName, headers);
+
+        ResponseEntity<Sample> response = restTemplate.postForEntity(URL, request , Sample.class );
+
+        Sample data=response.getBody();
+
+        return data;
+
+    }
+
     public static String sampleFileName(){
-
-
         return sampleIp;
+
+    }
+
+    public static String getPath(){
+        return path;
 
     }
 

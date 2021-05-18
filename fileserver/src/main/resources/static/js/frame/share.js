@@ -376,18 +376,24 @@ $(function () {
     var sortName = "";
     //分页元素
     var total = 0; // 总共多少记录
+    let nu=0;
     //分页请求
     Init(0);
 
-    $("#Pagination").pagination(total, {
-        callback: PageCallback,
-        prev_text: '上一页',
-        next_text: '下一页',
-        items_per_page: pageNumber,
-        num_display_entries: 4, // 连续分页主体部分显示的分页条目数
-        num_edge_entries: 1, // 两侧显示的首尾分页的条目数
-        jump: true,
-    });
+    function refresh() {
+        pageNumber = $("#showNumber").val();
+        nu=1;
+        $("#Pagination").pagination(total, {
+            callback: PageCallback,
+            prev_text: '上一页',
+            next_text: '下一页',
+            items_per_page: pageNumber,
+            num_display_entries: 4, // 连续分页主体部分显示的分页条目数
+            num_edge_entries: 1, // 两侧显示的首尾分页的条目数
+            jump: true,
+        });
+    }
+
 
     function PageCallback(index, jq) { // 前一个参数表示当前点击的那个分页的页数索引值，后一个参数表示装载容器。
         pageIndex = index;
@@ -449,12 +455,22 @@ $(function () {
                 // total=21;
                 total = data.page.totalElements;
                 $(".totalmsg").html("【共" + total + "条记录，当前显示：" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + 1) + "~" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + data.page.numberOfElements) + "】");
+                if(nu==0){
+                    refresh();
+                }
             },
             error: function (data) {
                 console.log("服务器异常");
             }
         });
     }
+
+    //搜索
+    $(".querybtn").click(function () {
+        likeName = $("#query").val();
+        nu=0;
+        Init(0);
+    });
 
     function getKbMbGb(limit) {
         var size = "";

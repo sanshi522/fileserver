@@ -1,20 +1,22 @@
-var pageNumber = 10; // 每页显示多少条记录
-var pageIndex = 0;//页码
-var subId = 0;
-var choicetype = 0;
-var likeName = "";
-var sort1 = "";
-var sortName = "";
-var abilityId = 0;  //知识点
-var difficultyLevel = 0; //难度
-//分页元素
-var total = 50; // 总共多少记录
 
-let quan = 0;//是否批量操作标识符
-//界面存在试题集合
-choiceids = [];
 
 $(function () {
+
+    var pageNumber = 10; // 每页显示多少条记录
+    var pageIndex = 0;//页码
+    var subId = 0;
+    var choicetype = 0;
+    var likeName = "";
+    var sort1 = "";
+    var sortName = "";
+    var abilityId = 0;  //知识点
+    var difficultyLevel = 0; //难度
+//分页元素
+    var total = 50; // 总共多少记录
+
+    let quan = 0;//是否批量操作标识符
+//界面存在试题集合
+   var choiceids = [];
     //比对现有试题与添加试题弹出框试题
     function refaddbtn() {
         choiceids.splice(0);
@@ -68,6 +70,7 @@ $(function () {
     var maskWidth = $(document).width();
     //遮照层的高度
     var maskHeight = $(document).height();
+    let nu=0;
 
     //刷新
     function ref() {
@@ -189,24 +192,43 @@ $(function () {
 
     $("#typeScreen").change(function () {
         choicetype = $("#typeScreen").val();
+        nu=0;
         binds(0);
     });
 
     $("#abilityId").change(function () {
         abilityId = $("#abilityId").val();
+        nu=0;
         binds(0);
     });
 
     $("#typeScreen2").change(function () {
         difficultyLevel = $("#typeScreen2").val();
+        nu=0;
         binds(0);
     });
 
 
     $(".querybtn").click(function () {
+        nu=0;
         likeName = $("#query").val();
         binds(0);
     });
+
+
+    function refresh() {
+        nu=1;
+        pageNumber = $("#showNumber").val();
+        $("#Pagination").pagination(total, {
+            callback: PageCallback,
+            prev_text: '上一页',
+            next_text: '下一页',
+            items_per_page: pageNumber,
+            num_display_entries: 4, // 连续分页主体部分显示的分页条目数
+            num_edge_entries: 1, // 两侧显示的首尾分页的条目数
+            jump: true,
+        });
+    }
 
 
     $("#showNumber").val('10').trigger("change")
@@ -488,7 +510,7 @@ $(function () {
                             '<div class="answer">标答：' + data.page.content[i].correct + '</div>\n' +
                             '<div class="difficulty">难度：' + difficul + '</div>\n' +
                             '<div class="analysis">解析：' + data.page.content[i].analysis + '</div>\n' +
-                            '<div class="knowledge">知识点：</div>\n' +
+                            '<div class="knowledge">知识点：'+data.page.content[i].abilityIds+'</div>\n' +
                             '</div>\n' +
                             '</div>');
                     } else if (data.page.content[i].type == 3) {//判断题
@@ -507,7 +529,7 @@ $(function () {
                             '\t\t\t\t<div class="answer">标答：' + correct + '</div>\n' +
                             '\t\t\t\t<div class="difficulty">难度：' + difficul + '</div>\n' +
                             '\t\t\t\t<div class="analysis">解析：' + data.page.content[i].analysis + '</div>\n' +
-                            '\t\t\t\t<div class="knowledge">知识点：</div>\n' +
+                            '\t\t\t\t<div class="knowledge">知识点：'+data.page.content[i].abilityIds+'</div>\n' +
                             '\t\t\t</div>\n' +
                             '\t\t</div>');
                     } else if (data.page.content[i].type == 4) {//简答题
@@ -523,7 +545,7 @@ $(function () {
                             '\t\t\t\t<div class="answer">标答：' + data.page.content[i].correct + '</div>\n' +
                             '\t\t\t\t<div class="difficulty">难度：' + difficul + '</div>\n' +
                             '\t\t\t\t<div class="analysis">解析：' + data.page.content[i].analysis + '</div>\n' +
-                            '\t\t\t\t<div class="knowledge">知识点：</div>\n' +
+                            '\t\t\t\t<div class="knowledge">知识点：'+data.page.content[i].abilityIds+'</div>\n' +
                             '\t\t\t</div>\n' +
                             '\t\t</div>');
                     }
@@ -531,8 +553,10 @@ $(function () {
                 choicebind();
                 refaddbtn();
                 total = data.page.totalElements;
-                $(".totalmsg").html("【共" + total + "条记录，当前显示：" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + 1) + "~" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + data.page.numberOfElements) + "】");
-
+                $(".totalmsg").html("【共" + total + "条记录】");
+                if(nu==0){
+                    refresh();
+                }
             },
             error: function (data) {
                 console.log("服务器异常");

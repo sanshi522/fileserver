@@ -2,7 +2,9 @@ package com.sanshi.fileserver.controller;
 
 import com.sanshi.fileserver.bean.Answer;
 import com.sanshi.fileserver.service.AnswerService;
+import com.sanshi.fileserver.utils.RestTemplateUtil;
 import com.sanshi.fileserver.vo.AnswerVo;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,7 @@ public class AnswerController {
 
     private AnswerService answerService;
 
+
     public AnswerController(AnswerService answerService) {
         this.answerService = answerService;
     }
@@ -31,19 +34,18 @@ public class AnswerController {
     @RequestMapping("/save")
     @ResponseBody
     public int save(@RequestBody List<Answer> answerList) {
-        return answerService.save(answerList);
+    return answerService.save(answerList);
     }
 
     @RequestMapping("/upload")
     @ResponseBody
     public String upload(@RequestParam("file") MultipartFile file, HttpServletRequest req) {
-
         if (file.isEmpty()) {
             return "";
         } else {
             //日期目录
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
-            String path = "E:/fileUpload/";
+            String path = RestTemplateUtil.getPath();
             String format = sdf.format(new Date());
             File folder = new File(path + format);
             if (!folder.isDirectory()) {
@@ -68,6 +70,7 @@ public class AnswerController {
     @RequestMapping("/approval")
     @ResponseBody
     public List<AnswerVo> approval(Integer respondentId) {
+
         return answerService.approval(respondentId);
     }
 

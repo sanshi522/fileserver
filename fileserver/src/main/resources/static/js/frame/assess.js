@@ -2,7 +2,6 @@
 $(function () {
 
 
-
     var upident;
     //指定类型的对象id集合
     var userList = [];
@@ -182,8 +181,23 @@ $(function () {
     var classId = 0;
     //分页元素
     var total = 50; // 总共多少记录
+    let nu = 0;
+    let nu2 = 0;
 
 
+    function refresh() {
+        pageNumber = $("#showNumber").val();
+        nu = 1;
+        $("#Pagination").pagination(total, {
+            callback: PageCallback,
+            prev_text: '上一页',
+            next_text: '下一页',
+            items_per_page: pageNumber,
+            num_display_entries: 4, // 连续分页主体部分显示的分页条目数
+            num_edge_entries: 1, // 两侧显示的首尾分页的条目数
+            jump: true,
+        });
+    }
 
     $("#showNumber").val('10').trigger("change");
     $("#showNumber").change(function () {
@@ -209,30 +223,13 @@ $(function () {
     }
 
 
-    $("#showNumber2").val('10').trigger("change");
-    $("#showNumber2").change(function () {
-        if (pageNumber != $("#showNumber2").val()) {
-            pageNumber = $("#showNumber2").val();
-            $("#Pagination2").pagination(total1, {
-                callback: PageCallback2,
-                prev_text: '上一页',
-                next_text: '下一页',
-                items_per_page: pageNumber1,
-                num_display_entries: 4, // 连续分页主体部分显示的分页条目数
-                num_edge_entries: 1, // 两侧显示的首尾分页的条目数
-                jump: true,
-            });
-            findTesTPaper(0);
-        }
-    });
+
 
     //初始化单页显示条数
     function PageCallback2(index, jq) { // 前一个参数表示当前点击的那个分页的页数索引值，后一个参数表示装载容器。
         pageIndex1 = index;
         findTesTPaper(pageIndex1);
     }
-
-
 
 
     /**
@@ -323,6 +320,11 @@ $(function () {
                     Enint();
                     total = data.page.totalElements;
                     $(".totalmsg").html("【共" + total + "条记录，当前显示：" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + 1) + "~" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + data.page.numberOfElements) + "】");
+
+                    if (nu == 0) {
+                        refresh();
+
+                    }
                 }
 
                 console.log(data);
@@ -332,21 +334,25 @@ $(function () {
             }
         });
     }
+
     Init(0);
     /**学科筛选 **/
     $("#subIdScreen").change(function () {
         subId = $("#subIdScreen").val();
+        nu = 0;
         Init(0);
 
     });
     /**搜索 **/
     $(".querybtn").click(function () {
         name = $("#query").val();
+        nu = 0;
         Init(0);
     });
     /**老师赛选**/
     $("#TeacherSelect").change(function () {
         issueId = $("#TeacherSelect").val();
+        nu = 0;
         Init(0);
     });
 
@@ -549,7 +555,8 @@ $(function () {
     //学科选择
     $("#subIdScreen2").change(function () {
         subId1 = $(this).val();
-        if ($("#screenTest_div").is(":visible")) findTesTPaper(0);
+        if ($("#screenTest_div").is(":visible")) nu2 = 0;
+        findTesTPaper(0);
         $("#testpaper_id").val("");
         $("#testpaper_id").attr("data_value", 0);
     })
@@ -562,6 +569,7 @@ $(function () {
             $.alert("请选择考核学科！");
             return false;
         }
+        nu2 = 0;
         findTesTPaper(0);
     });
     //点击添加考核对象添加按钮
@@ -574,26 +582,46 @@ $(function () {
     //弹出框试题搜索
     $(".querybtn1").click(function () {
         likeName1 = $("#query1").val();
+        nu2 = 0;
         findTesTPaper(0);
     });
-    $("#Pagination1").pagination(total1, {
-        callback: PageCallback1,
-        prev_text: '上一页',
-        next_text: '下一页',
-        items_per_page: pageNumber,
-        num_display_entries: 4, // 连续分页主体部分显示的分页条目数
-        num_edge_entries: 1, // 两侧显示的首尾分页的条目数
-        jump: true,
-    });
 
-    function PageCallback1(index, jq) { // 前一个参数表示当前点击的那个分页的页数索引值，后一个参数表示装载容器。
-        pageIndex = index;
-        findTesTPaper(pageIndex);
+
+
+    function refresh2() {
+        pageNumber1 = $("#showNumber2").val();
+        nu2 = 1;
+        $("#Pagination2").pagination(total1, {
+            callback: PageCallback2,
+            prev_text: '上一页',
+            next_text: '下一页',
+            items_per_page: pageNumber1,
+            num_display_entries: 4, // 连续分页主体部分显示的分页条目数
+            num_edge_entries: 1, // 两侧显示的首尾分页的条目数
+            jump: true,
+        });
     }
+
+    $("#showNumber2").val('5').trigger("change");
+    $("#showNumber2").change(function () {
+        if (pageNumber1 != $("#showNumber2").val()) {
+            pageNumber1 = $("#showNumber2").val();
+            $("#Pagination2").pagination(total1, {
+                callback: PageCallback2,
+                prev_text: '上一页',
+                next_text: '下一页',
+                items_per_page: pageNumber1,
+                num_display_entries: 4, // 连续分页主体部分显示的分页条目数
+                num_edge_entries: 1, // 两侧显示的首尾分页的条目数
+                jump: true,
+            });
+            findTesTPaper(0);
+        }
+    });
 
     //加载试卷
     function findTesTPaper(index) {
-        pageIndex = index;
+        pageIndex1 = index;
         let val = {
             "pageNumber": pageNumber1,
             "pageIndex": pageIndex1,
@@ -627,6 +655,10 @@ $(function () {
                     total1 = data.page.totalElements;
                     $(".totalmsg2").html("【共" + total1 + "条记录，当前显示：" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + 1) + "~" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + data.page.numberOfElements) + "】");
                     TestPaperBind();
+
+                    if (nu2 == 0) {
+                        refresh2();
+                    }
                 }
                 console.log(data);
 

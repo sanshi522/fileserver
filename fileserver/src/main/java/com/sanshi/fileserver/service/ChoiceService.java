@@ -36,6 +36,8 @@ public interface ChoiceService {
      */
     Map findAll(ScreenChoice choice);
 
+    Map findAll2(ScreenChoice choice);
+
     /**
      * 删除
      *

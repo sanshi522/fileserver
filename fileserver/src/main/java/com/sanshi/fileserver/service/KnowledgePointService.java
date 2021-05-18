@@ -51,4 +51,8 @@ public interface KnowledgePointService {
     List<KnowledgePoint> selectBySubId(Integer id);
 
     KnowledgePoint findOneBySubIdAndName(Integer subId, String name);
+  /*
+  查询知识点
+   */
+    public List<KnowledgePoint> selectByNam(int [] arr);
 }

@@ -6,6 +6,7 @@ import com.sanshi.fileserver.service.TestPaperService;
 import com.sanshi.fileserver.vo.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -86,8 +87,10 @@ public class TestPaperServiceImpl implements TestPaperService {
 
     @Override
     public Map findAll(PageGet val) {
+        Sort sort = null;
+        sort =  Sort.by(Sort.Direction.DESC,"createTime");
         Pageable pageable;
-        pageable = PageRequest.of(val.getPageIndex(), val.getPageNumber());
+        pageable = PageRequest.of(val.getPageIndex(), val.getPageNumber(),sort);
         Map json = new HashMap();
         json.put("resoult", true);
         if (val.getLikeName().isEmpty())

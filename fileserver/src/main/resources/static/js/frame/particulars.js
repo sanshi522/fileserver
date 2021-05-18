@@ -1,6 +1,23 @@
 var answerList = [];
 
+var sampleUrl="";
+
 $(function () {
+
+
+    //获取样本服务器的访问地址
+    $.ajax({
+        url: "Sample/sampleUrl",
+        contentType: "application/json;charset=UTF-8",
+        type: "post",
+        success: function (data) {
+            sampleUrl = data;
+        },
+        error: function (data) {
+            console.log("服务器异常")
+
+        }
+    })
 //快速锚点定位
     function anchorBind() {
         $(".anchor").bind("click", function () {
@@ -111,7 +128,7 @@ $(function () {
                             '<div class="answer">标答：' + data[i].choice.correct + '</div>\n' +
                             '<div class="difficulty">难度：' + difficul + '</div>\n' +
                             '<div class="analysis">解析：' + data[i].choice.analysis + '</div>\n' +
-                            '<div class="knowledge">知识点：</div>\n' +
+                            '<div class="knowledge">知识点：'+data[i].choice.abilityIds+'</div>\n' +
                             '            </div>\n' +
                             '        </div>');
                     } else if (data[i].choice.type == 3) {//判断题
@@ -143,12 +160,17 @@ $(function () {
                             '<div class="answer">标答：' + correct + '</div>\n' +
                             '<div class="difficulty">难度：' + difficul + '</div>\n' +
                             '<div class="analysis">解析：' + data[i].choice.analysis + '</div>\n' +
-                            '<div class="knowledge">知识点：</div>\n' +
+                            '<div class="knowledge">知识点：'+data[i].choice.abilityIds+'</div>\n' +
 
                             '\t\t\t</div>\n' +
                             '\t\t</div>');
                     } else if (data[i].choice.type == 4) {//简答题
                         let name = "";
+                        let id="";
+                        if(data[i].answer != null && data[i].answer.id != null){
+                            id=data[i].answer.id;
+                        }
+
                         if (data[i].answer != null && data[i].answer.answer != null) {
                             name = data[i].answer.answer;
                         }
@@ -165,12 +187,12 @@ $(function () {
                             '\t\t\t\t<div class="make-choice">\n' +
                             '\t\t\t\t\t<div class="text-cho"><textarea rows="3" cols="50" wrap="hard" id="' + data[i].choice.id + '" placeholder="请输入参考答案" >' + name + ' </textarea></div>\n' +
                             '<div style="float: left"> <a  class="btn btn-link" onclick="DownloadFile(' + data[i].choice.id + ')" >试题附件</a></div>  ' +
-                            '<div style="float: left"> <a  class="btn btn-link" onclick="DownloadAttachment(' + data[i].answer.id + ')" >学生上传附件</a></div>  ' +
+                            '<div style="float: left"> <a  class="btn btn-link" onclick="DownloadAttachment(' + id + ')" >学生上传附件</a></div>  ' +
                             '\t\t\t\t</div>\n' +
                             '<div class="answer">标答：' + data[i].choice.correct + '</div>\n' +
                             '<div class="difficulty">难度：' + difficul + '</div>\n' +
                             '<div class="analysis">解析：' + data[i].choice.analysis + '</div>\n' +
-                            '<div class="knowledge">知识点：</div>\n' +
+                            '<div class="knowledge">知识点：'+data[i].choice.abilityIds+'</div>\n' +
                             '\t\t\t</div>\n' +
                             '\t\t</div>');
                     }
@@ -205,57 +227,67 @@ $(function () {
         }
     }
 
-
-
-
 });
 
 var  win=window;
 
 function DownloadAttachment(id) {
-    const SPEED = 500;
-    $.ajax({
-        url: "Answer/findById",
-        type: "post",
-        data: {"id": id},
-        success: function (data) {
-            let str = data.fileIds.split(",");
-            for (let i = 0; i < str.length; i++) {
-                if (str[i] != "" && str[i] != null) {
-                    setTimeout(() => {
-                        win.location.href = "/file/downloadShareFile2?filename=" + str[i];
-                    }, SPEED * i)
-                } else {
-                    $.alert("没有附件");
+    if(id=="" || id==undefined){
+        $.alert("没有附件");
+        return false;
+    }else {
+        const SPEED = 500;
+        $.ajax({
+            url: "Answer/findById",
+            type: "post",
+            data: {"id": id},
+            success: function (data) {
+                let str = data.fileIds.split(",");
+                for (let i = 0; i < str.length; i++) {
+                    if (str[i] != "" && str[i] != null) {
+                        setTimeout(() => {
+                            win.location.href = "/file/downloadShareFile2?filename=" + str[i];
+                        }, SPEED * i)
+                    } else {
+                        $.alert("没有附件");
+                    }
                 }
+            },
+            error: function () {
+                console.log("服务器异常");
             }
-        },
-        error: function () {
-            console.log("服务器异常");
-        }
 
-    })
+        })
+    }
+
 }
-
 
 function DownloadFile(id) {
     $.ajax({
-        url: "ChoiceFile/findFileName",
+        url: "ChoiceFile/findFileName2",
         type: "post",
         data: {"choiceId": id},
         success: function (data) {
-            const SPEED = 500;
-            if (data.length > 0) {
+            const  SPEED=500;
+            if(data.length>0){
                 console.log(data);
                 for (let i = 0; i < data.length; i++) {
-                    setTimeout(() => {
-                        win.location.href = "Sample/downloadShareFile?filename=" + data[i];
-                    }, SPEED * i)
+                    if(data[i].type==0){
+                        setTimeout(()=>{
+                            win.location.href = "Sample/downloadShareFile?filename="+data[i].name;
+                        },SPEED*i)
+                    }else {
+                        setTimeout(()=>{
+                            var newhref = sampleUrl+"Sample/downloadShareFile?filename="+data[i].name;
+                            win.location.href=newhref;
+                        },SPEED*i)
+                    }
                 }
-
-            } else {
+            }else {
                 $.alert("没有附件");
             }
+
+
         },
         error: function () {
             console.log("服务器异常");

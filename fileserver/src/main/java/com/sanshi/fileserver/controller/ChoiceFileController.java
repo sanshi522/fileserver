@@ -5,6 +5,7 @@ import com.sanshi.fileserver.bean.FileSample;
 import com.sanshi.fileserver.bean.Sample;
 import com.sanshi.fileserver.service.ChoiceFileService;
 import com.sanshi.fileserver.service.FileSampleService;
+import com.sanshi.fileserver.utils.FileUtil;
 import com.sanshi.fileserver.utils.RestTemplateUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +51,34 @@ public class ChoiceFileController {
                     String name=data.getFilePath()+"/"+fileName+"_"+i+suffix;
                     //String name=RestTemplateUtil.sampleFileName()+"/"+data.getFilePath()+"/"+fileName+"_"+i+suffix;  配置远程需要做的
                     list.add(name);
+                }
+            }
+
+        }
+        System.out.print(list);
+
+        return  list;
+    }
+
+
+    @RequestMapping("/findFileName2")
+    @ResponseBody
+    public List<FileUtil>findFileName2(Integer choiceId){
+        List<ChoiceFile>  choiceFileList=   choiceFileService.findByChoiceId(choiceId);
+        List<FileUtil>  list=new ArrayList<>();
+        for (ChoiceFile   file:choiceFileList) {
+            if(file.getType()==0){
+                FileSample   fileSample=fileSampleService.findById(file.getFileId());
+                list.add( new FileUtil(fileSample.getPath().replaceAll("\\\\","/"),0));
+            }else {
+                String url="/Sample/externalFindById";
+                Sample data= RestTemplateUtil.findByIdPost(url,file.getFileId());
+                String fileName=data.getFileName().substring(0,data.getFileName().lastIndexOf("."));
+                String suffix= data.getFileName().substring(data.getFileName().lastIndexOf("."),data.getFileName().length());
+                for(int i=1;i<=data.getFileNumbe();i++){
+                    String name=data.getFilePath()+"/"+fileName+"_"+i+suffix;
+                    //String name=RestTemplateUtil.sampleFileName()+"/"+data.getFilePath()+"/"+fileName+"_"+i+suffix;  配置远程需要做的
+                    list.add(new FileUtil(  name,1));
                 }
             }
 

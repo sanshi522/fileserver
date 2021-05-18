@@ -7,6 +7,7 @@ import com.sanshi.fileserver.service.RespondentsService;
 import com.sanshi.fileserver.vo.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,15 +46,16 @@ public class AssessServiceImpl implements AssessService {
         this.session = session;
         this.respondentsRepository = respondentsRepository;
         this.assessUserRepository = assessUserRepository;
-        this.assessRepository = assessRepository;
         this.choiceRepository = choiceRepository;
     }
 
     @Override
     public Map findAll(ScreenAssess screenAssess) {
         Map json = new HashMap();
+        Sort sort = null;
+        sort =  Sort.by(Sort.Direction.DESC,"createTime");
         Pageable pageable;
-        pageable = PageRequest.of(screenAssess.getPageIndex(), screenAssess.getPageNumber());
+        pageable = PageRequest.of(screenAssess.getPageIndex(), screenAssess.getPageNumber(),sort);
         SessionUser sessionUser = (SessionUser) session.getAttribute("user");
         if (!screenAssess.getName().isEmpty()) {
             screenAssess.setName("%" + screenAssess.getName() + "%");
@@ -128,8 +130,14 @@ public class AssessServiceImpl implements AssessService {
     @Override
     @Transactional
     public int save(AssessUserVo assessUserVo) {
-        SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-        assessUserVo.getAssess().setIssueId(sessionUser.getTeacher().getTeaId());
+        if(assessUserVo.getAssess().getId()!=null){
+       Assess  assess=     assessRepository.findOneById(assessUserVo.getAssess().getId());
+            assessUserVo.getAssess().setCreateTime(assess.getCreateTime());
+            assessUserVo.getAssess().setIssueId(assess.getIssueId());
+        }else {
+            SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+            assessUserVo.getAssess().setIssueId(sessionUser.getTeacher().getTeaId());
+        }
         //添加试卷
         Assess asses = assessRepository.save(assessUserVo.getAssess());
         //删除该试卷所有绑定的对象

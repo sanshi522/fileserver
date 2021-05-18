@@ -6,9 +6,7 @@ import com.sanshi.fileserver.service.KnowledgePointService;
 import com.sanshi.fileserver.vo.PageGet;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -54,6 +52,27 @@ public class KnowledgePointController {
     @ResponseBody
     public List<KnowledgePoint> selectBySubId(Integer id) {
         return knowledgePointService.selectBySubId(id);
+
+    }
+
+    @RequestMapping(path = "/selectByNam")
+    @ResponseBody
+    public List<KnowledgePoint> selectByNam(@RequestParam("arr") String arr) {
+        String    [] a=arr.split(",");
+        int  []  ar=new int [a.length] ;
+        int j=0;
+        for(int i=0;i<a.length;i++){
+            if(a[i]!=""){
+
+          ar[j]=Integer.parseInt(a[i]);
+                j++;
+            }
+        }
+        if(ar.length<1){
+            return   null;
+        }
+
+        return  knowledgePointService.selectByNam(ar);
 
     }
 

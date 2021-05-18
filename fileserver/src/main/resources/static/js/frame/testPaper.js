@@ -33,27 +33,45 @@ $(function () {
     }
 
 
-
-
-
     var pageNumber = 10; // 每页显示多少条记录
     var pageIndex = 0;//页码
     var subId = 0;
     var likeName = "";
     var total = 50; // 总共多少记录
+    let nu=0;
     getsubtype();
     //分页元素
 
     //初始化单页显示条数
 
-    $("#Pagination").pagination(total, {
-        callback: PageCallback,
-        prev_text: '上一页',
-        next_text: '下一页',
-        items_per_page: pageNumber,
-        num_display_entries: 4, // 连续分页主体部分显示的分页条目数
-        num_edge_entries: 1, // 两侧显示的首尾分页的条目数
-        jump: true,
+    function refresh() {
+        nu=1;
+        pageNumber = $("#showNumber").val();
+        $("#Pagination").pagination(total, {
+            callback: PageCallback,
+            prev_text: '上一页',
+            next_text: '下一页',
+            items_per_page: pageNumber,
+            num_display_entries: 4, // 连续分页主体部分显示的分页条目数
+            num_edge_entries: 1, // 两侧显示的首尾分页的条目数
+            jump: true,
+        });
+    }
+    $("#showNumber").val('10').trigger("change")
+    $("#showNumber").change(function () {
+        if (pageNumber != $("#showNumber").val()) {
+            pageNumber = $("#showNumber").val();
+            $("#Pagination").pagination(total, {
+                callback: PageCallback,
+                prev_text: '上一页',
+                next_text: '下一页',
+                items_per_page: pageNumber,
+                num_display_entries: 4, // 连续分页主体部分显示的分页条目数
+                num_edge_entries: 1, // 两侧显示的首尾分页的条目数
+                jump: true,
+            });
+            Init(0);
+        }
     });
 
     function PageCallback(index, jq) { // 前一个参数表示当前点击的那个分页的页数索引值，后一个参数表示装载容器。
@@ -85,7 +103,7 @@ $(function () {
                             url: "/testPaper/findMsg",
                             //contentType:"application/json;charset=UTF-8",
                             type: "post",
-
+                            async: false,
                             data: {id: data.page.content[i].id},
                             dataType: "json",
                             success: function (data2) {
@@ -119,7 +137,7 @@ $(function () {
                                     '                <td>编辑操作：</td>\n' +
                                     '                <td style="font-size: 20px;">\n' +
                                     '                    <label style="margin-right: 10px;cursor: pointer;"><i onclick="javascript:parent.open(\'addTestPaper?id=' + data.page.content[i].id + '\')" class="my-icon lsm-sidebar-icon icon-bianji del"></i></label>\n' +
-                                    '                    <label><i class="my-icon lsm-sidebar-icon icon-shanchu " data_id=' + data.page.content[i].id + '  style="cursor: pointer;"></i></label>\n' +
+                                    '                    <label><i class="my-icon lsm-sidebar-icon icon-shanchu"  data_id=' + data.page.content[i].id + '  style="cursor: pointer;"></i></label>\n' +
                                     '                </td>\n' +
                                     '            </tr>\n' +
                                     '\n' +
@@ -129,13 +147,16 @@ $(function () {
                             }, error(data2) {
                             }
                         });
+
                     }
                     delTestPaper();
+
                     total = data.page.totalElements;
                     $(".totalmsg").html("【共" + total + "条记录，当前显示：" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + 1) + "~" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + data.page.numberOfElements) + "】");
+                    if(nu==0){
+                        refresh()
+                    }
                 }
-
-                console.log(data);
 
             }, error: function (data) {
                 console.log("服务器异常");
@@ -148,14 +169,15 @@ $(function () {
 
     $("#subIdScreen").change(function () {
         subId = $("#subIdScreen").val();
+        nu=0;
         Init(0);
     });
 
     $(".querybtn").click(function () {
         likeName = $("#query").val();
+        nu=0;
         Init(0);
     });
-
     //删除试卷
     function delTestPaper() {
         $(".icon-shanchu").bind("click", function () {
@@ -186,8 +208,6 @@ $(function () {
 
                 }
             });
-
-
         });
 
     }
@@ -465,3 +485,34 @@ $(function () {
 });
 
 
+//删除试卷
+// function delTestPaper(testPaperId) {
+//
+//         $.confirm({
+//             confirmButtonClass: 'btn-info',
+//             cancelButtonClass: 'btn-danger',
+//             title: '提示',
+//             content: '确定要删除该试卷吗？',
+//             confirm: function () {
+//                 $.ajax({
+//                     url: "testPaper/delete",
+//                     type: "post",
+//                     data: {"testPaperId": testPaperId},
+//                     async: false,
+//                     dataType: "json",
+//                     success: function (data) {
+//                         $.alert(data.data);
+//                     },
+//                     error: function (data) {
+//
+//                     }
+//
+//                 });
+//             },
+//             cancel: function () {
+//
+//             }
+//         });
+//
+//
+// }

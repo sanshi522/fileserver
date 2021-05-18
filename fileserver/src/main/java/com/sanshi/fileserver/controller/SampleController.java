@@ -38,6 +38,16 @@ public class SampleController {
     }
 
 
+
+    @RequestMapping("/sampleUrl")
+    @ResponseBody
+    public String sampleUrl(){
+        String data= RestTemplateUtil.sampleFileName();
+        return  data;
+    }
+
+
+
     @RequestMapping("/downloadShareFile")
     public String downLoad(String filename, HttpServletResponse response) throws UnsupportedEncodingException {
         File file = new File(filename);

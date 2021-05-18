@@ -3,10 +3,12 @@ $(function () {
     let pageIndex=1;
     let pageNumber=5;
     let  total=5;
+    let likeName="";
     let  nu=0;
 
      function refresh() {
          nu=1;
+         pageNumber = $("#showNumber").val();
         $("#Pagination").pagination(total, {
             callback: PageCallback,
             prev_text: '上一页',
@@ -47,7 +49,8 @@ $(function () {
         pageIndex=index;
       let  Page={
           "pageIndex":pageIndex,
-          "pageNumber":pageNumber
+          "pageNumber":pageNumber,
+          "likeName":likeName
       }
         $.ajax({
         url:"/Sample/findAll",
@@ -76,6 +79,9 @@ $(function () {
              // });
              // total=21;
              total = data.total;
+             // if(data.pageNum==0){
+             //     data.pageNum=1;
+             // }
              $(".totalmsg").html("【共" + total + "条记录，当前显示：" + (data.prePage * data.pageSize + 1) + "~" + (data.pageNum * data.pageSize ) + "】");
              if(nu==0){
                  refresh();
@@ -88,6 +94,13 @@ $(function () {
          }
         })
     }
+
+    //搜索
+    $(".querybtn").click(function () {
+        likeName = $("#query").val();
+        nu=0;
+        Init(0);
+    });
 })
 
 
@@ -117,13 +130,13 @@ function  xiazai() {
     let value="";
     const  SPEED=500;
     for(let i=1;i<=dataSource.fileNumbe;i++){
-
         if (dataSource.fileName != "" && dataSource.fileName != null) {
             setTimeout(()=>{
                 let fileName=dataSource.fileName.substring(0,dataSource.fileName.lastIndexOf("."));
                 let suffix= dataSource.fileName.substring(dataSource.fileName.lastIndexOf("."),dataSource.fileName.length);
                 value= dataSource.filePath+"/"+fileName+"_"+i+suffix
-                win.location.href = "Sample/downloadShareFile?filename="+value;
+                var newhref = "http://192.168.0.112:8060/Sample/downloadShareFile?filename="+value;
+                win.location.href=newhref;
             },SPEED*i)
 
         } else {

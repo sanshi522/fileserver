@@ -27,9 +27,10 @@ public class AnswerServiceImpl implements AnswerService {
     private TestPaperBindChoiceRepository testPaperBindChoiceRepository;
     private RespondentsService respondentsService;
     private HttpSession session;
+    private KnowledgePointRepository knowledgePointRepository;
 
 
-    public AnswerServiceImpl(AnswerRepository answerRepository, ChoiceRepository choiceRepository, RespondentsRepository respondentsRepository, AssessRepository assessRepository, TestPaperRepository testPaperRepository, TestPaperBindChoiceRepository testPaperBindChoiceRepository, HttpSession session, RespondentsService respondentsService) {
+    public AnswerServiceImpl(AnswerRepository answerRepository, ChoiceRepository choiceRepository, RespondentsRepository respondentsRepository, AssessRepository assessRepository, TestPaperRepository testPaperRepository, TestPaperBindChoiceRepository testPaperBindChoiceRepository, HttpSession session, RespondentsService respondentsService, KnowledgePointRepository knowledgePointRepository) {
         this.answerRepository = answerRepository;
         this.choiceRepository = choiceRepository;
         this.respondentsRepository = respondentsRepository;
@@ -38,6 +39,7 @@ public class AnswerServiceImpl implements AnswerService {
         this.testPaperBindChoiceRepository = testPaperBindChoiceRepository;
         this.session = session;
         this.respondentsService = respondentsService;
+        this.knowledgePointRepository=knowledgePointRepository;
     }
 
     @Override
@@ -180,6 +182,22 @@ public class AnswerServiceImpl implements AnswerService {
         for (TestPaperBindChoice testPaperBindChoice : testPaperBindChoiceList) {
             AnswerVo answerVo = new AnswerVo();
             Choice choice = choiceRepository.findOneById(testPaperBindChoice.getChoiceId());
+            String   abilityIds="";
+              if(choice.getAbilityIds()!=null && !choice.getAbilityIds().equals("")){
+                 String   arr []  =choice.getAbilityIds().split(",");
+                 List<Integer>    a=new ArrayList<>();
+                 for (int i=0;i<arr.length;i++){
+                     if(arr[i].equals("")){
+                     continue;
+                     }
+                    a.add(Integer.parseInt(arr[i]));
+                 }
+                  List<KnowledgePoint>  knowledgePointList=    knowledgePointRepository.findAllByIdIn(a);
+                  for (KnowledgePoint  knowledgePoint: knowledgePointList) {
+                      abilityIds+=knowledgePoint.getName()+",";
+                  }
+              }
+            choice.setAbilityIds(abilityIds);
             answerVo.setChoice(choice);
             if (respondents == null) {
                 answerVo.setAnswer(null);

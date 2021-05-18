@@ -1,6 +1,7 @@
 // JavaScript Document
 var checkAll = [];
 var samplerCheckAll = [];
+var knowledgeList=[];
 $(function () {
 
     $("#upload").on("click", function () {
@@ -46,6 +47,8 @@ $(function () {
     var likeName2 = "";
     var sort = "";
     var sortName = "";
+    let nu=0;
+    let nu2=0;
     //分页元素
     var total = 50; // 总共多少记录
     //初始化单页显示条数
@@ -66,6 +69,34 @@ $(function () {
         }
     });
 
+    function refresh() {
+        nu=1;
+        pageNumber = $("#showNumber").val();
+        $("#Pagination").pagination(total, {
+            callback: PageCallback,
+            prev_text: '上一页',
+            next_text: '下一页',
+            items_per_page: pageNumber,
+            num_display_entries: 4, // 连续分页主体部分显示的分页条目数
+            num_edge_entries: 1, // 两侧显示的首尾分页的条目数
+            jump: true,
+        });
+    }
+
+    function refresh2() {
+        nu2=1;
+        pageNumber2 = $("#showNumber2").val();
+        $("#Pagination2").pagination(total2, {
+            callback: PageCallback2,
+            prev_text: '上一页',
+            next_text: '下一页',
+            items_per_page: pageNumber2,
+            num_display_entries: 4, // 连续分页主体部分显示的分页条目数
+            num_edge_entries: 1, // 两侧显示的首尾分页的条目数
+            jump: true,
+        });
+    }
+
 
     $("#showNumber2").val('5').trigger("change")
     $("#showNumber2").change(function () {
@@ -85,6 +116,9 @@ $(function () {
     });
 
 
+
+
+
     function PageCallback(index, jq) { // 前一个参数表示当前点击的那个分页的页数索引值，后一个参数表示装载容器。
         pageIndex = index;
         Init(pageIndex);
@@ -97,15 +131,18 @@ $(function () {
 
     $("#subIdScreen").change(function () {
         subId = $("#subIdScreen").val();
+        nu=0;
         Init(0);
     });
     $("#typeScreen").change(function () {
         choicetype = $("#typeScreen").val();
+        nu=0;
         Init(0);
     });
 
     $(".querybtn").click(function () {
         likeName = $("#query").val();
+        nu=0;
         Init(0);
     });
 
@@ -127,7 +164,7 @@ $(function () {
             url: "/choice/findAll",
             contentType: "application/json;charset=UTF-8",
             type: "post",
-            async: false,
+            async: true,
             data: JSON.stringify(ScreenChoice),
             dataType: "json",
             success: function (data) {
@@ -135,6 +172,7 @@ $(function () {
                 let difficul = "";
                 for (let i = 0; i < data.page.content.length; i++) {
                     difficul = "";
+
                     for (let k = 0; k < 5; k++) {
                         if (k < data.page.content[i].difficultyLevel)
                             difficul += '<label style="color: #85822b;font-size: 14px;">★</label>';
@@ -184,7 +222,7 @@ $(function () {
                             '<div class="answer">标答：' + data.page.content[i].correct + '</div>\n' +
                             '<div class="difficulty">难度：' + difficul + '</div>\n' +
                             '<div class="analysis">解析：' + data.page.content[i].analysis + '</div>\n' +
-                            '<div class="knowledge">知识点：</div>\n' +
+                            '<div class="knowledge">知识点：'+data.page.content[i].abilityIds+'</div>\n' +
                             '</div>\n' +
                             '</div>');
                     } else if (data.page.content[i].type == 3) {//判断题
@@ -204,7 +242,7 @@ $(function () {
                             '\t\t\t\t<div class="answer">标答：' + correct + '</div>\n' +
                             '\t\t\t\t<div class="difficulty">难度：' + difficul + '</div>\n' +
                             '\t\t\t\t<div class="analysis">解析：' + data.page.content[i].analysis + '</div>\n' +
-                            '\t\t\t\t<div class="knowledge">知识点：</div>\n' +
+                            '\t\t\t\t<div class="knowledge">知识点：'+data.page.content[i].abilityIds+'</div>\n' +
                             '\t\t\t</div>\n' +
                             '\t\t</div>');
                     } else if (data.page.content[i].type == 4) {//简答题
@@ -221,7 +259,7 @@ $(function () {
                             '\t\t\t\t<div class="answer">标答：' + data.page.content[i].correct + '</div>\n' +
                             '\t\t\t\t<div class="difficulty">难度：' + difficul + '</div>\n' +
                             '\t\t\t\t<div class="analysis">解析：' + data.page.content[i].analysis + '</div>\n' +
-                            '\t\t\t\t<div class="knowledge">知识点：</div>\n' +
+                            '\t\t\t\t<div class="knowledge">知识点：'+data.page.content[i].abilityIds+'</div>\n' +
                             '\t\t\t</div>\n' +
                             '\t\t</div>');
                     }
@@ -229,6 +267,9 @@ $(function () {
                 choicebind();
                 total = data.page.totalElements;
                 $(".totalmsg").html("【共" + total + "条记录，当前显示：" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + 1) + "~" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + data.page.numberOfElements) + "】");
+                if(nu==0){
+                    refresh()
+                }
             },
             error: function (data) {
                 console.log("服务器异常");
@@ -433,9 +474,11 @@ $(function () {
     //搜索
     var querident;
     $("#query101").click(function () {
+
         if (querident == 1)
             getknowleged();
         else
+            nu2=0;
             getaccessory(0);
     });
     //点击知识点
@@ -449,10 +492,14 @@ $(function () {
         $(".popWindow").css("min-width", '710px');
         $(".addtitel").html("知识点");
         $(".addcontext").empty();
+        $("#paginationParent2").hide();
         getknowleged();
+        total2=0;
+        refresh2();
     });
     //点击附件
     $("#accessory_open").click(function () {
+        $("#paginationParent2").show();
         querident = 2;
         $(".addtext").show();
         $(".library_div").show();
@@ -462,10 +509,12 @@ $(function () {
         $(".popWindow").css("min-width", '710px');
         $(".addtitel").html("附件");
         $(".addcontext").empty();
+        nu2=0;
         getaccessory(0);
     });
  //附件文件类型切换
     $("#library").change(function () {
+        nu2=0;
         getaccessory(0);
     });
 
@@ -492,6 +541,7 @@ $(function () {
 
     //获取某一试题信息
     function getchoice(id) {
+        knowledgeList=[];
         $.ajax({
             url: "/choice/findOneById",
             type: "post",
@@ -543,6 +593,29 @@ $(function () {
                 console.log(data);
                 checkAll = [];
                 samplerCheckAll = [];
+                $.ajax({
+                    url:"knowledgePoint/selectByNam",
+                    type: "post",
+                    data:{"arr":data.abilityIds},
+                    sync: false,
+                    dataType: "json",
+                    success:function (data3) {
+                        console.log(data3)
+                        for(let i=0;i<data3.length;i++){
+    $(".knowledges").append('<span class="knowledge_a" knowid="' + data3[i].id + '" knowname="' + data3[i].name+ '">' +  data3[i].name + '</span>')
+                            knowledgeList.push(data3[i].id);
+                        }
+                        $(".knowledge_a").bind("click", function () {
+                            let  index= knowledgeList.indexOf(parseInt($(this).attr("knowid")));
+                            if (index > -1) {
+                                knowledgeList.splice(index, 1);
+                            }
+                            $(this).remove();
+                        })
+
+                    }
+                })
+
                 attachment();
 
             },
@@ -563,7 +636,7 @@ $(function () {
                 $(".addcontext").empty();
                 for (let i = 0; i < data.length; i++) {
                     //$(".addcontext").append(data[i].subId+";"+data[i].name+"<br>")
-                    $(".addcontext").append('<div class="knowledge_b" knowid="' + data[i].subId + '" knowname="' + data[i].name + '" >\n' +
+                    $(".addcontext").append('<div class="knowledge_b" knowid="' + data[i].id + '" knowname="' + data[i].name + '" >\n' +
                         '<span class="knowledge_bp1" >' + data[i].name + '</span>\n' +
                         '<span class="knowledge_bp2" >\n' +
                         '<i class="my-icon lsm-sidebar-icon icon-tianjia know_add"></i>\n' +
@@ -571,11 +644,22 @@ $(function () {
                         '</div>')
                 }
                 $(".know_add").bind("click", function () {
+                    if(knowledgeList.indexOf(parseInt($(this).parent().parent().attr("knowid")))>-1){
+                        return ;
+                    }
                     $(".knowledges").append('<span class="knowledge_a" knowid="' + $(this).parent().parent().attr("knowid") + '" knowname="' + $(this).parent().parent().attr("knowname") + '">' + $(this).parent().parent().attr("knowname") + '</span>')
+                    knowledgeList.push(parseInt($(this).parent().parent().attr("knowid")));
+
                     $(".knowledge_a").bind("click", function () {
+                       let  index= knowledgeList.indexOf(parseInt($(this).attr("knowid")));
+                        if (index > -1) {
+                            knowledgeList.splice(index, 1);
+                        }
+
                         $(this).remove();
                     })
                 });
+
             },
             error: function (data) {
                 $.alert("服务器异常");
@@ -661,7 +745,6 @@ $(function () {
                     }
                 }
                 total2 = data.page.totalElements;
-                $(".totalmsg2").html("【共" + total2 + "条记录，当前显示：" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + 1) + "~" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + data.page.numberOfElements) + "】");
 
             },
             error: function (data) {
@@ -672,7 +755,8 @@ $(function () {
                 pageIndex2 = index+1;
                 let Page={
                     "pageIndex":pageIndex2,
-                    "pageNumber":pageNumber2
+                    "pageNumber":pageNumber2,
+                    "likeName": $("#query1").val()
                 }
                 $.ajax({
                     url: "/Sample/findAll",
@@ -697,7 +781,6 @@ $(function () {
                                 '</div>');
                         }
                         total2 = data.total;
-                        $(".totalmsg2").html("【共" + total + "条记录，当前显示：" + (data.prePage * data.pageSize + 1) + "~" + (pageIndex2 * data.pageSize ) + "】");
 
                     }, error: function (data) {
 
@@ -705,6 +788,11 @@ $(function () {
                 });
 
         	}
+
+         if(nu2==0){
+             refresh2();
+         }
+
     }
 
     //重置
@@ -790,6 +878,10 @@ $(function () {
         analysis = $("#choice_analysis").val();
         //知识点集合
         abilityIds = "";
+      for (let i=0;i<knowledgeList.length;i++){
+          abilityIds+=knowledgeList[i]+","
+      }
+
         difficultyLevel = $("input[name='star']:checked").val();
         if (difficultyLevel == null) {
             $.alert("请选择难易程度");
@@ -947,6 +1039,8 @@ $(function () {
             success: function (responseStr) {
                 if (responseStr == "导入成功") {
                     $.alert("导入成功");
+                    nu=0;
+                    Init(pageIndex);
                 } else {
                     alert("导入失败");
                 }
@@ -1036,6 +1130,8 @@ function attachment() {
     }
 
 }
+
+
 
 
 

@@ -1,6 +1,23 @@
 var answerList = [];
 var win = window;
+var sampleUrl="";
 $(function () {
+
+        //获取样本服务器的访问地址
+        $.ajax({
+            url: "Sample/sampleUrl",
+            contentType: "application/json;charset=UTF-8",
+            type: "post",
+            success: function (data) {
+                sampleUrl = data;
+            },
+            error: function (data) {
+                console.log("服务器异常")
+
+            }
+        })
+
+
 
     function addRespondents() {
         let Respondents = {
@@ -170,12 +187,16 @@ function binds() {
     var assessId = $("#assessId").attr("assessId");
     var respondentsId = $("#respondentsId").val();
     let flag = true;
-    choices.each(function (i, choice) {
-        if (!flag) return;
+    answerList=[];
+    // choices.each(function (i, choice) {
+
+        for(let x=0;x<choices.length;x++){
+        let choice=choices[x];
         var type = $(choice).attr("choice_type")
         var id = $(choice).attr("choiceid");
         var value = "";
         var num = $(choice).attr("c_index");
+        var num2=null;
         var fileIds = $(choice).attr("fileUrl");
         if (fileIds != "" && fileIds != undefined) {
             fileIds = fileIds.substring(0, fileIds.length - 1);
@@ -218,28 +239,7 @@ function binds() {
         }
         if (value == "") {
             flag = false;
-            if (confirm("还有题目未作答确定要提交吗") == true) {
-                flag = true;
-                return true;
-            } else {
-                return false;
-            }
-            // $.confirm({
-            //     confirmButtonClass: 'btn-info',
-            //     cancelButtonClass: 'btn-danger',
-            //     title: '提示',
-            //     content: '还有题目未作答确定要提交吗',
-            //     confirm: function () {
-            //         flag=true;
-            //     },
-            //     cancel: function () {
-            //         $("html,body").animate({
-            //             scrollTop: choices.eq(parseInt(num)).offset().top - 40
-            //         }, 200 /*scroll实现定位滚动*/); /*让整个页面可以滚动*/
-            //          flag=false;
-            //         return ;
-            //     }
-            // });
+            num2=num;
         }
         let Answer = {
             "choiceId": id,
@@ -248,26 +248,72 @@ function binds() {
             "fileIds": fileIds
         }
         answerList.push(Answer);
-    });
-    if (!flag) {
-        return;
+    };
+    let answerList2=answerList;
+
+    for(let i=0;i<answerList.length;i++){
+        for (let j=0;j<answerList2.length;j++){
+            if(i==j){
+                continue;
+            }
+            if(answerList[i].choiceId==answerList2[j].choiceId){
+                answerList2.splice(j,1);
+            }
+
+        }
     }
 
-    $.ajax({
-        url: "Answer/save",
-        type: "Post",
-        contentType: "application/json;charset=UTF-8",
-        sync: false,
-        data: JSON.stringify(answerList),
-        dataType: "json",
-        success: function (data) {
-            console.log(data);
-            window.location.href = "javascript:history.go(-1)";
-        },
-        error: function (data) {
-            console.log("服务器异常");
-        }
-    })
+    if (!flag) {
+        $.confirm({
+            confirmButtonClass: 'btn-info',
+            cancelButtonClass: 'btn-danger',
+            title: '提示',
+            sync: false,
+            content: '还有题目未作答确定要提交吗',
+            confirm: function () {
+                $.ajax({
+                    url: "Answer/save",
+                    type: "Post",
+                    contentType: "application/json;charset=UTF-8",
+                    sync: false,
+                    data: JSON.stringify(answerList2),
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                        window.location.href = "javascript:history.go(-1)";
+                    },
+                    error: function (data) {
+                        console.log("服务器异常");
+                    }
+                })
+
+            },
+            cancel: function () {
+                $("html,body").animate({
+                    scrollTop: choices.eq(parseInt(num2)).offset().top - 40
+                }, 200 /*scroll实现定位滚动*/); /*让整个页面可以滚动*/
+                flag=false;
+            }
+        });
+    }else {
+        $.ajax({
+            url: "Answer/save",
+            type: "Post",
+            contentType: "application/json;charset=UTF-8",
+            sync: false,
+            data: JSON.stringify(answerList2),
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                window.location.href = "javascript:history.go(-1)";
+            },
+            error: function (data) {
+                console.log("服务器异常");
+            }
+        })
+    }
+
+
 }
 
 function toString(a) {
@@ -306,7 +352,7 @@ function substrings(str) {
 
 function DownloadAttachment(id) {
     $.ajax({
-        url: "ChoiceFile/findFileName",
+        url: "ChoiceFile/findFileName2",
         type: "post",
         data: {"choiceId": id},
         success: function (data) {
@@ -314,13 +360,18 @@ function DownloadAttachment(id) {
             if(data.length>0){
                 console.log(data);
                   for (let i = 0; i < data.length; i++) {
+                      if(data[i].type==0){
+                          setTimeout(()=>{
+                              win.location.href = "Sample/downloadShareFile?filename="+data[i].name;
+                          },SPEED*i)
 
-                    setTimeout(()=>{
-                        win.location.href = "Sample/downloadShareFile?filename="+data[i];
-                      },SPEED*i)
+                      }else {
+                          setTimeout(()=>{
+                              var newhref = sampleUrl+"Sample/downloadShareFile?filename="+data[i].name;
+                              win.location.href=newhref;
+                          },SPEED*i)
+                      }
                   }
-
-
 
             }else {
                 $.alert("没有附件");

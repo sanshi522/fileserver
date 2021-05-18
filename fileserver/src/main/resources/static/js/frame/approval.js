@@ -3,7 +3,21 @@ var win = window;
 var pageNumber = 5; // 每页显示多少条记录
 var pageIndex = 0;//页码
 var total = 50; // 总共多少记录
+var  sampleUrl="";
 $(function () {
+    //获取样本服务器的访问地址
+    $.ajax({
+        url: "Sample/sampleUrl",
+        contentType: "application/json;charset=UTF-8",
+        type: "post",
+        success: function (data) {
+            sampleUrl = data;
+        },
+        error: function (data) {
+            console.log("服务器异常")
+
+        }
+    })
 //快速锚点定位
     function anchorBind() {
         $(".anchor").bind("click", function () {
@@ -191,6 +205,7 @@ $(function () {
 function save() {
     let respondentId = $("#respondentId").attr("respondentId");
     let choices = $(".choice");
+    answerList=[];
     if (choices.length > 0) {
         let flag = true;
         for (let i = 0; i < choices.length; i++) {
@@ -207,20 +222,22 @@ function save() {
             var regPos = /^\d+(\.\d+)?$/; //非负浮点数
             if (!regPos.test(score)) {
                 $.alert("分数不合法");
-                flag = false;
+
                 $("html,body").animate({
                     scrollTop: choices.eq(parseInt(num)).offset().top - 40
                 }, 200 /*scroll实现定位滚动*/); /*让整个页面可以滚动*/
-                return false;
+                flag = false;
+
             }
 
             if (parseFloat(score) > parseFloat(maxscore)) {
                 $.alert("分数不等大于总分");
-                flag = false;
+
                 $("html,body").animate({
                     scrollTop: choices.eq(parseInt(num)).offset().top - 40
                 }, 200 /*scroll实现定位滚动*/); /*让整个页面可以滚动*/
-                return false;
+                flag = false;
+
             }
             if (score == undefined || score == "") {
                 score = 0;
@@ -238,7 +255,7 @@ function save() {
         }
 
         $.ajax({
-            url: "Answer/teachRead",
+             url: "Answer/teachRead",
             type: "Post",
             sync: false,
             contentType: "application/json;charset=UTF-8",
@@ -301,20 +318,26 @@ function DownloadAttachment(id) {
 
 function DownloadFile(id) {
     $.ajax({
-        url: "ChoiceFile/findFileName",
+        url: "ChoiceFile/findFileName2",
         type: "post",
         data: {"choiceId": id},
         success: function (data) {
-            const SPEED = 500;
-            if (data.length > 0) {
+            const  SPEED=500;
+            if(data.length>0){
                 console.log(data);
                 for (let i = 0; i < data.length; i++) {
-                    setTimeout(() => {
-                        win.location.href = "Sample/downloadShareFile?filename=" + data[i];
-                    }, SPEED * i)
+                    if(data[i].type==0){
+                        setTimeout(()=>{
+                            win.location.href = "Sample/downloadShareFile?filename="+data[i].name;
+                        },SPEED*i)
+                    }else {
+                        setTimeout(()=>{
+                            var newhref = sampleUrl+"Sample/downloadShareFile?filename="+data[i].name;
+                            win.location.href=newhref;
+                        },SPEED*i)
+                    }
                 }
-
-            } else {
+            }else {
                 $.alert("没有附件");
             }
         },

@@ -26,6 +26,7 @@ public class ChoiceController {
     @PostMapping("/findAll")
     @ResponseBody
     public Map findAll(@RequestBody ScreenChoice screenChoice) {
+
         return choiceService.findAll(screenChoice);
     }
 
