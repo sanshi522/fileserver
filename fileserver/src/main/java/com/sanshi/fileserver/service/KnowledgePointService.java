@@ -56,3 +56,5 @@ public interface KnowledgePointService {
    */
     public List<KnowledgePoint> selectByNam(int [] arr);
 }
+
+

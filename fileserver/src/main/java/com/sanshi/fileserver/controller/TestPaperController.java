@@ -81,7 +81,7 @@ public class TestPaperController {
     @RequestMapping(path = "/save")
     @ResponseBody
     public TestPaper save(@RequestBody TestPaper testPaper) {
-        if(testPaper.getId()!=null){
+        if(testPaper.getId()!=null && testPaper.getId()!=0){
           TestPaper  testPaper1=    testPaperService.findOneById(testPaper.getId());
             testPaper.setCreateTime(testPaper1.getCreateTime());
             testPaper.setCreationId(testPaper1.getCreationId());

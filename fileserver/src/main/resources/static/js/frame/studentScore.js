@@ -21,27 +21,7 @@ $(function () {
     }
 
 
-    $("#showNumber").val('10').trigger("change")
-    $("#showNumber").change(function () {
-        if (pageNumber != $("#showNumber").val()) {
-            pageNumber = $("#showNumber").val();
-            $("#Pagination").pagination(total, {
-                callback: PageCallback,
-                prev_text: '上一页',
-                next_text: '下一页',
-                items_per_page: pageNumber,
-                num_display_entries: 4, // 连续分页主体部分显示的分页条目数
-                num_edge_entries: 1, // 两侧显示的首尾分页的条目数
-                jump: true,
-            });
-            init(0);
-        }
-    });
 
-    function PageCallback(index, jq) { // 前一个参数表示当前点击的那个分页的页数索引值，后一个参数表示装载容器。
-        pageIndex = index;
-        Init(pageIndex);
-    }
 
     init(0);
 
@@ -54,6 +34,7 @@ $(function () {
         $.ajax({
             url: "Respondents/selectScore",
             type: "Post",
+            sync: false,
             contentType: "application/json;charset=UTF-8",
             data: JSON.stringify(PageGet),
             dataType: "json",
@@ -101,6 +82,28 @@ $(function () {
             error: function (data) {
             }
         });
+    }
+
+    $("#showNumber").val('10').trigger("change")
+    $("#showNumber").change(function () {
+        if (pageNumber != $("#showNumber").val()) {
+            pageNumber = $("#showNumber").val();
+            $("#Pagination").pagination(total, {
+                callback: PageCallback,
+                prev_text: '上一页',
+                next_text: '下一页',
+                items_per_page: pageNumber,
+                num_display_entries: 4, // 连续分页主体部分显示的分页条目数
+                num_edge_entries: 1, // 两侧显示的首尾分页的条目数
+                jump: true,
+            });
+            init(0);
+        }
+    });
+
+    function PageCallback(index, jq) { // 前一个参数表示当前点击的那个分页的页数索引值，后一个参数表示装载容器。
+        pageIndex = index;
+        init(pageIndex);
     }
 
 });

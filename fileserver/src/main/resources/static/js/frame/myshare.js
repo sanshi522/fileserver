@@ -431,7 +431,6 @@ $(function () {
                             '<div class="sharefilesize">' + getKbMbGb(data.page.content[i].size) + '</div>\n' +
                             '<div class="susdiv">\n' +
                             '<div class="operation download"><i class="my-icon lsm-sidebar-icon icon-xiazai querybtn"></i></div>\n' +
-                            '<div class="operation compile"><i class="my-icon lsm-sidebar-icon icon-bianji querybtn"></i></div>\n' +
                             '<div class="operation delete"><i class="my-icon lsm-sidebar-icon icon-shanchu querybtn"></i></div>\n' +
                             '</div>\n' +
                             '</div>');
@@ -442,7 +441,6 @@ $(function () {
                             '<div class="sharefilesize">' + getKbMbGb(data.page.content[i].size) + '</div>\n' +
                             '<div class="susdiv">\n' +
                             '<div class="operation download"><i class="my-icon lsm-sidebar-icon icon-xiazai querybtn"></i></div>\n' +
-                            '<div class="operation compile"><i class="my-icon lsm-sidebar-icon icon-bianji querybtn"></i></div>\n' +
                             '<div class="operation delete"><i class="my-icon lsm-sidebar-icon icon-shanchu querybtn"></i></div>\n' +
                             '</div>\n' +
                             '</div>');
@@ -451,6 +449,26 @@ $(function () {
                 $(".download").bind("click", function () {
                     win.location.href = "/file/downloadShareFile?fileId=" + $(this).parent().parent().attr("fileid");
                 });
+                $(".delete").bind("click", function () {
+                  let id =$(this).parent().parent().attr("fileid");
+               $.ajax({
+                   url:"/file/deleteById",
+                   type:"post",
+                   data:{"id":id},
+                   dataType:"json",
+                   success:function (data) {
+                       if (data.ok==false){
+                           $.alert(data.data);
+                           return;
+                       }else {
+                           Init(pageIndex);
+                       }
+                   }
+               })
+
+                });
+
+
                 total = data.page.totalElements;
                 $(".totalmsg").html("【共" + total + "条记录，当前显示：" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + 1) + "~" + (data.page.pageable.pageNumber * data.page.pageable.pageSize + data.page.numberOfElements) + "】");
                 //$(".filtr-container").html(JSON.stringify(data));

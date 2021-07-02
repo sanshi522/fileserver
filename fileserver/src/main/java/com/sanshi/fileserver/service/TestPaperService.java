@@ -62,4 +62,18 @@ public interface TestPaperService {
      * 自动生成试卷
      */
     public Result generateTestPaper(TestPaperUtils testPaperUtils);
+
+    /**
+     * 根据学科查询试卷
+     * @param id
+     * @return
+     */
+    public  List<TestPaper> findAllBySubjectId(Integer id);
+
+    /**
+     * 根据老师查询试卷
+     */
+    public List<TestPaper> findAllByTeacherId(Integer id);
+
+
 }

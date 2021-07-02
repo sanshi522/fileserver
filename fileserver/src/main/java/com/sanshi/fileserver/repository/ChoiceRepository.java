@@ -98,5 +98,18 @@ public interface ChoiceRepository extends JpaRepository<Choice, Integer>, JpaSpe
 
     List<Choice> findAllByTypeAndSubId(Integer type, Integer subId);
 
+    /**
+     * 根据知识点id查询试题
+     */
+    List<Choice> findAllByAbilityIdsLike(String Ability);
+
+    /**
+     * 根据学科查询试题
+     */
+
+    List<Choice>findAllBySubId(Integer id);
+
+
+
 
 }

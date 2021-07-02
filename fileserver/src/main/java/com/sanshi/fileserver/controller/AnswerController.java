@@ -2,7 +2,6 @@ package com.sanshi.fileserver.controller;
 
 import com.sanshi.fileserver.bean.Answer;
 import com.sanshi.fileserver.service.AnswerService;
-import com.sanshi.fileserver.utils.RestTemplateUtil;
 import com.sanshi.fileserver.vo.AnswerVo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -24,6 +23,10 @@ import java.util.UUID;
 @RequestMapping("/Answer")
 public class AnswerController {
 
+    //学生文件上传保存地址
+    @Value("${sampleurl.path}")
+    private  String path;
+
     private AnswerService answerService;
 
 
@@ -41,11 +44,10 @@ public class AnswerController {
     @ResponseBody
     public String upload(@RequestParam("file") MultipartFile file, HttpServletRequest req) {
         if (file.isEmpty()) {
-            return "";
+            return "文件不能为空";
         } else {
             //日期目录
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
-            String path = RestTemplateUtil.getPath();
             String format = sdf.format(new Date());
             File folder = new File(path + format);
             if (!folder.isDirectory()) {

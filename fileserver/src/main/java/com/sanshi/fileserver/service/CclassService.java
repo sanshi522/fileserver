@@ -26,4 +26,13 @@ public interface CclassService {
     public Cclass findOneById(Integer Id);
 
     public Cclass save(Cclass cclass);
+
+    /**
+     * 根据学院ID查询班级
+     * @param id
+     * @return
+     */
+    public  List<Cclass> findByGradeId(Integer id);
+
+    public  int  deleteById(Integer  id);
 }

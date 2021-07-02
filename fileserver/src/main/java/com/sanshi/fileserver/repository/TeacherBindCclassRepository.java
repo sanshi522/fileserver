@@ -36,4 +36,6 @@ public interface TeacherBindCclassRepository extends JpaRepository<TeacherBindCc
     TeacherBindCclass save(TeacherBindCclass t);
 
     void deleteById(Integer id);
+
+    void deleteByTeeaId(Integer id);
 }

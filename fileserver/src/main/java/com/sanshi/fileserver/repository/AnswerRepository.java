@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * 答题dao
  */
@@ -47,6 +49,10 @@ public interface AnswerRepository extends JpaRepository<Answer, Integer>, JpaSpe
     Double selectScore(Integer respondentsId);
 
     Answer findOneById(Integer id);
+
+
+    int  deleteByRespondentsId(Integer respondentId);
+    List<Answer> findAllByRespondentsId(Integer id);
 
 
 }

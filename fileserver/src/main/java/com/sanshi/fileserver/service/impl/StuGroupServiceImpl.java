@@ -1,12 +1,16 @@
 package com.sanshi.fileserver.service.impl;
 
 import com.sanshi.fileserver.bean.StuGroup;
+import com.sanshi.fileserver.bean.Student;
+import com.sanshi.fileserver.repository.AssessUserRepository;
 import com.sanshi.fileserver.repository.GroupRepository;
 import com.sanshi.fileserver.service.StuGroupService;
+import com.sanshi.fileserver.service.StudentService;
 import com.sanshi.fileserver.vo.PageGet;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,8 +20,14 @@ import java.util.Map;
 public class StuGroupServiceImpl implements StuGroupService {
     private GroupRepository groupRepository;
 
-    public StuGroupServiceImpl(GroupRepository groupRepository) {
+    private StudentService  studentService;
+
+    private AssessUserRepository assessUserRepository;
+
+    public StuGroupServiceImpl(GroupRepository groupRepository, StudentService studentService, AssessUserRepository assessUserRepository) {
         this.groupRepository = groupRepository;
+        this.studentService = studentService;
+        this.assessUserRepository = assessUserRepository;
     }
 
     @Override
@@ -49,7 +59,13 @@ public class StuGroupServiceImpl implements StuGroupService {
     }
 
     @Override
+    @Transactional
     public Integer deleteById(Integer val) {
+       List<Student> studentList=   studentService.findAllByStuGroup(val);
+       for (Student student:studentList){
+           studentService.deleteById(student.getStuId());
+       }
+        assessUserRepository.deleteByTestObjectAndTestObjectId(4,val);
         groupRepository.deleteById(val);
         return 1;
     }

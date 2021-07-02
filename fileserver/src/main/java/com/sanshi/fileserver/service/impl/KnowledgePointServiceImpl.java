@@ -1,17 +1,18 @@
 package com.sanshi.fileserver.service.impl;
 
+import com.sanshi.fileserver.bean.Choice;
 import com.sanshi.fileserver.bean.KnowledgePoint;
 import com.sanshi.fileserver.bean.Subject;
+import com.sanshi.fileserver.repository.ChoiceRepository;
 import com.sanshi.fileserver.repository.KnowledgePointRepository;
 import com.sanshi.fileserver.service.KnowledgePointService;
 import com.sanshi.fileserver.vo.PageGet;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,9 +21,11 @@ import java.util.Map;
 @Service("KnowledgePointServiceImpl")
 public class KnowledgePointServiceImpl implements KnowledgePointService {
     private KnowledgePointRepository knowledgePointRepository;
+    private ChoiceRepository choiceRepository;
 
-    public KnowledgePointServiceImpl(KnowledgePointRepository knowledgePointRepository) {
+    public KnowledgePointServiceImpl(KnowledgePointRepository knowledgePointRepository, ChoiceRepository choiceRepository) {
         this.knowledgePointRepository = knowledgePointRepository;
+        this.choiceRepository = choiceRepository;
     }
 
     @Override
@@ -58,8 +61,29 @@ public class KnowledgePointServiceImpl implements KnowledgePointService {
     }
 
     @Override
+    @Transactional
     public void deleteById(Integer id) {
-        knowledgePointRepository.deleteById(id);
+
+        String  Ability="%"+id+"%";
+        List<Choice>  choiceList=choiceRepository.findAllByAbilityIdsLike(Ability);
+
+        for (Choice choice:choiceList){
+            String  str="";
+            String []  a=choice.getAbilityIds().split(",");
+            for (int i=0;i<a.length;i++){
+                if (a[i]==""){
+                    continue;
+                }
+                if ( Integer.parseInt(a[i])==id){
+                    continue;
+                }
+                str+=a[i]+",";
+            }
+            String str2=str.substring(0,str.length()-1);
+            choice.setAbilityIds(str2);
+            choiceRepository.save(choice);
+        }
+         knowledgePointRepository.deleteById(id);
     }
 
 
@@ -77,13 +101,6 @@ public class KnowledgePointServiceImpl implements KnowledgePointService {
         return json;
     }
 
-
-    @RequestMapping(path = "/deleteById")
-    @ResponseBody
-    public Integer deleteById(Integer val, HttpServletRequest request) {
-        knowledgePointRepository.deleteById(val);
-        return 1;
-    }
 
     @Override
     public List<KnowledgePoint> selectBySubId(Integer id) {

@@ -93,4 +93,17 @@ public interface RespondentsService {
     RespondentsMsg selectRespondentsMsg2(Integer id);
 
 
+    /**
+     *通过考核id学生id获取答卷
+     */
+    Respondents  selectAssessIdAndStuId(Integer assessId,Integer stuId);
+
+    /**
+     * 通过学生id查询答卷
+     * @param id
+     * @return
+     */
+    List<Respondents>  findByStudentId(Integer id);
+
+
 }

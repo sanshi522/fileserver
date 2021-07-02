@@ -15,7 +15,7 @@ public class SessionFilter implements Filter {
     String NO_LOGIN = "nologin";
 
     //不需要登录就可以访问的路径(比如:注册登录等)
-    String[] includeUrls = new String[]{"/login", "/js", "/css", "/images", "/favicon.ico", "/join", "/findpass", "file", "/error", "/hello", "/subject"};
+    String[] includeUrls = new String[]{"/login", "/js", "/css", "/images", "/favicon.ico", "/join", "/findpass", "file", "/error", "/hello", "/subject","/ChoiceFile/findDelete"};
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

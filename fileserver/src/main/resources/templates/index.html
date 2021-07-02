@@ -54,18 +54,13 @@
         <div class="lsm-scroll">
             <div class="lsm-sidebar">
                 <ul>
-                    <li class="lsm-sidebar-item stu-show tea-show man-show">
-                        <a class="active" href="javascript:;"><i class="my-icon lsm-sidebar-icon icon-shouye"></i><span>首页</span>
-                            <i class="my-icon lsm-sidebar-more"></i>
-                        </a>
-                    </li>
                     <li class="lsm-sidebar-item tea-show">
                         <a href="javascript:;"><i
                                 class="my-icon lsm-sidebar-icon icon-banjiguanli"></i><span>教学管理</span><i
                                 class="my-icon lsm-sidebar-more"></i></a>
                         <ul>
-                            <li><a href="javascript:javascript:open('group');;"><span>小组</span></a></li>
-                            <li><a href="javascript:javascript:open('student');;"><span>学生</span></a></li>
+                            <li onclick="addClass(this)"><a href="javascript:javascript:open('group');;"><span>小组</span></a></li>
+                            <li onclick="addClass(this)"><a href="javascript:javascript:open('student');;"><span>学生</span></a></li>
                         </ul>
                     </li>
                     <li class="lsm-sidebar-item man-show">
@@ -73,13 +68,20 @@
                                 class="my-icon lsm-sidebar-icon icon-banjiguanli"></i><span>教学管理</span><i
                                 class="my-icon lsm-sidebar-more"></i></a>
                         <ul>
-                            <li><a href="javascript:javascript:open('subject');"><span>学科</span></a></li>
-                            <li><a href="javascript:javascript:open('grade');"><span>学院</span></a></li>
-                            <li><a href="javascript:javascript:open('class');"><span>班级</span></a></li>
-                            <li><a href="javascript:javascript:open('teacher');"><span>老师</span></a></li>
-                            <li><a href="javascript:javascript:open('group');"><span>小组</span></a></li>
-                            <li><a href="javascript:javascript:open('student');"><span>学生</span></a></li>
-                            <li><a href="javascript:javascript:open('schooling');"><span>授课</span></a></li>
+                            <li onclick="addClass(this)"><a href="javascript:javascript:open('subject');"><span>学科</span></a></li>
+                            <li onclick="addClass(this)"><a href="javascript:javascript:open('grade');"><span>学院</span></a></li>
+                            <li onclick="addClass(this)"><a href="javascript:javascript:open('class');"><span>班级</span></a></li>
+                            <li onclick="addClass(this)"><a href="javascript:javascript:open('group');"><span>小组</span></a></li>
+                            <li onclick="addClass(this)"><a href="javascript:javascript:open('schooling');"><span>授课</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="lsm-sidebar-item man-show">
+                        <a href="javascript:;"><i
+                                class="my-icon lsm-sidebar-icon icon-banjiguanli"></i><span>用户管理</span><i
+                                class="my-icon lsm-sidebar-more"></i></a>
+                        <ul>
+                            <li onclick="addClass(this)"><a href="javascript:javascript:open('teacher');"><span>老师</span></a></li>
+                            <li onclick="addClass(this)"><a href="javascript:javascript:open('student');"><span>学生</span></a></li>
                         </ul>
                     </li>
                     <li class="lsm-sidebar-item tea-show man-show">
@@ -87,9 +89,8 @@
                                 class="my-icon lsm-sidebar-icon icon-shishiboxingjiankongtu"></i><span>题库</span><i
                                 class="my-icon lsm-sidebar-more"></i></a>
                         <ul>
-                            <li><a href="javascript:javascript:open('choice');"><span>试题</span></a></li>
-                            <li><a href="javascript:javascript:open('sample');"><span>样本文件</span></a></li>
-                            <li><a href="javascript:javascript:open('knowledgePoint');"><span>知识点</span></a></li>
+                            <li onclick="addClass(this)"><a href="javascript:javascript:open('choice');"><span>试题</span></a></li>
+                            <li onclick="addClass(this)"><a href="javascript:javascript:open('knowledgePoint');"><span>知识点</span></a></li>
                         </ul>
                     </li>
 
@@ -99,8 +100,8 @@
                                 class="my-icon lsm-sidebar-icon icon-kaoshifenxi"></i><span>考核评估</span><i
                                 class="my-icon lsm-sidebar-more"></i></a>
                         <ul>
-                            <li><a href="javascript:javascript:open('testPaper');"><span>试卷</span></a></li>
-                            <li><a href="javascript:javascript:open('assess');"><span>考核管理</span></a></li>
+                            <li onclick="addClass(this)"><a href="javascript:javascript:open('testPaper');"><span>试卷</span></a></li>
+                            <li onclick="addClass(this)"><a href="javascript:javascript:open('assess');"><span>考核管理</span></a></li>
                         </ul>
                     </li>
                     <li class="lsm-sidebar-item stu-show">
@@ -108,17 +109,24 @@
                                 class="my-icon lsm-sidebar-icon icon-kaoshifenxi"></i><span>考核中心</span><i
                                 class="my-icon lsm-sidebar-more"></i></a>
                         <ul>
-                            <li><a href="javascript:javascript:open('studentAssess');"><span>考核测试</span></a></li>
-                            <li><a href="javascript:javascript:open('studentScore');"><span>我的成绩</span></a></li>
+                            <li onclick="addClass(this)"><a href="javascript:javascript:open('studentAssess');"><span>考核测试</span></a></li>
+                            <li onclick="addClass(this)"><a href="javascript:javascript:open('studentScore');"><span>我的成绩</span></a></li>
                         </ul>
                     </li>
                     <li class="lsm-sidebar-item stu-show tea-show man-show">
                         <a href="javascript:;"><i class="my-icon lsm-sidebar-icon icon-gongxiang"></i><span>共享站</span><i
                                 class="my-icon lsm-sidebar-more"></i></a>
                         <ul>
-                            <li><a href="javascript:open('share');"><span>共享中心</span></a></li>
-                            <li><a href="javascript:open('myshare');"><span>我的共享</span></a></li>
-                            <li><a href="javascript:open('addshare');"><span>添加共享</span></a></li>
+                            <li onclick="addClass(this)"><a href="javascript:open('share');"><span>共享中心</span></a></li>
+                            <li onclick="addClass(this)"><a href="javascript:open('myshare');"><span>我的共享</span></a></li>
+                            <li onclick="addClass(this)"><a href="javascript:open('addshare');"><span>添加共享</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="lsm-sidebar-item  tea-show man-show">
+                        <a href="javascript:;"><i class="my-icon lsm-sidebar-icon icon-gongxiang"></i><span>样本文件管理</span><i
+                                class="my-icon lsm-sidebar-more"></i></a>
+                        <ul>
+                            <li onclick="addClass(this)"><a href="javascript:javascript:open('sample');"><span>样本文件</span></a></li>
                         </ul>
                     </li>
 

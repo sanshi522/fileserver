@@ -38,6 +38,7 @@
             <option value="2">多选题</option>
             <option value="3">判断题</option>
             <option value="4">简答题</option>
+            <option value="5">填空题</option>
         </select>
     </div>
     <div class="blue ui buttons" style="float: right;">
@@ -146,7 +147,7 @@
     <div id="Pagination"></div>
 </div>
 <div class="popWindow">
-    <h3>试题编辑<span hidden>关闭</span></h3>
+    <h3>试题编辑<span hidden id="sp1">关闭</span></h3>
     <div class="choicecontent" style="width: auto;float: left;">
         <div style="width:300px;float: left;">
             <div class="wContent" style="width:300px;float: left;overflow-y: auto;">
@@ -159,6 +160,7 @@
                                 <option value="2">多选题</option>
                                 <option value="3">判断题</option>
                                 <option value="4">简答题</option>
+                                <option value="5">填空题</option>
                             </select>
                         </td>
                     </tr>
@@ -263,9 +265,9 @@
                     </tr>
                     <tr>
                         <td>评分标准</td>
-                        <td>
+                        <td id="scaleofmarkstd">
                             <select name="channels" id="scaleofmarks" data-style="btn-info" class="selectpicker">
-                                <option value="0">自动全等</option>
+                                <option value="0" >自动全等</option>
                                 <option value="1">少选百分比+多选不得分</option>
                                 <option value="2">人工</option>
                             </select>

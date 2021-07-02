@@ -180,7 +180,10 @@ public class RespondentsServiceImpl implements RespondentsService {
         for (AssessUser assessUser : assessUserList) {
             switch (assessUser.getTestObject()) {
                 case 1:   //学年级别
-                    List<Integer> studentList = studentRepository.findIdsByStuGroupIn(groupRepository.findALLIdByCclassIdIn(cclassRepository.findIdsByGradeIdIn(gradeRepository.findIdsByYear(assessUser.getTestObjectId()))));
+                  List<Integer>  list1=    gradeRepository.findIdsByYear(assessUser.getTestObjectId());
+                    List<Integer> list2= cclassRepository.findIdsByGradeIdIn(list1);
+                    List<Integer> list3= groupRepository.findALLIdByCclassIdIn(list2);
+                    List<Integer> studentList = studentRepository.findIdsByStuGroupIn(list3);
                     for (Integer studentId : studentList) {
                         list.add(studentId);
                     }
@@ -267,6 +270,17 @@ public class RespondentsServiceImpl implements RespondentsService {
         respondent.setCorrect(2);
         respondentsRepository.save(respondent);
         return 1;
+    }
+
+
+    @Override
+    public Respondents selectAssessIdAndStuId(Integer assessId, Integer stuId) {
+        return respondentsRepository.findOneByAssessIdAndStuId(assessId,stuId);
+    }
+
+    @Override
+    public List<Respondents> findByStudentId(Integer id) {
+        return respondentsRepository.findAllBystuId(id);
     }
 
 }

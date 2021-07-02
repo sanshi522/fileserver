@@ -53,6 +53,14 @@ public interface TestPaperBindChoiceRepository extends JpaRepository<TestPaperBi
      */
     void deleteByTestPaperId(Integer id);
 
+    /**
+     * 通过试题id删除绑定信息
+     * @param id
+     * @return
+     */
+
+    void deleteByChoiceId(Integer id);
+
     List<TestPaperBindChoice> findAllByChoiceId(Integer id);
 
     @Query(value = "select t.choiceId from TestPaperBindChoice t where t.testPaperId = ?1")
@@ -60,6 +68,9 @@ public interface TestPaperBindChoiceRepository extends JpaRepository<TestPaperBi
 
 
     TestPaperBindChoice findAllByChoiceIdAndTestPaperId(Integer choiceId, Integer testPaperId);
+
+
+    TestPaperBindChoice findOneById(Integer id);
 
 
 }

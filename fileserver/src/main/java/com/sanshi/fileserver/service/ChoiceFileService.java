@@ -10,5 +10,9 @@ public interface ChoiceFileService {
 
     List<ChoiceFile> findByChoiceId(Integer choiceId);
 
+    List<ChoiceFile> findByFileId(Integer fileId);
+
+    List<ChoiceFile> findByTypeAndFileId(Integer type,Integer fileId);
+
 
 }

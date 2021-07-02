@@ -73,50 +73,97 @@ public class AnswerServiceImpl implements AnswerService {
             respondentsRepository.save(respondents);
             //获取试题在该试卷的分值
             TestPaperBindChoice testPaperBindChoice = testPaperBindChoiceRepository.findAllByChoiceIdAndTestPaperId(choice.getId(), testPaper.getId());
-            switch (choice.getScaleRule()) {
-                case 0:
-                    if (answer.getAnswer() != null && answer.getAnswer().equals(choice.getCorrect())) {
-                        answer.setScore(testPaperBindChoice.getScore());
-                    } else {
-                        answer.setScore(0d);
-                    }
-                    answer.setCorrect(1);
-                    answer.setCorrectUserid(0);
-                    break;
-                case 1:
-                    Double score = 0d;  //总分数
-                    if (choice.getCorrect() != null && answer.getAnswer() != "") {
-                        String[] arr = choice.getCorrect().split(",");  //正确答案
-                        String str = answer.getAnswer();
-                        String[] ans = str.split(",");
-                        int sum = 0;
-                        for (int i = 0; i < ans.length; i++) {
-                            Boolean flag = Arrays.asList(arr).contains(ans[i]);
-                            if (flag) {
-                                sum++;
-                            } else {
-                                sum = 0;
-                                score = 0d;
-                                break;
+            if(choice.getType()!=5) {
+                switch (choice.getScaleRule()) {
+                    case 0:
+                        if (answer.getAnswer() != null && answer.getAnswer().equals(choice.getCorrect())) {
+                            answer.setScore(testPaperBindChoice.getScore());
+                        } else {
+                            answer.setScore(0d);
+                        }
+                        answer.setCorrect(1);
+                        answer.setCorrectUserid(0);
+                        break;
+                    case 1:
+                        Double score = 0d;  //总分数
+                        if (choice.getCorrect() != null && answer.getAnswer() != "") {
+                            String[] arr = choice.getCorrect().split(",");  //正确答案
+                            String str = answer.getAnswer();
+                            String[] ans = str.split(",");
+                            int sum = 0;
+                            for (int i = 0; i < ans.length; i++) {
+                                Boolean flag = Arrays.asList(arr).contains(ans[i]);
+                                if (flag) {
+                                    sum++;
+                                } else {
+                                    sum = 0;
+                                    score = 0d;
+                                    break;
+                                }
+                            }
+                            if (sum > 0) {
+                                Double single = testPaperBindChoice.getScore() / Double.valueOf(arr.length);
+                                Double all = single * sum;
+                                score = Math.floor(all) + (all % 1 >= 0.5 ? 0.5 : 0);
                             }
                         }
-                        if (sum > 0) {
-                            Double single = testPaperBindChoice.getScore() / Double.valueOf(arr.length);
-                            Double all = single * sum;
-                            score = Math.floor(all) + (all % 1 >= 0.5 ? 0.5 : 0);
+                        answer.setScore(score);
+                        answer.setCorrect(1);
+                        answer.setCorrectUserid(0);
+                        break;
+                    default:
+                        answer.setScore(0d);
+                        answer.setCorrect(0);
+                }
+            }else {
+
+                switch (choice.getScaleRule()) {
+                    case 0:
+                        if (answer.getAnswer() != null ) {
+                            String s1 = answer.getAnswer().replaceAll("#",",");
+                            String answerName =s1.substring(0,s1.lastIndexOf(","));
+                            if (answerName.equals(choice.getCorrect())){
+                                answer.setScore(testPaperBindChoice.getScore());
+                            }
+                        } else {
+                            answer.setScore(0d);
                         }
-                    }
-                    answer.setScore(score);
-                    answer.setCorrect(1);
-                    answer.setCorrectUserid(0);
-                    break;
-                default:
-                    answer.setScore(0d);
-                    answer.setCorrect(0);
+                        answer.setCorrect(1);
+                        answer.setCorrectUserid(0);
+                        break;
+                    case 1:
+                        Double score = 0d;  //总分数
+                        if (choice.getCorrect() != null && answer.getAnswer() != "") {
+                            String s1 = answer.getAnswer().replaceAll("#",",");
+                            String answerName =s1.substring(0,s1.lastIndexOf(","));
+                            String[] arr = choice.getCorrect().split(",");  //正确答案
+                            String[] ans = answerName.split(",");
+                            int sum = 0;
+                            for (int i = 0; i < ans.length; i++) {
+                                Boolean flag = Arrays.asList(arr).contains(ans[i]);
+                                if (flag) {
+                                    sum++;
+                                }
+                            }
+                            if (sum > 0) {
+                                Double single = testPaperBindChoice.getScore() / Double.valueOf(arr.length);
+                                Double all = single * sum;
+                                score = Math.floor(all) + (all % 1 >= 0.5 ? 0.5 : 0);
+                            }else {
+                                score = 0d;
+                            }
+                        }
+                        answer.setScore(score);
+                        answer.setCorrect(1);
+                        answer.setCorrectUserid(0);
+                        break;
+                    default:
+                        answer.setScore(0d);
+                        answer.setCorrect(0);
+                }
             }
             answerRepository.save(answer);
         }
-
         return 1;
     }
 
@@ -214,5 +261,15 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public Answer findById(Integer id) {
         return answerRepository.findOneById(id);
+    }
+
+    @Override
+    public Double selectScore(Integer respondentsId) {
+        return  answerRepository.selectScore(respondentsId);
+    }
+
+    @Override
+    public int deleteByRespondentId(Integer id) {
+        return answerRepository.deleteByRespondentsId(id);
     }
 }

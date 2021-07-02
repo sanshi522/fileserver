@@ -30,9 +30,12 @@
 <body>
 <label id="AssessId" th:testPaperId="${id}" hidden=""></label>
 <div class="assessMsg row">
-
 </div>
-
+<div class=" row">
+    <div  class="col-md-2 col-md-offset-10">
+        <button class="btn-info" onclick="exportScore()">导出成绩</button>
+    </div>
+</div>
 <div class="Respondentses">
     <div class="assessMenus">
         <div class="assessMenu" data_type="1" style="background:#4DADDB">

@@ -43,6 +43,19 @@ $(function () {
         });
     }
 
+    String.prototype.toArray = function () {  //把字符串转换为数组
+        var p = this.length;
+        a = [];  //获取当前字符串长度，并定义空数组
+        if (p) {  //如果存在则执行循环操作，预防空字符串
+            for (var i = 0; i < p; i++) {  //遍历字符串，枚举每个字符
+                a.push(this.charAt(i));  //把每个字符按顺序装入数组
+            }
+        }
+        return a;  //返回数组
+    }
+
+
+
     Init(0);
 
     function Init(index) {
@@ -188,6 +201,58 @@ $(function () {
                             '\t\t\t\t\t<div class="text-cho"><textarea rows="3" cols="50" wrap="hard" id="' + data[i].choice.id + '" placeholder="请输入参考答案" >' + name + ' </textarea></div>\n' +
                             '<div style="float: left"> <a  class="btn btn-link" onclick="DownloadFile(' + data[i].choice.id + ')" >试题附件</a></div>  ' +
                             '<div style="float: left"> <a  class="btn btn-link" onclick="DownloadAttachment(' + id + ')" >学生上传附件</a></div>  ' +
+                            '\t\t\t\t</div>\n' +
+                            '<div class="answer">标答：' + data[i].choice.correct + '</div>\n' +
+                            '<div class="difficulty">难度：' + difficul + '</div>\n' +
+                            '<div class="analysis">解析：' + data[i].choice.analysis + '</div>\n' +
+                            '<div class="knowledge">知识点：'+data[i].choice.abilityIds+'</div>\n' +
+                            '\t\t\t</div>\n' +
+                            '\t\t</div>');
+                    }else if (data[i].choice.type == 5) {//简答题
+                        let name = "";
+                        let  ChioceName="";
+                        if (data[i].answer != null && data[i].answer.answer != null) {
+                            name = data[i].answer.answer;
+                        }
+
+                        if(name!="" && name!="#"){
+                            let  answers  =name.split("#");
+                            let  str=data[i].choice.topic;
+                            let    s=   str.toArray();
+                            let s1=0;
+
+                            for (let x=0;x<s.length;x++){
+                                if(s[x]=="_"){
+                                    ChioceName+= '<input style=" border:none; border-bottom: 1px solid #000;" type="text" value='+answers[s1]+' />';
+                                    s1++;
+                                }else{
+                                    ChioceName+=s[x];
+                                }
+
+                            }
+
+                        }else {
+                            let  str=data[i].choice.topic;
+                            let    s=   str.toArray();
+                            for (let x=0;x<s.length;x++){
+                                if(s[x]=="_"){
+                                    ChioceName+= '<input style=" border:none; border-bottom: 1px solid #000;" type="text" />';
+                                }else{
+                                    ChioceName+=s[x];
+                                }
+                            }
+                        }
+                        $("#choices").append('<div class="choice" choicecheck="0"   >\n' +
+                            ' <div class="choice-title"><div class="choice-index"></div><div class="choice-name" >' + ChioceName + '(' + data[i].score + '分) </div>\n' +
+                            '<input class="choice-box"  name="checkItem" type="checkbox" />' +
+                            ' <div class="choice-oper delete-choice"></div>\n' +
+                            '<div class="score_div">\n' +
+                            '<span>得分：' + score + '</span>\n' +
+                            '</div>' +
+                            // ' <div class="choice-oper delete-choice"><input type="checkbox" name="TestPaper"/></i></div>\n' +
+                            '\t\t\t</div>\n' +
+                            '\t\t\t<div class="choice-details1">\n' +
+                            '\t\t\t\t<div class="make-choice">\n' +
                             '\t\t\t\t</div>\n' +
                             '<div class="answer">标答：' + data[i].choice.correct + '</div>\n' +
                             '<div class="difficulty">难度：' + difficul + '</div>\n' +

@@ -2,9 +2,11 @@ package com.sanshi.fileserver.controller;
 
 import com.sanshi.fileserver.bean.Cclass;
 import com.sanshi.fileserver.bean.StuGroup;
+import com.sanshi.fileserver.bean.Student;
 import com.sanshi.fileserver.service.CclassService;
 import com.sanshi.fileserver.service.StuGroupService;
 import com.sanshi.fileserver.vo.PageGet;
+import com.sanshi.fileserver.vo.Result;
 import com.sanshi.fileserver.vo.SessionUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,6 +86,26 @@ public class CclassController {
     public Cclass SaveClass(Cclass val, HttpServletRequest request) {
         System.out.println(val.toString());
         return cclassService.save(val);
+    }
+
+
+    @RequestMapping(path = "/findDelete")
+    @ResponseBody
+    public Result findDelete(Integer val, HttpServletRequest request) {
+         List<StuGroup>  stuGroupList=  stuGroupService.findGroupsByCclassId(val);
+        if (stuGroupList.size()>0){
+            return  new Result(false,"该班级下有学生确定要删除吗");
+        }
+        return  new Result(true,"可以删除");
+
+    }
+
+
+
+    @RequestMapping(path = "/deleteById")
+    @ResponseBody
+    public Integer deleteById(Integer val, HttpServletRequest request) {
+        return cclassService.deleteById(val);
     }
 
 }

@@ -66,24 +66,64 @@ function tablebind() {
     $(".del").bind("click", function () {
         let thetable = $(this).parents("table");
         let thetr = $(this).parents("tr");
-        //if (confirm("确定要删除这条信息吗?") == true) {
+
+
         if ($(this).parents("tr").attr("data_val") != "" && $(this).parents("tr").attr("data_val") != "") {
-            //alert($(this).parents("tr").attr("data_val"));
-            //alert($(this).parents("table").attr("dellrc"));
             $.ajax({
-                url: $(thetable).attr("dellrc"),
+                url: $(thetable).attr("finddell"),
                 type: "post",
                 async: false,
                 data: {val: $(thetr).attr("data_val")},
                 dataType: "json",
                 success: function (data) {
-                    thetr.remove();
+                    if (data.ok == false) {
+                        $.confirm({
+                            confirmButtonClass: 'btn-info',
+                            cancelButtonClass: 'btn-danger',
+                            title: '提示',
+                            content: data.data,
+                            confirm: function () {
+                                $.ajax({
+                                    url: $(thetable).attr("dellrc"),
+                                    type: "post",
+                                    async: false,
+                                    data: {val: $(thetr).attr("data_val")},
+                                    dataType: "json",
+                                    success: function (data) {
+                                        thetr.remove();
+                                    }
+                                });
+                            },
+                            cancel: function () {
+
+                            }
+                        });
+                    }else {
+                        $.ajax({
+                            url: $(thetable).attr("dellrc"),
+                            type: "post",
+                            async: false,
+                            data: {val: $(thetr).attr("data_val")},
+                            dataType: "json",
+                            success: function (data) {
+                                thetr.remove();
+                            }
+                        });
+
+                    }
                 }
             });
+
         } else {
             thetr.remove();
         }
-        //}
+
+
+
+
+
+
+
     });
 }
 

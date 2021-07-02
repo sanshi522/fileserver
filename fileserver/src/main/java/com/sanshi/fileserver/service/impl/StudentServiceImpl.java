@@ -1,6 +1,10 @@
 package com.sanshi.fileserver.service.impl;
 
+import com.sanshi.fileserver.bean.Respondents;
+import com.sanshi.fileserver.repository.AssessUserRepository;
 import com.sanshi.fileserver.repository.GroupRepository;
+import com.sanshi.fileserver.service.AnswerService;
+import com.sanshi.fileserver.service.RespondentsService;
 import com.sanshi.fileserver.vo.PageGet;
 import com.sanshi.fileserver.vo.SessionUser;
 import com.sanshi.fileserver.bean.Student;
@@ -21,10 +25,16 @@ import java.util.Map;
 public class StudentServiceImpl implements StudentService {
     private StudentRepository studentRepository;
     private GroupRepository groupRepository;
+    private RespondentsService  respondentsService;
+    private AnswerService   answerService;
+    private AssessUserRepository assessUserRepository;
 
-    public StudentServiceImpl(StudentRepository studentRepository, GroupRepository groupRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository, GroupRepository groupRepository, RespondentsService respondentsService, AnswerService answerService, AssessUserRepository assessUserRepository) {
         this.studentRepository = studentRepository;
         this.groupRepository = groupRepository;
+        this.respondentsService = respondentsService;
+        this.answerService = answerService;
+        this.assessUserRepository = assessUserRepository;
     }
 
     @Override
@@ -93,7 +103,14 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional
     public Integer deleteById(Integer val) {
+      List<Respondents> respondentsList=respondentsService.findByStudentId(val);
+      for (Respondents  respondents:respondentsList){
+          answerService.deleteByRespondentId(respondents.getId());
+          respondentsService.delete(respondents);
+      }
+        assessUserRepository.deleteByTestObjectAndTestObjectId(5,val);
         studentRepository.deleteById(val);
         return 1;
     }

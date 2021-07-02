@@ -193,7 +193,7 @@ $(function () {
                                     op = "B." + data.page.content[i].optionB;
                                     break;
                                 case 2:
-                                    op = "C." + data.page.content[i].optionB;
+                                    op = "C." + data.page.content[i].optionC;
                                     break;
                                 case 3:
                                     op = "D." + data.page.content[i].optionD;
@@ -262,6 +262,34 @@ $(function () {
                             '\t\t\t\t<div class="knowledge">知识点：'+data.page.content[i].abilityIds+'</div>\n' +
                             '\t\t\t</div>\n' +
                             '\t\t</div>');
+                     }
+                    else if(data.page.content[i].type == 5){
+                      let  str=data.page.content[i].topic;
+                    let    s=   str.toArray();
+                    let  ChioceName="";
+                    for (let x=0;x<s.length;x++){
+                     if(s[x]=="_"){
+                         ChioceName+= '<input style=" border:none; border-bottom: 1px solid #000;width: 50px" type="text"/>';
+                     }else{
+                         ChioceName+=s[x];
+                     }
+
+                    }
+                        $(".allchoice").append('<div class="choice"  choiceid="' + data.page.content[i].id + '">\n' +
+                            '\t\t\t<div class="choice-title"><div class="choice-type" data="' + data.page.content[i].type + '">填空题</div><div class="choice-name" >' + ChioceName + '</div>\n' +
+                            '\t\t\t\t<div class="choice-oper pack-up"><i class="my-icon lsm-sidebar-icon  icon-jiantouxia"></i></div>\n' +
+                            '\t\t\t\t<div class="choice-oper delete-choice"><i class="my-icon lsm-sidebar-icon icon-shanchu "></i></div>\n' +
+                            '\t\t\t\t<div class="choice-oper edit-choice"><i class="my-icon lsm-sidebar-icon icon-bianji "></i></div>\n' +
+                            '\t\t\t</div>\n' +
+                            '\t\t\t<div class="choice-details">\n' +
+                            '\t\t\t\t<div class="make-choice">\n' +
+                            '\t\t\t\t</div>\n' +
+                            '\t\t\t\t<div class="answer">标答：' + data.page.content[i].correct + '</div>\n' +
+                            '\t\t\t\t<div class="difficulty">难度：' + difficul + '</div>\n' +
+                            '\t\t\t\t<div class="analysis">解析：' + data.page.content[i].analysis + '</div>\n' +
+                            '\t\t\t\t<div class="knowledge">知识点：'+data.page.content[i].abilityIds+'</div>\n' +
+                            '\t\t\t</div>\n' +
+                            '\t\t</div>');
                     }
                 }
                 choicebind();
@@ -279,6 +307,8 @@ $(function () {
 
     $("#addchoice").click(function (e) {
         //清空savchoice内容
+        $(".choice_table").attr("choice_id", "");
+        knowledgeList=[];
         openWindw(e.pageX, e.pageY, 0);
     });
 //////////////////////////////////////////////////////////////////////悬浮窗口js
@@ -328,6 +358,11 @@ $(function () {
 
     function openWindw(x, y, id) {
         ref();
+        $("#sp1").hide();
+        $(".addtext").hide();
+        $(".popWindow").css("min-width", '300px');
+        $(window).resize();
+        $("#resetchoice").click();
         popinit(id);
 
         $(popWindow).css("left", x - popWindowWidth + 'px');
@@ -396,6 +431,9 @@ $(function () {
             $(".awser_tr1").show();
             $(".awser_tr2").hide();
             $(".accessory_tr").hide();
+            $("#scaleofmarks").val(0).trigger("change");
+
+
         } else if ($("#choicetype").val() == 2) {
             $(".choice_judje_tr").hide();
             $(".choice_option_tr").show();
@@ -404,18 +442,28 @@ $(function () {
             $(".awser_tr1").show();
             $(".awser_tr2").hide();
             $(".accessory_tr").hide();
+            $("#scaleofmarks").val(1).trigger("change");
         } else if ($("#choicetype").val() == 3) {
             $(".choice_option_tr").hide();
             $(".choice_judje_tr").show();
             $(".awser_tr1").show();
             $(".awser_tr2").hide();
             $(".accessory_tr").hide();
+            $("#scaleofmarks").val(0).trigger("change");
+        } else  if($("#choicetype").val() == 5){
+            $(".choice_option_tr").hide();
+            $(".choice_judje_tr").hide();
+            $(".awser_tr2").show();
+            $(".awser_tr1").hide();
+            $(".accessory_tr").hide();
+            $("#scaleofmarks").val(2).trigger("change");
         } else {
             $(".choice_option_tr").hide();
             $(".choice_judje_tr").hide();
             $(".awser_tr2").show();
             $(".awser_tr1").hide();
             $(".accessory_tr").show();
+            $("#scaleofmarks").val(2).trigger("change");
         }
         checkedno();
     });
@@ -524,6 +572,7 @@ $(function () {
             getchoice(id);
 
         } else {
+
             return;
         }
     }
@@ -571,15 +620,15 @@ $(function () {
                         if (s[l] == "F") $(".optionF").children("td").children(".choice_option").prop("checked", true);
                     }
                 } else if (data.type == 3) {
-                    $("input[name='judje']").val(data.correct);
+
                     if (data.correct == 1) {
-                        $(".choice_judje cor1").prop("checked", true);
+                        $(".cor1").prop("checked", true);
                         $("#anwser").val("正确");
                     } else {
-                        $(".choice_judje cor2").prop("checked", true);
+                        $(".cor2").prop("checked", true);
                         $("#anwser").val("错误");
                     }
-                } else if (data.type == 4) {
+                } else if (data.type == 4 || data.type == 5) {
                     $("#answer2").val(data.correct);
                 }
                 if (data.difficultyLevel == 5) $("#star5").prop("checked", true);
@@ -707,7 +756,7 @@ $(function () {
             "sortName": sortName
         }
         $.ajax({
-            url: "/file/getAllShareFile",
+            url: "/file/choiceShareFile",
             contentType: "application/json;charset=UTF-8",
             type: "post",
             async: false,
@@ -745,6 +794,9 @@ $(function () {
                     }
                 }
                 total2 = data.page.totalElements;
+                if(nu2==0){
+                    refresh2();
+                }
 
             },
             error: function (data) {
@@ -781,6 +833,9 @@ $(function () {
                                 '</div>');
                         }
                         total2 = data.total;
+                        if(nu2==0){
+                            refresh2();
+                        }
 
                     }, error: function (data) {
 
@@ -789,9 +844,7 @@ $(function () {
 
         	}
 
-         if(nu2==0){
-             refresh2();
-         }
+
 
     }
 
@@ -801,6 +854,7 @@ $(function () {
         $(".operation1").val("");
         checkedno();
         $("#anwser").val("");
+        $("#answer2").val("");
         $(".knowledges").empty();//知识点
         $(".accessorys").empty();//附件
         $("#choice_analysis").val("");//解析
@@ -828,7 +882,7 @@ $(function () {
         if ($(".choice_table").attr("choice_id") == "")
             id = null;
         else
-            id = $(".choice_table").attr("choice_id");
+        id = $(".choice_table").attr("choice_id");
         subId = $("#subjectId").val();
         topic = $("#choice_name").val();
         if (topic == "" || topic.length == 0) {
@@ -869,6 +923,13 @@ $(function () {
             }
         }
         if (type == 4) {
+            correct = $("#answer2").val();
+            if (correct == null || correct.length == 0) {
+                $.alert("请输入参考答案");
+                return;
+            }
+        }
+        if (type == 5) {
             correct = $("#answer2").val();
             if (correct == null || correct.length == 0) {
                 $.alert("请输入参考答案");
@@ -949,6 +1010,7 @@ $(function () {
                 $(".addtext").hide();
                 $("#cancel").click();
                 Init(pageIndex);
+
             },
             error: function (data) {
                 $.alert("服务器异常,添加失败！");

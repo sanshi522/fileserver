@@ -3,7 +3,9 @@ package com.sanshi.fileserver.controller;
 import com.sanshi.fileserver.bean.StuGroup;
 import com.sanshi.fileserver.bean.Student;
 import com.sanshi.fileserver.service.StuGroupService;
+import com.sanshi.fileserver.service.StudentService;
 import com.sanshi.fileserver.vo.PageGet;
+import com.sanshi.fileserver.vo.Result;
 import com.sanshi.fileserver.vo.SessionUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +23,11 @@ import java.util.Map;
 @RequestMapping("/Group")
 public class GroupController {
     private StuGroupService stuGroupService;
+    private StudentService  studentService;
 
-    public GroupController(StuGroupService stuGroupService) {
+    public GroupController(StuGroupService stuGroupService, StudentService studentService) {
         this.stuGroupService = stuGroupService;
+        this.studentService = studentService;
     }
 
     @RequestMapping(path = "/GetGroup")
@@ -97,4 +101,18 @@ public class GroupController {
     public Integer deleteById(Integer val, HttpServletRequest request) {
         return stuGroupService.deleteById(val);
     }
+
+    @RequestMapping(path = "/findDelete")
+    @ResponseBody
+    public Result findDelete(Integer val, HttpServletRequest request) {
+        List<Student>  studentList= studentService.findAllByStuGroup(val);
+        if (studentList.size()>0){
+            return  new Result(false,"该小组下有学生确定要删除吗");
+        }
+        return  new Result(true,"可以删除");
+
+    }
+
+
+
 }

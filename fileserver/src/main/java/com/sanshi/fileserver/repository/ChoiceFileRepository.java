@@ -14,4 +14,12 @@ public interface ChoiceFileRepository  extends JpaRepository<ChoiceFile, Integer
    ChoiceFile   save(ChoiceFile choiceFile);
 
    List<ChoiceFile> findAllByChoiceId(Integer id);
+
+   List<ChoiceFile> findAllByFileId(Integer fileId);
+
+   List<ChoiceFile> findAllByTypeAndFileId(Integer type,Integer fileId);
+
+
+
+
 }

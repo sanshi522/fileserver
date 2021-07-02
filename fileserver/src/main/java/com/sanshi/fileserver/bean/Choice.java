@@ -23,7 +23,7 @@ public class Choice {
      */
     private String topic;
     /**
-     * 类型（单选，多选，判断题，简答题）
+     * 类型（单选，多选，判断题，简答题，填空题）
      */
     private Integer type;
     /**

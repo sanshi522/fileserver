@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -46,10 +47,14 @@ public interface KnowledgePointRepository extends JpaRepository<KnowledgePoint, 
      */
     void deleteById(Integer id);
 
+
+    void deleteBySubId(Integer id);
+
     /**
      * 获取知识点
      */
 
     List<KnowledgePoint> findAllBySubId(Integer id);
+
 
 }

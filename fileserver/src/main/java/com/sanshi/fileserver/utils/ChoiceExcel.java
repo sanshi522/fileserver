@@ -10,58 +10,58 @@ public class ChoiceExcel {
     /**
      * 题目
      */
-    @Excel(name = "题目", orderNum = "1", width = 50)
+    @Excel(name = "题目(填空题需要填写答案区域用_表示)", orderNum = "1", width = 100)
     private String topic;
     /**
      * 类型（单选，多选，判断题，简答题）
      */
-    @Excel(name = "类型", orderNum = "2", width = 20, replace = {"单选题_1", "多选题_2", "判断题_3", "简答题_4"})
+    @Excel(name = "类型", orderNum = "2", width = 20, replace = {"单选题_1", "多选题_2", "判断题_3", "简答题_4","填空题_5"})
     private Integer type;
 
     /**
      * 选项个数
      */
-    @Excel(name = "选项个数（简答题,判断题无需填写,多选和单选填对应的选项个数）", orderNum = "3", width = 50)
+    @Excel(name = "选项个数（简答题,判断题，填空题无需填写,多选和单选填对应的选项个数,）", orderNum = "3", width = 50)
     private Integer optionNum;
     /**
      * 选项A
      */
-    @Excel(name = "选项A", orderNum = "4", width = 20)
+    @Excel(name = "选项A", orderNum = "4", width = 50)
     private String optionA;
     /**
      * 选项B
      */
-    @Excel(name = "选项B", orderNum = "5", width = 20)
+    @Excel(name = "选项B", orderNum = "5", width = 50)
     private String optionB;
     /**
      * 选项C
      */
-    @Excel(name = "选项c", orderNum = "6", width = 20)
+    @Excel(name = "选项c", orderNum = "6", width = 50)
     private String optionC;
     /**
      * 选项D
      */
-    @Excel(name = "选项D", orderNum = "7", width = 20)
+    @Excel(name = "选项D", orderNum = "7", width = 50)
     private String optionD;
     /**
      * 选项E
      */
-    @Excel(name = "选项E", orderNum = "8", width = 20)
+    @Excel(name = "选项E", orderNum = "8", width = 50)
     private String optionE;
     /**
      * 选项F
      */
-    @Excel(name = "选项F", orderNum = "9", width = 20)
+    @Excel(name = "选项F", orderNum = "9", width = 50)
     private String optionF;
     /**
      * 正确选项
      */
-    @Excel(name = "答案(多选用逗号隔开,问答题(1表示正确,0表示错误))", orderNum = "10", width = 30)
+    @Excel(name = "答案(多选用逗号隔开,问答题(1表示正确,0表示错误))", orderNum = "10", width = 100)
     private String correct;
     /**
      * 解析
      */
-    @Excel(name = "解析", orderNum = "11", width = 30)
+    @Excel(name = "解析", orderNum = "11", width = 100)
     private String analysis;
 
     /**

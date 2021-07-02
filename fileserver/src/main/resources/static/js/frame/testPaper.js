@@ -429,10 +429,12 @@ $(function () {
 
         if ($("#TestPaperName").val() == "" || $("#TestPaperName").val() == null) {
             $.alert("试卷名称不能为空");
+            return;
         }
 
-        if ($("#TestPaperName").val() == "" || $("#TestPaperName").val() == null) {
-            $.alert("试卷名称不能为空");
+        if ($("#subIdScreen2").val() == "" || $("#subIdScreen2").val() == undefined) {
+            $.alert("学科不能为空");
+            return;
         }
         var re = /^[0-9]+.?[0-9]*/;
         if (!re.test($("#rodSum").val())) {
@@ -444,11 +446,15 @@ $(function () {
             return;
         }
         if (!re.test($("#judgeSum").val())) {
-            $.alert("判断题只能为数字");
+            $.alert("判断题数量只能为数字");
             return;
         }
         if (!re.test($("#answerSum").val())) {
-            $.alert("简答题只能为数字");
+            $.alert("简答题数量只能为数字");
+            return;
+        }
+        if (!re.test($("#gapSum").val())) {
+            $.alert("填空题数量只能为数字");
             return;
         }
 
@@ -464,6 +470,8 @@ $(function () {
             "checkScore": $("#checkScore").val(),
             "judgeScore": $("#judgeScore").val(),
             "answerScore": $("#answerScore").val(),
+            "gapSum":$("#gapSum").val(),
+            "gapScore":$("#gapScore").val()
         }
         $.ajax({
             url: "testPaper/generateTestPaper",

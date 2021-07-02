@@ -215,6 +215,25 @@ public class TestPaperServiceImpl implements TestPaperService {
                     }
                     list.add(TestPaperUtils.red(choiceList8, d1));
                 }
+
+
+                //填空题
+                if (testPaperUtils.getGapSum() > 0) {
+                    Double e = Math.floor(testPaperUtils.getGapSum() * 0.9);
+                    int d1 = testPaperUtils.getGapSum() - e.intValue();
+                    List<Choice> List7 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{1, 2}, 5, testPaperUtils.getSubId());
+                    if (List7.size() < e) {
+                        return new Result(false, "填空题一星二星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(List7, e.intValue()));
+
+                    List<Choice> List8 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{3, 4}, 5, testPaperUtils.getSubId());
+                    if (List8.size() < d1) {
+                        return new Result(false, "填空题三星四星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(List8, d1));
+                }
+
                 break;
             case 2:     //一般  %70的 一至三星题   30%的 四星五星题
                 //单选题
@@ -283,6 +302,25 @@ public class TestPaperServiceImpl implements TestPaperService {
                     }
                     list.add(TestPaperUtils.red(choiceList16, h1));
                 }
+
+                //填空题
+                if (testPaperUtils.getGapSum() > 0) {
+                    Double h = Math.floor(testPaperUtils.getGapSum() * 0.9);
+                    int h1 = testPaperUtils.getGapSum() - h.intValue();
+                    List<Choice> choiceList15 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{1, 2, 3}, 5, testPaperUtils.getSubId());
+                    if (choiceList15.size() < h) {
+                        return new Result(false, "填空题一星二星三星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList15, h.intValue()));
+
+                    List<Choice> choiceList16 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{4, 5}, 5, testPaperUtils.getSubId());
+                    if (choiceList16.size() < h1) {
+                        return new Result(false, "填空题四星五星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList16, h1));
+                }
+
+
                 break;
             case 3:     //困难  %70的 三至四星题    %30的 五星题
                 if (testPaperUtils.getRodSum() > 0) {
@@ -332,6 +370,7 @@ public class TestPaperServiceImpl implements TestPaperService {
                     }
                     list.add(TestPaperUtils.red(choiceList25, m2));
                 }
+
                 //简答题
                 if (testPaperUtils.getAnswerSum() > 0) {
                     Double s1 = Math.floor(testPaperUtils.getAnswerSum() * 0.7);
@@ -348,6 +387,25 @@ public class TestPaperServiceImpl implements TestPaperService {
                     }
                     list.add(TestPaperUtils.red(choiceList28, s2));
                 }
+
+
+
+                //填空题
+                if (testPaperUtils.getGapSum() > 0) {
+                    Double s1 = Math.floor(testPaperUtils.getGapSum() * 0.7);
+                    List<Choice> List27 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{3, 4}, 5, testPaperUtils.getSubId());
+                    if (List27.size() < s1) {
+                        return new Result(false, "填空题三星四星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(List27, s1.intValue()));
+                    int s2 = testPaperUtils.getGapSum() - s1.intValue();
+                    List<Choice> List28 = choiceRepository.findAllByDifficultyLevelInAndTypeAndSubId(new Integer[]{5}, 5, testPaperUtils.getSubId());
+                    if (List28.size() < s2) {
+                        return new Result(false, "填空题五星难度数量不足");
+                    }
+                    list.add(TestPaperUtils.red(List28, s2));
+                }
+
                 break;
             default:
                 //单选题
@@ -379,10 +437,20 @@ public class TestPaperServiceImpl implements TestPaperService {
                     //简答题
                     List<Choice> choiceList32 = choiceRepository.findAllByTypeAndSubId(4, testPaperUtils.getSubId());
                     if (choiceList32.size() < testPaperUtils.getAnswerSum()) {
-                        return new Result(false, "判断题数量不足");
+                        return new Result(false, "简答题数量不足");
                     }
                     list.add(TestPaperUtils.red(choiceList32, testPaperUtils.getAnswerSum()));
                 }
+
+                if (testPaperUtils.getGapSum() > 0) {
+                    //填空题
+                    List<Choice> choiceList33 = choiceRepository.findAllByTypeAndSubId(5, testPaperUtils.getSubId());
+                    if (choiceList33.size() < testPaperUtils.getGapSum()) {
+                        return new Result(false, "填空题数量不足");
+                    }
+                    list.add(TestPaperUtils.red(choiceList33, testPaperUtils.getGapSum()));
+                }
+
                 break;
         }
         List<Choice> list1 = testPaperUtils.conversion(list);
@@ -404,7 +472,6 @@ public class TestPaperServiceImpl implements TestPaperService {
                 case 1:
                     testPaperBindChoice.setScore(testPaperUtils.getRodScore());
                     break;
-
                 case 2:
                     testPaperBindChoice.setScore(testPaperUtils.getCheckScore());
                     break;
@@ -414,6 +481,9 @@ public class TestPaperServiceImpl implements TestPaperService {
                 case 4:
                     testPaperBindChoice.setScore(testPaperUtils.getAnswerScore());
                     break;
+                case 5:
+                    testPaperBindChoice.setScore(testPaperUtils.getGapScore());
+                    break;
             }
             testPaperBindChoice.setIndexNum(i);
             testPaperBindChoice.setChoiceId(list1.get(i).getId());
@@ -421,5 +491,15 @@ public class TestPaperServiceImpl implements TestPaperService {
             testPaperBindChoiceRepository.save(testPaperBindChoice);
         }
         return new Result(true, "试卷生成成功");
+    }
+
+    @Override
+    public List<TestPaper> findAllBySubjectId(Integer id) {
+        return testPaperRepository.findAllBySubId(id);
+    }
+
+    @Override
+    public List<TestPaper> findAllByTeacherId(Integer id) {
+        return testPaperRepository.findAllByCreationId(id);
     }
 }

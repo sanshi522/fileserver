@@ -63,11 +63,22 @@ public class TestPaperUtils {
      */
     private double answerScore;
 
+    /**
+     * 判断题数量
+     */
+
+    private  int   gapSum;
+
+    /**
+     * 判断题分数
+     */
+    private  double  gapScore;
+
 
     /**
      * 总分
      */
-    private double TotalScore;
+    private double totalScore;
 
 
     public TestPaperUtils() {
@@ -86,7 +97,41 @@ public class TestPaperUtils {
         this.judgeScore = judgeScore;
         this.answerSum = answerSum;
         this.answerScore = answerScore;
-        TotalScore = totalScore;
+        this.totalScore = totalScore;
+    }
+
+
+    public TestPaperUtils(String testPaperName, Integer subId, Integer difficulty, int rodSum, double rodScore, int checkSum, double checkScore, int judgeSum, double judgeScore, int answerSum, double answerScore, int gapSum, double gapScore, double totalScore) {
+        this.testPaperName = testPaperName;
+        this.subId = subId;
+        this.difficulty = difficulty;
+        this.rodSum = rodSum;
+        this.rodScore = rodScore;
+        this.checkSum = checkSum;
+        this.checkScore = checkScore;
+        this.judgeSum = judgeSum;
+        this.judgeScore = judgeScore;
+        this.answerSum = answerSum;
+        this.answerScore = answerScore;
+        this.gapSum = gapSum;
+        this.gapScore = gapScore;
+        this.totalScore = totalScore;
+    }
+
+    public int getGapSum() {
+        return gapSum;
+    }
+
+    public void setGapSum(int gapSum) {
+        this.gapSum = gapSum;
+    }
+
+    public double getGapScore() {
+        return gapScore;
+    }
+
+    public void setGapScore(double gapScore) {
+        this.gapScore = gapScore;
     }
 
     public double getRodScore() {
@@ -178,11 +223,11 @@ public class TestPaperUtils {
     }
 
     public double getTotalScore() {
-        return TotalScore;
+        return totalScore;
     }
 
     public void setTotalScore(double totalScore) {
-        TotalScore = totalScore;
+        this.totalScore = totalScore;
     }
 
     @Override
@@ -193,7 +238,7 @@ public class TestPaperUtils {
                 ", checkSum=" + checkSum +
                 ", judgeSum=" + judgeSum +
                 ", answerSum=" + answerSum +
-                ", TotalScore=" + TotalScore +
+                ", TotalScore=" + totalScore +
                 '}';
     }
 
@@ -213,7 +258,7 @@ public class TestPaperUtils {
             s = false;
             r = rand.nextInt(choiceList.size());
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getId() == r) {
+                if (list.get(i).getId() ==choiceList.get(r).getId()) {
                     s = true;
                     break;
                 }

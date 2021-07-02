@@ -7,6 +7,7 @@ import com.sanshi.fileserver.service.CclassService;
 import com.sanshi.fileserver.service.GradeService;
 import com.sanshi.fileserver.service.StuGroupService;
 import com.sanshi.fileserver.vo.PageGet;
+import com.sanshi.fileserver.vo.Result;
 import com.sanshi.fileserver.vo.SessionUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -113,4 +114,23 @@ public class GradeController {
     public Grade SaveClass(Grade val, HttpServletRequest request) {
         return gradeService.save(val);
     }
+
+
+    @RequestMapping(path = "/findDelete")
+    @ResponseBody
+    public Result findDelete(Integer val, HttpServletRequest request) {
+        List<Cclass>  cclassList=  cclassService.findByGradeId(val);
+        if (cclassList.size()>0){
+            return  new Result(false,"该学院下有班级和学生确定要删除吗？");
+        }
+        return  new Result(true,"可以删除");
+
+    }
+
+    @RequestMapping(path = "/deleteById")
+    @ResponseBody
+    public int deleteById(Integer val) {
+    return   gradeService.deleteById(val);
+    }
+
 }

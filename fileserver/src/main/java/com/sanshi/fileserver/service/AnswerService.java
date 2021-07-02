@@ -67,4 +67,17 @@ public interface AnswerService {
      */
     Answer findById(Integer id);
 
+    /**
+     * 查询成绩
+     * @param respondentsId
+     * @return
+     */
+    Double  selectScore(Integer respondentsId);
+
+    /**
+     * 根据答卷id删除答题
+     */
+
+    int  deleteByRespondentId(Integer id);
+
 }

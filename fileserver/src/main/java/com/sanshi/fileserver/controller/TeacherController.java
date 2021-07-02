@@ -2,9 +2,12 @@ package com.sanshi.fileserver.controller;
 
 import com.sanshi.fileserver.bean.StuGroup;
 import com.sanshi.fileserver.bean.Teacher;
+import com.sanshi.fileserver.bean.TestPaper;
 import com.sanshi.fileserver.service.StuGroupService;
 import com.sanshi.fileserver.service.TeacherService;
+import com.sanshi.fileserver.service.TestPaperService;
 import com.sanshi.fileserver.vo.PageGet;
+import com.sanshi.fileserver.vo.Result;
 import com.sanshi.fileserver.vo.SessionUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,10 +25,12 @@ import java.util.Map;
 public class TeacherController {
     private TeacherService teacherService;
     private StuGroupService stuGroupService;
+    private TestPaperService  testPaperService;
 
-    public TeacherController(TeacherService teacherService, StuGroupService stuGroupService) {
+    public TeacherController(TeacherService teacherService, StuGroupService stuGroupService, TestPaperService testPaperService) {
         this.teacherService = teacherService;
         this.stuGroupService = stuGroupService;
+        this.testPaperService = testPaperService;
     }
 
     @RequestMapping(path = "/save")
@@ -107,6 +112,18 @@ public class TeacherController {
         return 1;
     }
 
+    @RequestMapping(path = "/findDelete")
+    @ResponseBody
+    public Result findDelete(Integer val, HttpServletRequest request) {
+        //List<Integer> list    =teacherService.findAllByTeacherId(val);
+         List<TestPaper>   testPaperList= testPaperService.findAllByTeacherId(val);
+        if (testPaperList.size()>0){
+            return  new Result(false,"该老师有创建的试卷和发布的考核确定要删除吗？");
+        }
+        return  new Result(true,"可以删除");
+
+    }
+
     @RequestMapping(path = "/GetNameById")
     @ResponseBody
     public Map GetNameById(Integer val) {
@@ -136,5 +153,18 @@ public class TeacherController {
         return teacherService.findAll();
     }
 
+    @RequestMapping(path = "/findTeacherBindClass")
+    @ResponseBody
+    public Result findTeacherBindClass(Integer val, HttpServletRequest request) {
+
+        return new Result(true,"可以删除");
+    }
+
+    @RequestMapping(path = "/deleteTeacherBindClass")
+    @ResponseBody
+    public Integer deleteTeacherBindClass(Integer val, HttpServletRequest request) {
+        teacherService.deleteTeacherBindClass(val);
+        return 1;
+    }
 
 }

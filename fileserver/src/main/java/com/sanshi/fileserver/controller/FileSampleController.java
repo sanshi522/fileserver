@@ -1,6 +1,9 @@
 package com.sanshi.fileserver.controller;
 
+import com.sanshi.fileserver.bean.ChoiceFile;
 import com.sanshi.fileserver.bean.FileSample;
+import com.sanshi.fileserver.service.ChoiceFileService;
+import com.sanshi.fileserver.service.ChoiceService;
 import com.sanshi.fileserver.service.FileSampleService;
 import com.sanshi.fileserver.utils.UploadUtil;
 import com.sanshi.fileserver.vo.FileExists;
@@ -28,9 +31,13 @@ import java.util.stream.Collectors;
 @RequestMapping("/file")
 public class FileSampleController {
     private FileSampleService fileSampleService;
+    private ChoiceService  choiceService;
+    private ChoiceFileService  choiceFileService;
 
-    public FileSampleController(FileSampleService fileSampleService) {
+    public FileSampleController(FileSampleService fileSampleService, ChoiceService choiceService, ChoiceFileService choiceFileService) {
         this.fileSampleService = fileSampleService;
+        this.choiceService = choiceService;
+        this.choiceFileService = choiceFileService;
     }
 
     @GetMapping("/exists")
@@ -173,6 +180,47 @@ public class FileSampleController {
         }
         return null;
     }
+
+    @RequestMapping("/deleteById")
+    @ResponseBody
+    public Result  deleteById(Integer id){
+        FileSample  sample=   fileSampleService.findById(id);
+        List<ChoiceFile>  list= choiceFileService.findByFileId(sample.getId());
+
+        if(list.size()>0){
+            return   new Result(false,"有试题绑定该文件请先解除绑定");
+        }
+            String  fileName=sample.getPath();
+            File file = new File(fileName);
+            if(!file.exists()){
+            }else{
+                if(file.isFile()){
+                    if(file.isFile() && file.exists()){
+                        file.delete();
+                    }else{
+                    }
+                }else{
+                }
+            }
+        fileSampleService.deleteById(id);
+        return   new Result(true,"删除成功");
+    }
+
+
+    @PostMapping("/choiceShareFile")
+    @ResponseBody
+    public Map  choiceShareFile(@RequestBody ScreenShareFile screenShareFile, HttpServletRequest request){
+        List<Integer> list=fileSampleService.ScreenALL2(screenShareFile,request);
+        List<Integer> list1=fileSampleService.ScreenMyALL2(screenShareFile,request);
+        for (Integer  l:list1 ) {
+            list.add(l);
+        }
+        return   fileSampleService.choiceShareFile(screenShareFile,list);
+    }
+
+
+
+
 
 
 }

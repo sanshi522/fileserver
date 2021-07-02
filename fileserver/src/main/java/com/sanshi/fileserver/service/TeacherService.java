@@ -2,6 +2,7 @@ package com.sanshi.fileserver.service;
 
 import com.sanshi.fileserver.bean.Student;
 import com.sanshi.fileserver.bean.Teacher;
+import com.sanshi.fileserver.bean.TeacherBindCclass;
 import com.sanshi.fileserver.vo.PageGet;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,4 +28,9 @@ public interface TeacherService {
     Teacher save(Teacher teacher);
 
     List<Teacher> findAll();
+
+    List<Integer> findAllByTeacherId(Integer id);
+
+      void   deleteTeacherBindClass(Integer id);
+
 }

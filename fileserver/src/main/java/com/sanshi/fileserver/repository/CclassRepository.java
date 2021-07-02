@@ -64,7 +64,7 @@ public interface CclassRepository extends JpaRepository<Cclass, Integer>, JpaSpe
     /**
      * 查询院系组的所有班级id
      */
-    @Query(value = "select s.id from Cclass s where s.gradeId in ?2")
+    @Query(value = "select s.id from Cclass s where s.gradeId in ?1")
     List<Integer> findIdsByGradeIdIn(List<Integer> GradeIds);
 
     /**

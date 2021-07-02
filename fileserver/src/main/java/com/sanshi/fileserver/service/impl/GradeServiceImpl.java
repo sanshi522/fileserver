@@ -1,14 +1,18 @@
 package com.sanshi.fileserver.service.impl;
 
+import com.sanshi.fileserver.bean.Cclass;
 import com.sanshi.fileserver.bean.Grade;
+import com.sanshi.fileserver.repository.AssessUserRepository;
 import com.sanshi.fileserver.repository.CclassRepository;
 import com.sanshi.fileserver.repository.GradeRepository;
 import com.sanshi.fileserver.repository.TeacherBindCclassRepository;
+import com.sanshi.fileserver.service.CclassService;
 import com.sanshi.fileserver.service.GradeService;
 import com.sanshi.fileserver.vo.PageGet;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,11 +23,15 @@ public class GradeServiceImpl implements GradeService {
     private GradeRepository gradeRepository;
     private CclassRepository cclassRepository;
     private TeacherBindCclassRepository teacherBindCclassRepository;
+    private CclassService cclassService;
+    private AssessUserRepository assessUserRepository;
 
-    public GradeServiceImpl(GradeRepository gradeRepository, CclassRepository cclassRepository, TeacherBindCclassRepository teacherBindCclassRepository) {
+    public GradeServiceImpl(GradeRepository gradeRepository, CclassRepository cclassRepository, TeacherBindCclassRepository teacherBindCclassRepository, CclassService cclassService, AssessUserRepository assessUserRepository) {
         this.gradeRepository = gradeRepository;
         this.cclassRepository = cclassRepository;
         this.teacherBindCclassRepository = teacherBindCclassRepository;
+        this.cclassService = cclassService;
+        this.assessUserRepository = assessUserRepository;
     }
 
     @Override
@@ -61,6 +69,7 @@ public class GradeServiceImpl implements GradeService {
 
     @Override
     public Grade findOneById(Integer id) {
+
         return gradeRepository.findOneById(id);
     }
 
@@ -69,7 +78,14 @@ public class GradeServiceImpl implements GradeService {
         return gradeRepository.save(grade);
     }
 
+    @Override
+    @Transactional
     public Integer deleteById(Integer id) {
+     List<Cclass>  cclassList=   cclassService.findByGradeId(id);
+     for (Cclass cclass:cclassList){
+         cclassService.deleteById(cclass.getId());
+     }
+        assessUserRepository.deleteByTestObjectAndTestObjectId(2,id);
         gradeRepository.deleteById(id);
         return 1;
     }

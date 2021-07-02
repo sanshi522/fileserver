@@ -23,6 +23,7 @@ public class ChoiceServiceImpl implements ChoiceService {
     private ChoiceFileRepository choiceFileRepository;
     private KnowledgePointRepository  knowledgePointRepository;
 
+
     public ChoiceServiceImpl(ChoiceRepository choiceRepository, TestPaperBindChoiceRepository testPaperBindChoiceRepository, TestPaperRepository testPaperRepository, SubjectRepository subjectRepository,ChoiceFileRepository choiceFileRepository,KnowledgePointRepository  knowledgePointRepository) {
         this.choiceRepository = choiceRepository;
         this.testPaperBindChoiceRepository = testPaperBindChoiceRepository;
@@ -40,6 +41,10 @@ public class ChoiceServiceImpl implements ChoiceService {
     @Override
     @Transactional
     public Choice save(ChoiceUtil choiceUtil) {
+      if (choiceUtil.getChoice().getId()!=null){
+   Choice choice2= choiceRepository.findOneById(choiceUtil.getChoice().getId());
+           choiceUtil.getChoice().setCreateTime(choice2.getCreateTime());
+       }
         Choice  choice=choiceRepository.save(choiceUtil.getChoice());
        choiceFileRepository.deleteByChoiceId(choice.getId());
         for (ChoiceFile  choiceFile :choiceUtil.getChoiceFileList() ){
@@ -229,7 +234,6 @@ public class ChoiceServiceImpl implements ChoiceService {
                 for (KnowledgePoint  knowledgePoint: knowledgePointList) {
                     abilityIds+=knowledgePoint.getName()+",";
                 }
-
             }
             choice1.setAbilityIds(abilityIds);
         }
@@ -242,12 +246,13 @@ public class ChoiceServiceImpl implements ChoiceService {
         return null;
     }
 
-
     @Override
+    @Transactional
     public Map deleteById(Integer id) {
         Map json = new HashMap();
         List<TestPaperBindChoice> testPaperBindChoices = testPaperBindChoiceRepository.findAllByChoiceId(id);
         if (testPaperBindChoices.size() == 0) {
+            choiceFileRepository.deleteByChoiceId(id);
             choiceRepository.deleteById(id);
             json.put("resoult", true);
         } else {

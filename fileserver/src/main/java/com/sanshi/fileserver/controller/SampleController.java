@@ -2,8 +2,12 @@ package com.sanshi.fileserver.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.sanshi.fileserver.bean.Sample;
+import com.sanshi.fileserver.bean.SampleUrl;
 import com.sanshi.fileserver.utils.RestTemplateUtil;
 import com.sanshi.fileserver.vo.Page;
+import com.sanshi.fileserver.vo.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,12 +22,17 @@ import java.io.*;
 @RequestMapping("/Sample")
 public class SampleController {
 
+    @Value("${sampleurl.ip}")
+    private   String ip;
+
+    @Value("${sampleurl.sampleIp}")
+    private  String sampleIp;
 
 
  @RequestMapping("/findAll")
  @ResponseBody
   public  PageInfo   findAll(@RequestBody  Page page){
-        String url="/Sample/find";
+        String url=ip+"/Sample/find";
         PageInfo data= RestTemplateUtil.executePost(url,page);
     return   data;
   }
@@ -32,7 +41,7 @@ public class SampleController {
     @RequestMapping("/findById")
     @ResponseBody
     public Sample findById(Integer id){
-        String url="/Sample/externalFindById";
+        String url=ip+"/Sample/externalFindById";
         Sample data= RestTemplateUtil.findByIdPost(url,id);
         return   data;
     }
@@ -42,7 +51,7 @@ public class SampleController {
     @RequestMapping("/sampleUrl")
     @ResponseBody
     public String sampleUrl(){
-        String data= RestTemplateUtil.sampleFileName();
+       String data= sampleIp;
         return  data;
     }
 
@@ -89,6 +98,10 @@ public class SampleController {
         }
         return null;
     }
+
+
+
+
 
 
 }

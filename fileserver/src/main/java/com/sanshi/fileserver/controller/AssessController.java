@@ -1,8 +1,16 @@
 package com.sanshi.fileserver.controller;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.sanshi.fileserver.bean.Assess;
+import com.sanshi.fileserver.bean.Cclass;
+import com.sanshi.fileserver.bean.Respondents;
+import com.sanshi.fileserver.bean.Student;
 import com.sanshi.fileserver.service.*;
+import com.sanshi.fileserver.utils.StudentExcel;
 import com.sanshi.fileserver.vo.*;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.http.HttpResponse;
+import java.util.*;
 
 /**
  * 获取考核
@@ -20,11 +30,22 @@ import java.util.Map;
 @RequestMapping("/Assess")
 public class AssessController {
     private AssessService assessService;
+    private RespondentsService  respondentsService;
+    private  StudentService studentService;
+    private  StuGroupService  stuGroupService;
+    private  CclassService  cclassService;
+    private  GradeService  gradeService;
+    private  AnswerService answerService;
 
-    public AssessController(AssessService assessService) {
+    public AssessController(AssessService assessService, RespondentsService respondentsService, StudentService studentService, StuGroupService stuGroupService, CclassService cclassService, GradeService gradeService, AnswerService answerService) {
         this.assessService = assessService;
+        this.respondentsService = respondentsService;
+        this.studentService = studentService;
+        this.stuGroupService = stuGroupService;
+        this.cclassService = cclassService;
+        this.gradeService = gradeService;
+        this.answerService = answerService;
     }
-
 
     /**
      * 获取考核
@@ -116,6 +137,54 @@ public class AssessController {
     @ResponseBody
     public Assess findByOneId(Integer assessId) {
         return assessService.findByOneId(assessId);
+    }
+
+
+    //导出成绩
+    @RequestMapping(path = "/exportScore")
+    public void exportScore (Integer assessId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Assess  assess=   assessService.findByOneId(assessId);
+      List<Integer>   list=respondentsService.selectStudent(assess.getId());
+      List<StudentScore> studentScoreList=new ArrayList<>();
+        for (Integer  id:list){
+            StudentScore  studentScore=new StudentScore();
+          Student  student= studentService.findOneById(id);
+            studentScore.setStuName(student.getStuName());
+            studentScore.setStuNumber(student.getStuNumber());
+            studentScore.setAssessName(assess.getName());
+          Cclass  cclass= cclassService.findOneById(stuGroupService.findOneById(student.getStuGroup()).getCclassId());
+            studentScore.setClassName(cclass.getName());
+            studentScore.setGradeName(gradeService.findOneById(cclass.getGradeId()).getName());
+            //获取成绩
+           Respondents  respondents= respondentsService.selectAssessIdAndStuId(assess.getId(),student.getStuId());
+           if(respondents!=null){
+
+               Double  d=  answerService.selectScore(respondents.getId());
+               if(d==null){
+                   studentScore.setState("未提交");
+                   studentScore.setScore(0);
+               }else {
+                   studentScore.setState("已参加");
+                   studentScore.setScore(d);
+               }
+
+           }else {
+               studentScore.setState("缺考");
+               studentScore.setScore(0);
+           }
+            studentScoreList.add(studentScore);
+        }
+
+        Collections.sort(studentScoreList, new Comparator<StudentScore>() {
+            @Override
+            public int compare(StudentScore o1, StudentScore o2) {
+                //升序
+                return o1.getGradeName().compareTo(o2.getGradeName());
+            }
+        });
+        ExportParams exportParams = new ExportParams("学生考核成绩表", "导出");
+        Workbook workbook = ExcelExportUtil.exportExcel(exportParams, StudentScore.class,studentScoreList);
+        ExcelUtils.downLoadExcel(assess.getName()+"成绩信息表", workbook, request, response);
     }
 
 

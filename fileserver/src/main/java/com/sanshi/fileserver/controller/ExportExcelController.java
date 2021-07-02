@@ -114,11 +114,27 @@ public class ExportExcelController {
         int size = 1;
         ChoiceExcel choiceExcel = new ChoiceExcel(null, "北京所在的时区是？", 1, 4, "西四区", "东九区", "东八区", "西九区", null, null,
                 "C", "北京是中国的首都位于东八区", 1, 0, "世界时区");
+        ChoiceExcel choiceExcel2 = new ChoiceExcel(null, "唐代的诗人有哪些？", 2, 4, "李白", "杜甫", "李清照", "苏轼", null, null,
+                "A,B", "唐代诗人", 2, 1, "唐代诗人");
+        ChoiceExcel choiceExcel3 = new ChoiceExcel(null, "java是世界上最美的编程语言吗？", 3, null, null, null, null, null, null, null,
+                "1", "编程语言", 2, 0, "编程语言");
+        ChoiceExcel choiceExcel4 = new ChoiceExcel(null, "请默写出师表", 4, null, null, null, null, null, null, null,
+                "，", "出师表", 5, 2, "出师表");
+        ChoiceExcel choiceExcel5 = new ChoiceExcel(null, "唐代被合称为李杜的分别是_,_", 5, null, null, null, null, null, null, null,
+                "李白,杜甫", "李白,杜甫", 5, 2, "李白杜甫");
         if (subjectList.size() > 0) {
             size = subjectList.size();
             choiceExcel.setSubId(subjectList.get(0).getName());
+            choiceExcel2.setSubId(subjectList.get(0).getName());
+            choiceExcel3.setSubId(subjectList.get(0).getName());
+            choiceExcel4.setSubId(subjectList.get(0).getName());
+            choiceExcel5.setSubId(subjectList.get(0).getName());
         }
         choiceExcelList.add(choiceExcel);
+        choiceExcelList.add(choiceExcel2);
+        choiceExcelList.add(choiceExcel3);
+        choiceExcelList.add(choiceExcel4);
+        choiceExcelList.add(choiceExcel5);
         String[] arr = new String[size];
         for (int i = 0; i < subjectList.size(); i++) {
             arr[i] = subjectList.get(i).getName();
@@ -126,7 +142,7 @@ public class ExportExcelController {
         ExportParams exportParams = new ExportParams("试题信息", "导出");
         Workbook workbook = ExcelExportUtil.exportExcel(exportParams, ChoiceExcel.class, choiceExcelList);
         ExcelUtils.selectList(workbook, 0, 0, arr);
-        ExcelUtils.selectList(workbook, 2, 2, new String[]{"单选题", "多选题", "判读题", "简答题"});
+        ExcelUtils.selectList(workbook, 2, 2, new String[]{"单选题", "多选题", "判断题", "简答题","填空题"});
         ExcelUtils.selectList(workbook, 12, 12, new String[]{"1", "2", "3", "4", "5"});
         ExcelUtils.selectList(workbook, 13, 13, new String[]{"全自动相等", "少选百分比多选不得分", "人工"});
         ExcelUtils.downLoadExcel("试题信息模板", workbook, request, response);

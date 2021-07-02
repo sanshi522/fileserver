@@ -1,6 +1,8 @@
 package com.sanshi.fileserver.controller;
 
+import com.sanshi.fileserver.bean.SampleUrl;
 import com.sanshi.fileserver.vo.SessionUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,9 @@ import java.io.*;
 
 @Controller
 public class HelloController {
+
+    @Autowired
+    private  SampleUrl sampleUrl;
     @GetMapping("/particulars")
     public ModelAndView particulars(Integer id) {
         if (id == null) id = 0;
@@ -187,6 +192,7 @@ public class HelloController {
      */
     @GetMapping(path = "/")
     public String welcomePage(HttpServletRequest request) {
+
         HttpSession session = request.getSession();
         if (session != null && session.getAttribute("user") != null) {
             SessionUser sessionUser = new SessionUser();

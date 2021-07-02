@@ -4,6 +4,7 @@ import com.sanshi.fileserver.bean.KnowledgePoint;
 import com.sanshi.fileserver.bean.Subject;
 import com.sanshi.fileserver.service.KnowledgePointService;
 import com.sanshi.fileserver.vo.PageGet;
+import com.sanshi.fileserver.vo.Result;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,11 @@ public class KnowledgePointController {
         return knowledgePointService.save(knowledgePoint);
     }
 
-    ;
+    @RequestMapping(path = "/findDelete")
+    @ResponseBody
+    public Result findDelete(Integer val, HttpServletRequest request) {
+        return  new Result(false,"该知识点可能已经被使用确定要删除吗?");
+    }
 
     @RequestMapping(path = "/deleteById")
     @ResponseBody

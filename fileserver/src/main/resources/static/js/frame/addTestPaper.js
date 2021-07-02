@@ -370,7 +370,36 @@ $(function () {
 
                         '\t\t\t</div>\n' +
                         '\t\t</div>');
+                }   else if(data.choices[i].choice.type == 5){
+                    let  str=data.choices[i].choice.topic;
+                    let    s=   str.toArray();
+                    let  ChioceName="";
+                    for (let x=0;x<s.length;x++){
+                        if(s[x]=="_"){
+                            ChioceName+= '<input style=" border:none; border-bottom: 1px solid #000;width: 50px" type="text"/>';
+                        }else{
+                            ChioceName+=s[x];
+                        }
+
+                    }
+                    $("#choices").append('<div class="choice" choicecheck="0"  choiceid="' + data.choices[i].choice.id + '" bindId="' + data.choices[i].testPaperBindChoice.id + '" c_index="' + data.choices[i].testPaperBindChoice.indexNum + '">\n' +
+                        ' <div class="choice-title"><div class="choice-index">' + (data.choices[i].testPaperBindChoice.indexNum + 1) + '</div><div class="choice-name" >' +ChioceName + '</div>\n' +
+                        '<input class="choice-box"  name="checkItem" type="checkbox" />' +
+                        ' <div class="choice-oper delete-choice"><i class="my-icon lsm-sidebar-icon icon-shanchu " ></i></div>\n' +
+                        '<div class="score_div">\n' +
+                        '<input class="form-control score1" type="text" placeholder="分值" value="' + data.choices[i].testPaperBindChoice.score + '">\n' +
+                        '</div>' +
+                        // ' <div class="choice-oper delete-choice"><input type="checkbox" name="TestPaper"/></i></div>\n' +
+                        '\t\t\t</div>\n' +
+                        '\t\t\t<div class="choice-details1">\n' +
+                        '\t\t\t\t<div class="make-choice">\n' +
+                        '\t\t\t\t</div>\n' +
+                        '\t\t\t</div>\n' +
+                        '\t\t</div>');
+
                 }
+
+
             }
             deleteChoiceBind();
             sortRef();
@@ -427,6 +456,17 @@ $(function () {
         })
     }
 
+
+    String.prototype.toArray = function () {  //把字符串转换为数组
+        var p = this.length;
+        a = [];  //获取当前字符串长度，并定义空数组
+        if (p) {  //如果存在则执行循环操作，预防空字符串
+            for (var i = 0; i < p; i++) {  //遍历字符串，枚举每个字符
+                a.push(this.charAt(i));  //把每个字符按顺序装入数组
+            }
+        }
+        return a;  //返回数组
+    }
 
     /**
      * 添加试题到弹出框
@@ -549,6 +589,33 @@ $(function () {
                             '\t\t\t</div>\n' +
                             '\t\t</div>');
                     }
+                    else if(data.page.content[i].type == 5){
+                        let  str=data.page.content[i].topic;
+                        let    s=   str.toArray();
+                        let  ChioceName="";
+                        for (let x=0;x<s.length;x++){
+                            if(s[x]=="_"){
+                                ChioceName+= '<input style=" border:none; border-bottom: 1px solid #000;width: 50px" type="text"/>';
+                            }else{
+                                ChioceName+=s[x];
+                            }
+
+                        }
+                        $(".allChoice").append('<div class="choice1"  choiceid="' + data.page.content[i].id + '">\n' +
+                            '\t\t\t<div class="choice-title"><div class="choice-type" data="' + data.page.content[i].type + '">填空题</div><div class="choice-name" >' + ChioceName + '</div>\n' +
+                            '\t\t\t\t<div class="choice-oper pack-up"><i class="my-icon lsm-sidebar-icon  icon-jiantouxia"></i></div>\n' +
+                            '<div class="choice-oper addthis"><i class="my-icon lsm-sidebar-icon  icon-tianjia"></i></div>\n' +
+                            '\t\t\t</div>\n' +
+                            '\t\t\t<div class="choice-details">\n' +
+                            '\t\t\t\t<div class="make-choice">\n' +
+                            '\t\t\t\t</div>\n' +
+                            '\t\t\t\t<div class="answer">标答：' + data.page.content[i].correct + '</div>\n' +
+                            '\t\t\t\t<div class="difficulty">难度：' + difficul + '</div>\n' +
+                            '\t\t\t\t<div class="analysis">解析：' + data.page.content[i].analysis + '</div>\n' +
+                            '\t\t\t\t<div class="knowledge">知识点：'+data.page.content[i].abilityIds+'</div>\n' +
+                            '\t\t\t</div>\n' +
+                            '\t\t</div>');
+                    }
                 }
                 choicebind();
                 refaddbtn();
@@ -596,7 +663,6 @@ $(function () {
                 '\t\t\t\t<div class="make-choice">\n' +
                 '\t\t\t\t\t<div class="text-cho">' + htmlss + '</div>\n' +
                 '\t\t\t\t</div>\n' +
-
                 '\t\t\t</div>\n' +
                 '\t\t</div>');
             deleteChoiceBind();
@@ -917,16 +983,22 @@ $(function () {
             success: function (data) {
                 console.log(data);
                 $.alert("试题保存成功");
-                window.location.href = "javascript:history.go(-1)";
+
             },
             error: function (data) {
                 console.log("服务器异常");
             }
         })
+        this.parent.open("testPaper");
+
     }
 
 
 });
+
+
+
+
 
 
 

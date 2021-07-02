@@ -2,24 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>知识点</title>
-    <link rel="stylesheet" type="text/css" href="/css/frame/share.css"/>
-    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/fonts/iconfont1.css">
-    <link rel="stylesheet" type="text/css" href="/css/frame/student.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap/bootstrap-select/bootstrap-select.min.css">
+    <title>样本文件</title>
     <link rel="stylesheet" type="text/css" href="/css/jquery-confirm/jquery-confirm.css">
-    <link rel="stylesheet" type="text/css" href="/css/jquery-pagination/pagination.css">
-    <link rel="stylesheet" type="text/css" href="/css/frame/assess.css">
+    <link rel="stylesheet" type="text/css" href="/css/frame/sample.css">
+    <link rel="stylesheet" type="text/css" href="css/frame/share.css"/>
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/iconfont1.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-select/bootstrap-select.min.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery-pagination/pagination.css">
 
     <script src="/js/jquery/jquery-3.5.1.min.js"></script>
     <script src="/js/bootstrap/bootstrap.min.js"></script>
     <script src="/js/bootstrap/bootstrap-select/bootstrap-select.min.js"></script>
     <script src="/js/bootstrap/bootstrap-select/i18n/defaults-zh_CN.min.js"></script>
     <script src="/js/jquery/jquery-pagination/jquery.pagination.js"></script>
-    <script src="/js/frame/ytable.js"></script>
-    <script src="/js/jquery/jquery-confirm.js"></script>
     <script src="/js/frame/sample.js"></script>
+    <script src="/js/jquery/jquery-confirm.js"></script>
+
+
 </head>
 <style>
     body {
@@ -31,19 +31,23 @@
     }
 </style>
 <body>
-<div id="contextWrap" style="margin-left:auto;margin-right:auto; width:100%">
+<div id="contextWraps" style="margin-left:auto;margin-right:auto; width:100%">
     <div class="mainWrap navslide" >
         <div class="row" style="width: 100%">
             <div class="col-md-2 col-md-offset-5">
                 <h2>样本文件</h2>
             </div>
+
         </div>
         <div class="ui segment fullheight">
+            <div style="float: left" > <a class="btn btn-info"  id="addsample">文件上传</a></div>
             <div class="ui query">
                 <input class="query" type="text" name="gender" id="query">
                 <i class="my-icon lsm-sidebar-icon icon-chazhao querybtn"></i>
             </div>
-            <div class="ui divider"></div>
+            <div class="ui divider">
+
+            </div>
             <div class="filtr-container">
 
             </div>
@@ -70,6 +74,170 @@
         </div>
 
     </div>
+</div>
+
+
+<div class="popWindow" style="width: 570px;">
+    <div id="contextWrap">
+        <div class="mainWrap navslide">
+            <div class="ui equal width left aligned padded grid stackable">
+                <!--Site Content-->
+                <div class="sixteen wide tablet sixteen wide computer column">
+                    <div class="ui segments">
+                        <div class="ui segment">
+                            <h3 class="ui header">添加样本文件</h3>
+                        </div>
+                        <div class="ui segment fullheight">
+                            <div class="filtr-container2">
+                                <div class="smailtitel">选择文件</div>
+
+                                <div class="ui filelist">
+                                </div>
+                            </div>
+                            <form id="addform">
+                                <div class="row" style="float: left">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" >文件名为</span>
+                                        <input type="text" class="form-control" id="fileName"   aria-describedby="basic-addon1">
+                                        <span class="input-group-addon" >回放速率</span>
+                                        <select class="form-control" id="playRate">
+                                            <option value="280" selected="selected">280MHz</option>
+                                            <option value="920" >920MHz</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" >参考频率</span>
+                                        <input type="text" class="form-control" id="referenceFreq" aria-describedby="basic-addon1">
+                                        <span class="input-group-addon" >参考功率</span>
+                                        <input type="text" class="form-control" id="referencePower" aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" >调制方式</span>
+                                        <input type="text" class="form-control" id="modulationType" aria-describedby="basic-addon1">
+                                        <span class="input-group-addon" >编码方式</span>
+                                        <input type="text" class="form-control" id="codType" aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" >网络协议类型</span>
+                                        <input type="text" class="form-control" id="protoType" aria-describedby="basic-addon1">
+                                        <span class="input-group-addon" >信源类型</span>
+                                        <input type="text" class="form-control" id="sourceType" aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" >体制</span>
+                                        <input type="text" class="form-control" id="systemType" aria-describedby="basic-addon1">
+                                        <span class="input-group-addon" >传输类型</span>
+                                        <input type="text" class="form-control" id="tranModel" aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" >载波数量</span>
+                                        <input type="text" class="form-control" id="carrierNum" aria-describedby="basic-addon1">
+                                    </div>
+
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div style="display: none; width:500px;float: left" class="progress-body">
+                            <div style="margin-bottom: 10px;"><span style="width: 100px; display: inline-block; text-align: right">上传进度：</span><progress></progress></div>
+                            <div style="margin-bottom: 10px; margin-left: 30px; width: 200px;" class="progress-speed">0 bytes</div>
+                            <div style="margin-bottom: 10px; margin-left: 30px; width: 200px;" class="progress-info">资料正准备上传</div>
+                        </div>
+
+                        <div style="margin-top: 20px">
+                            <div class="blue ui buttons commit-1">
+                                <button class="ui button " id="submit" data-shuffle>上传</button>
+                            </div>
+                            <div class="blue ui buttons reset-1" style="float: right">
+                                <button class="ui button info" id="cancel" data-filter="all">关闭</button>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <!--Site Content-->
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="popWindow2" style="width: 570px;">
+    <div id="contextWrap2">
+        <div class="mainWrap navslide">
+            <div class="ui equal width left aligned padded grid stackable">
+                <!--Site Content-->
+                <div class="sixteen wide tablet sixteen wide computer column">
+                    <div class="ui segments">
+                        <div class="ui segment">
+                            <h3 class="ui header">编辑样本文件</h3>
+                        </div>
+                            <form id="addform2">
+                                <input type="hidden" id="sampleId">
+                                <div class="row" style="float: left">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" >文件名为</span>
+                                        <input type="text" class="form-control" id="fileName2"   aria-describedby="basic-addon1">
+                                        <span class="input-group-addon" >回放速率</span>
+                                        <select class="form-control" id="playRate2">
+                                            <option value="280" >280MHz</option>
+                                            <option value="920" >920MHz</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" >参考频率</span>
+                                        <input type="text" class="form-control" id="referenceFreq2" aria-describedby="basic-addon1">
+                                        <span class="input-group-addon" >参考功率</span>
+                                        <input type="text" class="form-control" id="referencePower2" aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" >调制方式</span>
+                                        <input type="text" class="form-control" id="modulationType2" aria-describedby="basic-addon1">
+                                        <span class="input-group-addon" >编码方式</span>
+                                        <input type="text" class="form-control" id="codType2" aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" >网络协议类型</span>
+                                        <input type="text" class="form-control" id="protoType2" aria-describedby="basic-addon1">
+                                        <span class="input-group-addon" >信源类型</span>
+                                        <input type="text" class="form-control" id="sourceType2" aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" >体制</span>
+                                        <input type="text" class="form-control" id="systemType2" aria-describedby="basic-addon1">
+                                        <span class="input-group-addon" >传输类型</span>
+                                        <input type="text" class="form-control" id="tranModel2" aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" >载波数量</span>
+                                        <input type="text" class="form-control" id="carrierNum2" aria-describedby="basic-addon1">
+                                    </div>
+
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div style="margin-top: 20px">
+                            <div class="blue ui buttons commit-1">
+                                <button class="ui button " id="submit2" data-shuffle>确定</button>
+                            </div>
+                            <div class="blue ui buttons reset-1" style="float: right">
+                                <button class="ui button info" id="cancel2" data-filter="all">关闭</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Site Content-->
+            </div>
+        </div>
+    </div>
+
+
+</div>
 
 </body>
 </html>

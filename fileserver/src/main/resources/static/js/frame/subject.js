@@ -1,17 +1,20 @@
+
+
+//请求条件
+let nu=0;
+var pageNumber = 5; // 每页显示多少条记录
+var pageIndex = 0;//页码
+var issistId = 0;
+var likeName = "";
+var total = 0; // 总共多少记录
 $(function () {
-    //请求条件
-    let nu=0;
-    var pageNumber = 10; // 每页显示多少条记录
-    var pageIndex = 0;//页码
-    var issistId = 0;
-    var likeName = "";
-    var total = 0; // 总共多少记录
+
 
     $("#query").val("");
     Init(0);
 
     //初始化单页显示条数
-    $("#showNumber").val('10').trigger("change");
+    $("#showNumber").val('5').trigger("change");
     $("#showNumber").change(function () {
         if (pageNumber != $("#showNumber").val()) {
             pageNumber = $("#showNumber").val();

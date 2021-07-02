@@ -1,10 +1,13 @@
 package com.sanshi.fileserver.controller;
 
+import com.sanshi.fileserver.bean.Respondents;
 import com.sanshi.fileserver.bean.StuGroup;
 import com.sanshi.fileserver.bean.Student;
+import com.sanshi.fileserver.service.RespondentsService;
 import com.sanshi.fileserver.service.StuGroupService;
 import com.sanshi.fileserver.service.StudentService;
 import com.sanshi.fileserver.vo.PageGet;
+import com.sanshi.fileserver.vo.Result;
 import com.sanshi.fileserver.vo.SessionUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,10 +26,12 @@ import java.util.Map;
 public class StudentController {
     private StudentService studentService;
     private StuGroupService stuGroupService;
+    private RespondentsService respondentsService;
 
-    public StudentController(StudentService studentService, StuGroupService stuGroupService) {
+    public StudentController(StudentService studentService, StuGroupService stuGroupService, RespondentsService respondentsService) {
         this.studentService = studentService;
         this.stuGroupService = stuGroupService;
+        this.respondentsService = respondentsService;
     }
 
     @RequestMapping(path = "/GetStudent")
@@ -86,5 +91,17 @@ public class StudentController {
     public Integer deleteById(Integer val, HttpServletRequest request) {
         return studentService.deleteById(val);
     }
+
+    @RequestMapping(path = "/findDelete")
+    @ResponseBody
+    public Result findDelete(Integer val, HttpServletRequest request) {
+         List<Respondents>   respondentsList= respondentsService.findByStudentId(val);
+         if (respondentsList.size()>0){
+             return new Result(false,"该学生已参加过考核确定删除吗");
+         }
+        return  new Result(true,"可删除");
+    }
+
+
 
 }

@@ -26,4 +26,14 @@ public class ChoiceFileServiceImpl implements ChoiceFileService {
     public List<ChoiceFile> findByChoiceId(Integer choiceId) {
         return choiceFileRepository.findAllByChoiceId(choiceId);
     }
+
+    @Override
+    public List<ChoiceFile> findByFileId(Integer fileId) {
+        return choiceFileRepository.findAllByFileId(fileId);
+    }
+
+    @Override
+    public List<ChoiceFile> findByTypeAndFileId(Integer type, Integer fileId) {
+        return choiceFileRepository.findAllByTypeAndFileId(type,fileId);
+    }
 }

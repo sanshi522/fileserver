@@ -73,3 +73,11 @@ function say() {
     alert("parent.html");
 }
 
+
+function addClass(th){
+    $('.active').removeClass("active");
+    $(th).children("a").addClass("active");
+
+
+}
+

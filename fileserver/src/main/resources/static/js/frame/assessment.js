@@ -75,7 +75,7 @@ $(function () {
             sync:false,
             success: function (re) {
                 $(".assessMsg").empty();
-                $(".assessMsg").append(' <div  class="col-md-2 col-md-offset-5"><h2>' + re.name + '</h2></div>');
+                $(".assessMsg").append(' <div  class="col-md-6 col-md-offset-3" style=" text-align: center;"><h2>' + re.name + '</h2></div>');
             },
             error: function (re) {
                 console.log("服务器异常")
@@ -143,4 +143,12 @@ $(function () {
     }
 
 
+
 })
+
+//导出成绩
+function  exportScore() {
+    let assessId = $("#AssessId").attr("testPaperId");
+    window.location.href = "Assess/exportScore?assessId="+assessId;
+
+}

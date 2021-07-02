@@ -1,15 +1,15 @@
 package com.sanshi.fileserver.service.impl;
 
-import com.sanshi.fileserver.repository.TeacherBindCclassRepository;
+import com.sanshi.fileserver.bean.*;
+import com.sanshi.fileserver.repository.*;
+import com.sanshi.fileserver.service.TestPaperService;
 import com.sanshi.fileserver.vo.PageGet;
 import com.sanshi.fileserver.vo.SessionUser;
-import com.sanshi.fileserver.bean.Student;
-import com.sanshi.fileserver.bean.Teacher;
-import com.sanshi.fileserver.repository.TeacherRepository;
 import com.sanshi.fileserver.service.TeacherService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,10 +23,22 @@ import java.util.Map;
 public class TeacherServiceImpl implements TeacherService {
     private TeacherRepository teacherRepository;
     private TeacherBindCclassRepository teacherBindCclassRepository;
+    private TestPaperService testPaperService;
+    private AssessRepository assessRepository;
+    private RespondentsRepository respondentsRepository;
+    private AnswerRepository answerRepository;
+    private TestPaperRepository testPaperRepository;
+    private AssessUserRepository assessUserRepository;
 
-    public TeacherServiceImpl(TeacherRepository teacherRepository, TeacherBindCclassRepository teacherBindCclassRepository) {
+    public TeacherServiceImpl(TeacherRepository teacherRepository, TeacherBindCclassRepository teacherBindCclassRepository, TestPaperService testPaperService, AssessRepository assessRepository, RespondentsRepository respondentsRepository, AnswerRepository answerRepository, TestPaperRepository testPaperRepository, AssessUserRepository assessUserRepository) {
         this.teacherRepository = teacherRepository;
         this.teacherBindCclassRepository = teacherBindCclassRepository;
+        this.testPaperService = testPaperService;
+        this.assessRepository = assessRepository;
+        this.respondentsRepository = respondentsRepository;
+        this.answerRepository = answerRepository;
+        this.testPaperRepository = testPaperRepository;
+        this.assessUserRepository = assessUserRepository;
     }
 
     @Override
@@ -118,7 +130,27 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    @Transactional
     public void deleteByTeaId(Integer id) {
+        teacherBindCclassRepository.deleteByTeeaId(id);
+        List<TestPaper> testPaperList = testPaperService.findAllByTeacherId(id);
+        for (TestPaper testPaper : testPaperList) {
+            List<Assess> assessList = assessRepository.findAllByTestPaperId(testPaper.getId());
+            for (Assess assess : assessList) {
+                List<Respondents> respondentsList = respondentsRepository.findAllByAssessId(assess.getId());
+                for (Respondents respondents : respondentsList) {
+                    List<Answer> answerList = answerRepository.findAllByRespondentsId(respondents.getId());
+                    for (Answer answer : answerList) {
+                        answerRepository.deleteById(answer.getId());
+                    }
+                    respondentsRepository.deleteById(respondents.getId());
+                }
+                assessUserRepository.deleteByAssessId(assess.getId());
+                assessRepository.deleteById(assess.getId());
+            }
+            testPaperRepository.deleteById(testPaper.getId());
+        }
+
         teacherRepository.deleteByTeaId(id);
     }
 
@@ -130,5 +162,15 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<Teacher> findAll() {
         return teacherRepository.findAll();
+    }
+
+    @Override
+    public List<Integer> findAllByTeacherId(Integer id) {
+        return teacherBindCclassRepository.findCclasesIdByTeaid(id);
+    }
+
+    @Override
+    public void deleteTeacherBindClass(Integer id) {
+        teacherBindCclassRepository.deleteById(id);
     }
 }

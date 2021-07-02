@@ -39,6 +39,13 @@ public interface FileSampleService {
      */
     Map ScreenALL(ScreenShareFile screenShareFile, HttpServletRequest request);
 
+
+
+    List<Integer>   ScreenALL2(ScreenShareFile screenShareFile, HttpServletRequest request);
+
+
+    List<Integer>   ScreenMyALL2(ScreenShareFile screenShareFile, HttpServletRequest request);
+
     /**
      * 获取共享出去的文件
      *
@@ -46,4 +53,11 @@ public interface FileSampleService {
      * @return
      */
     Map ScreenMyALL(ScreenShareFile screenShareFile, HttpServletRequest request);
+
+    /**
+     * 试题挂载样本文件
+     */
+
+    Map choiceShareFile(ScreenShareFile screenShareFile, List<Integer> list);
+
 }

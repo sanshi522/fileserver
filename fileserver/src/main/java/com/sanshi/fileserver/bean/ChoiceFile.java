@@ -16,7 +16,7 @@ public class ChoiceFile {
 
     private Integer choiceId;
 
-    private Integer type;
+    private Integer type;   //0为共享文件 1为样本文件
 
     private  Integer fileId;
 

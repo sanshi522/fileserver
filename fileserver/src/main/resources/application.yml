@@ -10,11 +10,11 @@ spring:
       ddl-auto: update
   datasource:
     name: text
-    url: jdbc:mysql://192.168.0.100:3306/wais?serverTimezone=CTT #url
+    url: jdbc:mysql://localhost:3306/wais?serverTimezone=CTT #url
     username: root #用户名
     password: 123456
     driverClassName: com.mysql.cj.jdbc.Driver
-    data: classpath:import.sql
+   # data: classpath:import.sql
     initialization-mode: always
     dbcp2:
       max-idle: 10
@@ -46,8 +46,12 @@ spring:
   ##      suffix: .jsp #后缀
   servlet:
     multipart:
-      max-file-size: 50MB #单个数据大小
-      max-request-size: 10240MB #总数据大小
+      max-file-size: -1 #单个数据大小
+      max-request-size: -1 #总数据大小
     #jackson:
     # serialization: true
 
+sampleurl:
+  ip: http://192.168.0.112:8060
+  sampleIp: http://192.168.0.112:8060/
+  path: 'E:/fileUpload/'

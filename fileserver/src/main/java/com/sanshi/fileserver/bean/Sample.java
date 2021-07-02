@@ -22,23 +22,24 @@ public class Sample {
 
     private  String tranModel;
 
-    private  int    carrierNum;
+    private  Integer    carrierNum;
 
-    private  int  referenceTime;
+    private  Integer  referenceTime;
 
     private  String fileName;
 
-    private  int  fileNumbe;
+    private  Integer  fileNumber;
 
     private  String filePath;
 
-    private  int  fileSize;
+    private  Long  fileSize;
 
-    private String thumbnailPath;
+    private Integer   playRate;
 
-    private int   playRate;
+    public Sample() {
+    }
 
-    public Sample(Integer id, Double referenceFreq, Double referencePower, String modulationType, String codType, String protoType, String sourceType, String systemType, String tranModel, int carrierNum, int referenceTime, String fileName, int fileNumbe, String filePath, int fileSize, String thumbnailPath, int playRate) {
+    public Sample(Integer id, Double referenceFreq, Double referencePower, String modulationType, String codType, String protoType, String sourceType, String systemType, String tranModel, Integer carrierNum, Integer referenceTime, String fileName, Integer fileNumber, String filePath, Long fileSize, Integer playRate) {
         this.id = id;
         this.referenceFreq = referenceFreq;
         this.referencePower = referencePower;
@@ -51,14 +52,10 @@ public class Sample {
         this.carrierNum = carrierNum;
         this.referenceTime = referenceTime;
         this.fileName = fileName;
-        this.fileNumbe = fileNumbe;
+        this.fileNumber = fileNumber;
         this.filePath = filePath;
         this.fileSize = fileSize;
-        this.thumbnailPath = thumbnailPath;
         this.playRate = playRate;
-    }
-
-    public Sample() {
     }
 
     public Integer getId() {
@@ -133,19 +130,19 @@ public class Sample {
         this.tranModel = tranModel;
     }
 
-    public int getCarrierNum() {
+    public Integer getCarrierNum() {
         return carrierNum;
     }
 
-    public void setCarrierNum(int carrierNum) {
+    public void setCarrierNum(Integer carrierNum) {
         this.carrierNum = carrierNum;
     }
 
-    public int getReferenceTime() {
+    public Integer getReferenceTime() {
         return referenceTime;
     }
 
-    public void setReferenceTime(int referenceTime) {
+    public void setReferenceTime(Integer referenceTime) {
         this.referenceTime = referenceTime;
     }
 
@@ -157,12 +154,12 @@ public class Sample {
         this.fileName = fileName;
     }
 
-    public int getFileNumbe() {
-        return fileNumbe;
+    public Integer getFileNumber() {
+        return fileNumber;
     }
 
-    public void setFileNumbe(int fileNumbe) {
-        this.fileNumbe = fileNumbe;
+    public void setFileNumber(Integer fileNumber) {
+        this.fileNumber = fileNumber;
     }
 
     public String getFilePath() {
@@ -173,27 +170,42 @@ public class Sample {
         this.filePath = filePath;
     }
 
-    public int getFileSize() {
+    public Long getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(int fileSize) {
+    public void setFileSize(Long fileSize) {
         this.fileSize = fileSize;
     }
 
-    public String getThumbnailPath() {
-        return thumbnailPath;
-    }
-
-    public void setThumbnailPath(String thumbnailPath) {
-        this.thumbnailPath = thumbnailPath;
-    }
-
-    public int getPlayRate() {
+    public Integer getPlayRate() {
         return playRate;
     }
 
-    public void setPlayRate(int playRate) {
+    public void setPlayRate(Integer playRate) {
         this.playRate = playRate;
     }
+
+    @Override
+    public String toString() {
+        return "Sample{" +
+                "id=" + id +
+                ", referenceFreq=" + referenceFreq +
+                ", referencePower=" + referencePower +
+                ", modulationType='" + modulationType + '\'' +
+                ", codType='" + codType + '\'' +
+                ", protoType='" + protoType + '\'' +
+                ", sourceType='" + sourceType + '\'' +
+                ", systemType='" + systemType + '\'' +
+                ", tranModel='" + tranModel + '\'' +
+                ", carrierNum=" + carrierNum +
+                ", referenceTime=" + referenceTime +
+                ", fileName='" + fileName + '\'' +
+                ", fileNumber=" + fileNumber +
+                ", filePath='" + filePath + '\'' +
+                ", fileSize=" + fileSize +
+                ", playRate=" + playRate +
+                '}';
+    }
+
 }

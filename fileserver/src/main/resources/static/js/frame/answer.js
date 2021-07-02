@@ -67,6 +67,17 @@ $(function () {
         });
     }
 
+    String.prototype.toArray = function () {  //把字符串转换为数组
+        var p = this.length;
+        a = [];  //获取当前字符串长度，并定义空数组
+        if (p) {  //如果存在则执行循环操作，预防空字符串
+            for (var i = 0; i < p; i++) {  //遍历字符串，枚举每个字符
+                a.push(this.charAt(i));  //把每个字符按顺序装入数组
+            }
+        }
+        return a;  //返回数组
+    }
+
 
 //遍历试卷信息及试题
     function information(data) {
@@ -151,6 +162,31 @@ $(function () {
                         '\t\t\t\t</div>\n' +
                         '\t\t\t</div>\n' +
                         '\t\t</div>');
+                }else if (data.choiceList[i].choice.type == 5) {//填空题
+
+                    let  str=data.choiceList[i].choice.topic;
+                    let    s=   str.toArray();
+                    let  ChioceName="";
+                    for (let x=0;x<s.length;x++){
+                        if(s[x]=="_"){
+                            ChioceName+= '<input style=" border:none; border-bottom: 1px solid #000;" type="text"/>';
+                        }else{
+                            ChioceName+=s[x];
+                        }
+
+                    }
+                    $("#choices").append('<div class="choice" choicecheck="0" fileUrl=""  choice_type="' + data.choiceList[i].choice.type + '" choiceid="' + data.choiceList[i].choice.id + '">\n' +
+                        ' <div class="choice-title"><div class="choice-index">' + (i + 1) + '</div><div class="choice-name" >' + ChioceName + '(' + data.choiceList[i].score + '分)</div>\n' +
+                        ' <div class="choice-oper delete-choice"> </div>\n' +
+                        '<div class="score_div">\n' +
+                        '</div>' +
+                        '\t\t\t</div>\n' +
+                        '\t\t\t<div class="choice-details1">\n' +
+                        '\t\t\t\t<div class="make-choice">\n' +
+                        ' <div class="uploading-done pull-left">  </div> ' +
+                        '\t\t\t\t</div>\n' +
+                        '\t\t\t</div>\n' +
+                        '\t\t</div>');
                 }
             }
             sortRef();
@@ -189,14 +225,14 @@ function binds() {
     let flag = true;
     answerList=[];
     // choices.each(function (i, choice) {
-
+    var num2=null;
         for(let x=0;x<choices.length;x++){
         let choice=choices[x];
         var type = $(choice).attr("choice_type")
         var id = $(choice).attr("choiceid");
         var value = "";
         var num = $(choice).attr("c_index");
-        var num2=null;
+
         var fileIds = $(choice).attr("fileUrl");
         if (fileIds != "" && fileIds != undefined) {
             fileIds = fileIds.substring(0, fileIds.length - 1);
@@ -236,8 +272,18 @@ function binds() {
                 value = document.getElementById(id).value;
 
                 break;
+            case  "5":
+               let divName=$(choice).find("div.choice-name");
+                 let  inputs=  $(divName).find('input[type="text"]');
+                 for (let l=0;l<inputs.length ;l++){
+                     if ($(inputs[l]).val()!=""){
+                         value+=$(inputs[l]).val()+"#";
+                     }
+
+                 }
+                break;
         }
-        if (value == "") {
+        if (value == "" ) {
             flag = false;
             num2=num;
         }
@@ -285,12 +331,12 @@ function binds() {
                     error: function (data) {
                         console.log("服务器异常");
                     }
-                })
+                 })
 
             },
             cancel: function () {
                 $("html,body").animate({
-                    scrollTop: choices.eq(parseInt(num2)).offset().top - 40
+                         scrollTop: choices.eq(parseInt(num2)).offset().top - 40
                 }, 200 /*scroll实现定位滚动*/); /*让整个页面可以滚动*/
                 flag=false;
             }
@@ -388,15 +434,18 @@ function DownloadAttachment(id) {
 
 var files = [];
 var upBtnIndex = 0;
-
+var sindex = 0;
 function studentUp(th) {
-    let sindex = 0;
     sindex = $(th).parent().parent().find('.uploading-done').find('.line-box').length;
     var max = 100;
     var init = 0;
     var uploaded;
     var formData = new FormData();
-    console.log($(th)[0].files[0]);
+    console.log($(th)[0].files[0].size);
+    if ($(th)[0].files[0].size>100921976){
+        $.alert("文件大于100MB请压缩文件或多次上传");
+        return;
+    }
     formData.append("file", $(th)[0].files[0]);
     $.ajax({
         url: "/Answer/upload",
@@ -407,10 +456,14 @@ function studentUp(th) {
         processData: false,
         // 告诉jQuery不要去设置Content-Type请求头
         contentType: false,
-        beforeSend: function () {
-            console.log("正在进行，请稍候");
-        }, success: function (responseStr) {
-            if (responseStr != "" && responseStr != "上传失败") {
+        processData: false,
+        // 告诉jQuery不要去设置Content-Type请求头
+        contentType: false,
+        processData: false,
+        contentType: false,
+
+       success: function (responseStr) {
+            if (responseStr != "文件不能为空" && responseStr != "上传失败") {
                 let value = $(th).parent().parent().parent().parent().attr("fileUrl");
                 value = value + responseStr + ",";
                 $(th).parent().parent().parent().parent().attr('fileUrl', value);
@@ -429,8 +482,6 @@ function studentUp(th) {
             } else {
                 $.alert(responseStr);
             }
-
-
         }
     });
 
@@ -460,3 +511,4 @@ function removeFile(th) {
     $(th).parent().parent().parent().parent().parent().parent().attr("fileUrl", value)
     $(th).parent().parent().remove();
 }
+

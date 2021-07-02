@@ -25,8 +25,13 @@ public class TestPaperBindChoiceServiceImpl implements TestPaperBindChoiceServic
 
     @Override
     public void save(List<TestPaperBindChoice> testPaperBindChoices) {
-        for (int i = 0; i < testPaperBindChoices.size(); i++)
+        for (int i = 0; i < testPaperBindChoices.size(); i++) {
+            if (testPaperBindChoices.get(i).getId()!=null){
+          TestPaperBindChoice testPaperBindChoice=      testPaperBindChoiceRepository.findOneById(testPaperBindChoices.get(i).getId());
+                testPaperBindChoices.get(i).setCreateTime(testPaperBindChoice.getCreateTime());
+            }
             testPaperBindChoiceRepository.save(testPaperBindChoices.get(i));
+        }
     }
 
 

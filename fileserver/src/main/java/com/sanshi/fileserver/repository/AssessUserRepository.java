@@ -20,6 +20,8 @@ public interface AssessUserRepository extends JpaRepository<AssessUser, Integer>
 
     List<AssessUser> findAllByTestObjectAndTestObjectId(Integer testObject, Integer testObjectId);
 
+    void deleteByTestObjectAndTestObjectId(Integer object,Integer objectId);
+
     @Query(value = "select s.assessId from AssessUser s where s.testObject =?1 and s.testObjectId=?2 ")
     List<Integer> findAssessIdAllByTestObjectAndTestObjectId(Integer testObject, Integer testObjectId);
 

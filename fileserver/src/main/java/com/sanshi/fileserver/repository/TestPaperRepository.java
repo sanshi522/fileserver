@@ -47,11 +47,15 @@ public interface TestPaperRepository extends JpaRepository<TestPaper, Integer>, 
 
     Page<TestPaper> findAllBySubIdAndNameLike(Integer subId, String name, Pageable pa);
 
+    List<TestPaper> findAllBySubId(Integer subId);
+
     Page<TestPaper> findAllByNameLike(String name, Pageable pa);
 
     List<TestPaper> findAll();
 
     TestPaper findOneByName(String name);
+
+    List<TestPaper> findAllByCreationId (Integer id);
 
 
 }

@@ -240,6 +240,7 @@ $(function () {
     function Init(index) { // 参数就是点击的那个分页的页数索引值
         pageIndex = index;
         subId = $("#subIdScreen").val();
+        pageNumber = $("#showNumber").val();
         issueId = $("#TeacherSelect").val();
         let ScreenAssess = {
             "pageNumber": pageNumber,
@@ -483,12 +484,14 @@ $(function () {
         browserHeight = $(window).height();
         positionLeft = browserWidth / 2 - popWindowWidth / 2 + browserScrollLeft;
         positionTop = browserHeight / 2 - popWindowHeight / 2 + browserScrollTop;
-
-
     }
 
     $("#addAssess").click(function (e) {
-
+        $("#AssessId").val("");
+        $("#testObject").empty();
+        $("#assname").val("");
+        $("#testpaper_id").val("");
+        $("#make_time").val(0);
         updatelist();
         openWindw(e.pageX, e.pageY);
     });
@@ -1017,6 +1020,7 @@ $(function () {
                 console.log("服务器异常");
 
             }
+
 
         })
 
