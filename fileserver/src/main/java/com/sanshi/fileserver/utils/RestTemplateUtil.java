@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.sanshi.fileserver.bean.Sample;
 import com.sanshi.fileserver.vo.Page;
 import com.sanshi.fileserver.vo.PageGet;
+import com.sanshi.fileserver.vo.SamplePage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,14 +19,14 @@ import java.util.Map;
 public class RestTemplateUtil {
 
 
-    public static PageInfo executePost(String url, Page page){
+    public static PageInfo executePost(String url, SamplePage page){
         String URL=url;
 
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
 
-        HttpEntity<Page> request = new HttpEntity<>(page, headers);
+        HttpEntity<SamplePage> request = new HttpEntity<>(page, headers);
 
         ResponseEntity<PageInfo> response = restTemplate.postForEntity(URL, request , PageInfo.class );
 

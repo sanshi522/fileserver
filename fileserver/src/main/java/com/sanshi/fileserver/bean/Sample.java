@@ -1,6 +1,10 @@
 package com.sanshi.fileserver.bean;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
+
 public class Sample {
 
     private  Integer  id;
@@ -35,11 +39,16 @@ public class Sample {
     private  Long  fileSize;
 
     private Integer   playRate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date getData;
+
+    private  String  name;
 
     public Sample() {
     }
 
-    public Sample(Integer id, Double referenceFreq, Double referencePower, String modulationType, String codType, String protoType, String sourceType, String systemType, String tranModel, Integer carrierNum, Integer referenceTime, String fileName, Integer fileNumber, String filePath, Long fileSize, Integer playRate) {
+
+    public Sample(Integer id, Double referenceFreq, Double referencePower, String modulationType, String codType, String protoType, String sourceType, String systemType, String tranModel, Integer carrierNum, Integer referenceTime, String fileName, Integer fileNumber, String filePath, Long fileSize, Integer playRate, Date getData, String name) {
         this.id = id;
         this.referenceFreq = referenceFreq;
         this.referencePower = referencePower;
@@ -56,6 +65,8 @@ public class Sample {
         this.filePath = filePath;
         this.fileSize = fileSize;
         this.playRate = playRate;
+        this.getData = getData;
+        this.name = name;
     }
 
     public Integer getId() {
@@ -186,6 +197,22 @@ public class Sample {
         this.playRate = playRate;
     }
 
+    public Date getGetData() {
+        return getData;
+    }
+
+    public void setGetData(Date getData) {
+        this.getData = getData;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return "Sample{" +
@@ -205,7 +232,8 @@ public class Sample {
                 ", filePath='" + filePath + '\'' +
                 ", fileSize=" + fileSize +
                 ", playRate=" + playRate +
+                ", getData=" + getData +
+                ", name='" + name + '\'' +
                 '}';
     }
-
 }

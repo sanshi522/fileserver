@@ -6,6 +6,7 @@ import com.sanshi.fileserver.bean.SampleUrl;
 import com.sanshi.fileserver.utils.RestTemplateUtil;
 import com.sanshi.fileserver.vo.Page;
 import com.sanshi.fileserver.vo.Result;
+import com.sanshi.fileserver.vo.SamplePage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,7 @@ public class SampleController {
 
  @RequestMapping("/findAll")
  @ResponseBody
-  public  PageInfo   findAll(@RequestBody  Page page){
+  public  PageInfo   findAll(@RequestBody SamplePage page){
         String url=ip+"/Sample/find";
         PageInfo data= RestTemplateUtil.executePost(url,page);
     return   data;
@@ -58,18 +59,13 @@ public class SampleController {
 
 
     @RequestMapping("/downloadShareFile")
-    public String downLoad(String filename, HttpServletResponse response) throws UnsupportedEncodingException {
+    public String downLoad(String filename,String names, HttpServletResponse response) throws UnsupportedEncodingException {
         File file = new File(filename);
-        String name = filename;
-        if (filename.lastIndexOf("/") >= 0) {
-            String str1 = filename.substring(0, filename.lastIndexOf("/"));
-            name = filename.substring(str1.length() + 1, filename.length());
-        }
         if (file.exists()) { //判断文件父目录是否存在
             //response.setContentType("application/vnd.ms-excel;charset=UTF-8");
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/force-download");
-            response.setHeader("Content-Disposition", "attachment;fileName=" + java.net.URLEncoder.encode(name, "UTF-8"));
+            response.setHeader("Content-Disposition", "attachment;fileName=" + java.net.URLEncoder.encode(names, "UTF-8"));
             byte[] buffer = new byte[1024];
             FileInputStream fis = null; //文件输入流
             BufferedInputStream bis = null;

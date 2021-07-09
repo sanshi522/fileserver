@@ -1,5 +1,7 @@
 var sampleUrl="";
 var size=0;
+var endData = new Date();
+var endData2 = new Date();
 $(function () {
     let pageIndex=1;
     let pageNumber=10;
@@ -18,6 +20,64 @@ $(function () {
             console.log("服务器异常")
         }
     })
+
+
+
+
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1,                 //月份
+            "d+": this.getDate(),                    //日
+            "h+": this.getHours(),                   //小时
+            "m+": this.getMinutes(),                 //分
+            "s+": this.getSeconds(),                 //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds()             //毫秒
+        };
+        if (/(y+)/.test(fmt))
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substring(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt))
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substring(("" + o[k]).length)));
+        return fmt;
+    }
+
+
+    $('#search-to-date').datetimepicker({
+        format: 'Y-m-d H:i:00',
+        value: new Date().Format('yyyy-MM-dd hh:mm:ss'),
+        theme: 'dark',
+        step: 1,
+        onSelectTime: function (dateText, inst) {
+            endData = dateText;
+            dateText.Format('yyyy-MM-dd hh:mm:ss');
+        },
+        onSelectDate: function (dateText, inst) {
+            endData = dateText;
+            dateText.Format('yyyy-MM-dd hh:mm:ss');
+        }
+    });
+
+
+    $('#search-fom-date').datetimepicker({
+        format: 'Y-m-d H:i:00',
+        value: new Date().Format('yyyy-MM-dd hh:mm:ss'),
+        theme: 'dark',
+        step: 1,
+        onSelectTime: function (dateText, inst) {
+            endData2=dateText;
+            dateText.Format('yyyy-MM-dd hh:mm:ss');
+        },
+        onSelectDate: function (dateText, inst) {
+            endData2=dateText;
+            dateText.Format('yyyy-MM-dd hh:mm:ss');
+        }
+    });
+
+
+
+
+    $.datetimepicker.setLocale('zh');
 
 
 
@@ -62,16 +122,17 @@ $(function () {
     
     function Init(index) {
         pageIndex=index;
-      let  Page={
-          "pageIndex":pageIndex,
-          "pageNumber":pageNumber,
-          "likeName":likeName
-      }
+        let SamplePage={
+            "pageIndex":pageIndex,
+            "pageNumber":pageNumber,
+            "likeName":likeName,
+            "type":$("#typeScreen").val()
+        }
         $.ajax({
         url:"/Sample/findAll",
         type:"post",
         contentType: "application/json;charset=UTF-8",
-        data: JSON.stringify(Page),
+        data: JSON.stringify(SamplePage),
         dataType:"json",
          success:function (data) {
              $(".filtr-container").empty();
@@ -79,14 +140,26 @@ $(function () {
              for (let i = 0; i < data.size; i++) {
                  let me=0;
                  if (me == 0) {
+
                      $(".filtr-container").append('<div class="filtr-item chunk" fileid=' + data.list[i].id + '>\n' +
                          '<img src="../../images/file_logo_png/1140224.png"/>\n' +
-                         '<div class="sharefilename">'+data.list[i].fileName+'</div>\n' +
+                         '<div class="sharefilename"  style="width:60%;height: 80%" >' +
+                         '<div><span style="float: left" >样本名：</span>'+   data.list[i].fileName+' </div> '+
+                         '<div style="width: 100%;float: left"><span  style="float: left">调制方式：</span>'+data.list[i].modulationType+' </div> '+
+                         '<div style="width: 100%;float: left"><span  style="float: left">编码方式：</span>'+data.list[i].codType+' </div> '+
+                         '<div style="width: 100%;float: left"><span  style="float: left">体制：</span>'+data.list[i].systemType+' </div> '+
+                         '<div style="width: 100%;float: left"><span  style="float: left">文件数量：</span>'+data.list[i].fileNumber+' </div> '+
+                         '<div style="width: 100%;float: left"><span  style="float: left">采集时间：</span>'+data.list[i].getData+' </div> '+
+                         '</div>\n' +
                          '<div class="sharefilesize"></div>\n' +
                          '<div class="susdiv">\n' +
-                         '<div class="operation download"><i class="my-icon lsm-sidebar-icon icon-xiazai " onclick="sampleDownload( '+data.list[i].id+')"></i></div>\n' +
-                         '<div class="operation delete"><i class="my-icon lsm-sidebar-icon icon-shanchu querybtn" onclick="deleteById('+data.list[i].id+')"></i></div>\n' +
-                         '<div class="operation compile"><i class="my-icon lsm-sidebar-icon icon-bianji querybtn" sampleId='+data.list[i].id+' ></i></div>\n' +
+                         '<div style="width: 30%;float: left"> <button onclick="sampleDownload( '+data.list[i].id+')"  class="btn-info" style="width: 60px">下载</button> </div>\n' +
+                         '<div style="width: 30%;float: left"> <button class="btn-warning icon-bianji" sampleId='+data.list[i].id+'>编辑</button> </div>\n' +
+                         '<div style="width: 30%;float: left"> <button class="btn-danger" onclick="deleteById('+data.list[i].id+')">删除</button></div>\n' +
+
+                         // '<div class="operation download"><i class="my-icon lsm-sidebar-icon icon-xiazai " onclick="sampleDownload( '+data.list[i].id+')"></i></div>\n' +
+                         // '<div class="operation delete"><i class="my-icon lsm-sidebar-icon icon-shanchu querybtn" onclick="deleteById('+data.list[i].id+')"></i></div>\n' +
+                         // '<div class="operation compile"><i class="my-icon lsm-sidebar-icon icon-bianji querybtn" sampleId='+data.list[i].id+' ></i></div>\n' +
                          '</div>\n' +
                          '</div>');
                  } else {
@@ -135,6 +208,8 @@ $(function () {
      * 弹出窗
      */
     $("#addsample").click(function (e) {
+        $(":text").val("");
+        $("#search-to-date").val(new Date().Format('yyyy-MM-dd hh:mm:ss'));
         openWindw(e.pageX, e.pageY);
     });
 
@@ -178,10 +253,9 @@ $(function () {
         $('body').append(oMask);
         $('.mask').width(maskWidth).height(maskHeight);
         popWindow.removeClass("hide");
+        $('#playRate').val(280).trigger("change");
         $(".ui.filelist").empty();
         initadd();
-        $('#playRate').val(280).trigger("change");
-        $('#suffix').val("bin").trigger("change");
 
     };
 
@@ -208,9 +282,12 @@ $(function () {
             "</div>");
         //添加文件
         $(".icon-bianji").bind("click", function (e) {
+            $(":text").val("");
+            $("#search-to-date").val(new Date().Format('yyyy-MM-dd hh:mm:ss'));
             openWindw2(e.pageX, e.pageY);
             let id=  $(this).attr("sampleId")
             findSamle(id);
+
         });
 
         $("#addfilebtn").bind("click", function () {
@@ -243,13 +320,11 @@ $(function () {
     }
     $("#cancel").click(function () {
         $(".popWindow").hide();
-        $(":input").val("");
         $(".ui.filelist").empty();
     });
 
     $("#cancel2").click(function () {
         $(".popWindow2").hide();
-        $(":input").val("");
         $(".ui.filelist").empty();
     });
 
@@ -328,7 +403,6 @@ $(function () {
                     let fileName=name+name2;
                     let protoType=parseInt($("#playRate").val());
                     let referenceTime=Math.ceil(size/2/(protoType*1000*1000));
-
                     let Sample={
                         "id":null,
                         "referenceFreq":$("#referenceFreq").val(),
@@ -337,16 +411,17 @@ $(function () {
                         "codType":$("#modulationType").val(),
                         "protoType":$("#protoType").val(),
                         "sourceType":$("#sourceType").val(),
-                        "sourceType":$("#systemType").val(),
                         "tranModel":$("#tranModel").val(),
                         "carrierNum":$("#carrierNum").val(),
                         "systemType":$("#systemType").val(),
                         "referenceTime":referenceTime,
-                        "fileName":fileName,
+                        "fileName":$("#fileName").val(),
                         "fileNumber":files.length,
                         "filePath":path,
                         "fileSize":size,
-                        "playRate":$("#playRate").val()
+                        "playRate":$("#playRate").val(),
+                        "name":fileName,
+                        "getData": endData.Format('yyyy-MM-dd hh:mm:ss'),
                     }
 
                     $.ajax({
@@ -386,6 +461,9 @@ $(function () {
             $.alert("文件名不能为空");
             return;
         }
+        let fileSize=parseInt($("#sampleSize").val());
+        let protoType=parseInt($("#playRate2").val());
+        let referenceTime=Math.ceil(fileSize/2/(protoType*1000*1000));
         let Sample={
             "id": $("#sampleId").val(),
             "referenceFreq":$("#referenceFreq2").val(),
@@ -394,13 +472,15 @@ $(function () {
             "codType":$("#modulationType2").val(),
             "protoType":$("#protoType2").val(),
             "sourceType":$("#sourceType2").val(),
-            "sourceType":$("#systemType2").val(),
             "tranModel":$("#tranModel2").val(),
             "carrierNum":$("#carrierNum2").val(),
             "fileName":$("#fileName2").val(),
             "playRate":$("#playRate2").val(),
             "systemType":$("#systemType2").val(),
+            "referenceTime":referenceTime,
+            "getData":endData2.Format('yyyy-MM-dd hh:mm:ss')
         }
+
         $.ajax({
             url:sampleUrl+"Sample/Update",
             contentType: "application/json;charset=UTF-8",
@@ -446,12 +526,13 @@ function  xiazai() {
     let value="";
     const  SPEED=500;
     for(let i=0;i<dataSource.fileNumber;i++){
-        if (dataSource.fileName != "" && dataSource.fileName != null) {
+        if (dataSource.name != "" && dataSource.name != null) {
             setTimeout(()=>{
-                let fileName=dataSource.fileName.substring(0,dataSource.fileName.lastIndexOf("."));
-                let suffix= dataSource.fileName.substring(dataSource.fileName.lastIndexOf("."),dataSource.fileName.length);
+                let fileName=dataSource.name.substring(0,dataSource.name.lastIndexOf("."));
+                let suffix= dataSource.name.substring(dataSource.name.lastIndexOf("."),dataSource.name.length);
                 value= dataSource.filePath+"/"+fileName+"_"+i+suffix
-                var newhref =sampleUrl+"Sample/downloadShareFile?filename="+value;
+                let name=dataSource.fileName+"_"+i+suffix;
+                var newhref =sampleUrl+"Sample/downloadShareFile?filename="+value+"&names="+name;
                 win.location.href=newhref;
             },SPEED*i)
 
@@ -459,6 +540,8 @@ function  xiazai() {
             $.alert("没有附件");
         }
     }
+
+
 
 }
 
@@ -541,6 +624,7 @@ function canceledHandle(e) {
 };
 
 
+
 function EditfileName() {
     let  files =$(".file");
     if (files.length>0) {
@@ -553,6 +637,7 @@ function EditfileName() {
             }
         }
     }
+
 }
 
 
@@ -565,7 +650,7 @@ function  findSamle(id) {
         success: function (data) {
             $('#playRate2').val(data.playRate).trigger("change");
             $("#sampleId").val(data.id);
-            $("#fileName2").val(data.fileName.substring(0,data.fileName.lastIndexOf(".")));
+            $("#fileName2").val(data.fileName);
             $("#referenceFreq2").val(data.referenceFreq);
             $("#referencePower2").val(data.referencePower);
             $("#modulationType2").val(data.modulationType);
@@ -575,7 +660,9 @@ function  findSamle(id) {
             $("#systemType2").val(data.systemType);
             $("#tranModel2").val(data.tranModel);
             $("#carrierNum2").val(data.carrierNum);
-          $("#systemType2").val(data.systemType);
+            $("#systemType2").val(data.systemType);
+            $("#sampleSize").val(data.fileSize);
+            $("#search-fom-date").val(data.getData);
         }, error: function (data) {
         }
     })

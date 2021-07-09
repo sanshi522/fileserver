@@ -1,15 +1,16 @@
 package com.sanshi.fileserver.utils;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.afterturn.easypoi.excel.annotation.ExcelTarget;
 
 import java.util.Date;
-
 public class ChoiceExcel {
     @Excel(name = "学科", orderNum = "0", width = 30)
     private String subId;
     /**
      * 题目
      */
+
     @Excel(name = "题目(填空题需要填写答案区域用_表示)", orderNum = "1", width = 100)
     private String topic;
     /**

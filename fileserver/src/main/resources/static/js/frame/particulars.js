@@ -339,11 +339,11 @@ function DownloadFile(id) {
                 for (let i = 0; i < data.length; i++) {
                     if(data[i].type==0){
                         setTimeout(()=>{
-                            win.location.href = "Sample/downloadShareFile?filename="+data[i].name;
+                            win.location.href = "Sample/downloadShareFile?filename="+data[i].name+"&names="+data[i].fileName;
                         },SPEED*i)
                     }else {
                         setTimeout(()=>{
-                            var newhref = sampleUrl+"Sample/downloadShareFile?filename="+data[i].name;
+                            var newhref = sampleUrl+"Sample/downloadShareFile?filename="+data[i].name+"&names="+data[i].fileName;
                             win.location.href=newhref;
                         },SPEED*i)
                     }

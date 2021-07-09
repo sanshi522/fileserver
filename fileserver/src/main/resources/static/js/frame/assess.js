@@ -710,7 +710,7 @@ $(function () {
         if (upident != '1')
             $("#yearScreenDiv").css("display", "block");
         if (upident == '7' || upident == '1')
-            $("#yearScreenDiv").css("display", "none");
+       $("#yearScreenDiv").css("display", "none");
         $("#gradeScreenDiv").css("display", "none");
         $("#classScreenDiv").css("display", "none");
         $("#groupScreenDiv").css("display", "none");
@@ -779,7 +779,6 @@ $(function () {
                         for (let i = 0; i < data.grades.length; i++) {
                             $("#selecttarget").append('<tr class="assuser" data_id=' + data.grades[i].id + ' data_name=' + data.grades[i].name + ' ><td>' + data.grades[i].name + '</td>  <td style="text-align:right;"><i class="my-icon lsm-sidebar-icon icon-tianjia assessuser-add"/></td></tr>');
                         }
-
                         assessuser_addbind();
                         updatelist();
                     }
@@ -973,7 +972,7 @@ $(function () {
             return;
         }
         if ($("#search-to-date").val() == "") {
-            $.alert("结束时间不能为空");
+           $.alert("结束时间不能为空");
             return;
         }
         if (endData.getTime() <= startData.getTime()) {

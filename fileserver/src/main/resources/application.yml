@@ -52,6 +52,6 @@ spring:
     # serialization: true
 
 sampleurl:
-  ip: http://192.168.0.112:8060
-  sampleIp: http://192.168.0.112:8060/
-  path: 'E:/fileUpload/'
+  ip: http://192.168.3.21:8060
+  sampleIp: http://192.168.3.21:8060/
+  path: 'E:/file/'      #学生上传文件地址

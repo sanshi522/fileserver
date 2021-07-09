@@ -82,18 +82,18 @@ public class ChoiceFileController {
                 if(fileSample==null){
                     continue;
                 }
-                list.add( new FileUtil(fileSample.getPath().replaceAll("\\\\","/"),0));
+                list.add( new FileUtil(fileSample.getPath().replaceAll("\\\\","/"),0,fileSample.getName()));
             }else {
                 String url=ip+"/Sample/externalFindById";
                 Sample data= RestTemplateUtil.findByIdPost(url,file.getFileId());
                 if (data==null){
                     continue;
                 }
-                String fileName=data.getFileName().substring(0,data.getFileName().lastIndexOf("."));
-                String suffix= data.getFileName().substring(data.getFileName().lastIndexOf("."),data.getFileName().length());
+                String fileName=data.getName().substring(0,data.getName().lastIndexOf("."));
+                String suffix= data.getName().substring(data.getName().lastIndexOf("."),data.getName().length());
                 for(int i=0;i<data.getFileNumber();i++){
                     String name=data.getFilePath()+"/"+fileName+"_"+i+suffix;
-                    list.add(new FileUtil(  name,1));
+                    list.add(new FileUtil( name,1,data.getFileName()+"_"+i+suffix));
                 }
             }
         }
@@ -113,6 +113,7 @@ public class ChoiceFileController {
     }
         return  new  Result(true,"可以删除");
     }
+
 
 
     @CrossOrigin

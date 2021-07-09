@@ -1,4 +1,6 @@
 $(function () {
+
+
     $.ajax({
         url: "login/Islogin",
         type: "post",
@@ -10,6 +12,7 @@ $(function () {
             if (data.logintype == 0) {//学生
                 $(".user_name").html(data.user.stuName);
                 $(".stu-show").css("display", "block");
+                open("studentAssess");
             } else {
                 $(".user_name").html(data.user.teaName);
                 if (data.user.teaIdentity == 1) {//老师
@@ -22,6 +25,7 @@ $(function () {
                 } else {
                     location.href = "/";
                 }
+                open("student");
             }
         },
         error: function (jqXHR) {
